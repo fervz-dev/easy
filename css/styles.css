@@ -1,0 +1,319 @@
+body {
+	background: transparent url(images/line-gradient-body2.png) no-repeat left top;
+	margin: 0px;
+	padding: 0px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color: #f1f1f1;
+}
+
+#wrapper-main {
+	background: transparent url(images/bg-body.png) repeat-x center bottom;
+	margin: 0px;
+	padding: 0px;
+	clear:both;
+}
+
+#footer {
+/*	background: transparent url(images/bg-footer.png) repeat-x center top;
+	margin: 0px;
+	padding: 10px;
+	min-height:24px;
+	clear:both;
+*/
+
+    background: transparent url(images/bg-footer.png) repeat-x center top;
+    bottom: 0;
+    left: 0;
+	margin: 0px;
+	padding: 10px;
+    min-height: 24px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000000;
+}
+
+body.front {
+	background: #28587e url(images/line-gradient-body.jpg) no-repeat left top;
+	margin: 0px;
+	padding: 0px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color: #f1f1f1;
+}
+
+#header {
+	min-height:120px;
+	clear:both;
+	display:block;
+	border-bottom: 2px solid #6fc2ea;
+	position:relative;
+}
+
+#main {
+}
+
+.content {
+    float: left;
+    padding: 10px 0 0 2px;
+}
+
+.corner-left-top {
+	background: transparent url(images/corner-left-top.png) no-repeat left top;
+	margin: 0px;
+	padding: 0px;
+	width: 14px;
+	height: 14px;
+}
+
+.corner-right-top {
+	background: transparent url(images/corner-right-top.png) no-repeat left top;
+	margin: 0px;
+	padding: 0px;
+	width: 14px;
+	height: 14px;
+}
+
+.corner-left-bottom {
+	background: transparent url(images/corner-left-bottom.png) no-repeat left top;
+	margin: 0px;
+	padding: 0px;
+	width: 14px;
+	height: 14px;
+}
+
+.corner-right-bottom {
+	background: transparent url(images/corner-right-bottom.png) no-repeat left top;
+	margin: 0px;
+	padding: 0px;
+	width: 14px;
+	height: 14px;
+}
+
+.estira-left {
+	background: transparent url(images/estira-left-login.png) repeat-y left top;
+	margin: 0px;
+	padding: 0px;
+}
+
+.estira-right {
+	background: transparent url(images/estira-right-login.png) repeat-y left top;
+	margin: 0px;
+	padding: 0px;
+}
+
+.estira-top {
+	background: transparent url(images/estira-top-login.png) repeat-x left top;
+	margin: 0px;
+	padding: 0px;
+}
+
+.estira-bottom {
+	background: transparent url(images/estira-bottom-login.png) repeat-x left top;
+	margin: 0px;
+	padding: 0px;
+}
+
+/*LOGIN*/
+.login {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 550px;
+	height: 400px;
+	margin-top: -200px;
+	margin-left: -275px;
+	overflow: auto;
+}
+
+.bg-login {
+	background: transparent url(images/bg-login.png) repeat left top;
+	margin: 0px;
+	padding: 0px;
+}
+
+.login-form {
+	clear:both;
+	width: 300px;
+	margin: 0 auto;
+}
+
+
+.front .desarrollo {
+	background: transparent url(images/desarrollo.png) no-repeat left top;
+	margin: 0px;
+	padding: 0px;
+	display:block;
+	float: right;
+    margin: -7px 38px 0 0;
+}
+
+.desarrollo {
+	background: transparent url(images/desarrollo2.png) no-repeat left top;
+	margin: 0 50px 0 50px;
+	padding: 0px;
+	display:block;
+	float: right;
+}
+
+
+#footer ul.menu {
+    display: block;
+    float: right;
+	font-size:11px;
+}
+#footer ul.menu {
+    margin: 5px 0;
+}
+#footer ul.menu li {
+    display: inline;
+    margin: 0;
+}
+#footer ul.menu li a {
+    margin: 0;
+    padding: 0 10px;
+    text-decoration: none;
+	color:#fff;
+}
+
+#footer ul.menu li.last a {
+}
+
+a {
+    margin: 0;
+    padding: 0px;
+    text-decoration: none;
+	color:#464646;
+}
+
+.sidebar-left {
+    background: transparent url("images/bg-leftsidebar-top.png") no-repeat right top;
+    color: #FFFFFF;
+    float: left;
+    font-size: 13px;
+    padding: 30px 0 0;
+    width: 223px;
+	margin-left: 8px;
+}
+.sidebar-left-A {
+    background: url("images/bg-leftsidebar-bottom.png") no-repeat scroll right bottom transparent;
+    min-height: 223px;
+    padding-bottom: 50px;
+}
+.sidebar-left-B {
+    background: url("images/bg-leftsidebar.png") repeat-y scroll right center transparent;
+}
+
+.sidebar-left a {
+    border-top: 1px solid #e2f3fb;
+    color: #555;
+    display: block;
+    font-weight: normal;
+    padding: 5px 8px 4px;
+}
+
+.sidebar-left ul ul a {
+    padding: 5px 8px 4px 15px;
+}
+
+.sidebar-left a:hover {
+    color: #30B3F1;
+    text-decoration: none;
+}
+.sidebar-left ul li {
+    margin: 0;
+	list-style-image: none;
+    list-style-type: none;
+}
+
+ul {
+    margin:0;
+	padding:0;
+}
+
+#login-admin {
+    background: url("images/bg-logged.png") repeat-x center top transparent;
+	height:inherit;
+}
+
+.login-admin-A {
+    background: url("images/bg-logged-left.png") no-repeat left top transparent;
+	height:inherit;
+	padding-left:23px;
+}
+
+.login-admin-B {
+    background: url("images/bg-logged-right.png") no-repeat right top transparent;
+	padding-right:19px;
+	position:absolute;
+	top:0px;
+	right:0px;
+	height:24px;
+}
+
+a.logout {
+	font-weight: bold;
+	color:#FFF;
+	margin:0px 0px 0px 20px;
+	position:relative;
+	top:4px;
+}
+
+span.name {
+	color:#FFF;
+	position:relative;
+	top:4px;
+}
+
+#tabsMain {
+	float:left;
+	position:absolute;
+	bottom:0px;
+	margin-left:200px;
+}
+
+#tabsMain ul, #tabsMain ul.active	 {
+	padding:6px 0px;
+}
+
+#tabsMain ul li {
+	background: url("images/bg-tab-right.png") no-repeat right top transparent;
+    display: inline;
+    margin: 0;
+	padding:12px 13px 6px 0px;
+}
+
+#tabsMain ul li {
+	background-image: none;
+    display: inline;
+    margin: 0;
+	padding:12px 13px 6px 0px;
+}
+
+#tabsMain ul li.active {
+	background: url("images/bg-tab-right.png") no-repeat right top transparent;
+}
+
+
+#tabsMain ul li a {
+	background-image: none;
+	padding:12px 9px 6px;
+}
+
+#tabsMain ul li.active a {
+	background: url("images/bg-tab-left.png") no-repeat left top transparent;
+	color:#FFF;
+	font-weight:bold;
+}
+
+
+#tabsMain ul li a span {
+	padding:12px 12px 6px 12px;
+	background-image: none;
+
+}
+
+#tabsMain ul li.active a span {
+	background: url("images/bg-tab.png") repeat-x center top transparent;
+
+}
