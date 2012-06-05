@@ -68,8 +68,17 @@ class Pedidos_proveedor extends CI_Controller
            $onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
            $onclick_add="onclick=add('".$row->id_pedido."')";
     	   $onclikedit="onclick=edit('".$row->id_pedido."')";
-     	   $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>';
+
+           if($row->activo == 1)
+           {
+                $onclikabierto="onclick=abierto('".$row->id_pedido."')";
+                $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
+           }elseif ($row->activo == 0) {
+               $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
+               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
+           }
            $data->rows[$i]['cell']=array($acciones,
+                                    strtoupper($row->id_pedido),
                                     strtoupper($row->fecha_pedido),
                                     strtoupper($row->fecha_entrega),
                                     strtoupper($row->nombre_empresa),
@@ -92,6 +101,21 @@ class Pedidos_proveedor extends CI_Controller
     {
         $editar=$this->pedidos->editar($id);
         echo 1;
+    }
+
+    //////////////////////////// cerrar pedido ///////////////////////////////////
+    public function cerrar_pedido($id)
+    {
+        $cerrar=$this->pedidos->cerrar($id);
+        if($cerrar > 0)
+    {
+        echo 1;
+    }
+    else
+    {
+        echo 0;
+    }
+
     }
 
     public function guardar()
@@ -145,6 +169,13 @@ public function subpaginacion($id)
 
     if(!$sidx) $sidx =1;
 
+$verificacion = $this->db->query("SELECT
+                                        pedido_proveedor.activo
+                                        FROM
+                                        pedido_proveedor
+                                        WHERE
+                                        pedido_proveedor.id_pedido = '$id'"
+                                );
  $consul = $this->db->query("SELECT
                                     cantidad_pedido.id_cantidad_pedido,
                                     cat_mprima.nombre,
@@ -206,18 +237,54 @@ exit();
     $data->total = $total_pages;
     $data->records = $count;
     $i=0;
+$con = $verificacion->row();
+$valor = $con->activo;
+
+if ($valor == 1) {
+    $N=1;
     foreach($result1->result() as $row) {
     
       $data->rows[$i]['id']=$row->id_cantidad_pedido;
-       $onclik="onclick=eliminar_producto('".$row->id_cantidad_pedido."')";;
- $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+      
+        $onclik="onclick=eliminar_producto('".$row->id_cantidad_pedido."')";
+        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';   
+      
+      
+       
         $data->rows[$i]['cell']=array($acciones,
+                                                ($N),
                                     strtoupper($row->nombre),
                                     strtoupper($row->ancho),
                                     strtoupper($row->largo),
                                     strtoupper($row->cantidad));
         $i++;
+        $N++;
     }
+
+    }elseif ($valor == 0) {
+ $N=1;
+    foreach($result1->result() as $row) {
+    
+      $data->rows[$i]['id']=$row->id_cantidad_pedido;
+      
+        $onclik="onclick=eliminar_producto('".$row->id_cantidad_pedido."')";
+        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';   
+      
+      
+       
+        $data->rows[$i]['cell']=array($acciones,
+                                                ($N),
+                                    strtoupper($row->nombre),
+                                    strtoupper($row->ancho),
+                                    strtoupper($row->largo),
+                                    strtoupper($row->cantidad));
+        $i++;
+        $N++;
+    }
+
+    }
+    
+
     // La respuesta se regresa como json
     echo json_encode($data);   
 }

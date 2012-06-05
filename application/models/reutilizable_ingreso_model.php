@@ -19,7 +19,11 @@ class Reutilizable_ingreso_model extends CI_Model
                                     cprima.ancho,
                                     cprima.largo,
                                     resistencia.resistencia,
-                                    cprima.peso
+                                    cprima.peso,
+                                    cprima.cantidad,
+                                    cprima.peso_total,
+                                    cprima.restan
+
                                     FROM cat_mprima_reutilizable AS cprima, resistencia_mprima AS resistencia
                                     WHERE resistencia.id_resistencia_mprima=cprima.resistencia_mprima_id_resistencia_mprima
                                     AND cprima.activo = 1 
@@ -78,7 +82,10 @@ public function get_resistencia_all()
         'resistencia_mprima_id_resistencia_mprima'=>$this->input->post('resistencia_mprima_id_resistencia_mprima'),
         'tipo'=>'reutilizable',
         'tipo_m'=>$this->input->post('tipo_m'),
-        'peso'=>$this->input->post('peso')
+        'peso'=>$this->input->post('peso'),
+        'cantidad'=>$this->input->post('cantidad'),
+        'peso_total'=>$this->input->post('peso_total'),
+        'restan'=>$this->input->post('restan')
     );
 
     $this->db->where('id_cat_mprima', $id);
@@ -104,6 +111,9 @@ public function get_resistencia_all()
         'tipo'=>'reutilizable',
         'tipo_m'=>$this->input->post('tipo_m'),
         'peso'=>$this->input->post('peso'),
+        'cantidad'=>$this->input->post('cantidad'),
+        'peso_total'=>$this->input->post('peso_total'),
+        'restan'=>$this->input->post('cantidad'),
         'activo'=>1
         );
         $this->db->insert('cat_mprima_reutilizable', $data);

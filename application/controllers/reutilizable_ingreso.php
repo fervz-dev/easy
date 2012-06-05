@@ -66,7 +66,10 @@ class Reutilizable_ingreso extends CI_Controller{
             strtoupper($row->ancho),
             strtoupper($row->largo),
             strtoupper($row->peso),
-            strtoupper($row->resistencia)
+            strtoupper($row->resistencia),
+            strtoupper($row->cantidad),
+            strtoupper($row->peso_total),
+            strtoupper($row->restan)
             );
            $i++;
         }

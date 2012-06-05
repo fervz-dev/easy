@@ -6,7 +6,7 @@
     mtype: 'POST',
 		      //  $data->rows[$i]['cell']=array($acciones,strtoupper($row->nombre),strtoupper($row->descripcion),strtoupper($row->direccion),strtoupper($row->colonia),strtoupper($row->poblacion),strtoupper($row->rfc));
 
-                        colNames:['Acciones','NOMBRE','CARACTERISTICA','GROSOR','ANCHO','LARGO','peso','RESISTENCIA'],
+                        colNames:['Acciones','NOMBRE','CARACTERISTICA','GROSOR','ANCHO','LARGO','PESO','RESISTENCIA','CANTIDAD', 'PESO TOTAL', 'RESTAN'],
                         colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:170,resizable:false, sortable:true,search:false,editable:false},
                                   {name:'nombre', index:'nombre', width:100,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'caracteristica', index:'caracteristica', width:100,resizable:false, sortable:true,search:true,editable:true},
@@ -15,7 +15,11 @@
                                   {name:'ancho', index:'ancho', width:40,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'largo', index:'largo', width:40,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'peso', index:'peso', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:true,editable:true}
+                                  {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:true,editable:true},
+                                  {name:'cantidad', index:'cantidad', width:40,resizable:false, sortable:true,search:true,editable:true},
+                                  {name:'peso_total', index:'peso_total', width:40,resizable:false, sortable:true,search:true,editable:true},
+                                  {name:'restan', index:'restan', width:80,resizable:false, sortable:true,search:true,editable:true}
+
 
                                 ],                             
     pager: jQuery('#paginacion'),
@@ -62,6 +66,8 @@ $.ajax({
             $("#largo").val(dato[4]);
             $("#resistencia_mprima_id_resistencia_mprima").val(dato[5]);
             $("#peso").val(dato[6]);
+            $("#cantidad").val(dato[7]);
+            $("#peso_total").val(dato[8]);
             },
                         error:function(datos){
                         alert("Error al procesar los datos ");
@@ -113,7 +119,9 @@ function editar(id)
                                 "ancho":$("#ancho").val(),
                                 "largo":$("#largo").val(),
                                 "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val(),               
-                                "peso":$("#peso").val()
+                                "peso":$("#peso").val(),
+                                "cantidad":$("#cantidad").val(),
+                                "peso_total":$("#peso_total").val()
                               },
                     cache: false,
                      datatype:"html",
@@ -207,7 +215,9 @@ $.ajax({
                   "ancho":$("#ancho").val(),
                   "largo":$("#largo").val(),
                   "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val(),               
-                  "peso":$("#peso").val()
+                  "peso":$("#peso").val(),
+                  "cantidad":$("#cantidad").val(),
+                  "peso_total":$("#peso_total").val()
                 },
 
                      datatype:"html",

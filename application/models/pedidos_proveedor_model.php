@@ -17,7 +17,8 @@ class Pedidos_proveedor_model extends CI_Model
 									pedido_proveedor.fecha_pedido,
 									pedido_proveedor.fecha_entrega,
 									proveedores.nombre_empresa,
-									oficina.nombre_oficina
+									oficina.nombre_oficina,
+									pedido_proveedor.activo									
 									FROM
 									pedido_proveedor ,
 									proveedores ,
@@ -132,6 +133,14 @@ public function guardar_pedido()
    		$this->db->insert('pedido_proveedor', $data);
 		return $this->db->affected_rows(); 
 	}
+/////////////////////cerrar pedido /////////////////////
+public function cerrar($id)
+{
+    $data = array('activo' => 0);
+			$this->db->where('id_pedido', $id);
+			$this->db->update('pedido_proveedor', $data);
+			return $this->db->affected_rows();
+}
 
    }
 ?>

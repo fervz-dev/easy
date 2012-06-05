@@ -1,5 +1,72 @@
 <?php $this->load->view('hed');?>
 <script>
+//////////////////////////////////////////// Espera id del pedido y confirmacion para cerrarlo ////////////////////
+function cerrar_pedido(id,confirmacion)
+{
+if(confirmacion==true)
+{
+  $.ajax({
+          async:true,cache: false,
+          beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+          type:"POST",
+          url:"<?php echo base_url();?>pedidos_proveedor/cerrar_pedido/"+id,
+          datatype:"html",
+          success:function(data, textStatus){
+                                            
+                                            switch(data){
+                                                          case "0": 
+                                                                  $("#ErrorDatos").fadeIn();
+                                                                  $("#ErrorDatos").html("Error al procesar los datos.");
+                                                                  //alert("Error al procesar los datos ");
+                                                          break;
+                                             
+                                                          case "1": 
+                                                          
+                                                                  $( "#dialogo" ).dialog( "close" );
+                                                                  // alert('editado');
+                                                                  // guardar_paciente(data);
+                                                                  $("#tbl_p_prove").trigger("reloadGrid"); 
+                                                                  msg('Registro eliminado correctamente');
+                                                          break;
+                                                 
+                                                          default:
+                                                                  $( "#dialogo").dialog( "close" );
+                                                                  //alert('Vacante guardada');
+                                                                  // reloading();
+                                                          break; 
+                                            
+                                                        }//switch
+                                            },
+          error:function(datos){
+                                alert("Error inesparado");
+                             }//Error
+          });//Ajax
+}
+
+}
+//////////////////////////////////////////// Funcion para cerrar Pedido a proveedores /////////////////////////////
+function abierto (id) {
+  $( "#dialogo" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+            var confirmacion=true;
+           cerrar_pedido(id,confirmacion);        
+          },
+          Cancelar:function()
+          {   
+        $( "#dialogo" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialogo" ).dialog( "open" );
+
+}
+
 ////////////////////////////////////////////agregar producto///////////////////////////////////////////////////////
 function add(id)
 {
@@ -260,12 +327,14 @@ if(r==true)
     mtype: 'POST',
 		      
                         colNames:['Acciones',
+                                    'ID PEDIDO',
                                     'FECHA DE PEDIDO',
                                     'FECHA DE ENTREGA',
                                     'PROVEEDOR',
                                     'LUGAR DE ENVIO'
                                     ],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
+                                  {name:'id_pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
                                   {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
                                   {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:true,editable:true},
                                   {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:true, sortable:true,search:true,editable:true},
@@ -299,9 +368,10 @@ if(r==true)
    url:"<?php echo base_url();?>pedidos_proveedor/subpaginacion/"+row_id,
    datatype: "json",
    mtype: 'POST',
-   colNames: ['ACCI&Oacute;N','NOMBRE','ANCHO','LARGO','CANTIDAD'],    
+   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','ANCHO','LARGO','CANTIDAD'],    
    colModel: [
-             {name:"acciones",index:"acciones",width:56,align:"center"}, 
+             {name:"acciones",index:"acciones",width:56,align:"center"},
+             {name:"No",index:"No",width:56,align:"center"},
              {name:"nombre",index:"nombre",search: false,align:"center"},
              {name:"ancho",index:"ancho",align:"left",search: false},
              {name:"largo",index:"largo",align:"left",search: false},
@@ -340,4 +410,15 @@ if(r==true)
         <div style="display:none" id="dialog-procesos_producto" title="Pedidos">
         <?php 
         $this->load->view('pedidos_proveedores/formulario_producto');?>
+        </div>
+        <!-- Funcion dialogo -->
+        <div style="display:none;" id="dialogo" >
+          <div class="ui-widget">
+            <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+              <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+              <strong>Precaución:</strong> Esta seguro de cerrar el pedido?</p>
+            </div>
+          </div>
+        </div>
+        <div style="display:none;" id="ErrorDatos">
         </div>
