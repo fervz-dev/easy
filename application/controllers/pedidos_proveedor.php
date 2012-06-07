@@ -267,8 +267,8 @@ if ($valor == 1) {
     
       $data->rows[$i]['id']=$row->id_cantidad_pedido;
       
-        $onclik="onclick=eliminar_producto('".$row->id_cantidad_pedido."')";
-        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';   
+        $onclik="onclick=pedido_cerrado('".$row->id_cantidad_pedido."')";
+        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Eliminar" height="18" /></span>';   
       
       
        

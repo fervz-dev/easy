@@ -68,8 +68,17 @@ class Pedidos_reutilizable extends CI_Controller
            $onclik="onclick=eliminar_pedido('".$row->id_pedido_reutilizable."')";
            // $onclick_add="onclick=add('".$row->id_pedido_reutilizable."')";
     	   $onclikedit="onclick=edit('".$row->id_pedido_reutilizable."')";
-     	   $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" />';
+     	   // $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" />';
            // </span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>0
+           if($row->activo == 1){
+            $onclikabierto="onclick=abierto('".$row->id_pedido_reutilizable."')";
+            $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
+     
+           }elseif ($row->activo == 0) {
+            $onclikcerrado="onclick=cerrado('".$row->id_pedido_reutilizable."')";
+            $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
+
+           }
            $data->rows[$i]['cell']=array($acciones,
                                     strtoupper($row->fecha_pedido),
                                     strtoupper($row->fecha_entrega),
@@ -311,6 +320,20 @@ public function paginacion_producto($id)
     }
     // La respuesta se regresa como json
     echo json_encode($data);   
+    }
+         //////////////////////////// cerrar pedido ///////////////////////////////////
+    public function cerrar_pedido($id)
+    {
+        $cerrar=$this->pedidos->cerrar($id);
+        if($cerrar > 0)
+    {
+        echo 1;
+    }
+    else
+    {
+        echo 0;
+    }
+
     }
 		
 }

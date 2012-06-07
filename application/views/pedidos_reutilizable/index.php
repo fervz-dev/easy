@@ -1,5 +1,110 @@
 <?php $this->load->view('hed');?>
 <script>
+function cerrado () {
+
+   $( "#dialogo_cerrado" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          
+          Cerrar:function()
+          {   
+        $( "#dialogo_cerrado" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialogo_cerrado" ).dialog( "open" );
+   
+}
+//////////////////////////////////////////// Alerta producto - Pedido cerrado ////////////////////////////////////////////////
+
+function pedido_cerrado () {
+
+   $( "#dialogo_cerrado" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          
+          Cerrar:function()
+          {   
+        $( "#dialogo_cerrado" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialogo_cerrado" ).dialog( "open" );
+   
+}
+//////////////////////////////////////////// Espera id del pedido y confirmacion para cerrarlo ////////////////////
+function cerrar_pedido(id,confirmacion)
+{
+if(confirmacion==true)
+{
+  $.ajax({
+          async:true,cache: false,
+          beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+          type:"POST",
+          url:"<?php echo base_url();?>pedidos_reutilizable/cerrar_pedido/"+id,
+          datatype:"html",
+          success:function(data, textStatus){
+                                            
+                                            switch(data){
+                                                          case "0": 
+                                                                  $("#ErrorDatos").fadeIn();
+                                                                  $("#ErrorDatos").html("Error al procesar los datos.");
+                                                                  //alert("Error al procesar los datos ");
+                                                          break;
+                                             
+                                                          case "1": 
+                                                          
+                                                                  $( "#dialogo" ).dialog( "close" );
+                                                                  // alert('editado');
+                                                                  // guardar_paciente(data);
+                                                                  $("#tbl_p_prove").trigger("reloadGrid"); 
+                                                                  msg('Pedido cerrado satisfacotiramente');
+                                                          break;
+                                                 
+                                                          default:
+                                                                  $( "#dialogo").dialog( "close" );
+                                                                  //alert('Vacante guardada');
+                                                                  // reloading();
+                                                          break; 
+                                            
+                                                        }//switch
+                                            },
+          error:function(datos){
+                                alert("Error inesparado");
+                             }//Error
+          });//Ajax
+}
+
+}
+function abierto (id) {
+  $( "#dialogo" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+            var confirmacion=true;
+           cerrar_pedido(id,confirmacion);        
+          },
+          Cancelar:function()
+          {   
+        $( "#dialogo" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialogo" ).dialog( "open" );
+
+}
 //////////////////////////////////////////GUARDAR ID EDITADO//////////////////////////
 function editar(id)
 {
@@ -258,4 +363,22 @@ $( "#dialog-procesos" ).dialog({
         <div style="display:none" id="dialog-procesos" title="Pedidos">
         <?php 
         $this->load->view('pedidos_reutilizable/formulario');?>
+        </div>
+  <!-- Funcion dialogo -->
+        <div style="display:none;" id="dialogo" >
+          <div class="ui-widget">
+            <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+              <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+              <strong>Precaución:</strong> Esta seguro de cerrar el pedido?</p>
+            </div>
+          </div>
+        </div>
+        <!-- Pedido cerrado -->
+        <div style="display:none;" id="dialogo_cerrado" >
+          <div class="ui-widget">
+            <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+              <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+              <strong>Alerta:</strong> El Pedido ya esta cerrado!!!</p>
+            </div>
+          </div>
         </div>

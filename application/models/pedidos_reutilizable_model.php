@@ -18,7 +18,8 @@ class Pedidos_reutilizable_model extends CI_Model
 									pedidos_reutilizable.fecha_entrega,
 									pedidos_reutilizable.cantidad,
 									proveedores.nombre_empresa,
-									oficina.nombre_oficina
+									oficina.nombre_oficina,
+									pedidos_reutilizable.activo
 									FROM
 									pedidos_reutilizable ,
 									proveedores ,
@@ -127,5 +128,14 @@ public function guardar_pedido()
 		return $this->db->affected_rows(); 
 	}
 
+
+/////////////////////cerrar pedido /////////////////////
+public function cerrar($id)
+{
+    $data = array('activo' => 0);
+			$this->db->where('id_pedido_reutilizable', $id);
+			$this->db->update('pedidos_reutilizable', $data);
+			return $this->db->affected_rows();
+}
    }
 ?>

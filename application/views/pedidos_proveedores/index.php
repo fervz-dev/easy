@@ -1,5 +1,46 @@
 <?php $this->load->view('hed');?>
 <script>
+//////////////////////////////////////////// Alerta Pedido cerrado ///////////////////////////////////////////////////////////
+function cerrado () {
+
+   $( "#dialogo_cerrado" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          
+          Cerrar:function()
+          {   
+        $( "#dialogo_cerrado" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialogo_cerrado" ).dialog( "open" );
+   
+}
+//////////////////////////////////////////// Alerta producto - Pedido cerrado ////////////////////////////////////////////////
+
+function pedido_cerrado () {
+
+   $( "#dialogo_cerrado" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          
+          Cerrar:function()
+          {   
+        $( "#dialogo_cerrado" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialogo_cerrado" ).dialog( "open" );
+   
+}
 //////////////////////////////////////////// Espera id del pedido y confirmacion para cerrarlo ////////////////////
 function cerrar_pedido(id,confirmacion)
 {
@@ -26,7 +67,7 @@ if(confirmacion==true)
                                                                   // alert('editado');
                                                                   // guardar_paciente(data);
                                                                   $("#tbl_p_prove").trigger("reloadGrid"); 
-                                                                  msg('Registro eliminado correctamente');
+                                                                  msg('Pedido cerrado satisfacotiramente');
                                                           break;
                                                  
                                                           default:
@@ -420,5 +461,12 @@ if(r==true)
             </div>
           </div>
         </div>
-        <div style="display:none;" id="ErrorDatos">
+        <!-- Pedido cerrado -->
+        <div style="display:none;" id="dialogo_cerrado" >
+          <div class="ui-widget">
+            <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+              <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+              <strong>Alerta:</strong> El Pedido ya esta cerrado!!!</p>
+            </div>
+          </div>
         </div>
