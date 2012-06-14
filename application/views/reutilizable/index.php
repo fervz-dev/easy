@@ -65,6 +65,9 @@ $.ajax({
             $("#ancho").val(dato[3]);
             $("#largo").val(dato[4]);
             $("#resistencia_mprima_id_resistencia_mprima").val(dato[5]);
+              div_peso=dato[6].split('.');
+            $("#kilos").val(div_peso[0]);
+            $("#gramos").val(div_peso[1]);
             $("#peso").val(dato[6]);
             $("#cantidad").val(dato[7]);
             $("#peso_total").val(dato[8]);
@@ -78,8 +81,8 @@ $.ajax({
 
 $( "#dialog-procesos" ).dialog({
       autoOpen: false,
-      height: 250,
-      width: 380,
+      height: 'auto',
+      width: 'auto',
       modal: true,
       buttons: {
           Aceptar: function() {
@@ -252,8 +255,8 @@ function alta()
 document.cat_mprima.reset();
 $( "#dialog-procesos" ).dialog({
       autoOpen: false,
-      height: 420,
-      width: 390,
+      height: 'auto',
+      width: 'auto',
       modal: true,
       buttons: {
           Aceptar: function() {
@@ -280,7 +283,7 @@ $( "#dialog-procesos" ).dialog({
 </table>
         <table id="tbl"></table>
         <div id="paginacion"> </div>
-        <div style="display:none" id="dialog-procesos" title="Catalogo">
+        <div style="display:none" id="dialog-procesos" title="Reutilizable">
         <?php 
 
         $this->load->view('reutilizable/formulario');?>

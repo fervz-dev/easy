@@ -6,7 +6,7 @@
 <?php $this->load->view('session_user');?>
 <?php $this->load->view('menu_izquierdo');?>
 			<div class="content">
-				<?php $this->load->view('login/acceso');?>
+				<?php //$this->load->view('login/acceso');?>
 				<?php $this->load->view($vista); ?>
 			</div>
    		</div>

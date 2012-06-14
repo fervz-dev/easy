@@ -142,5 +142,33 @@ public function cerrar($id)
 			return $this->db->affected_rows();
 }
 
+
+//////////////////// extra solo los campos que cumplan con la condicion si activo=1 /////////////////////////////////////
+public function get_pedido_proveedor_almacen($sidx, $sord, $start, $limite)
+	{
+		$query = $this->db->query("SELECT
+									pedido_proveedor.id_pedido,
+									pedido_proveedor.fecha_pedido,
+									pedido_proveedor.fecha_entrega,
+									proveedores.nombre_empresa,
+									oficina.nombre_oficina,
+									pedido_proveedor.activo,
+									pedido_proveedor.verificacion_almacen								
+									FROM
+									pedido_proveedor ,
+									proveedores ,
+									oficina
+									WHERE
+									pedido_proveedor.proveedores_id_proveedores = proveedores.id_proveedores 
+									AND
+									pedido_proveedor.oficina = oficina.id_oficina
+									AND
+									pedido_proveedor.activo=0
+									ORDER BY $sidx $sord 
+									LIMIT $start, $limite;"
+									);
+		return ($query->num_rows()> 0)? $query->result() : NULL;
+	}
+
    }
 ?>

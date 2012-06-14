@@ -86,8 +86,11 @@ class Reutilizable_ingreso extends CI_Controller{
              strtoupper($row->tipo_m).'~'.
              strtoupper($row->ancho).'~'.
              strtoupper($row->largo).'~'.
+             strtoupper($row->resistencia_mprima_id_resistencia_mprima).'~'.
              strtoupper($row->peso).'~'.
-             strtoupper($row->resistencia_mprima_id_resistencia_mprima);
+             strtoupper($row->cantidad.'~'.
+             strtoupper($row->peso_total)
+             );
     }
 
     public function editar_mprima($id)

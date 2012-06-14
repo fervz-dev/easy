@@ -56,7 +56,9 @@ public function get_resistencia_all()
                                         cat_mprima.ancho,
                                         cat_mprima.largo,
                                         cat_mprima.resistencia_mprima_id_resistencia_mprima,
-                                        cprima.peso
+                                        cat_mprima.peso,
+                                        cat_mprima.cantidad,
+                                        cat_mprima.peso_total
                                         FROM
                                         cat_mprima_reutilizable AS cat_mprima,
                                         resistencia_mprima
