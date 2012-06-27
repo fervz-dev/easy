@@ -19,7 +19,7 @@ class Menu_almacen extends CI_Controller
 	{
 
      
-        $data['vista']='menu_almacen/menu';
+        $data['vista']='menu_almacen/bajar_stock_linea';
 		$this->load->view('principal',$data);
 	}
 

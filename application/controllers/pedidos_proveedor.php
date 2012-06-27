@@ -376,5 +376,16 @@ public function paginacion_producto($id)
     // La respuesta se regresa como json
     echo json_encode($data);   
     }
+    public function verificacion_pedido($id)
+    {
+        $row=$this->pedidos->get_producto_($id);
+        echo strtoupper($row->nombre).'~'.
+             strtoupper($row->ancho).'~'.
+             strtoupper($row->largo).'~'.
+             strtoupper($row->cantidad).'~'.
+             strtoupper($row->resistencia);
+            
+    }
+
 		
 }

@@ -28,12 +28,42 @@ class Almacen_linea extends CI_Controller
         
 		$this->load->view('principal',$data);
 	}
+    ///////////////////////verificacion de producto ////////////////////////
+    public function verificacion_producto($id)
+    {
+        
+    }
+    ///////////////////////verificacion del pedido en la tabla pedidos//////
+     public function cerrar_pedido($id)
+    {
+        $cerrar=$this->pedidos->cerrar($id);
+        if($cerrar > 0)
+    {
+        echo 1;
+    }
+    else
+    {
+        echo 0;
+    }
+
+    }
+
+    public function verificacion_pedido($id)
+    {
+        $verificar=$this->pedidos->verificacion_model($id);
+        if ($verificar>0) {
+                   echo 1;
+               }else{
+                echo 0; 
+               }       
+    }
+
     //////////////////////////////////crear codigo de pedido ///////////////////////////////////////////
-    public function nuevo_code($id)
+   /* public function nuevo_code($id)
     {
         $row=$this->code->get_code($id);
         echo ($row->code);
-    }
+    }*/
 
 	public function paginacion()
 	{
@@ -48,7 +78,7 @@ class Almacen_linea extends CI_Controller
         // $conexion = new mysqli("servidor","usuario","password","basededatos");
         // Se hace una consulta para saber cuantos registros se van a mostrar
 
-     $consul = $this->db->query('SELECT * from pedido_proveedor ');
+     $consul = $this->db->query('SELECT * from pedido_proveedor where pedido_proveedor.activo=0 ');
      $count = $consul->num_rows();
         //En base al numero de registros se obtiene el numero de paginas
         if( $count >0 ) {
@@ -104,19 +134,20 @@ public function subpaginacion($id)
 
     if(!$sidx) $sidx =1;
 
-$verificacion = $this->db->query("SELECT
-                                        cantidad_pedido.codigo
-                                        FROM
-                                        cantidad_pedido
-                                        WHERE
-                                        cantidad_pedido.id_pedido = '$id'"
-                                );
+$verificacion_pedido_1 = $this->db->query("SELECT pedido_proveedor.verificacion_almacen
+                                            from pedido_proveedor, cantidad_pedido
+                                            WHERE
+                                            pedido_proveedor.activo = 0 AND
+                                            pedido_proveedor.id_pedido = '$id'
+                                            GROUP BY
+                                            pedido_proveedor.id_pedido");
  $consul = $this->db->query("SELECT
                                     cantidad_pedido.id_cantidad_pedido,
                                     cat_mprima.nombre,
                                     cat_mprima.ancho,
                                     cat_mprima.largo,
-                                    cantidad_pedido.cantidad
+                                    cantidad_pedido.cantidad,
+                                    cantidad_pedido.verificacion
                                     FROM
                                     cantidad_pedido ,
                                     pedido_proveedor ,
@@ -128,6 +159,7 @@ $verificacion = $this->db->query("SELECT
                                     cantidad_pedido.id_cantidad_pedido
                                     ORDER BY
                                     cat_mprima.nombre ASC
+
                         ");
 
 if($consul->num_rows()==0)
@@ -156,7 +188,8 @@ exit();
                         cat_mprima.ancho,
                         cat_mprima.largo,
                         cantidad_pedido.cantidad,
-                        cantidad_pedido.codigo
+                        cantidad_pedido.codigo,
+                        cantidad_pedido.verificacion
 
                         FROM
                         cantidad_pedido ,
@@ -164,7 +197,8 @@ exit();
                         cat_mprima
                         WHERE
                         cantidad_pedido.id_pedido = '$id' AND
-                        cantidad_pedido.catalogo_producto = cat_mprima.id_cat_mprima
+                        cantidad_pedido.catalogo_producto = cat_mprima.id_cat_mprima AND
+                        pedido_proveedor.activo = 0
                         GROUP BY cantidad_pedido.id_cantidad_pedido
                         ORDER BY $sidx $sord LIMIT $start , $limit;";
     $result1 = $this->db->query($consulta);
@@ -174,52 +208,69 @@ exit();
     $data->total = $total_pages;
     $data->records = $count;
     $i=0;
-$con = $verificacion->row();
-$valor = $con->codigo;
+///verificacion de pedido activo/////
+$consulta_veri_0=$verificacion_pedido_1->row();
+$consulta_veri_1=$consulta_veri_0->verificacion_almacen;
 
-if ($valor == '') {
+
+///condicion para asegurar que el pedido ya se alla verifcado////////////////////
+if ($consulta_veri_1==0) 
+{
     $N=1;
     foreach($result1->result() as $row) {
-    
-      $data->rows[$i]['id']=$row->id_cantidad_pedido;
-      
-        $onclik="onclick=nuevo_code('".$row->id_cantidad_pedido."')";
-        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/code_activo.png" width="18" title="Crear Codigo" height="18" /></span>';   
-      
-      
-       
-        $data->rows[$i]['cell']=array($acciones,
+        ///////////////////////////////////verificamos si el produto ya esta verificado////////////
+        if ($row->verificacion==1) {
+            $data->rows[$i]['id']=$row->id_cantidad_pedido;
+            $onclik="onclick=verificacion_producto_pedido('".$row->id_cantidad_pedido."')";
+            $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/alert-icon.png" width="18" title="verificar producto" height="18" /></span>';   
+            $data->rows[$i]['cell']=array($acciones,
                                                 ($N),
                                     strtoupper($row->nombre),
                                     strtoupper($row->ancho),
                                     strtoupper($row->largo),
                                     strtoupper($row->cantidad));
-        $i++;
-        $N++;
+            $i++;
+            $N++;
+        }
+        elseif($row->verificacion==0)
+        {
+            $data->rows[$i]['id']=$row->id_cantidad_pedido;
+            $onclik="";
+            $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/verificado-icon.png" width="18" title="Verificado" height="18" /></span>';   
+          
+          
+           
+            $data->rows[$i]['cell']=array($acciones,
+                                                    ($N),
+                                        strtoupper($row->nombre),
+                                        strtoupper($row->ancho),
+                                        strtoupper($row->largo),
+                                        strtoupper($row->cantidad));
+            $i++;
+            $N++;
+
+        }
+
     }
 
-    }elseif ($valor == 0) {
- $N=1;
+}
+elseif($consulta_veri_1==1)
+{
+    $N=1;
     foreach($result1->result() as $row) {
-    
-      $data->rows[$i]['id']=$row->id_cantidad_pedido;
-      
-        $onclik="onclick=ver_codigo('".$row->id_cantidad_pedido."')";
-        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/code.png" width="18" title="Ver codigo" height="18" /></span>';   
-      
-      
-       
-        $data->rows[$i]['cell']=array($acciones,
-                                                ($N),
-                                    strtoupper($row->nombre),
-                                    strtoupper($row->ancho),
-                                    strtoupper($row->largo),
-                                    strtoupper($row->cantidad));
-        $i++;
-        $N++;
-    }
+            $data->rows[$i]['id']=$row->id_cantidad_pedido;
+            $acciones='';   
+            $data->rows[$i]['cell']=array($acciones,
+                                                    ($N),
+                                        strtoupper($row->nombre),
+                                        strtoupper($row->ancho),
+                                        strtoupper($row->largo),
+                                        strtoupper($row->cantidad));
+            $i++;
+            $N++;
 
     }
+}
     
 
     // La respuesta se regresa como json

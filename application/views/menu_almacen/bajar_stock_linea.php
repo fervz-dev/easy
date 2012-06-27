@@ -1,6 +1,6 @@
 <?php $this->load->view('hed');?>
 <script type="text/javascript">
-/////////////////////////////////////////////// crear codigo de pedi a provedores /////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////// crear codigo de pedido a provedores /////////////////////////////////////////////////////////////////////
 
 function nuevo_code (id) {
 	 $.ajax({
@@ -128,9 +128,25 @@ function nuevo_code (id) {
 		<li><a href="#productos_terminados">Productos terminados</a></li>
 	</ul>
 	<div id="linea">
+    <table>
+            <tr>
+              <td>
+                <button onclick="javascrip:stock();" title="Bajar pedido de linea">
+                  <div style="width:120px; height:30px;"><img src="img/bajar_stock.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Proveedor</p></div></div>  
+                </button>
+              </td>
+              <td>
+                <button onclick="javascrip:stock();" title="Bajar pedido de linea">
+                  <div style="width:120px; height:30px;"><img src="img/bajar_stock.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Nave</p></div></div>  
+                </button>
+              </td>
+            </tr>
+          </table>
 		<table id="tbl_linea"></table>
         <div id="paginacion"> </div>    
         <div style="display:none" id="dialog-procesos" title="Pedidos">
+
+
         <?php 
         $this->load->view('pedidos_proveedores/formulario');?>
         </div>

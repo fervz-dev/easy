@@ -92,7 +92,7 @@
       <tr>
         <td  class="estira-left"></td>
         <td class="bg-login">
-          <img class="logo" src="<?php echo base_url(); ?>images/logo_easy.png" width="505" height="235"><br />
+          <img class="logo" src="<?php echo base_url(); ?>images/logo.jpg" width="505" height="235"><br />
           <form name="form" id="form"  enctype="multipart/form-data" method="POST" action="<?php echo base_url().'inicio/validar_usuario';?>" >
             <div id="respuesta"><p><?php if(isset($ErrorDatos)){echo $ErrorDatos;}?></p></div>
             <table class="login-form" border="0">
