@@ -73,7 +73,7 @@ $.ajax({
             $("#peso_total").val(dato[8]);
             },
                         error:function(datos){
-                        alert("Error al procesar los datos ");
+                        notify("Error al procesar los datos " ,500,5000,'error');
             return false;
                         }//Error
                         });//Ajax
@@ -87,7 +87,7 @@ $( "#dialog-procesos" ).dialog({
       buttons: {
           Aceptar: function() {
           editar(id);
-          msg('El registro se ha editado correctamente');
+
             },
           Cancelar:function()
           {
@@ -132,28 +132,23 @@ function editar(id)
 
                              switch(data){
                                case "0": 
-                           // $("#ErrorListaProductos").fadeIn();
-                                          //$("#ErrorListaProductos").html("Error al procesar los datos.");
-                                          alert("Error al procesar los datos ");
-                      break;
-                               case "1": 
-                    $( "#dialog-procesos" ).dialog( "close" );
-                   // alert('editado');
-                 // guardar_paciente(data);
-                   reloading();
-                  break;
 
-                                   default:
-                                   $( "#dialog-procesos" ).dialog( "close" );
-                     //alert('Vacante guardada');
-                 // reloading();
-                   
-                   break; 
+                               notify("Error al procesar los datos " ,500,5000,'error');
+                               break;
+                               case "1": 
+                               $( "#dialog-procesos" ).dialog( "close" );
+                               reloading();
+                               notify('El registro se edito correctamente',500,5000,'aviso');
+                               break;
+                               default:
+                               $( "#dialog-procesos" ).dialog( "close" );
+
+                               break; 
 
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error al procesar los datos ");
+                              notify("Error al procesar los datos " ,500,5000,'error');
                              }//Error
                          });//Ajax
 }
@@ -173,29 +168,27 @@ if(r==true)
 
                              switch(data){
                                case "0": 
-                           // $("#ErrorListaProductos").fadeIn();
-                                          //$("#ErrorListaProductos").html("Error al procesar los datos.");
-                                          alert("Error al procesar los datos ");
-                      break;
+                               // $("#ErrorListaProductos").fadeIn();
+                               //$("#ErrorListaProductos").html("Error al procesar los datos.");
+                               notify("Error al procesar los datos " ,500,5000,'error');
+                               break;
                                case "1": 
-                    $( "#dialog-procesos" ).dialog( "close" );
-                   // alert('editado');
-                 // guardar_paciente(data);
-                   reloading();
-                   msg('Registro eliminado correctamente');
-                  break;
-
-                                   default:
-                                   $( "#dialog-procesos" ).dialog( "close" );
-                     //alert('Vacante guardada');
-                 // reloading();
-                   
-                   break; 
+                               $( "#dialog-procesos" ).dialog( "close" );
+                               // alert('editado');
+                               // guardar_paciente(data);
+                               reloading();
+                               notify('El registro se elimino correctamente',500,5000,'aviso');
+                               break;
+                               default:
+                               $( "#dialog-procesos" ).dialog( "close" );
+                               //alert('Vacante guardada');
+                               // reloading();
+                               break; 
 
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesparado");
+                             notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax
 }
@@ -228,23 +221,23 @@ $.ajax({
 
                              switch(data){
                                case "0": 
-                            alert("Error al procesar los datos ");
-                      break;
-                              case "1": 
-                           reloading();
-                               msg('El registro se ha guardado correctamente');
-                         $( "#dialog-procesos" ).dialog( "close" );
-                     break;
-
-                                   default:
-                                   $( "#dialog-procesos" ).dialog( "close" );
-                            alert("Error "+data);
-                  break; 
+                               notify("Error al procesar los datos " ,500,5000,'error');
+                               break;
+                               case "1": 
+                               reloading();
+                               notify('El registro se guardado correctamente',500,5000,'aviso');
+                               $( "#dialog-procesos" ).dialog( "close" );
+                               break;
+                               default:
+                               $( "#dialog-procesos" ).dialog( "close" );
+                               var error='Error'+data;
+                               notify(error ,500,5000,'error');
+                               break; 
 
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesperado");
+                              notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax      
 
@@ -274,7 +267,7 @@ $( "#dialog-procesos" ).dialog({
 
 
 </script>
-<table align="center"  width="90%">
+<table >
 <tr>
 <td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
 </td>

@@ -350,7 +350,7 @@ $( "#dialog-procesos" ).dialog({
    });                
 </script>
 
-<table align="center"  width="90%">
+<table >
 <tr>
 <td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
 </td>

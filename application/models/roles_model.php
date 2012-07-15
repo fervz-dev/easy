@@ -9,7 +9,26 @@ class Roles_model extends CI_Model
 
 public function pantallas()
 {
-$query="select * from pantallas where status = 1 order by nombre asc";
+$query="SELECT
+pantallas.id_pantalla,
+pantallas.nombre,
+pantallas.descripcion,
+pantallas.url,
+pantallas.orden,
+pantallas.imagen,
+pantallas.`status`,
+pantallas.id_usuario,
+pantallas.id_sucursal,
+pantallas.id_menu,
+menu_principal.titulo_menu
+FROM
+pantallas ,
+menu_principal
+WHERE
+pantallas.id_menu = menu_principal.id_menu AND
+pantallas.`status` = '1'
+ORDER BY
+pantallas.id_menu ASC";
 $query=$this->db->query($query);
 
 return ($query->num_rows() > 0)? $query->result_array(): NULL;

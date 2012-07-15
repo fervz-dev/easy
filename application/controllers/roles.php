@@ -180,8 +180,8 @@ public function guardar()
 $id_rol=$this->roles->guardar();
 $this->roles->guarda_permisos($id_rol);
 
-$this->session->set_flashdata('message', array('messageType' => 'OK','Message' => 'El registro se ha guardado correctamente.'));
-redirect(base_url().'roles','refresh');
+$this->session->set_flashdata('message', array('2'));
+redirect(base_url().'roles?m=1&submain=3','refresh');
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -201,8 +201,8 @@ public function editar($id)
 $this->roles->editar($id);
 $f=$this->roles->editar_permisos($id);
 $this->roles->guarda_permisos($id);
-$this->session->set_flashdata('message', array('messageType' => 'OK','Message' => 'El registro se ha editado correctamente.'));
-redirect(base_url().'roles','refresh');
+$this->session->set_flashdata('message', array('1'));
+redirect(base_url().'roles?m=1&submain=3','refresh');
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -1,4 +1,5 @@
  <!-- footer -->
+
      <div id="footer">
 		<div class="desarrollo"><a href="#"><img src="images/desarrollado2.png" /></a></div>
 			<ul class="menu">

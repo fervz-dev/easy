@@ -11,7 +11,7 @@ class Inicio extends CI_Controller {
 	
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //validando login de usuario
-	public function validar_usuario()
+public function validar_usuario()
 	{
 	 $user = $this->input->post('user');
 	 $pass = $this->input->post('password');
@@ -23,7 +23,7 @@ class Inicio extends CI_Controller {
 				 $this->load->view('login/index.php',$Data);           
 				break;
 	  case true: 
-	            redirect(base_url()."panel","refresh");
+	            redirect(base_url()."panel?m=1","refresh");
 			    break;				
 	 }
 	}

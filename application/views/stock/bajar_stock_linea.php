@@ -19,7 +19,7 @@ function add_stock (id) {
 
             switch(data){
                         case "0": 
-                                 alert("Error al procesar los datos ");
+                                 notify("Error al procesar los datos " ,500,5000,'error');
                         break;
                         case "1": 
                                   $( "#dialog-procesos12" ).dialog( "close" );
@@ -32,7 +32,7 @@ function add_stock (id) {
                               }//switch
                              },
                         error:function(data){
-                              alert("Error al procesar los datos ");
+                              notify("Error al procesar los datos " ,500,5000,'error');
                              }//Error
                          });//Ajax
            
@@ -78,7 +78,7 @@ $.ajax({
                                   
                                   },
                         error:function(datos){
-                        alert("Error al procesar los datos ");
+                        notify("Error al procesar los datos " ,500,5000,'error');
             return false;
                         }//Error
                         });//Ajax

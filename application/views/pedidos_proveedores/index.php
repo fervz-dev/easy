@@ -56,30 +56,28 @@ if(confirmacion==true)
                                             
                                             switch(data){
                                                           case "0": 
-                                                                  $("#ErrorDatos").fadeIn();
-                                                                  $("#ErrorDatos").html("Error al procesar los datos.");
-                                                                  //alert("Error al procesar los datos ");
+
+                                                                  notify("Error al procesar los datos " ,500,5000,'error');
                                                           break;
                                              
                                                           case "1": 
                                                           
                                                                   $( "#dialogo" ).dialog( "close" );
-                                                                  // alert('editado');
-                                                                  // guardar_paciente(data);
+
                                                                   $("#tbl_p_prove").trigger("reloadGrid"); 
-                                                                  msg('Pedido cerrado satisfacotiramente');
+                                                                  notify('Pedido cerrado satisfactoriamente',500,5000,'aviso');
+                                                                  
                                                           break;
                                                  
                                                           default:
                                                                   $( "#dialogo").dialog( "close" );
-                                                                  //alert('Vacante guardada');
-                                                                  // reloading();
+
                                                           break; 
                                             
                                                         }//switch
                                             },
           error:function(datos){
-                                alert("Error inesparado");
+                                notify("Error inesperado" ,500,5000,'error');
                              }//Error
           });//Ajax
 }
@@ -173,7 +171,7 @@ $.ajax({
             $("#oficina").val(dato[2]);
             },
         error:function(datos){
-        alert("Error al procesar los datos ");
+        notify("Error al procesar los datos " ,500,5000,'error');
           return false;
         }//Error
         });//Ajax
@@ -187,7 +185,7 @@ $( "#dialog-procesos" ).dialog({
       buttons: {
           Aceptar: function() {
           editar(id);
-          msg('El registro se ha editado correctamente');
+
             },
           Cancelar:function()
           {
@@ -218,23 +216,24 @@ $.ajax({
 
                           switch(data){
                               case "0": 
-                                  alert("Error al procesar los datos ");
+                                  notify("Error al procesar los datos " ,500,5000,'error');
                               break;
                               
                               case "1": 
                                   $("#tbl_p_prove").trigger("reloadGrid");
-                                  msg('El registro se ha guardado correctamente');
+                                  notify('El registro se guardado correctamente',500,5000,'aviso');
                                   $( "#dialog-procesos" ).dialog( "close" );
                               break;
 
                               default:
                                   $( "#dialog-procesos" ).dialog( "close" );
-                                  alert("Error "+data);
+                                  var error='Error'+data;
+                                 notify(error ,500,5000,'error');
                               break; 
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesperado");
+                             notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax      
 
@@ -259,24 +258,25 @@ $.ajax({
 
                       switch(data){
                                case "0": 
-                                  alert("Error al procesar los datos ");
+                                  notify("Error al procesar los datos " ,500,5000,'error');
                                 break;
                                 
                                 case "1": 
                                    $("#tbl_p_prove").trigger("reloadGrid");
-                                    msg('El registro se ha guardado correctamente');
+                                    notify('El registro se guardado correctamente',500,5000,'aviso');
                                    $( "#dialog-procesos" ).dialog( "close" );
                                 break;
 
                                 default:
                                    $( "#dialog-procesos" ).dialog( "close" );
-                                  alert("Error "+data);
+                                  var error='Error'+data;
+                                 notify(error ,500,5000,'error');
                                 break; 
 
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesperado");
+                             notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax      
 
@@ -298,13 +298,13 @@ if(r==true)
 
                              switch(data){
                                case "0": 
-                                  alert("Error al procesar los datos ");
+                                  notify("Error al procesar los datos " ,500,5000,'error');
                                 break;
                                case "1": 
                                     $( "#dialog-procesos" ).dialog( "close" );
                   
                                  $("#tbl_p_prove").trigger("reloadGrid");
-                                 msg('Registro eliminado correctamente');
+                                 notify('El registro se elimino correctamente',500,5000,'aviso');
                                 break;
 
                                    default:
@@ -314,7 +314,7 @@ if(r==true)
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesparado");
+                              notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax
 }
@@ -338,12 +338,12 @@ if(r==true)
 
                              switch(data){
                                case "0": 
-                                  alert("Error al procesar los datos ");
+                                  notify("Error al procesar los datos " ,500,5000,'error');
                                 break;
                                case "1":
                                $("#tbl_p_prove").trigger("reloadGrid");
                                     $( "#dialog-procesos" ).dialog( "close" );
-                                 msg('Registro eliminado correctamente');
+                                 notify('El registro se elimino correctamente',500,5000,'aviso');
                                 break;
 
                                    default:
@@ -353,7 +353,7 @@ if(r==true)
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesparado");
+                              notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax
 }
@@ -433,7 +433,7 @@ if(r==true)
    });                
 </script>
 
-<table align="center"  width="90%">
+<table >
 <tr>
 <td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
 </td>

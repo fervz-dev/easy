@@ -15,7 +15,7 @@ function alta_directorio()
                     $("#id_cliente").val(data);
                                 },
           error:function(datos){
-          alert("Error al procesar los datos ");
+          notify("Error al procesar los datos " ,500,5000,'error');
           return false;
           }//Error
           });//Ajax*/
@@ -47,7 +47,7 @@ $.ajax({
           
           switch(data){
           case "0": 
-                  alert("Error al procesar los datos ");
+                  notify("Error al procesar los datos " ,500,5000,'error');
           break;
           
           case "1": 
@@ -59,7 +59,7 @@ $.ajax({
           },
           error:function(datos)
                 {
-                  alert("Error al procesar los datos ");
+                  notify("Error al procesar los datos " ,500,5000,'error');
                 }//Error
           });//Ajax
            
@@ -90,7 +90,7 @@ $.ajax({
                                   $("#observaciones_d").val(dato[5]);
                                               },
                         error:function(datos){
-                        alert("Error al procesar los datos ");
+                        notify("Error al procesar los datos " ,500,5000,'error');
             return false;
                         }//Error
                         });//Ajax
@@ -124,7 +124,7 @@ function editar_directorio_all()
 
                              switch(data){
                                case "0": 
-                                  alert("Error al procesar los datos ");
+                                  notify("Error al procesar los datos " ,500,5000,'error');
                                break;
                                case "1": 
                             $( "#tbl_directorio" ).trigger("reloadGrid");
@@ -135,7 +135,7 @@ function editar_directorio_all()
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error al procesar los datos ");
+                              notify("Error al procesar los datos " ,500,5000,'error');
                              }//Error
                          });//Ajax
            

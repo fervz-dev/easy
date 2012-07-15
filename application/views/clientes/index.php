@@ -1,4 +1,4 @@
-<?php $this->load->view('hed');?>
+
 <script>
 
 function alta()
@@ -71,7 +71,8 @@ $.ajax({
 
             },
                         error:function(datos){
-                        alert("Error al procesar los datos ");
+                        var error='Error'+data;
+                                 notify(error ,500,5000,'error');
             return false;
                         }//Error
                         });//Ajax
@@ -85,7 +86,8 @@ $( "#dialog-procesos" ).dialog({
       buttons: {
           Aceptar: function() {
           editar(id);
-          msg('El registro se ha editado correctamente');
+
+
             },
           Cancelar:function()
           {
@@ -129,10 +131,12 @@ function editar(id)
                                case "0": 
                            // $("#ErrorListaProductos").fadeIn();
                                           //$("#ErrorListaProductos").html("Error al procesar los datos.");
-                                          alert("Error al procesar los datos ");
+                                          var error='Error'+data;
+                                 notify(error ,500,5000,'error');
                       break;
                                case "1": 
                     $( "#dialog-procesos" ).dialog( "close" );
+                    notify('El registro se edito correctamente',500,5000,'aviso');
                    // alert('editado');
                  // guardar_paciente(data);
                    reloading();
@@ -148,7 +152,7 @@ function editar(id)
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error al procesar los datos ");
+                          notify("Error al procesar los datos " ,500,5000,'error');
                              }//Error
                          });//Ajax
 }
@@ -182,22 +186,22 @@ $.ajax({
                              switch(data){
                                case "0": 
                             alert("Error al procesar los datos ");
-                      break;
-                              case "1": 
-                           reloading();
-                               msg('El registro se ha guardado correctamente');
-                         $( "#dialog-procesos" ).dialog( "close" );
-                     break;
-
-                                   default:
-                                   $( "#dialog-procesos" ).dialog( "close" );
-                            alert("Error "+data);
-                  break; 
-
+                              break;
+                                      case "1": 
+                                   reloading();
+                                   notify('El registro se ha guardado correctamente',500,5000,'aviso');
+                                    /*msg('El registro se ha guardado correctamente');*/
+                                 $( "#dialog-procesos" ).dialog( "close" );
+                              break;
+                              default:
+                                $( "#dialog-procesos" ).dialog( "close" );
+                                var error='Error'+data;
+                                 notify(error ,500,5000,'error');
+                              break; 
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesperado");
+                          notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax      
 
@@ -221,14 +225,14 @@ if(r==true)
                                case "0": 
                            // $("#ErrorListaProductos").fadeIn();
                                           //$("#ErrorListaProductos").html("Error al procesar los datos.");
-                                          alert("Error al procesar los datos ");
+                                          notify("Error al procesar los datos " ,500,5000,'error');
                       break;
                                case "1": 
                     $( "#dialog-procesos" ).dialog( "close" );
                    // alert('editado');
                  // guardar_paciente(data);
                    reloading();
-                   msg('Registro eliminado correctamente');
+                  notify('El registro se ha eliminado correctamente',500,5000,'aviso');
                   break;
 
                                    default:
@@ -241,7 +245,7 @@ if(r==true)
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesparado");
+                              notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax
 }
@@ -275,21 +279,21 @@ if(r==true)
                                     'FECHA DE REGISTRO'
                                      ],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:false, align:"center", search:false},
-                                  {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'nombre_contacto', index:'nombre_contacto', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'tipo_persona', index:'tipo_persona', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'rfc', index:'rfc', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'dsc_estado', index:'dsc_estado', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'ciudad', index:'ciudad', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'direccion', index:'direccion', width:90,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'cp', index:'cp', width:60,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'lada', index:'lada', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'num_telefono', index:'num_telefono', width:120,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'ext', index:'ext', width:170,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'fax', index:'fax', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'email', index:'email', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'comentario', index:'comentario', width:90,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'fecha_ingreso', index:'fecha_ingreso', width:90,resizable:false, sortable:true,search:true,editable:true}
+                                  {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:false, sortable:true,search:false,editable:false},
+                                  {name:'nombre_contacto', index:'nombre_contacto', width:80,resizable:false, sortable:true,search:false,editable:false},
+                                  {name:'tipo_persona', index:'tipo_persona', width:100,resizable:false, sortable:true,search:false,editable:false},
+                                  {name:'rfc', index:'rfc', width:100,resizable:false, sortable:true,search:false,editable:false},
+                                  {name:'dsc_estado', index:'dsc_estado', width:100,resizable:false, sortable:true,search:false,editable:false},
+                                  {name:'ciudad', index:'ciudad', width:80,resizable:false, sortable:true,search:false,editable:false},
+                                  {name:'direccion', index:'direccion', width:90,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'cp', index:'cp', width:60,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'lada', index:'lada', width:80,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'num_telefono', index:'num_telefono', width:120,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'ext', index:'ext', width:170,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'fax', index:'fax', width:80,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'email', index:'email', width:40,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'comentario', index:'comentario', width:90,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'fecha_ingreso', index:'fecha_ingreso', width:90,resizable:false, sortable:true,search:false,editable:true}
                                 ],                             
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -316,7 +320,7 @@ function reloading()
   }
           			
         </script>
-<table align="center"  width="90%">
+<table >
 <tr>
 <td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
 </td>

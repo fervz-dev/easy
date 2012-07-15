@@ -1,3 +1,4 @@
+<form id="nuevo_usuario" name="nuevo_usuario">
 <table width="100%">
 <tr>
   <td width="30%">Sucursal:</td>
@@ -42,3 +43,4 @@
   <td><input name="email" id="email" type="text"></td>
 </tr>
 </table>
+</form>

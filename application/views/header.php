@@ -7,10 +7,11 @@
 <script type="text/javascript" src="<?php echo base_url();?>js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>js/jquery-ui-1.8.20.custom.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>js/jquery_numberformat.js"></script>
+<link type="text/css" href="<?php echo base_url();?>css/custom-theme/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
 <!-- estilo JQGrid -->
 <!-- <link type="text/css" href="<?php echo base_url();?>css/start/jquery-ui-1.8.20.custom.css" rel="stylesheet" /> -->
 <!-- <link type="text/css" href="<?php echo base_url();?>css/blitzer/jquery-ui-1.8.20.custom.css" rel="stylesheet" /> -->
-<link type="text/css" href="<?php echo base_url();?>css/custom-theme/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
+
 <!-- <link type="text/css" href="<?php echo base_url();?>css/cupertino/jquery-ui-1.8.20.custom.css" rel="stylesheet" /> -->
 <!-- <link type="text/css" rel="stylesheet"  href="<?php echo base_url();?>css/ui/demos.css" />
  -->

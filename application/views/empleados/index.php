@@ -57,7 +57,7 @@ $.ajax({
 
             },
                         error:function(datos){
-                        alert("Error al procesar los datos ");
+                        notify("Error al procesar los datos " ,500,5000,'error');
             return false;
                         }//Error
                         });//Ajax
@@ -71,7 +71,7 @@ $( "#dialog-procesos" ).dialog({
       buttons: {
           Aceptar: function() {
           editar(id);
-          msg('El registro se ha editado correctamente');
+
             },
           Cancelar:function()
           {
@@ -117,10 +117,11 @@ function editar(id)
                                case "0": 
                            // $("#ErrorListaProductos").fadeIn();
                                           //$("#ErrorListaProductos").html("Error al procesar los datos.");
-                                          alert("Error al procesar los datos ");
+                                          notify("Error al procesar los datos " ,500,5000,'error');
                       break;
                                case "1": 
                     $( "#dialog-procesos" ).dialog( "close" );
+                    notify('El registro se edito correctamente',500,5000,'aviso');
                    // alert('editado');
                  // guardar_paciente(data);
                    reloading();
@@ -136,7 +137,7 @@ function editar(id)
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error al procesar los datos ");
+                              notify("Error al procesar los datos " ,500,5000,'error');
                              }//Error
                          });//Ajax
            
@@ -175,23 +176,24 @@ $.ajax({
 
                              switch(data){
                                case "0": 
-                            alert("Error al procesar los datos ");
+                            notify("Error al procesar los datos " ,500,5000,'error');
                       break;
                               case "1": 
                            reloading();
-                               msg('El registro se ha guardado correctamente');
+                               notify('El registro se guardado correctamente',500,5000,'aviso');
                          $( "#dialog-procesos" ).dialog( "close" );
                      break;
 
                                    default:
                                    $( "#dialog-procesos" ).dialog( "close" );
-                            alert("Error "+data);
+                            var error='Error'+data;
+                                 notify(error ,500,5000,'error');
                   break; 
 
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesperado");
+                              notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax      
 
@@ -215,14 +217,14 @@ if(r==true)
                                case "0": 
                            // $("#ErrorListaProductos").fadeIn();
                                           //$("#ErrorListaProductos").html("Error al procesar los datos.");
-                                          alert("Error al procesar los datos ");
+                                          notify("Error al procesar los datos " ,500,5000,'error');
                       break;
                                case "1": 
                     $( "#dialog-procesos" ).dialog( "close" );
                    // alert('editado');
                  // guardar_paciente(data);
                    reloading();
-                   msg('Registro eliminado correctamente');
+                   notify('El registro se elimino correctamente',500,5000,'aviso');
                   break;
 
                                    default:
@@ -235,7 +237,7 @@ if(r==true)
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesparado");
+                              notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax
 }
@@ -311,7 +313,7 @@ function reloading()
   }
           			
         </script>
-<table align="center"  width="90%">
+<table >
 <tr>
 <td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/add_empleado.png" width="30" height="30" alta="Agregar Empleado"></div>
 </td>

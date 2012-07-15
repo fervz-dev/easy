@@ -2,8 +2,10 @@
 <script>
 function edit(id)
 {
+$("#dialog-alta").jqGrid('GridUnload');
 document.form1.reset();
 document.forms.form1.action= "<?php echo base_url();?>roles/editar/"+id;
+
 
 
 $.ajax({
@@ -13,16 +15,13 @@ $.ajax({
                         url:"<?php echo base_url();?>roles/get/"+id+"/"+Math.random()*10919939116744,
                         datatype:"html",
                         success:function(data, textStatus){
-						//$("#carga_organismos").html(data);
-                        //alert(data);
-						dato= data.split('~');
-						//alert(cadenaTexto);
-						$("#nombre").val(dato[0]);
-						$("#descripcion").val(dato[1]);						
-						},
+                        dato= data.split('~');
+                        $("#nombre").val(dato[0]);
+                        $("#descripcion").val(dato[1]);           
+                        },
                         error:function(datos){
-                        alert("Error al procesar los datos ");
-						return false;
+                        notify("Error al procesar los datos " ,500,5000,'error');
+                          return false;
                         }//Error
                         });//Ajax
 						
@@ -38,8 +37,9 @@ $( "#dialog-alta" ).dialog({
 			buttons: {
 					Aceptar: function() {
 					//editar(id);
-					document.form1.submit();
-					//msg('El registro se ha editado correctamente');
+          
+					document.form1.submit()
+
 				    },
 					Cancelar:function()
 					{
@@ -69,14 +69,14 @@ if(r==true)
                                case "0": 
 							             // $("#ErrorListaProductos").fadeIn();
                                           //$("#ErrorListaProductos").html("Error al procesar los datos.");
-                                          alert("Error al procesar los datos ");
+                                          notify("Error al procesar los datos " ,500,5000,'error');
 										  break;
                                case "1": 
 							      $( "#dialog-alta" ).dialog( "close" );
   								 // alert('editado');
 								 // guardar_paciente(data);
 								   reloading();
-								   msg('Registro eliminado correctamente');
+								   notify('El registro se elimino correctamente',500,5000,'aviso');
 								  break;
 
                                    default:
@@ -89,7 +89,7 @@ if(r==true)
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesparado");
+                              notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax
 }
@@ -104,7 +104,7 @@ function reloading()
 	}
 
 function alta() {
-
+$("#dialog-alta").jqGrid('GridUnload');
 document.form1.reset();
 document.forms.form1.action= "<?php echo base_url();?>roles/guardar/";
 
@@ -117,7 +117,7 @@ $("#nombre_especialidad").val('');
 $( "#dialog-alta" ).dialog({
 			autoOpen: false,
 			height: 500,
-			width: 800,
+			width: 700,
 			modal: true,
 			buttons: {
 					Aceptar: function() {
@@ -174,7 +174,7 @@ $( "#dialog-alta" ).dialog({
    });   
           			
         </script>
-<table align="center"  width="90%">
+<table >
 <tr>
 <td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
 </td>
