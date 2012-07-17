@@ -10,7 +10,10 @@ class Proveedores extends CI_Controller
 		parent::__construct();
         $this->load->model("estados_model","estados");
         $this->load->model("proveedores_model","proveedores");
-
+        if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
+            redirect(base_url().'inicio');
+        //echo 'denegado';
+        }
 	}
 
 	public function index()

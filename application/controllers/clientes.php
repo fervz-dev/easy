@@ -12,6 +12,10 @@ class Clientes extends CI_Controller
         $this->load->model("Directorio_model","directorio");
         $this->load->model("estados_model","estados");
         $this->load->model("clientes_model","clientes_");
+        if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
+            redirect(base_url().'inicio');
+        //echo 'denegado';
+        }
 
 	}
 

@@ -12,6 +12,10 @@ class Empleados extends CI_Controller
         $this->load->model("puestos_model","puestos");
         $this->load->model("estados_model","estados");
         $this->load->model("oficina_model","oficina");
+        if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
+            redirect(base_url().'inicio');
+        //echo 'denegado';
+        }
 
 	}
 

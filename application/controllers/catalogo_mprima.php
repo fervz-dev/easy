@@ -5,6 +5,10 @@ class Catalogo_mprima extends CI_Controller{
 		parent::__construct();
         $this->load->model("resistencia_mprima_model","resistencia");
 		$this->load->model("catalogo_mprima_model","catalogo");
+        if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
+            redirect(base_url().'inicio');
+        //echo 'denegado';
+        }   
 
 	}
 

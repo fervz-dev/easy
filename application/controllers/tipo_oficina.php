@@ -8,6 +8,10 @@ class Oficina_model extends CI_Model
 	function __construct()
 	{
 		parent::__construct();
+		if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
+            redirect(base_url().'inicio');
+        //echo 'denegado';
+        }
 	}
 
 	public function get_tipo_oficinas_all()

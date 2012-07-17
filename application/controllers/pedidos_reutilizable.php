@@ -12,7 +12,10 @@ class Pedidos_reutilizable extends CI_Controller
         $this->load->model("proveedores_model","proveedores");
         $this->load->model("catalogo_mprima_model","catalogo_mprima");
         $this->load->model("oficina_model","oficina");
-
+        if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
+            redirect(base_url().'inicio');
+        //echo 'denegado';
+        }
 	}
 
 	public function index()

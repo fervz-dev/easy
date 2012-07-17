@@ -1,7 +1,4 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
-* 
-*/
 class Stock_lista extends CI_Controller
 {
 	
@@ -9,6 +6,10 @@ class Stock_lista extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model("stock_lista_model", "stock");
+        if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
+            redirect(base_url().'inicio');
+        //echo 'denegado';
+        }
 	}
 
 	public function index()
@@ -52,9 +53,9 @@ class Stock_lista extends CI_Controller
         $data->records = $count;
         $i=0;
         foreach($resultado_ as $row) {
-            $acciones="hola";
+        
            $data->rows[$i]['id']=$row->id_stock_linea;
-           $data->rows[$i]['cell']=array($acciones,
+           $data->rows[$i]['cell']=array(
                                     strtoupper($row->nombre),
                                     strtoupper($row->ancho),
                                     strtoupper($row->largo),
@@ -67,9 +68,9 @@ class Stock_lista extends CI_Controller
     	// La respuesta se regresa como json
         echo json_encode($data);
     }
-    public function add_stock()
+    public function add_stock($id)
         {
-        $save=$this->stock->add_stock();
+        $save=$this->stock->add_stock($id);
         echo $save;
         }	
 }

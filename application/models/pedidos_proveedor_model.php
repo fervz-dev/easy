@@ -182,9 +182,11 @@ public function get_pedido_proveedor_almacen($sidx, $sord, $start, $limite)
 	/////////////////////////enviar los datos del produto a pedidos provedor/bajar_stock_liena///////////
 	public function get_producto_($id)	
 	{
-		$query = $this->db->query("SELECT	cat_mprima.nombre,
+		$query = $this->db->query("SELECT	
+				cat_mprima.nombre,
 				cat_mprima.ancho,
 				cat_mprima.largo,
+				cat_mprima.tipo_m,
 				resistencia_mprima.resistencia,
 				cantidad_pedido.cantidad				
 				FROM

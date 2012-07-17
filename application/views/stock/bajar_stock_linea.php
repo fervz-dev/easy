@@ -10,6 +10,7 @@ function add_stock (id) {
             data:{"nombre":$("#nombre").val(),
                   "largo":$("#largo").val(),
                   "ancho":$("#ancho").val(),
+                  "tipo_m":$("#corrugado").val(),
                   "resistencia":$("#resistencia").val(),
                   "cantidad":$("#cantidad").val()
                 },
@@ -23,7 +24,8 @@ function add_stock (id) {
                         break;
                         case "1": 
                                   $( "#dialog-procesos12" ).dialog( "close" );
-                        reloading();
+                        $("#tbl_linea").trigger("reloadGrid"); 
+                        notify("El registro se agrego correctamente." ,500,5000,'aviso');
                         break;
                         default:
                                   $( "#dialog-procesos12" ).dialog( "close" );
@@ -73,8 +75,9 @@ $.ajax({
                                   $("#nombre").val(dato[0]);
                                   $("#largo").val(dato[1]);
                                   $("#ancho").val(dato[2]);
-                                  $("#cantidad").val(dato[3]);
-                                  $("#resistencia").val(dato[4]);
+                                  $("#corrugado").val(dato[3]);
+                                  $("#cantidad").val(dato[4]);
+                                  $("#resistencia").val(dato[5]);
                                   
                                   },
                         error:function(datos){
@@ -165,12 +168,12 @@ function verificacion_pedido (id, confirmacion) {
                                     'PROVEEDOR',
                                     'LUGAR DE ENVIO'
                                     ],
-                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                                  {name:'id_pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:true,editable:true}
+                        colModel:[{name:'acciones', index:'acciones', width:22, resizable:true, align:"center",sortable:true,search:false,editable:false},
+                                  {name:'id_pedido', index:'id_pedido', width:30,resizable:true,sortable:true,search:false,editable:false},
+                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true,sortable:true,search:false,editable:false},
+                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true,sortable:true,search:false,editable:false},
+                                  {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:true,sortable:true,search:false,editable:false},
+                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true,sortable:true,search:false,editable:false}
                                 ],                             
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -186,7 +189,7 @@ function verificacion_pedido (id, confirmacion) {
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
-  width:'950',
+  width:960,
   subGrid: true, 
     // searchurl:'<?php echo base_url();?>empresas/buscando',
     height:"auto",
@@ -200,14 +203,16 @@ function verificacion_pedido (id, confirmacion) {
    url:"<?php echo base_url();?>almacen_linea/subpaginacion/"+row_id,
    datatype: "json",
    mtype: 'POST',
-   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','ANCHO','LARGO','CANTIDAD'],    
+   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','ANCHO','LARGO','CORRUGADO','RESISTENCIA','CANTIDAD'],    
    colModel: [
-             {name:"acciones",index:"acciones",width:56,align:"center"},
-             {name:"No",index:"No",width:56,align:"center"},
-             {name:"nombre",index:"nombre",search: false,align:"center"},
-             {name:"ancho",index:"ancho",align:"left",search: false},
-             {name:"largo",index:"largo",align:"left",search: false},
-             {name:"cantidad",index:"cantidad",align:"left",search: false}
+             {name:"acciones",index:"acciones",width:56,align:"center",sortable:true,search:false,editable:false},
+             {name:"No",index:"No",width:56,align:"center",sortable:true,search:false,editable:false},
+             {name:"nombre",index:"nombre",align:"center",sortable:true,search:false,editable:false},
+             {name:"ancho",index:"ancho",align:"left",sortable:true,search:false,editable:false},
+             {name:"largo",index:"largo",align:"left",sortable:true,search:false,editable:false},
+             {name:"tipo_m",index:"tipo_m",align:"left",sortable:true,search:false,editable:false},
+             {name:"resistencia",index:"resistencia",align:"left",sortable:true,search:false,editable:false},
+             {name:"cantidad",index:"cantidad",align:"left",sortable:true,search:false,editable:false}
               ],
    rows:10, 
    rowNum:10,

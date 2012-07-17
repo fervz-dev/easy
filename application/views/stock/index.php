@@ -26,7 +26,7 @@ function ver_pedidos()
     datatype: "json",
     mtype: 'POST',
           //  $data->rows[$i]['cell']=array($acciones,strtoupper($row->nombre),strtoupper($row->descripcion),strtoupper($row->direccion),strtoupper($row->colonia),strtoupper($row->poblacion),strtoupper($row->contacto));
-                        colNames:['Acciones',
+                        colNames:[
                                   'NOMBRE',
                                   'ANCHO',
                                   'LARGO',
@@ -34,13 +34,12 @@ function ver_pedidos()
                                   'RESISTENCIA',
                                   'CANTIDAD'               
                                      ],
-                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:false, align:"center", search:false},
-                                  {name:'nombre', index:'nombre', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'ancho', index:'ancho', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'largo', index:'largo', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'corrugado', index:'corrugado', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'resistencia', index:'resistencia', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'cantidad', index:'cantidad', width:100,resizable:false, sortable:true,search:true,editable:true}
+                        colModel:[{name:'nombre', index:'nombre', width:100,resizable:false,sortable:true,search:false,editable:false},
+                                  {name:'ancho', index:'ancho', width:100,resizable:false,sortable:true,search:false,editable:false},
+                                  {name:'largo', index:'largo', width:100,resizable:false,sortable:true,search:false,editable:false},
+                                  {name:'corrugado', index:'corrugado', width:100,resizable:false,sortable:true,search:false,editable:false},
+                                  {name:'resistencia', index:'resistencia', width:100,resizable:false,sortable:true,search:false,editable:false},
+                                  {name:'cantidad', index:'cantidad', width:100,resizable:false,sortable:true,search:false,editable:false}
                                  ],                             
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -57,7 +56,7 @@ function ver_pedidos()
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
-  width:'100%',
+  width:'auto',
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl_stock_linea").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
    });

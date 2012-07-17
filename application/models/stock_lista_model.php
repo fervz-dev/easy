@@ -28,12 +28,13 @@ class Stock_lista_model extends CI_Model
 		return ($query->num_rows()> 0)? $query->result() : NULL;
 	}
 
-	public function add_stock()
+	public function add_stock($id)
 	{
 
 		$nom   =  $this->input->post('nombre');
 		$anc   =  $this->input->post('ancho');
 		$lar   =  $this->input->post('largo');
+		$corrugado   =  $this->input->post('tipo_m');
 		$resis =  $this->input->post('resistencia');
 		$cant  =  $this->input->post('cantidad');
 
@@ -56,22 +57,45 @@ class Stock_lista_model extends CI_Model
 
 				$id_stock=$respuesta->id_stock_linea;
 				$cantidad_bd=$respuesta->cantidad;
-				$cantidad_total=$cantidad + $cant;
+				$cantidad_total=$cantidad_bd + $cant;
 				
-			$this->db->where('id_stock_linea', $id_stock);
-			$this->db->update('clientes',$cantidad_total);
-			return $this->db->affected_rows();
+				$data = array ('cantidad'=>$cantidad_total);
+				$this->db->where('id_stock_linea', $id_stock);
+				$this->db->update('stock_linea',$data);
+				$data_cantidad = array ('verificacion'=>1);
+				$numero_rows=$this->db->affected_rows();
+				if ($numero_rows>0) {
+					// actualiza el registro de la tabla cantidad producto el campo verificacion a '1',
+					// para mostrar en la grid que ya se a verificado y agregado correctamente
+					$this->db->where('id_cantidad_pedido', $id);
+					$this->db->update('cantidad_pedido',$data_cantidad);
+					return $this->db->affected_rows();
+				}
+				
+
+				
 		}else{
+			
 			$data= array (
 						'nombre'=>$this->input->post('nombre'),
 						'ancho'=>$this->input->post('ancho'),
 						'largo'=>$this->input->post('largo'),
+						'corrugado'=>$this->input->post('tipo_m'),
 						'resistencia'=>$this->input->post('resistencia'),
 						'cantidad'=>$this->input->post('cantidad'),
 						'fecha_ingreso'=>date('y-m-d')
-		);
-		$this->db->insert('stock_linea', $data);
-		return $this->db->affected_rows(); 
+						);
+
+			$num_rows_insert=$this->db->insert('stock_linea', $data);
+			if ($num_rows_insert>0) {
+					// actualiza el registro de la tabla cantidad producto el campo verificacion a '1',
+					// para mostrar en la grid que ya se a verificado y agregado correctamente
+				$data_cantidad = array ('verificacion'=>1);
+					$this->db->where('id_cantidad_pedido', $id);
+					$this->db->update('cantidad_pedido',$data_cantidad);
+				return $this->db->affected_rows();
+			}
+			 
 		}
 
 		

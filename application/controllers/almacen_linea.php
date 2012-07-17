@@ -12,6 +12,10 @@ class Almacen_linea extends CI_Controller
             $this->load->model("proveedores_model","proveedores");
             $this->load->model("catalogo_mprima_model","catalogo_mprima");
             $this->load->model("oficina_model","oficina");
+            if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
+            redirect(base_url().'inicio');
+        //echo 'denegado';
+        }   
 
 	}
 
@@ -146,14 +150,17 @@ $verificacion_pedido_1 = $this->db->query("SELECT pedido_proveedor.verificacion_
                                     cat_mprima.nombre,
                                     cat_mprima.ancho,
                                     cat_mprima.largo,
+                                    resistencia_mprima.resistencia,
                                     cantidad_pedido.cantidad,
                                     cantidad_pedido.verificacion
                                     FROM
                                     cantidad_pedido ,
                                     pedido_proveedor ,
-                                    cat_mprima
+                                    cat_mprima,
+                                    resistencia_mprima
                                     WHERE
                                     cantidad_pedido.id_pedido = '$id' AND
+                                    cat_mprima.resistencia_mprima_id_resistencia_mprima = resistencia_mprima.id_resistencia_mprima AND
                                     cantidad_pedido.catalogo_producto = cat_mprima.id_cat_mprima
                                     GROUP BY
                                     cantidad_pedido.id_cantidad_pedido
@@ -187,17 +194,20 @@ exit();
                         cat_mprima.nombre,
                         cat_mprima.ancho,
                         cat_mprima.largo,
+                        cat_mprima.tipo_m,
+                        resistencia_mprima.resistencia,
                         cantidad_pedido.cantidad,
                         cantidad_pedido.codigo,
                         cantidad_pedido.verificacion
-
                         FROM
                         cantidad_pedido ,
                         pedido_proveedor ,
-                        cat_mprima
+                        cat_mprima,
+                        resistencia_mprima
                         WHERE
                         cantidad_pedido.id_pedido = '$id' AND
                         cantidad_pedido.catalogo_producto = cat_mprima.id_cat_mprima AND
+                        cat_mprima.resistencia_mprima_id_resistencia_mprima = resistencia_mprima.id_resistencia_mprima AND
                         pedido_proveedor.activo = 0
                         GROUP BY cantidad_pedido.id_cantidad_pedido
                         ORDER BY $sidx $sord LIMIT $start , $limit;";
@@ -219,7 +229,7 @@ if ($consulta_veri_1==0)
     $N=1;
     foreach($result1->result() as $row) {
         ///////////////////////////////////verificamos si el produto ya esta verificado////////////
-        if ($row->verificacion==1) {
+        if ($row->verificacion==0) {
             $data->rows[$i]['id']=$row->id_cantidad_pedido;
             $onclik="onclick=verificacion_producto_pedido('".$row->id_cantidad_pedido."')";
             $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/alert-icon.png" width="18" title="verificar producto" height="18" /></span>';   
@@ -228,11 +238,13 @@ if ($consulta_veri_1==0)
                                     strtoupper($row->nombre),
                                     strtoupper($row->ancho),
                                     strtoupper($row->largo),
+                                    strtoupper($row->tipo_m),
+                                    strtoupper($row->resistencia),
                                     strtoupper($row->cantidad));
             $i++;
             $N++;
         }
-        elseif($row->verificacion==0)
+        elseif($row->verificacion==1)
         {
             $data->rows[$i]['id']=$row->id_cantidad_pedido;
             $onclik="";
@@ -245,6 +257,8 @@ if ($consulta_veri_1==0)
                                         strtoupper($row->nombre),
                                         strtoupper($row->ancho),
                                         strtoupper($row->largo),
+                                        strtoupper($row->tipo_m),
+                                        strtoupper($row->resistencia),
                                         strtoupper($row->cantidad));
             $i++;
             $N++;
@@ -265,6 +279,8 @@ elseif($consulta_veri_1==1)
                                         strtoupper($row->nombre),
                                         strtoupper($row->ancho),
                                         strtoupper($row->largo),
+                                        strtoupper($row->tipo_m),
+                                        strtoupper($row->resistencia),
                                         strtoupper($row->cantidad));
             $i++;
             $N++;

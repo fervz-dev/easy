@@ -12,6 +12,10 @@ class Pedidos_proveedor extends CI_Controller
         $this->load->model("proveedores_model","proveedores");
         $this->load->model("catalogo_mprima_model","catalogo_mprima");
         $this->load->model("oficina_model","oficina");
+        if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
+            redirect(base_url().'inicio');
+        //echo 'denegado';
+        }
 
 	}
 
@@ -380,8 +384,9 @@ public function paginacion_producto($id)
     {
         $row=$this->pedidos->get_producto_($id);
         echo strtoupper($row->nombre).'~'.
-             strtoupper($row->ancho).'~'.
              strtoupper($row->largo).'~'.
+             strtoupper($row->ancho).'~'.
+             strtoupper($row->tipo_m).'~'.
              strtoupper($row->cantidad).'~'.
              strtoupper($row->resistencia);
             

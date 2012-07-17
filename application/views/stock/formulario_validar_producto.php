@@ -18,6 +18,10 @@
 		<td><input type="text" id="largo" name="largo" readonly="readonly" ></td>
 	</tr>
 	<tr>
+		<td><label>Corrugado</label></td>
+		<td><input type="text" id="corrugado" name="corrugado" readonly="readonly" ></td>
+	</tr>
+	<tr>
 		<td><label>Resistencia</label></td>
 		<td><input type="text" id="resistencia" name="resistencia" readonly="readonly" ></td>
 	</tr>
