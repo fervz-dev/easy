@@ -6,8 +6,8 @@ function alta()
 document.editar_clientes.reset();
 $( "#dialog-procesos" ).dialog({
       autoOpen: false,
-      height: 420,
-      width: 390,
+      height:'auto',
+      width: 'auto',
       modal: true,
       buttons: {
           Aceptar: function() {
@@ -52,8 +52,7 @@ $.ajax({
                         url:"<?php echo base_url();?>clientes/get/"+id+"/"+Math.random()*10919939116744,
                         datatype:"html",
                         success:function(data, textStatus){
-
-            dato= data.split('~');
+                        dato= data.split('~');
                                   $("#nombre_empresa").val(dato[0]);
                                   $("#nombre_contacto").val(dato[1]);
                                   $("#tipo_persona").val(dato[2]);
@@ -68,26 +67,23 @@ $.ajax({
                                   $("#fax").val(dato[11]);
                                   $("#email").val(dato[12]);     
                                   $("#comentario").val(dato[13]);
-
-            },
+      },
                         error:function(datos){
-                        var error='Error'+data;
-                                 notify(error ,500,5000,'error');
-            return false;
+                          var error='Error'+data;
+                          notify(error ,500,5000,'error');
+                          return false;
                         }//Error
-                        });//Ajax
+                      });//Ajax
 
 
 $( "#dialog-procesos" ).dialog({
       autoOpen: false,
-      height: 490,
-      width: 420,
+      height: "auto",
+      width: "auto",
       modal: true,
       buttons: {
           Aceptar: function() {
-          editar(id);
-
-
+            editar(id);
             },
           Cancelar:function()
           {
@@ -123,31 +119,23 @@ function editar(id)
                                 "fax":$("#fax").val(),
                                 "email":$("#email").val(),
                                 "comentario":$("#comentario").val()},
-                    cache: false,
-                     datatype:"html",
+                      cache: false,
+                      datatype:"html",
                       success:function(data, textStatus){
 
                              switch(data){
                                case "0": 
-                           // $("#ErrorListaProductos").fadeIn();
-                                          //$("#ErrorListaProductos").html("Error al procesar los datos.");
-                                          var error='Error'+data;
-                                 notify(error ,500,5000,'error');
-                      break;
+                                var error='Error'+data;
+                                notify(error ,500,5000,'error');
+                               break;
                                case "1": 
-                    $( "#dialog-procesos" ).dialog( "close" );
-                    notify('El registro se edito correctamente',500,5000,'aviso');
-                   // alert('editado');
-                 // guardar_paciente(data);
-                   reloading();
-                  break;
-
-                                   default:
-                                   $( "#dialog-procesos" ).dialog( "close" );
-                     //alert('Vacante guardada');
-                 // reloading();
-                   
-                   break; 
+                                $( "#dialog-procesos" ).dialog( "close" );
+                                notify('El registro se edito correctamente',500,5000,'aviso');
+                                reloading();
+                               break;
+                               default:
+                                $( "#dialog-procesos" ).dialog( "close" );
+                               break; 
 
                               }//switch
                              },
@@ -185,19 +173,18 @@ $.ajax({
 
                              switch(data){
                                case "0": 
-                            alert("Error al procesar los datos ");
-                              break;
-                                      case "1": 
-                                   reloading();
-                                   notify('El registro se ha guardado correctamente',500,5000,'aviso');
-                                    /*msg('El registro se ha guardado correctamente');*/
-                                 $( "#dialog-procesos" ).dialog( "close" );
-                              break;
-                              default:
-                                $( "#dialog-procesos" ).dialog( "close" );
-                                var error='Error'+data;
-                                 notify(error ,500,5000,'error');
-                              break; 
+                                notify("Error al procesar los datos " ,500,5000,'error');
+                               break;
+                               case "1": 
+                               reloading();
+                               notify('El registro se ha guardado correctamente',500,5000,'aviso');
+                               $( "#dialog-procesos" ).dialog( "close" );
+                               break;
+                               default:
+                               $( "#dialog-procesos" ).dialog( "close" );
+                               var error='Error'+data;
+                               notify(error ,500,5000,'error');
+                               break; 
                               }//switch
                              },
                         error:function(datos){
@@ -207,11 +194,11 @@ $.ajax({
 
 }
 
-
-function delet(id)
-{
-r=confirm('Esta seguro de eliminar el registro?');
-if(r==true)
+function delet (id) {
+  msg="Este artículo se eliminara. ¿Estás seguro?";
+  confirmacion(id,msg);
+}
+function delete_id(id)
 {
   $.ajax({
                       async:true,cache: false,
@@ -223,24 +210,16 @@ if(r==true)
 
                              switch(data){
                                case "0": 
-                           // $("#ErrorListaProductos").fadeIn();
-                                          //$("#ErrorListaProductos").html("Error al procesar los datos.");
-                                          notify("Error al procesar los datos " ,500,5000,'error');
-                      break;
+                                notify("Error al procesar los datos " ,500,5000,'error');
+                               break;
                                case "1": 
-                    $( "#dialog-procesos" ).dialog( "close" );
-                   // alert('editado');
-                 // guardar_paciente(data);
-                   reloading();
-                  notify('El registro se ha eliminado correctamente',500,5000,'aviso');
-                  break;
-
-                                   default:
-                                   $( "#dialog-procesos" ).dialog( "close" );
-                     //alert('Vacante guardada');
-                 // reloading();
-                   
-                   break; 
+                                $( "#dialog-procesos" ).dialog( "close" );
+                                reloading();
+                                notify('El registro se ha eliminado correctamente',500,5000,'aviso');
+                               break;
+                               default:
+                                $( "#dialog-procesos" ).dialog( "close" );
+                               break; 
 
                               }//switch
                              },
@@ -248,8 +227,6 @@ if(r==true)
                               notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax
-}
-
 }
 
 
@@ -260,7 +237,6 @@ if(r==true)
     url:'<?php echo base_url();?>clientes/paginacion',
     datatype: "json",
     mtype: 'POST',
-		      //  $data->rows[$i]['cell']=array($acciones,strtoupper($row->nombre),strtoupper($row->descripcion),strtoupper($row->direccion),strtoupper($row->colonia),strtoupper($row->poblacion),strtoupper($row->contacto));
                         colNames:['Acciones',
                                     'NOMBRE DE LA EMPRESA',
                                     'CONTACTO',
@@ -310,7 +286,7 @@ if(r==true)
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
-	width:'100%',
+	width:"auto",
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl_clientes").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
    });
@@ -318,8 +294,95 @@ function reloading()
   {
   $("#tbl_clientes").trigger("reloadGrid")
   }
-          			
-        </script>
+////////////////////////////////validacion//////////////////////////
+
+  function validarNUmero (numero) {
+    if (!/^([0-9])*[.]?[0-9]*$/.test(numero)){
+      return false;
+    }
+  }
+  function validarEmail (email) {
+    if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.([a-zA-Z0-9]{2,4})+$/.test(email)){
+      return false;
+    }
+  }
+    function validarVacio (id) {
+      if (vacio(id)==false) {
+        return false;
+      }
+    }
+
+    function vacio (campo) {
+      for (var i = 0; i < campo.length; i++) {
+        if (campo.charAt(i)!="") {
+            return true;
+        }
+      }
+      return false;
+    }
+    function validarCombo (id) {
+      if (id=='') {
+        return false;
+      };
+    }
+//////////////////////////////validacion////////////////////////////////////////////////////////////////
+function validarCampos () {
+  nombre_empresa=$("#nombre_empresa").val();
+  nombre_contacto=$("#nombre_contacto").val();
+  tipo_persona=$("#tipo_persona").val();
+  rfc=$("#rfc").val();
+  estado_id_estado=$("#estado_id_estado").val();
+  cp=$("#cp").val();
+  direccion=$("#direccion").val();
+  ciudad=$("#ciudad").val();
+  lada=$("#lada").val();
+  num_telefono=$("#num_telefono").val();
+  ext=$("#ext").val();
+  fax=$("#fax").val();
+  email=$("#email").val();     
+  comentario=$("#comentario").val();
+  if (validarVacio(nombre_empresa)==false) {
+    notify('* El campo <strong>Nombre de la Empresa</strong> no puede estar vacio!!!',500,5000,'error');
+    $("#nombre_empresa").focus();
+    return false;
+  }else if (validarVacio(nombre_contacto)==false) {
+    notify('* El campo <strong>Nombre del COntacto</strong> no puede estar vacio!!!',500,5000,'error');
+    $("#nombre_contacto").focus();
+    return false;
+  }else if (validarCombo(tipo_persona)==false) {
+    notify('* Debe seleccionar almenos una opcion de la lista <strong>Tipo de Persona</strong>',500,5000,'error');
+    $("#tipo_persona").focus();
+    return false;
+  }else if (validarVacio(rfc)==false) {
+    notify('* El campo <strong>RFC</strong> no puede estar vacio!!!',500,5000,'error');
+    $("#rfc").focus();
+    return false;
+  }
+
+}
+///////////////////dialogo de confirmacion////////////////////////////////////
+  function confirmacion (id,msg) {
+$('#dialog-confirm').append('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'+msg+'</p>');
+
+    $( "#dialog-confirm" ).dialog({
+      resizable: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+        "Eliminar": function() {
+          $( this ).dialog( "close" );
+          delete_id(id);
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+    }
+//////////////////////////////////////////////////////////////////////////////
+
+</script>
 <table >
 <tr>
 <td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>

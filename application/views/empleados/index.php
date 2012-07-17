@@ -6,8 +6,8 @@ function alta()
 document.editar_empleado.reset();
 $( "#dialog-procesos" ).dialog({
       autoOpen: false,
-      height: 420,
-      width: 390,
+      height: 'auto',
+      width: 'auto',
       modal: true,
       buttons: {
           Aceptar: function() {
@@ -109,32 +109,27 @@ function editar(id)
                                 "estado_id_estado":$("#estado_id_estado").val(),
                                 "colonia":$("#colonia").val(),
                                 "ciudad":$("#ciudad").val()},
-                    cache: false,
-                     datatype:"html",
-                      success:function(data, textStatus){
+                          cache: false,
+                          datatype:"html",
+                          success:function(data, textStatus){
 
-                             switch(data){
-                               case "0": 
-                           // $("#ErrorListaProductos").fadeIn();
-                                          //$("#ErrorListaProductos").html("Error al procesar los datos.");
-                                          notify("Error al procesar los datos " ,500,5000,'error');
-                      break;
-                               case "1": 
-                    $( "#dialog-procesos" ).dialog( "close" );
-                    notify('El registro se edito correctamente',500,5000,'aviso');
-                   // alert('editado');
-                 // guardar_paciente(data);
-                   reloading();
-                  break;
+                          switch(data){
+                          case "0": 
 
-                                   default:
-                                   $( "#dialog-procesos" ).dialog( "close" );
-                     //alert('Vacante guardada');
-                 // reloading();
-                   
-                   break; 
+                           notify("Error al procesar los datos " ,500,5000,'error');
+                          break;
+                          case "1": 
+                            $( "#dialog-procesos" ).dialog( "close" );
+                            notify('El registro se edito correctamente',500,5000,'aviso');
+                            reloading();
+                          break;
 
-                              }//switch
+                          default:
+                           $( "#dialog-procesos" ).dialog( "close" );
+
+                          break; 
+
+                          }//switch
                              },
                         error:function(datos){
                               notify("Error al procesar los datos " ,500,5000,'error');
@@ -153,49 +148,42 @@ function guardar()
 
 $.ajax({
           async:true,cache: false,
-          beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
-           type:"POST",
-            url:"<?php echo base_url();?>empleados/guardar?da="+Math.random()*2312,
+          beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();
+            ?>img/ajax-loader.gif" width="28" height="28" />');},
+          type:"POST",
+          url:"<?php echo base_url();?>empleados/guardar?da="+Math.random()*2312,
           data:{"nombre_obrero":$("#nombre_obrero").val(),
-                  "a_paterno":$("#a_paterno").val(),
-                  "a_materno":$("#a_materno").val(),
-                  "fecha_nacimiento":$("#fecha_nacimiento").val(),
-                  "direccion":$("#direccion").val(),
-                  "celular":$("#celular").val(),
-                  "telefono_casa":$("#telefono_casa").val(),
-                  "puestos_id_tipo_puesto":$("#puestos_id_tipo_puesto").val(),
-                  "oficina_id_oficina":$("#oficina_id_oficina").val(),
-                  "estado_civil":$("#estado_civil").val(),
-                  "sexo":sexo,
-                  "estado_id_estado":$("#estado_id_estado").val(),
-                  "colonia":$("#colonia").val(),
-                  "ciudad":$("#ciudad").val()},
+            "a_paterno":$("#a_paterno").val(),
+            "a_materno":$("#a_materno").val(),
+            "fecha_nacimiento":$("#fecha_nacimiento").val(),
+            "direccion":$("#direccion").val(),
+            "celular":$("#celular").val(),
+            "telefono_casa":$("#telefono_casa").val(),
+            "puestos_id_tipo_puesto":$("#puestos_id_tipo_puesto").val(),
+            "oficina_id_oficina":$("#oficina_id_oficina").val(),
+            "estado_civil":$("#estado_civil").val(),
+            "sexo":sexo,
+            "estado_id_estado":$("#estado_id_estado").val(),
+            "colonia":$("#colonia").val(),
+            "ciudad":$("#ciudad").val()},
 
-                     datatype:"html",
-                      success:function(data, textStatus){
+        datatype:"html",
+        success:function(data, textStatus){
 
-                             switch(data){
-                               case "0": 
-                            notify("Error al procesar los datos " ,500,5000,'error');
-                      break;
-                              case "1": 
-                           reloading();
-                               notify('El registro se guardado correctamente',500,5000,'aviso');
-                         $( "#dialog-procesos" ).dialog( "close" );
-                     break;
-
-                                   default:
-                                   $( "#dialog-procesos" ).dialog( "close" );
-                            var error='Error'+data;
-                                 notify(error ,500,5000,'error');
-                  break; 
-
-                              }//switch
-                             },
-                        error:function(datos){
-                              notify("Error inesperado" ,500,5000,'error');
-                             }//Error
-                         });//Ajax      
+        switch(data) {
+          case "0": notify("Error al procesar los datos ",500,5000,'error');
+          break;
+          case "1": reloading();
+            notify('el registro se guardado correctamente',500,5000,'aviso');
+            $( "#dialog-procesos" ).dialog( "close" );
+          break;
+          default: $( "#dialog-procesos" ).dialog( "close" );
+          }
+        },
+        error:function(datos){
+      notify("Error inesperado" ,500,5000,'error');
+        }//Error
+        });//Ajax      
 
 }
 
@@ -215,24 +203,16 @@ if(r==true)
 
                              switch(data){
                                case "0": 
-                           // $("#ErrorListaProductos").fadeIn();
-                                          //$("#ErrorListaProductos").html("Error al procesar los datos.");
-                                          notify("Error al procesar los datos " ,500,5000,'error');
-                      break;
+                                notify("Error al procesar los datos " ,500,5000,'error');
+                               break;
                                case "1": 
-                    $( "#dialog-procesos" ).dialog( "close" );
-                   // alert('editado');
-                 // guardar_paciente(data);
-                   reloading();
-                   notify('El registro se elimino correctamente',500,5000,'aviso');
-                  break;
-
-                                   default:
-                                   $( "#dialog-procesos" ).dialog( "close" );
-                     //alert('Vacante guardada');
-                 // reloading();
-                   
-                   break; 
+                                $( "#dialog-procesos" ).dialog( "close" );
+                                reloading();
+                                notify('El registro se elimino correctamente',500,5000,'aviso');
+                               break;
+                               default:
+                                $( "#dialog-procesos" ).dialog( "close" );
+                               break; 
 
                               }//switch
                              },
@@ -251,7 +231,7 @@ if(r==true)
     url:'<?php echo base_url();?>empleados/paginacion',
     datatype: "json",
     mtype: 'POST',
-		      //  $data->rows[$i]['cell']=array($acciones,strtoupper($row->nombre),strtoupper($row->descripcion),strtoupper($row->direccion),strtoupper($row->colonia),strtoupper($row->poblacion),strtoupper($row->rfc));
+		     
                         colNames:['Acciones',
                                     'NOMBRE',
                                     'APELLIDO PATERNO',

@@ -400,3 +400,4 @@ border-bottom: 1px solid #DEDEDE;
 .notify_campos.aviso{
     background-color: #90bb00;
 }
+#labelRight{text-align: right; float:right;}
