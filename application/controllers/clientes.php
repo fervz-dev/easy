@@ -58,6 +58,7 @@ public function paginacion()
         //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
         $start = $limite*$page - $limite;
         //Consulta que devuelve los registros de una sola pagina
+        if ($start < 0) $start = 0;
         $resultado_ =$this->clientes_->get_clientes($sidx, $sord, $start, $limite);
         // Se agregan los datos de la respuesta del servidor
         $data->page = $page;
@@ -167,6 +168,7 @@ public function paginacion()
         //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
         $start = $limite*$page - $limite;
         //Consulta que devuelve los registros de una sola pagina
+        if ($start < 0) $start = 0;
         $resultado_ =$this->directorio->get_directorio($sidx, $sord, $start, $limite,$id);
         // Se agregan los datos de la respuesta del servidor
         $data->page = $page;

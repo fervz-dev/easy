@@ -15,6 +15,7 @@
 |
 */
 $config['base_url']	= 'http://localhost/easy/';
+// $config['base_url']	= 'http://www.easyload.com.mx/systemEasy/';
 
 /*
 |--------------------------------------------------------------------------

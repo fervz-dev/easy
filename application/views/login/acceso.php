@@ -1,4 +1,4 @@
-<table align="center" border="1" width="58%">
+<!-- <table align="center" border="1" width="58%">
 <tr>
 	<td><a href="<?php echo base_url().'empleados';?>">Personal</a></td>
 	<td><a href="<?php echo base_url().'stock_lista';?>">Almacen</a></td>
@@ -22,4 +22,4 @@
 </tr>
 <tr>
 </tr>
-</table> 
+</table>  -->

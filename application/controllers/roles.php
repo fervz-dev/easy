@@ -65,6 +65,7 @@ public function paginacion()
     //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
     $start = $limit*$page - $limit;
     //Consulta que devuelve los registros de una sola pagina
+    if ($start < 0) $start = 0;
     $consulta = "SELECT * FROM roles ".$where." ORDER BY $sidx $sord LIMIT $start , $limit;";
     $result1 = $this->db->query($consulta);
 

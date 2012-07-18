@@ -27,6 +27,21 @@ class Stock_lista_model extends CI_Model
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
 	}
+////////////////////////////envia los datos  paginacion reutilizable/////////////////////////////////
+	public function get_stock_lista_reutilizable($sidx, $sord, $start, $limite)
+	{
+		$query = $this->db->query("SELECT
+									stock_reutilizable.id_stock_reutilizable,
+									stock_reutilizable.fecha_ingreso,
+									stock_reutilizable.proveedor,
+									stock_reutilizable.cantidad
+									FROM
+									stock_reutilizable
+									ORDER BY $sidx $sord 
+									LIMIT $start, $limite;"
+									);
+		return ($query->num_rows()> 0)? $query->result() : NULL;
+	}
 
 	public function add_stock($id)
 	{
@@ -100,7 +115,24 @@ class Stock_lista_model extends CI_Model
 
 		
 	}
+public function add_stock_reutilizable($id)
+	{
+		$data=array (	'fecha_ingreso'=>date('y-m-d'),
+						'proveedor'=>$this->input->post('proveedor_'),
+						'cantidad'=>$this->input->post('cantidad_'),
+						'id_pedido'=>$id
+						);
+		$this->db->insert('stock_reutilizable',$data);
+		$cantidad_rows=$this->db->affected_rows();
+		
+		if (count($cantidad_rows>0)) {
+			$data_pedido= array ('verificacion_almacen'=>0);
+			$this->db->where('id_pedido_reutilizable',$id);
+			$this->db->update('pedidos_reutilizable',$data_pedido);
 
-	
-   }
-?>
+		}else{
+			return $cantidad_rows;
+		}
+		
+	}
+}?>

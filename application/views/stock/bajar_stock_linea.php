@@ -36,8 +36,7 @@ function add_stock (id) {
                         error:function(data){
                               notify("Error al procesar los datos " ,500,5000,'error');
                              }//Error
-                         });//Ajax
-           
+                         });//Ajax        
 }
 //////////////////////////////////////////// Funcion para verificar que llego  PEDIDO /////////////////////////////
 function abierto (id) {
@@ -148,11 +147,6 @@ function verificacion_pedido (id, confirmacion) {
           });//Ajax
   };
 }
-
-
-
-
-
 /////////////////////////////////////////////// inicia la paginacion y subpaginacion ////////////////////////////////////////////////////////////////////
 	$(document).ready(function(){
   $("#tbl_linea").jqGrid('GridUnload');
@@ -183,7 +177,7 @@ function verificacion_pedido (id, confirmacion) {
     mtype: "POST",
     sortname: 'id_pedido',
     viewrecords: true,
-    sortorder: "asc",
+    sortorder: "desc",
   editable: true,
     caption: 'Pedido de linea',
     multiselect: false,

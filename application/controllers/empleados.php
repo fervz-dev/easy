@@ -59,6 +59,7 @@ class Empleados extends CI_Controller
         //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
         $start = $limite*$page - $limite;
         //Consulta que devuelve los registros de una sola pagina
+        if ($start < 0) $start = 0;
         $resultado_catalogo =$this->empleados->get_empleado($sidx, $sord, $start, $limite);
         // Se agregan los datos de la respuesta del servidor
         $data->page = $page;

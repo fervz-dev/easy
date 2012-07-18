@@ -128,7 +128,8 @@ public function guardar_pedido()
 		   		'fecha_pedido'=>date("Y-m-d"),
 			   	'fecha_entrega'=>$this->input->post('fecha_entrega'),
 				'proveedores_id_proveedores'=>$this->input->post('proveedor_id_proveedor'),
-				'oficina'=>$this->input->post('oficina')
+				'oficina'=>$this->input->post('oficina'),
+				
 			);
    		$this->db->insert('pedido_proveedor', $data);
 		return $this->db->affected_rows(); 

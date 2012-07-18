@@ -1,6 +1,6 @@
 
 <div id="header">
-<img alt="Logo" src="<?php echo base_url();?>img/logo.png" />
+<!-- <img alt="Logo" src="<?php echo base_url();?>img/logo.png" /> -->
       
 <!--  Menus -->
 <div id="tabsMain" class="">

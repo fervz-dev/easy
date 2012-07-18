@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<!-- estilo -->
 <link type="text/css" rel="stylesheet"  href="<?php echo base_url();?>css/styles_login.css" />
 <!-- JQGrid -->
@@ -79,8 +80,7 @@
 <script src="<?php echo base_url();?>jqgrid/js/i18n/grid.locale-es.js" type="text/javascript"></script>
 <script src="<?php echo base_url();?>jqgrid/js/jquery.jqGrid.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo base_url();?>jqgrid/css/ui.jqgrid.css" />
-	
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
 <!-- Titulo de la pagina -->
 <title><?php if(isset($titulo)){echo $titulo;}?></title>
 </head>

@@ -61,6 +61,7 @@ class Pedidos_proveedor extends CI_Controller
         //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
         $start = $limite*$page - $limite;
         //Consulta que devuelve los registros de una sola pagina
+        if ($start < 0) $start = 0;
         $resultado_ =$this->pedidos->get_pedido_proveedor($sidx, $sord, $start, $limite);
         // Se agregan los datos de la respuesta del servidor
         $data->page = $page;
@@ -219,6 +220,7 @@ exit();
     //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
     $start = $limit*$page - $limit;
     //Consulta que devuelve los registros de una sola pagina
+    if ($start < 0) $start = 0;
     $consulta = "SELECT
                         cantidad_pedido.id_cantidad_pedido,
                         cat_mprima.nombre,
@@ -340,6 +342,7 @@ public function paginacion_producto($id)
         //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
         $start = $limite*$page - $limite;
         //Consulta que devuelve los registros de una sola pagina
+        if ($start < 0) $start = 0;
         $consulta = "SELECT
                         cantidad_pedido.id_cantidad_pedido,
                         cat_mprima.nombre,
