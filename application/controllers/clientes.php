@@ -8,9 +8,8 @@ class Clientes extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-
-        $this->load->model("Directorio_model","directorio");
-        $this->load->model("estados_model","estados");
+        $this->load->model('direcciones_model','direcciones');
+        $this->load->model("directorio_model","directorio");
         $this->load->model("clientes_model","clientes_");
         if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
             redirect(base_url().'inicio');
@@ -22,7 +21,7 @@ class Clientes extends CI_Controller
 	public function index()
 	{
 
-        $data['estados']=$this->estados->get_estados_all();
+        $data['estados']=$this->direcciones->estados();
         $data['vista']='clientes/index';
 		$data['titulo']='Clientes';
         $data['vistaa']="vista1";
@@ -76,8 +75,9 @@ public function paginacion()
                                     strtoupper($row->nombre_contacto),
                                     strtoupper($row->tipo_persona),
                                     strtoupper($row->rfc),
-                                    strtoupper($row->dsc_estado),
-                                    strtoupper($row->ciudad),
+                                    $row->estado,
+                                    $row->municipio,
+                                    $row->localidad,
                                     strtoupper($row->direccion), 
                                     strtoupper($row->cp),
                                     strtoupper($row->lada),
@@ -101,10 +101,11 @@ public function paginacion()
                     strtoupper($row->nombre_contacto).'~'.
                     strtoupper($row->tipo_persona).'~'.
                     strtoupper($row->rfc).'~'.
-                    strtoupper($row->estado_id_estado).'~'.
-                    strtoupper($row->cp).'~'.
+                    $row->estado.'~'.
+                    $row->municipio.'~'.
+                    $row->localidad.'~'.
                     strtoupper($row->direccion).'~'.
-                    strtoupper($row->ciudad).'~'.
+                    strtoupper($row->cp).'~'.
                     strtoupper($row->lada).'~'.
                     strtoupper($row->num_telefono).'~'.
                     strtoupper($row->ext).'~'.
@@ -182,10 +183,10 @@ public function paginacion()
            $onclikedit_d="onclick=edit_dir('".$row->id_direcciones."')";
            $acciones='<span style=" cursor:pointer" '.$onclikedit_d.'><img title="Editar" src="'.base_url().'img/editar_dir.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik_d.'><img src="'.base_url().'img/eliminar_address.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikguardar_d.'><img src="'.base_url().'img/add_address.png" width="18" title="Eliminar" height="18" /></span>';
            $data->rows[$i]['cell']=array($acciones,
-                                    strtoupper($row->dsc_estado),
+                                    strtoupper($row->estado),
+                                    strtoupper($row->municipio),
+                                    strtoupper($row->localidad),
                                     strtoupper($row->direccion),
-                                    strtoupper($row->colonia),
-                                    strtoupper($row->ciudad),
                                     strtoupper($row->observaciones),
                                     );                        
            $i++;
@@ -199,10 +200,10 @@ public function paginacion()
     {
         $row=$this->directorio->get_id($id);
                echo strtoupper($row->id_direcciones).'~'.
-                    strtoupper($row->estado_id_estado).'~'.
+                    strtoupper($row->estado).'~'.
+                    strtoupper($row->municipio).'~'.
+                    strtoupper($row->localidad).'~'.
                     strtoupper($row->direccion).'~'.
-                    strtoupper($row->colonia).'~'.
-                    strtoupper($row->ciudad).'~'.
                     strtoupper($row->observaciones);                        
     }
    public function editar_directorio_all()
@@ -221,6 +222,26 @@ public function paginacion()
 
         $row=$this->directorio->comparar($id);
                echo strtoupper($row->clientes_id_clientes);
+    }
+    public function municipio($estado)
+    {
+        $municipios=$this->direcciones->municipios($estado);
+        $combo = "";
+        $combo= '<option value="">Selecciones...</option>';
+        for ($i=0; $i <count($municipios) ; $i++) { 
+             $combo .= "<option value='".$municipios[$i]["nombre"]."'>".$municipios[$i]["nombre"]."</option>";
+        }
+        echo $combo;
+    }
+    public function localidad($municipio)
+    {
+        $localidades=$this->direcciones->localidades($municipio);
+        $combo = "";
+        $combo= '<option value="">Selecciones...</option>';
+        for ($i=0; $i <count($localidades) ; $i++) { 
+            $combo .= "<option value='".$localidades[$i]["nombre"]."'>".$localidades[$i]["nombre"]."</option>";
+             }
+        echo $combo;
     }
 
 }

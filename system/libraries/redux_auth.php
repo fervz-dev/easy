@@ -54,6 +54,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 					if ($pass == $result->password){
 						$this->ci->session->set_userdata(array('id'=> $result->id));
                         $this->ci->session->set_userdata(array('rol'=> $result->id_roles));
+                        $this->ci->session->set_userdata(array('oficina'=> $result->oficina_id_oficina));
 						return true;
 					}//if de password
 					else{

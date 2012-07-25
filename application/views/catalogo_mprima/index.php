@@ -86,6 +86,7 @@ $( "#dialog-procesos" ).dialog({
 
 function reloading()
 {
+  $("tbl").jqGrid('GridUnload');
   $("#tbl").trigger("reloadGrid")
 }
 
@@ -242,40 +243,8 @@ $( "#dialog-procesos" ).dialog({
         $( "#dialog-procesos" ).dialog( "open" );
 }
 
-////////////////////////////////validacion//////////////////////////
 
-function validarNUmero (numero) {
-  if (!/^([0-9])*[.]?[0-9]*$/.test(numero)){
-    return false;
-  }
-}
-function validarEmail (email) {
-  if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.([a-zA-Z0-9]{2,4})+$/.test(email)){
-    return false;
-  }
-}
-  function validarVacio (id) {
-    if (vacio(id)==false) {
-      return false;
-    }
-  }
-
-  function vacio (campo) {
-    for (var i = 0; i < campo.length; i++) {
-      if (campo.charAt(i)!="") {
-          return true;
-      }
-    }
-    return false;
-  }
-  function validarCombo (id) {
-    if (id=='') {
-      return false;
-    };
-  }
 ////////////////////////////////////// validacion //////////////////////
-
-
 function validarCampos () {
 
             nombre=$("#nombre").val();
@@ -331,7 +300,7 @@ function validarCampos () {
   }
   ///////////////////dialogo de confirmacion////////////////////////////////////
   function confirmacion (id,msg) {
-$('#dialog-confirm').append('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'+msg+'</p>');
+$('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'+msg+'</p>');
 
     $( "#dialog-confirm" ).dialog({
       resizable: false,

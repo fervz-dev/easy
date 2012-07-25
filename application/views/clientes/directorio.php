@@ -1,11 +1,33 @@
 
 <script>
 ////////////////////////////////  Alta directorio ///////////////////////////////////////////////////
-
 function alta_directorio()
 {
+document.directorio.reset();
+$( "#editar_directorio" ).dialog({
+      autoOpen: false,
+      height:'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+            if (validarCampos()==true) {
+          guardar_nuevo();
+        }
+          },
+          Cancelar:function()
+          {   
+        $( "#editar_directorio" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#editar_directorio" ).dialog( "open" );
+}
+/*function alta_directorio()
+{
 
-/*$.ajax({
+$.ajax({
           async:true,cache: false,
           beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
           type:"GET",
@@ -18,11 +40,11 @@ function alta_directorio()
           notify("Error al procesar los datos " ,500,5000,'error');
           return false;
           }//Error
-          });//Ajax*/
-$( "#editar_directorio" ).fadeIn();
+          });//Ajax
+$( "#editar_directorio" ).dialog('open');
 
-$("#guardar_edit").fadeIn;
-}
+// $("#guardar_edit").fadeIn;
+}*/
 
 ///////////////////////////////  Guardar Directorio ////////////////////////////////////////////////
 
@@ -34,7 +56,7 @@ $.ajax({
           beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
           type:"POST",
           url:"<?php echo base_url();?>clientes/guardar_nuevo?da="+Math.random()*2312,
-          data:{"clientes_id_clientes":$("#id_cliente").val(),
+          data:{"clientes_id_clientes":$("#id_cliente_").val(),
                 "estado_id_estado_d":$("#estado_id_estado_d").val(),
                 "direccion_d":$("#direccion_d").val(),    
                 "colonia_d":$("#colonia_d").val(),
@@ -138,13 +160,14 @@ function editar_directorio_all()
                               notify("Error al procesar los datos " ,500,5000,'error');
                              }//Error
                          });//Ajax
-           
-
-
+}
+function validarCampos() {
+  // body...
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
 function directorio (id) {
+  $("#id_cliente_").val(id);
   $("#tbl_directorio").jqGrid('GridUnload');
 
 
@@ -195,9 +218,22 @@ function directorio (id) {
 }
 
    </script>
+   <div>
+     <table>
+       <tr>
+         <td> 
+          <button onclick="alta_directorio()">
+            <div style="width:135x; height:25px;"><img src="<?php echo base_url();?>img/add_address.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Nueva dirección</p></div></div>  
+
+         </button>
+
+          </td>
+       </tr>
+     </table>
+   </div>
    <table id="tbl_directorio"></table>
-        <div id="paginacion_directorio">
-        </div>
+   
+        <div id="paginacion_directorio"></div>
 
 <div id="editar_directorio" style="display:none">
 
@@ -205,3 +241,4 @@ function directorio (id) {
         $this->load->view('clientes/editar_directorio');?>
 
 </div>
+<input type="hidden" id="id_cliente_" name="id_cliente_">

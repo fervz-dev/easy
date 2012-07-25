@@ -381,23 +381,64 @@ border-top: 1px solid #DEDEDE;
 border-bottom: 1px solid #DEDEDE;
 
 }
-.notify_campos{
+.tipCampos{
     background-color: #333;
     color: #FFF;
     width: 250px;
     height:auto;
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-    border-radius:10px;
+    -moz-border-radius:0px;
+    -webkit-border-radius:0px;
+    border-radius:5px;
 }
-.notify_campos p{
+.tipCampos p{
     padding: 10px;
     margin: 0;
 }
-.notify_campos.error{
-    background-color: #F00;
-}
-.notify_campos.aviso{
-    background-color: #90bb00;
+.tipCampos.tip{
+    background-color: #042675;
 }
 #labelRight{text-align: right; float:right;}
+#compGroupA {
+float: left;
+width: 58%;
+}
+#compGroupB {
+float: right;
+width: 38%;
+}
+.demoHeaders {
+font-size: 1.3em;
+font-weight: normal;
+margin: 2em 0 1em;
+clear: both;
+}
+.demoHeaders span {
+font-size: .8em;
+}
+#components #dialog_link {
+padding: .4em 1em .4em 20px;
+text-decoration: none;
+position: relative;
+}
+#components #dialog_link span.ui-icon {
+margin: 0 5px 0 0;
+position: absolute;
+left: .2em;
+top: 50%;
+margin-top: -8px;
+zoom: 1;
+}
+ul#icons {margin: 0; padding: 0;}
+ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left; list-style: none;}
+ul#icons span.ui-icon {float: left; margin: 0 4px;}
+/* ---------------------------------------------------------------
+Clearfix
+--------------------------------------------------------------- */
+.clearfix:after {
+content: ".";
+display: block;
+height: 0;
+clear: both;
+visibility: hidden;
+}
+.clearfix {display: inline-block;} 

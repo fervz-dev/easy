@@ -17,8 +17,6 @@ class Catalogo_mprima extends CI_Controller{
         $data['resistencia']=$this->resistencia->get_resistencia_mprima_all();
     	$data['vista']='catalogo_mprima/index';
     	$data['titulo']='Catalogo de Materia Prima';
-         $data['vistaa']="vista1";
-         $data['vistab']="m2";
     	$this->load->view('principal',$data);
     }
 
@@ -51,7 +49,10 @@ class Catalogo_mprima extends CI_Controller{
         //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
         $start = $limite*$page - $limite;
         //Consulta que devuelve los registros de una sola pagina
-        if ($start < 0) $start = 0;
+        if ($start < 0){
+          $start = 0;
+         $data();   
+        }else{
         $resultado_catalogo =$this->catalogo->get_cat_mprima($sidx, $sord, $start, $limite);
         // Se agregan los datos de la respuesta del servidor
         $data->page = $page;
@@ -74,6 +75,7 @@ class Catalogo_mprima extends CI_Controller{
             strtoupper($row->resistencia)
             );
            $i++;
+        }
         }
     	// La respuesta se regresa como json
         echo json_encode($data);
