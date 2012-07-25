@@ -15,10 +15,11 @@ class Proveedores_model extends CI_Model
 										proveedores.id_proveedores,
 										proveedores.nombre_contacto,
 										proveedores.nombre_empresa,
-										estados.dsc_estado,
+										proveedores.estado,
+										proveedores.municipio,
+										proveedores.localidad,
 										proveedores.cp,
 										proveedores.direccion,
-										proveedores.ciudad,
 										proveedores.lada,
 										proveedores.num_telefono,
 										proveedores.ext,
@@ -29,9 +30,8 @@ class Proveedores_model extends CI_Model
 										proveedores ,
 										estados
 										WHERE
-										proveedores.activo = 1 AND
-										proveedores.estado_id_estado = estados.id_estado
-									ORDER BY $sidx $sord 
+										proveedores.activo = 1 
+										ORDER BY $sidx $sord 
 									LIMIT $start, $limite;"
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
@@ -58,10 +58,11 @@ class Proveedores_model extends CI_Model
         $query = $this->db->query("SELECT
 										proveedores.nombre_contacto,
 										proveedores.nombre_empresa,
-										proveedores.estado_id_estado,
+										proveedores.estado,
+										proveedores.municipio,
+										proveedores.localidad,
 										proveedores.cp,
 										proveedores.direccion,
-										proveedores.ciudad,
 										proveedores.lada,
 										proveedores.num_telefono,
 										proveedores.ext,
@@ -86,10 +87,11 @@ class Proveedores_model extends CI_Model
 	   	$data = array (
 	   	'nombre_contacto'=>$this->input->post('nombre_contacto'),
 		'nombre_empresa'=>$this->input->post('nombre_empresa'),
-		'estado_id_estado'=>$this->input->post('estado_id_estado'),
+		'estado'=>$this->input->post('estado'),
+		'municipio'=>$this->input->post('municipio'),
+		'localidad'=>$this->input->post('localidad'),
 		'cp'=>$this->input->post('cp'),
 		'direccion'=>$this->input->post('direccion'),
-		'ciudad'=>$this->input->post('ciudad'),
 		'lada'=>$this->input->post('lada'),
 		'num_telefono'=>$this->input->post('num_telefono'),
 		'ext'=>$this->input->post('ext'),
@@ -107,10 +109,11 @@ class Proveedores_model extends CI_Model
 		   		$data = array (
 			   	'nombre_contacto'=>$this->input->post('nombre_contacto'),
 				'nombre_empresa'=>$this->input->post('nombre_empresa'),
-				'estado_id_estado'=>$this->input->post('estado_id_estado'),
+				'estado'=>$this->input->post('estado'),
+				'municipio'=>$this->input->post('municipio'),
+				'localidad'=>$this->input->post('localidad'),
 				'cp'=>$this->input->post('cp'),
 				'direccion'=>$this->input->post('direccion'),
-				'ciudad'=>$this->input->post('ciudad'),
 				'lada'=>$this->input->post('lada'),
 				'num_telefono'=>$this->input->post('num_telefono'),
 				'ext'=>$this->input->post('ext'),

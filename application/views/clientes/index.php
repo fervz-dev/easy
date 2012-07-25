@@ -59,8 +59,8 @@ $.ajax({
                                   $("#tipo_persona").val(dato[2]);
                                   $("#rfc").val(dato[3]);
                                   $("#estado").val(dato[4]);
-                                  cargarMunicipio(dato[4],dato[5]);              
-                                  cargarLocalidad(dato[5],dato[6]);
+                                  cargarMunicipio('clientes',dato[4],dato[5]);              
+                                  cargarLocalidad('clientes',dato[5],dato[6]);
                                   $("#cp").val(dato[8]);
                                   $("#direccion").val(dato[7]);
                                   $("#lada").val(dato[9]);
@@ -367,66 +367,7 @@ function reloading()
   {
   $("#tbl_clientes").trigger("reloadGrid")
   }
-  function cargarLocalidad (municipio, localidad) {
-     $.ajax({
-                    url:"<?php echo base_url();?>clientes/localidad/"+municipio,
-                    type:"POST",
-                    beforeSend: function(){
-                       $("#ajax_localidad").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
-                    },
-                    success: function(html){
-                            $("#localidad").html(html);
-                            $("#ajax_localidad").html("");
-                            $("#localidad").val(localidad);
-                    }
-                    });
-    
-  }
-  function cargarMunicipio (estado,municipio) {
-      $.ajax({
-                    url:"<?php echo base_url();?>clientes/municipio/"+estado,
-                    type:"POST",  
-                    beforeSend: function(){
-                       $("#ajax_municipio").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
-                    },
-                    success: function(html){
-                            $("#municipio").html(html);
-                            $("#ajax_municipio").html("");
-                            $("#localidades").html("");
-                            $("#municipio").val(municipio);
-
-                    }
-                    });
-  }
-////////////////////////////cargar combos municipios y localidades//////////////////////////////////////
-function cargar_datos_municipios (id) {
-     $.ajax({
-                    url:"<?php echo base_url();?>clientes/municipio/"+id,
-                    type:"POST",  
-                    beforeSend: function(){
-                       $("#ajax_municipio").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
-                    },
-                    success: function(html){
-                            $("#municipio").html(html);
-                            $("#ajax_municipio").html("");
-                            $("#localidades").html("");
-                    }
-                    });
-  }
-  function cargar_datos_localidad (id) {
-     $.ajax({
-                    url:"<?php echo base_url();?>clientes/localidad/"+id,
-                    type:"POST",
-                    beforeSend: function(){
-                       $("#ajax_localidad").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
-                    },
-                    success: function(html){
-                            $("#localidad").html(html);
-                            $("#ajax_localidad").html("");
-                    }
-                    });
-    
-  }
+  
 ///////////////////////////////eventos input//////////////////////////////////////////////////////////
 $(function(){
 $('ul#icons li').hover(
@@ -571,6 +512,66 @@ function validarCamposForm1() {
   }
 
 }
+function cargarLocalidad (municipio, localidad) {
+     $.ajax({
+                    url:"<?php echo base_url();?>clientes/localidad/"+municipio,
+                    type:"POST",
+                    beforeSend: function(){
+                       $("#ajax_localidad").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
+                    },
+                    success: function(html){
+                            $("#localidad").html(html);
+                            $("#ajax_localidad").html("");
+                            $("#localidad").val(localidad);
+                    }
+                    });
+    
+  }
+  function cargarMunicipio (estado,municipio) {
+      $.ajax({
+                    url:"<?php echo base_url();?>clientes/municipio/"+estado,
+                    type:"POST",  
+                    beforeSend: function(){
+                       $("#ajax_municipio").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
+                    },
+                    success: function(html){
+                            $("#municipio").html(html);
+                            $("#ajax_municipio").html("");
+                            $("#localidades").html("");
+                            $("#municipio").val(municipio);
+
+                    }
+                    });
+  }
+////////////////////////////cargar combos municipios y localidades//////////////////////////////////////
+function cargar_datos_municipios (id) {
+     $.ajax({
+                    url:"<?php echo base_url();?>clientes/municipio/"+id,
+                    type:"POST",  
+                    beforeSend: function(){
+                       $("#ajax_municipio").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
+                    },
+                    success: function(html){
+                            $("#municipio").html(html);
+                            $("#ajax_municipio").html("");
+                            $("#localidades").html("");
+                    }
+                    });
+  }
+  function cargar_datos_localidad (id) {
+     $.ajax({
+                    url:"<?php echo base_url();?>clientes/localidad/"+id,
+                    type:"POST",
+                    beforeSend: function(){
+                       $("#ajax_localidad").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
+                    },
+                    success: function(html){
+                            $("#localidad").html(html);
+                            $("#ajax_localidad").html("");
+                    }
+                    });
+    
+  }
 ///////////////////dialogo de confirmacion////////////////////////////////////
   function confirmacion (id,msg) {
 $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'+msg+'</p>');

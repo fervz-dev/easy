@@ -8,7 +8,7 @@ class Proveedores extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-        $this->load->model("estados_model","estados");
+        $this->load->model("direcciones_model","direcciones");
         $this->load->model("proveedores_model","proveedores");
         if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
             redirect(base_url().'inicio');
@@ -19,7 +19,7 @@ class Proveedores extends CI_Controller
 	public function index()
 	{
 
-        $data['estados']=$this->estados->get_estados_all();
+        $data['estados']=$this->direcciones->estados();
         $data['vista']='proveedores/index';
 		$data['titulo']='proveedores';
          $data['vistaa']="vista1";
@@ -69,15 +69,16 @@ class Proveedores extends CI_Controller
            $data->rows[$i]['cell']=array($acciones,
                                     strtoupper($row->nombre_contacto),
                                     strtoupper($row->nombre_empresa),
-                                    strtoupper($row->dsc_estado),
+                                    $row->estado,
+                                    $row->municipio,
+                                    $row->localidad,
                                     strtoupper($row->cp),
-                                    strtoupper($row->ciudad),
                                     strtoupper($row->direccion),
                                     strtoupper($row->lada),
                                     strtoupper($row->num_telefono),
                                     strtoupper($row->ext),
                                     strtoupper($row->fax),
-                                    strtoupper($row->email),
+                                    $row->email,
                                     strtoupper($row->comentario));
 
                                     
@@ -92,10 +93,11 @@ class Proveedores extends CI_Controller
         $row=$this->proveedores->get_id($id);
         echo strtoupper($row->nombre_contacto).'~'.
              strtoupper($row->nombre_empresa).'~'.
-             strtoupper($row->estado_id_estado).'~'.
+             $row->estado.'~'.
+             $row->municipio.'~'.
+             $row->localidad.'~'.
              strtoupper($row->cp).'~'.
              strtoupper($row->direccion).'~'.
-             strtoupper($row->ciudad).'~'.
              strtoupper($row->lada).'~'.
              strtoupper($row->num_telefono).'~'.
              strtoupper($row->ext).'~'.
@@ -128,5 +130,26 @@ class Proveedores extends CI_Controller
             echo 0;
         }
     }
+     public function municipio($estado)
+    {
+        $municipios=$this->direcciones->municipios($estado);
+        $combo = "";
+        $combo= '<option value="">Selecciones...</option>';
+        for ($i=0; $i <count($municipios) ; $i++) { 
+             $combo .= "<option value='".$municipios[$i]["nombre"]."'>".$municipios[$i]["nombre"]."</option>";
+        }
+        echo $combo;
+    }
+    public function localidad($municipio)
+    {
+        $localidades=$this->direcciones->localidades($municipio);
+        $combo = "";
+        $combo= '<option value="">Selecciones...</option>';
+        for ($i=0; $i <count($localidades) ; $i++) { 
+            $combo .= "<option value='".$localidades[$i]["nombre"]."'>".$localidades[$i]["nombre"]."</option>";
+             }
+        echo $combo;
+    }
+
 		
 }
