@@ -10,28 +10,8 @@
 	</tr>
 
 	<tr>
-		<td><label id="labelRight">Caracteristica:</label></td>
-		<td><select id="caracteristica" name="caracteristica">
-				<option value="">Seleccione...</option>
-				<option value="SG">SG</option>
-				<option value="CORRUGADO">CORRUGADO</option>
-			</select>
-		</td>
-	</tr>
-
-	<tr>
-		<td><label id="labelRight">Tipo:</label></td>
-		<td><select id="tipo" name="tipo">
-				<option value="">Seleccione...</option>
-				<option value="LINEA">LINEA</option>
-				<option value="REUTILIZABLE">REUTILIZABLE</option>
-			</select>
-		</td>
-	</tr>
-
-		<tr>
-	<td><label id="labelRight">Grosor:</label></td>
-	<td><select id="tipo_m" name="tipo_m">
+		<td><label id="labelRight">Corrugado:</label></td>
+		<td><select id="tipo_m" name="tipo_m">
 			<option value="">Seleccione...</option>
 
 			<option value="SENCILLO">SENCILLO</option>

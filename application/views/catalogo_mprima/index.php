@@ -1,18 +1,49 @@
-<script type="text/javascript">   
+<script type="text/javascript"> 
+function cargar () {
+  $("#tbl").jqGrid({
+    url:'<?php echo base_url();?>catalogo_mprima/paginacion',
+    datatype: "json",
+    mtype: 'POST',
+                        colNames:['Acciones','NOMBRE','CORRUGADO','ANCHO','LARGO','RESISTENCIA'],
+                        colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:50,resizable:false, sortable:true,search:false,editable:false},
+                                  {name:'nombre', index:'nombre', width:70,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'tipo_m', index:'tipo_m', width:100,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'ancho', index:'ancho', width:60,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'largo', index:'largo', width:60,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:false,editable:true}
+                                ],                             
+    pager: jQuery('#paginacion'),
+    rownumbers:true,
+  rowNum:15,
+    rowList:[10,20,30],
+    imgpath: '<?php echo base_url();?>img/editar.jpg',
+    mtype: "POST",
+    sortname: 'id_cat_mprima',
+    viewrecords: true,
+    sortorder: "asc",
+  editable: true,
+    caption: 'Catalogo de Materia Prima',
+    multiselect: false,
+    height:'auto',
+    loadtext: 'Cargando',
+  width:'100%',
+    //searchurl:'<?php echo base_url();?>empresas/buscando',
+                height:"auto"
+        }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
+        $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
+}
   $(document).ready(function(){
 	$("#tbl").jqGrid({
     url:'<?php echo base_url();?>catalogo_mprima/paginacion',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Acciones','NOMBRE','CARACTERISTICA','TIPO','GROSOR','ANCHO','LARGO','RESISTENCIA'],
-                        colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:170,resizable:false, sortable:true,search:false,editable:false},
-                                  {name:'nombre', index:'nombre', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'caracteristica', index:'caracteristica', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'tipo', index:'tipo', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'tipo_m', index:'tipo_m', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'ancho', index:'ancho', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'largo', index:'largo', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:true,editable:true}
+                        colNames:['Acciones','NOMBRE','CORRUGADO','ANCHO','LARGO','RESISTENCIA'],
+                        colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:50,resizable:false, sortable:true,search:false,editable:false},
+                                  {name:'nombre', index:'nombre', width:70,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'tipo_m', index:'tipo_m', width:100,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'ancho', index:'ancho', width:60,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'largo', index:'largo', width:60,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:false,editable:true}
                                 ],                             
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -49,11 +80,9 @@ $.ajax({
             dato= data.split('~');
 
             $("#nombre").val(dato[0]);
-            $("#caracteristica").val(dato[1]);
-            $("#tipo").val(dato[2]);
-            $("#tipo_m").val(dato[3]);
-            $("#ancho").val(dato[4]);
-            $("#largo").val(dato[5]);
+            $("#tipo_m").val(dato[1]);
+            $("#ancho").val(dato[2]);
+            $("#largo").val(dato[3]);
             $("#resistencia_mprima_id_resistencia_mprima").val(dato[6]);
             },
                         error:function(datos){
@@ -86,7 +115,7 @@ $( "#dialog-procesos" ).dialog({
 
 function reloading()
 {
-  $("tbl").jqGrid('GridUnload');
+
   $("#tbl").trigger("reloadGrid")
 }
 
@@ -99,8 +128,6 @@ function editar(id)
                          type:"POST",
                           url:"<?php echo base_url();?>catalogo_mprima/editar_mprima/"+id,
                           data:{"nombre":$("#nombre").val(),
-                                "caracteristica":$("#caracteristica").val(),
-                                "tipo":$("#tipo").val(),
                                 "tipo_m":$("#tipo_m").val(),
                                 "ancho":$("#ancho").val(),
                                 "largo":$("#largo").val(),
@@ -156,8 +183,9 @@ function delete_id(id)
                                case "1": 
                                $( "#dialog-procesos" ).dialog( "close" );
 
-                               reloading();
-                               notify('El registro se elimino correctamente',500,5000,'aviso');
+                               notify('El registro se ha eliminado correctamente',500,5000,'aviso');
+                                 $("#tbl").jqGrid('GridUnload');
+                                  setTimeout("cargar()",1000);;
                                break;
                                default:
                                $( "#dialog-procesos" ).dialog( "close" );
@@ -182,8 +210,6 @@ $.ajax({
            type:"POST",
             url:"<?php echo base_url();?>catalogo_mprima/guardar?da="+Math.random()*2312,
             data:{"nombre":$("#nombre").val(),
-                  "caracteristica":$("#caracteristica").val(),
-                  "tipo":$("#tipo").val(),
                   "tipo_m":$("#tipo_m").val(),
                   "ancho":$("#ancho").val(),
                   "largo":$("#largo").val(),
@@ -248,8 +274,6 @@ $( "#dialog-procesos" ).dialog({
 function validarCampos () {
 
             nombre=$("#nombre").val();
-            caracteristica=$("#caracteristica").val();
-            tipo=$("#tipo").val();
             tipo_m=$("#tipo_m").val();
             ancho=$("#ancho").val();
             largo=$("#largo").val();
@@ -257,18 +281,7 @@ function validarCampos () {
             if (validarVacio(nombre)==false) {
               notify('* El campo <strong>Nombre</strong> no puede estar vacio!!!',500,5000,'error');
               $("#nombre").focus();
-              return false;
-
-            }else if (validarCombo(caracteristica)==false) {
-              notify('* Debe seleccionar almenos una opcion de la lista <strong>Caracteristica</strong>',500,5000,'error');
-              $("#caracteristica").focus();
-              return false;
-    
-            }else if (validarCombo(tipo)==false) {
-              notify('* Debe seleccionar almenos una opcion de la <strong>Tipo</strong>',500,5000,'error');
-              $("#tipo").focus();
-              return false;
-              
+              return false;    
             }else if (validarCombo(tipo_m)==false) {
               notify('* Debe seleccionar almenos una opcion de la lista <strong>Grosor</strong>',500,5000,'error');
               $("#tipo_m").focus();

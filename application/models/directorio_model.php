@@ -14,17 +14,15 @@ class Directorio_model extends CI_Model
 	{
 		$query = $this->db->query("SELECT
 										direcciones.id_direcciones,
-										estados.dsc_estado,
+										direcciones.estado,
+										direcciones.municipio,
+										direcciones.localidad,
 										direcciones.direccion,
-										direcciones.colonia,
-										direcciones.ciudad,
-										direcciones.observaciones
+										direcciones.comentario
 										FROM
-										direcciones ,
-										estados
+										direcciones
 										WHERE
-										direcciones.clientes_id_clientes = $id AND
-										estados.id_estado = direcciones.estado_id_estado
+										direcciones.clientes_id_clientes = $id 
 									ORDER BY $sidx $sord 
 									LIMIT $start, $limite;"
 									);
@@ -35,11 +33,11 @@ class Directorio_model extends CI_Model
     {
         $query = $this->db->query("SELECT
         								direcciones.id_direcciones,
-										direcciones.estado_id_estado,
+										direcciones.estado,
+										direcciones.municipio,
+										direcciones.localidad,
 										direcciones.direccion,
-										direcciones.colonia,
-										direcciones.ciudad,
-										direcciones.observaciones
+										direcciones.comentario
 										FROM
 										direcciones
 										WHERE
@@ -53,12 +51,12 @@ class Directorio_model extends CI_Model
    public function editar()
    {
 	   	$data = array (
-		'estado_id_estado'=>$this->input->post('estado_id_estado_d'),
-		'direccion'=>$this->input->post('direccion_d'),
-		'colonia'=>$this->input->post('colonia_d'),
-		'ciudad'=>$this->input->post('ciudad_d'),
-		'observaciones'=>$this->input->post('observaciones_d')
-	);
+						'estado'=>$this->input->post('estado_d'),
+						'municipio'=>$this->input->post('municipio_d'),
+						'localidad'=>$this->input->post('localidad_d'),
+						'direccion'=>$this->input->post('direccion_d'),
+						'comentario'=>$this->input->post('comentario_d'),
+);
 	$id=$this->input->post('id_direcciones');
 
 	$this->db->where('id_direcciones', $id);
@@ -69,11 +67,11 @@ class Directorio_model extends CI_Model
    {
 		   			$data = array (
 		   							'clientes_id_clientes'=>$this->input->post('clientes_id_clientes'),
-									'estado_id_estado'=>$this->input->post('estado_id_estado_d'),
+									'estado'=>$this->input->post('estado_d'),
+									'municipio'=>$this->input->post('municipio_d'),
+									'localidad'=>$this->input->post('localidad_d'),
 									'direccion'=>$this->input->post('direccion_d'),
-									'colonia'=>$this->input->post('colonia_d'),
-									'ciudad'=>$this->input->post('ciudad_d'),
-									'observaciones'=>$this->input->post('observaciones_d'),
+									'comentario'=>$this->input->post('comentario_d'),
 									'activo'=>1
 									);
    		$this->db->insert('direcciones', $data);
@@ -99,5 +97,11 @@ class Directorio_model extends CI_Model
 				        $fila = $query->row();
 				          return $fila;    
 	}
+public function eliminar_direccion($id)
+   {
+	    $data = array('id_direcciones' => $id);
+		$this->db->delete('direcciones', $data);
+		return $this->db->affected_rows();
+   }
 }
 ?>

@@ -8,8 +8,8 @@ class Oficina extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
+        $this->load->model('direcciones_model','direcciones');
         $this->load->model("tipo_oficina_model","tipo_oficina");
-        $this->load->model("estados_model","estados");
 		$this->load->model("oficina_model", "oficina");
         if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
             redirect(base_url().'inicio');
@@ -19,17 +19,15 @@ class Oficina extends CI_Controller
 
 	public function index()
 	{
+        $data['estados']=$this->direcciones->estados();
         $data['tipo_oficinas']=$this->tipo_oficina->get_tipo_oficinas_all();
-        $data['estados']=$this->estados->get_estados_all();
 		$data['vista']='oficina/index';
 		$data['titulo']='Oficinas';
-        $data['vistaa']="vista1";
-        $data['vistab']="m2";
 		$this->load->view('principal',$data);
 	}
 	public function paginacion()
 	{
-		 $page = $_POST['page'];  // Almacena el numero de pagina actual
+		$page = $_POST['page'];  // Almacena el numero de pagina actual
         $limite = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
         $sidx = $_POST['sidx'];  // Almacena el indice por el cual se hará la ordenación de los datos
         $sord = $_POST['sord'];  // Almacena el modo de ordenación
@@ -67,16 +65,22 @@ class Oficina extends CI_Controller
     	   $onclikedit="onclick=edit('".$row->id_oficina."')";
      	   $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
            $data->rows[$i]['cell']=array($acciones,
-                                        strtoupper($row->nombre_oficina), 
                                         strtoupper($row->nombre),
-                                        strtoupper($row->direccion),
-                                        strtoupper($row->colonia),
-                                        strtoupper($row->telefono),
+                                        strtoupper($row->nombre_oficina), 
                                         strtoupper($row->rfc),
-                                        strtoupper($row->observaciones),
-                                        strtoupper($row->ciudad),
-                                        strtoupper($row->dsc_estado),
-                                        strtoupper($row->cp)
+                                        $row->estado,
+                                        $row->municipio,
+                                        $row->localidad,
+                                        strtoupper($row->direccion),
+                                        strtoupper($row->cp),
+                                        strtoupper($row->lada),
+                                        strtoupper($row->num_telefono),
+                                        strtoupper($row->ext),
+                                        strtoupper($row->fax),
+                                        $row->email,
+                                        $row->comentario,
+                                        $row->coordx,
+                                        $row->coordy,
                                         );
            $i++;
         }
@@ -87,19 +91,22 @@ class Oficina extends CI_Controller
     public function get($id)
     {
         $row=$this->oficina->get_id($id);
-        echo strtoupper($row->nombre_oficina).'~'.
-             strtoupper($row->tipo_oficina_id_tipo_oficina).'~'.
-             strtoupper($row->direccion).'~'.
-             strtoupper($row->colonia).'~'.
-             strtoupper($row->telefono).'~'.
-             strtoupper($row->rfc).'~'.
-             strtoupper($row->ciudad).'~'.
-             strtoupper($row->estado_id_estado).'~'.
-             strtoupper($row->cp).'~'.
-             strtoupper($row->logo).'~'.
-             strtoupper($row->observaciones).'~'.
-             strtoupper($row->coordx).'~'.
-             strtoupper($row->coordy);
+        echo strtoupper($row->tipo_oficina_id_tipo_oficina).'~'.
+            strtoupper($row->nombre_oficina).'~'. 
+            strtoupper($row->rfc).'~'.
+            $row->estado.'~'.
+            $row->municipio.'~'.
+            $row->localidad.'~'.
+            strtoupper($row->direccion).'~'.
+            strtoupper($row->cp).'~'.
+            strtoupper($row->lada).'~'.
+            strtoupper($row->num_telefono).'~'.
+            strtoupper($row->ext).'~'.
+            strtoupper($row->fax).'~'.
+            $row->email.'~'.
+            $row->comentario.'~'.
+            $row->coordx.'~'.
+            $row->coordy;
     }
 
     public function editar_oficina($id)

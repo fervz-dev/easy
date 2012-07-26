@@ -19,7 +19,7 @@
 <tr>
 	<td><label>Oficina</label></td>
 	<td><select name="oficina"  id="oficina">
-		<option value="0">Seleccione...</option>
+		<option value="">Seleccione...</option>
 		<?php foreach ($oficinas as $ofn) { ?>
 		<option value="<?php echo $ofn['id_oficina']; ?>"><?php echo $ofn['nombre_oficina'] ?></option>
 		<?php } ?>

@@ -4,6 +4,10 @@
 function alta_directorio()
 {
 document.directorio.reset();
+///se  reinicializan los contenedores de municipios y localidades///////////////////////////
+$("#localidad_d").html("");
+$("#municipio_d").html("");
+////////////////////////////////////////////////////////////////////////////////////////////
 $( "#editar_directorio" ).dialog({
       autoOpen: false,
       height:'auto',
@@ -11,7 +15,7 @@ $( "#editar_directorio" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-            if (validarCampos()==true) {
+            if (validarCampos_direccion()==true) {
           guardar_nuevo();
         }
           },
@@ -45,6 +49,43 @@ $( "#editar_directorio" ).dialog('open');
 
 // $("#guardar_edit").fadeIn;
 }*/
+function delet_dir (id) {
+  msg="Este artículo se eliminara. ¿Estás seguro?";
+  confirmacion(id,msg);
+}
+function delete_dir (id) {
+  $.ajax({
+                      async:true,cache: false,
+                      beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+                      type:"POST",
+                      url:"<?php echo base_url();?>clientes/eliminar_direccion/"+id,
+                      datatype:"html",
+                      success:function(data, textStatus){
+
+                             switch(data){
+                               case "0": 
+                                notify("Error al procesar los datos " ,500,5000,'error');
+                               break;
+                               case "1": 
+                                $( "#editar_directorio" ).dialog( "close" );
+                                notify('El registro se ha eliminado correctamente',500,5000,'aviso');
+                                 $("#tbl_directorio").jqGrid('GridUnload');
+                                 id_direccion=$("#id_cliente_").val();
+                                  setTimeout("directorio(id_direccion)",1000);
+
+                               break;
+                               default:
+                                $( "#editar_directorio" ).dialog( "close" );
+                               break; 
+
+                              }//switch
+                             },
+                        error:function(datos){
+                              notify("Error inesperado" ,500,5000,'error');
+                             }//Error
+                         });//Ajax
+  
+}
 
 ///////////////////////////////  Guardar Directorio ////////////////////////////////////////////////
 
@@ -57,10 +98,11 @@ $.ajax({
           type:"POST",
           url:"<?php echo base_url();?>clientes/guardar_nuevo?da="+Math.random()*2312,
           data:{"clientes_id_clientes":$("#id_cliente_").val(),
-                "estado_id_estado_d":$("#estado_id_estado_d").val(),
-                "direccion_d":$("#direccion_d").val(),    
-                "colonia_d":$("#colonia_d").val(),
-                "ciudad_d":$("#ciudad_d").val()},
+                  "estado_d":$("#estado_d").val(),
+                  "municipio_d":$("#municipio_d").val(),
+                  "localidad_d":$("#localidad_d").val(),
+                  "direccion_d":$("#direccion_d").val(),
+                  "comentario_d":$("#comentario_d").val()},
 
           cache: false,
           datatype:"html",
@@ -74,14 +116,20 @@ $.ajax({
           
           case "1": 
                   $( "#tbl_directorio" ).trigger("reloadGrid");
-                  $( "#editar_directorio" ).fadeOut();
+                  notify('El registro se ha guardado correctamente',500,5000,'aviso');
+                  $( "#editar_directorio" ).dialog( "close" );
           break;
+          default:
+             $( "#editar_directorio" ).dialog( "close" );
+             var error='Error'+data;
+             notify(error ,500,5000,'error');
+             break; 
           
           }//switch
           },
           error:function(datos)
                 {
-                  notify("Error al procesar los datos " ,500,5000,'error');
+                  notify("Error al inesperado" ,500,5000,'error');
                 }//Error
           });//Ajax
            
@@ -105,21 +153,39 @@ $.ajax({
 
             dato= data.split('~');
                                   $("#id_direcciones").val(dato[0]);
-                                  $("#estado_id_estado_d").val(dato[1]);
-                                  $("#direccion_d").val(dato[2]);
-                                  $("#colonia_d").val(dato[3]);
-                                  $("#ciudad_d").val(dato[4]);
-                                  $("#observaciones_d").val(dato[5]);
+                                  $("#estado_d").val(dato[1]);
+                                  cargarMunicipio_direccion(dato[1],dato[2]);              
+                                  cargarLocalidad_direccion(dato[2],dato[3]);
+                                  $("#direccion_d").val(dato[4]);
+                                  $("#comentario_d").val(dato[5]);
                                               },
                         error:function(datos){
-                        notify("Error al procesar los datos " ,500,5000,'error');
-            return false;
+                         var error='Error'+data;
+                          notify(error ,500,5000,'error');
+                          return false;
                         }//Error
                         });//Ajax
-$( "#editar_directorio" ).fadeIn();
-
+$( "#editar_directorio" ).dialog({
+      autoOpen: false,
+      height:'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+            if (validarCampos_direccion()==true) {
+          editar_directorio_all(id);
+        }
+          },
+          Cancelar:function()
+          {   
+        $( "#editar_directorio" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#editar_directorio" ).dialog( "open" );
 }
-//Funcion editar empleado
+
 
 //////////////////////////////////////////////////////////////////////////////////////
 
@@ -133,11 +199,12 @@ function editar_directorio_all()
                         beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
                          type:"POST",
                           url:"<?php echo base_url();?>clientes/editar_directorio_all/",
-                          data:{"estado_id_estado_d":$("#estado_id_estado_d").val(),
-                                "direccion_d":$("#direccion_d").val(),    
-                                "colonia_d":$("#colonia_d").val(),
-                                "ciudad_d":$("#ciudad_d").val(),
-                                "observaciones_d":$("#observaciones_d").val(),
+                          data:{                                
+                                "estado_d":$("#estado_d").val(),
+                                "municipio_d":$("#municipio_d").val(),
+                                "localidad_d":$("#localidad_d").val(),
+                                "direccion_d":$("#direccion_d").val(),
+                                "comentario_d":$("#comentario_d").val(),
                                 "id_direcciones":$("#id_direcciones").val(),
                               },
                     cache: false,
@@ -150,9 +217,8 @@ function editar_directorio_all()
                                break;
                                case "1": 
                             $( "#tbl_directorio" ).trigger("reloadGrid");
-                             $( "#editar_directorio" ).fadeOut();
-
-
+                            $( "#editar_directorio" ).dialog( "close" );
+                            notify('El registro se edito correctamente',500,5000,'aviso');
                             break;
                               }//switch
                              },
@@ -161,9 +227,7 @@ function editar_directorio_all()
                              }//Error
                          });//Ajax
 }
-function validarCampos() {
-  // body...
-}
+
 
 ////////////////////////////////////////////////////////////////////////////////////
 function directorio (id) {
@@ -179,17 +243,17 @@ function directorio (id) {
 		      //  $data->rows[$i]['cell']=array($acciones,strtoupper($row->nombre),strtoupper($row->descripcion),strtoupper($row->direccion),strtoupper($row->colonia),strtoupper($row->poblacion),strtoupper($row->contacto));
                         colNames:['Acciones',
                                     'ESTADO',
-                                    'DIRECCION',
-                                    'COLONIA',
-                                    'CIUDAD',
-                                    'OBSERVACIONES'
+                                    'MUNICIPIO',
+                                    'LOCALIDAD',
+                                    'DIRECCION', 
+                                    'COMENTARIO'
                                      ],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:false, align:"center", search:false},
-                                  {name:'dsc_estado', index:'dsc_estado', width:100,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'direccion', index:'direccion', width:80,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'colonia', index:'colonia', width:100,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'ciudad', index:'ciudad', width:100,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'observaciones', index:'observaciones', width:100,resizable:false, sortable:true,search:false,editable:true}
+                                  {name:'estado', index:'estado', width:100,resizable:false, sortable:true,search:false,editable:false},
+                                  {name:'municipio', index:'municipio', width:80,resizable:false, sortable:true,search:false,editable:false},
+                                  {name:'localidad', index:'localidad', width:80,resizable:false, sortable:true,search:false,editable:false},
+                                  {name:'direccion', index:'direccion', width:90,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'comentario', index:'comentario', width:100,resizable:false, sortable:true,search:false,editable:true}
                                 ],                             
     pager: jQuery('#paginacion_directorio'),
     postData: {id: id},  
@@ -216,7 +280,137 @@ function directorio (id) {
     // console.log( typeof($('#tb1_directorio')));
     
 }
+function cargarLocalidad_direccion (municipio, localidad) {
+     $.ajax({
+                    url:"<?php echo base_url();?>direcciones/localidad/"+municipio,
+                    type:"POST",
+                    beforeSend: function(){
+                       $("#ajax_localidad_d").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
+                    },
+                    success: function(html){
+                            $("#localidad_d").html(html);
+                            $("#ajax_localidad_d").html("");
+                            $("#localidad_d").val(localidad);
+                    }
+                    });
+    
+  }
+  function cargarMunicipio_direccion (estado,municipio) {
+      $.ajax({
+                    url:"<?php echo base_url();?>direcciones/municipio/"+estado,
+                    type:"POST",  
+                    beforeSend: function(){
+                       $("#ajax_municipio_d").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
+                    },
+                    success: function(html){
+                            $("#municipio_d").html(html);
+                            $("#ajax_municipio_d").html("");
+                            $("#localidad_d").html("");
+                            $("#municipio_d").val(municipio);
 
+                    }
+                    });
+  }
+////////////////////////////cargar combos municipios y localidades//////////////////////////////////////
+function cargar_datos_municipios_direccion (id) {
+     $.ajax({
+                    url:"<?php echo base_url();?>direcciones/municipio/"+id,
+                    type:"POST",  
+                    beforeSend: function(){
+                       $("#ajax_municipio_d").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
+                    },
+                    success: function(html){
+                            $("#municipio_d").html(html);
+                            $("#ajax_municipio_d").html("");
+                            $("#localidad_d").html("");
+                    }
+                    });
+  }
+  function cargar_datos_localidad_direccion (id) {
+     $.ajax({
+                    url:"<?php echo base_url();?>direcciones/localidad/"+id,
+                    type:"POST",
+                    beforeSend: function(){
+                       $("#ajax_localidad_d").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
+                    },
+                    success: function(html){
+                            $("#localidad_d").html(html);
+                            $("#ajax_localidad_d").html("");
+                    }
+                    });
+    
+  }
+///////////////////dialogo de confirmacion////////////////////////////////////
+  function confirmacion (id,msg) {
+$('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'+msg+'</p>');
+
+    $( "#dialog-confirm" ).dialog({
+      resizable: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+        "Eliminar": function() {
+          $( this ).dialog( "close" );
+          delete_dir(id);
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+    }
+//////////////////////////////////////////////////////////////////////////////
+///////////////////////////////eventos input//////////////////////////////////////////////////////////
+$(function(){
+$('ul#icons li').hover(
+function() { $(this).addClass('ui-state-hover'); },
+function() { $(this).removeClass('ui-state-hover'); }
+); 
+});
+function tip (tipo) {
+  if (tipo=='direccion') {
+    tipCampos('Tipo de vialidad, Nombre vialidad, Numero interior y/o exterior, Asentamiento' ,500,8000,'tip');
+  }
+}
+//////////////////////////////validacion////////////////////////////////////////////////////////////////
+function validarCampos_direccion() {
+
+  estado=$("#estado_d").val();
+  municipio=$("#municipio_d").val();
+  localidad=$("#localidad_d").val();
+  direccion=$("#direccion_d").val();
+  comentario=$("#comentario_d").val();
+  
+  /*validacion estado*/
+  if (validarCombo(estado)==false) {
+    notify('Debe seleccionar almenos una opcion de la lista <strong>ESTADOS</strong>',500,5000,'error');
+    $("#estado_d").focus();
+    return false;
+  }
+  /*validar municipio*/
+  else if (validarCombo(municipio)==false) {
+    notify('Debe seleccionar almenos una opcion de la lista <strong>MUNICIPIO</strong>',500,5000,'error');
+    $("#municipio_d").focus();
+    return false;
+  }
+  /*validar localidad*/
+  else if (validarCombo(localidad)==false) {
+    notify('Debe seleccionar almenos una opcion de la lista <strong>LOCALIDAD</strong>',500,5000,'error');
+    $("#localidad_d").focus();
+    return false;
+  }
+  /*validar direccion*/
+  else if (validarVacio(direccion)==false) {
+    notify('* El campo <strong>DIRECCION</strong> no puede estar vacio!!!',500,5000,'error');
+    $("#direccion_d").focus();
+    return false;
+  }
+ else{
+    return true;
+  }
+
+}
    </script>
    <div>
      <table>

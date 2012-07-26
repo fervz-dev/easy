@@ -130,26 +130,5 @@ class Proveedores extends CI_Controller
             echo 0;
         }
     }
-     public function municipio($estado)
-    {
-        $municipios=$this->direcciones->municipios($estado);
-        $combo = "";
-        $combo= '<option value="">Selecciones...</option>';
-        for ($i=0; $i <count($municipios) ; $i++) { 
-             $combo .= "<option value='".$municipios[$i]["nombre"]."'>".$municipios[$i]["nombre"]."</option>";
-        }
-        echo $combo;
-    }
-    public function localidad($municipio)
-    {
-        $localidades=$this->direcciones->localidades($municipio);
-        $combo = "";
-        $combo= '<option value="">Selecciones...</option>';
-        for ($i=0; $i <count($localidades) ; $i++) { 
-            $combo .= "<option value='".$localidades[$i]["nombre"]."'>".$localidades[$i]["nombre"]."</option>";
-             }
-        echo $combo;
-    }
-
 		
 }

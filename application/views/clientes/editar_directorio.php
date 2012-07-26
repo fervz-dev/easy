@@ -1,21 +1,25 @@
 <form name="directorio" id="directorio">
 <table>
 	<tr>
-		<td><label>Estado</label></td>
-		<td><select  name="estado_id_estado_d" id="estado_id_estado_d">
+		<td><label id="labelRight">Estado:</label></td>
+		<td><select  name="estado_d" id="estado_d" onchange="cargar_datos_municipios_direccion(this.value);">
 			<option value="">Seleccione...</option>
 			<?php foreach ($estados as $est) { ?>
-			<option value="<?php echo $est['id_estado']; ?>"><?php echo $est['dsc_estado'] ?></option>
+			<option value="<?php echo $est['nombre']; ?>"><?php echo $est['nombre'] ?></option>
 			<?php } ?>
 		</select> 
 	</tr>
+
 	<tr>
-		<td><label>Ciudad</label></td>
-		<td><input name="ciudad_d" type="text" id="ciudad_d" size="35"></td>
+		<td><label id="labelRight">Municipio:</label></td>
+		<td><select id="municipio_d" name="municipio_d" onchange="cargar_datos_localidad_direccion(this.value);"></select></td>
+			<td id="ajax_municipio_d"></td>
 	</tr>
+
 	<tr>
-		<td><label>Colonia</label></td>
-		<td><input name="colonia_d" type="text" id="colonia_d" size="35"></td>
+		<td><label id="labelRight">Localidad:</label></td>
+			<td><select id="localidad_d" name="localidad_d"></select></td>
+			<td id="ajax_localidad_d"></td>
 	</tr>
 
 	<tr>
@@ -24,12 +28,9 @@
 	</tr>
 	<tr>
 		<td><label>Observaciones</label></td>
-		<td><input name="observaciones_d" type="text" id="observaciones_d" size="35"></td>
+		<td><input name="comentario_d" type="text" id="comentario_d" size="35"></td>
 		<input name="id_direcciones" type="hidden" id="id_direcciones" size="35">
 
-	</tr>
-	<div id="guardar_dir" style="display:none"><tr><td> </td> <td><input name="guardar_dir" type="button" id="guardar_dir" value="Guardar Nuevo" onClick="guardar_nuevo()"/></td></tr></div>
-	<div id="guardar_edit" style="display:none"><tr><td> </td> <td><input name="guardar_edit" type="button" id="guardar_edit" value="Guardar editado" onClick="editar_directorio_all()"/></td></tr></div>
-	
+	</tr>	
 </table>
 </form>

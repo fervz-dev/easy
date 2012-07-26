@@ -29,8 +29,6 @@ class Pedidos_proveedor extends CI_Controller
         //$data['mprima']=$this->catalogo_mprima->get_cat_mprima();
         $data['vista']='pedidos_proveedores/index';
 		$data['titulo']='Pedidos Proveedores';
-        $data['vistaa']="vista2";
-        $data['vistab']="m3";
 		$this->load->view('principal',$data);
 	}
 

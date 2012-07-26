@@ -76,7 +76,8 @@
 		function oculta(id)
 		{
 		$(id).fadeOut();
-		}	
+		}
+			
 
     </script>
     <!-- local gen ES -->

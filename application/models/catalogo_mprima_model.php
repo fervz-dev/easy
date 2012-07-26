@@ -13,8 +13,7 @@ class Catalogo_mprima_model extends CI_Model
     {
         $query = $this->db->query("SELECT cprima.id_cat_mprima,
                                     cprima.nombre,
-                                    cprima.caracteristica,
-                                    cprima.tipo,
+
                                     cprima.tipo_m,
                                     cprima.ancho,
                                     cprima.largo,
@@ -22,7 +21,6 @@ class Catalogo_mprima_model extends CI_Model
                                     FROM cat_mprima AS cprima, resistencia_mprima AS resistencia
                                     WHERE resistencia.id_resistencia_mprima=cprima.resistencia_mprima_id_resistencia_mprima
                                     AND cprima.activo = 1 
-                                    AND cprima.tipo = 'LINEA' 
                                     ORDER BY $sidx $sord 
                                     LIMIT $start, $limite;");
                                 return ($query->num_rows() > 0)? $query->result() : NULL;
@@ -45,8 +43,6 @@ public function get_resistencia_all()
     {
         $query = $this->db->query("SELECT
                                         cat_mprima.nombre,
-                                        cat_mprima.caracteristica,
-                                        cat_mprima.tipo,
                                         cat_mprima.tipo_m,
                                         cat_mprima.ancho,
                                         cat_mprima.largo,
@@ -70,11 +66,9 @@ public function get_resistencia_all()
    {
         $data = array (
         'nombre'=>$this->input->post('nombre'),
-        'caracteristica'=>$this->input->post('caracteristica'),
         'ancho'=>$this->input->post('ancho'),
         'largo'=>$this->input->post('largo'),
         'resistencia_mprima_id_resistencia_mprima'=>$this->input->post('resistencia_mprima_id_resistencia_mprima'),
-        'tipo'=>$this->input->post('tipo'),
         'tipo_m'=>$this->input->post('tipo_m')
     );
 
@@ -94,11 +88,9 @@ public function get_resistencia_all()
    {
         $data = array (
         'nombre'=>$this->input->post('nombre'),
-        'caracteristica'=>$this->input->post('caracteristica'),
         'ancho'=>$this->input->post('ancho'),
         'largo'=>$this->input->post('largo'),
         'resistencia_mprima_id_resistencia_mprima'=>$this->input->post('resistencia_mprima_id_resistencia_mprima'),
-        'tipo'=>$this->input->post('tipo'),
         'tipo_m'=>$this->input->post('tipo_m'),
         'activo'=>1
         );

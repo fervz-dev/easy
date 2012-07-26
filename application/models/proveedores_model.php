@@ -27,8 +27,7 @@ class Proveedores_model extends CI_Model
 										proveedores.email,
 										proveedores.comentario
 										FROM
-										proveedores ,
-										estados
+										proveedores
 										WHERE
 										proveedores.activo = 1 
 										ORDER BY $sidx $sord 
