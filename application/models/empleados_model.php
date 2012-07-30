@@ -12,11 +12,29 @@ class Empleados_model extends CI_Model
 
 	public function get_empleado($sidx, $sord, $start, $limite)
 	{
-		$query = $this->db->query("SELECT ob.id_obrero, ob.nombre_obrero, ob.a_paterno, ob.a_materno, ob.fecha_nacimiento, ob.direccion, ob.celular, ob.telefono_casa, pt.nombre, ofn.nombre_oficina,ob.estado_civil,ob.sexo, es.dsc_estado, ob.colonia, ob.ciudad
-									FROM obrero ob, puestos pt, oficina ofn, estados es
+		$query = $this->db->query("SELECT 	ob.id_obrero,
+											ob.nombre_obrero,
+											ob.a_paterno,
+											ob.a_materno,
+											ob.fecha_nacimiento,
+											ob.estado_civil,
+											ob.sexo,
+											ob.estado,
+											ob.municipio,
+											ob.localidad,
+											ob.cp,
+											ob.direccion,
+											ob.lada,										
+											ob.num_telefono,
+											ob.celular,
+											ob.email,
+											pt.nombre,
+											ofn.nombre_oficina,
+											ob.comentario,
+											ob.fecha_ingreso
+									FROM obrero ob, puestos pt, oficina ofn
 									WHERE ob.puestos_id_tipo_puesto = pt.id_tipo_puesto
 									AND ob.oficina_id_oficina = ofn.id_oficina
-									AND ob.estado_id_estado = es.id_estado
 									AND ob.activo = 1
 									ORDER BY $sidx $sord 
 									LIMIT $start, $limite;"
@@ -31,18 +49,23 @@ class Empleados_model extends CI_Model
 										obrero.a_paterno,
 										obrero.a_materno,
 										obrero.fecha_nacimiento,
-										obrero.direccion,
-										obrero.celular,
-										obrero.telefono_casa,
-										obrero.puestos_id_tipo_puesto,
-										obrero.oficina_id_oficina,
 										obrero.estado_civil,
 										obrero.sexo,
-										obrero.estado_id_estado,
-										obrero.colonia,
-										obrero.ciudad
+										obrero.estado,
+										obrero.municipio,
+										obrero.localidad,
+										obrero.cp,
+										obrero.direccion,
+										obrero.lada,										
+										obrero.celular,
+										obrero.num_telefono,
+										obrero.email,
+										obrero.puestos_id_tipo_puesto,
+										obrero.oficina_id_oficina,
+										obrero.comentario,
+										obrero.fecha_ingreso
 										FROM
-										obrero, oficina
+										obrero
 										WHERE
 										obrero.id_obrero = $id 
 										AND	obrero.activo = 1");
@@ -57,16 +80,21 @@ class Empleados_model extends CI_Model
 		'a_paterno'=>$this->input->post('a_paterno'),
 		'a_materno'=>$this->input->post('a_materno'),
 		'fecha_nacimiento'=>$this->input->post('fecha_nacimiento'),
-		'direccion'=>$this->input->post('direccion'),
-		'celular'=>$this->input->post('celular'),
-		'telefono_casa'=>$this->input->post('telefono_casa'),
-		'puestos_id_tipo_puesto'=>$this->input->post('puestos_id_tipo_puesto'),
-		'oficina_id_oficina'=>$this->input->post('oficina_id_oficina'),
 		'estado_civil'=>$this->input->post('estado_civil'),
 		'sexo'=>$this->input->post('sexo'),
-		'estado_id_estado'=>$this->input->post('estado_id_estado'),
-		'colonia'=>$this->input->post('colonia'),
-		'ciudad'=>$this->input->post('ciudad')
+		'estado'=>$this->input->post('estado'),
+		'municipio'=>$this->input->post('municipio'),
+		'localidad'=>$this->input->post('localidad'),
+		'direccion'=>$this->input->post('direccion'),
+		'cp'=>$this->input->post('cp'),
+		'lada'=>$this->input->post('lada'),
+		'num_telefono'=>$this->input->post('num_telefono'),
+		'celular'=>$this->input->post('celular'),
+		'email'=>$this->input->post('email'),
+		'puestos_id_tipo_puesto'=>$this->input->post('puestos_id_tipo_puesto'),
+		'oficina_id_oficina'=>$this->input->post('oficina_id_oficina'),
+		'comentario'=>$this->input->post('comentario')
+
 	);
 
 	$this->db->where('id_obrero', $id);
@@ -80,16 +108,21 @@ class Empleados_model extends CI_Model
 						'a_paterno'=>$this->input->post('a_paterno'),
 						'a_materno'=>$this->input->post('a_materno'),
 						'fecha_nacimiento'=>$this->input->post('fecha_nacimiento'),
-						'direccion'=>$this->input->post('direccion'),
-						'celular'=>$this->input->post('celular'),
-						'telefono_casa'=>$this->input->post('telefono_casa'),
-						'puestos_id_tipo_puesto'=>$this->input->post('puestos_id_tipo_puesto'),
-						'oficina_id_oficina'=>$this->input->post('oficina_id_oficina'),
 						'estado_civil'=>$this->input->post('estado_civil'),
 						'sexo'=>$this->input->post('sexo'),
-						'estado_id_estado'=>$this->input->post('estado_id_estado'),
-						'colonia'=>$this->input->post('colonia'),
-						'ciudad'=>$this->input->post('ciudad'),
+						'estado'=>$this->input->post('estado'),
+						'municipio'=>$this->input->post('municipio'),
+						'localidad'=>$this->input->post('localidad'),
+						'cp'=>$this->input->post('cp'),
+						'direccion'=>$this->input->post('direccion'),
+						'lada'=>$this->input->post('lada'),
+						'num_telefono'=>$this->input->post('num_telefono'),
+						'celular'=>$this->input->post('celular'),
+						'email'=>$this->input->post('email'),
+						'puestos_id_tipo_puesto'=>$this->input->post('puestos_id_tipo_puesto'),
+						'oficina_id_oficina'=>$this->input->post('oficina_id_oficina'),
+						'comentario'=>$this->input->post('comentario'),
+						'fecha_ingreso'=>date('y-m-d'),
 						'activo'=>1
 						);
    		$this->db->insert('obrero', $data);

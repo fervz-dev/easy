@@ -2,7 +2,7 @@
 
 class Reutilizable_ingreso_model extends CI_Model
 {
-   
+
     function __construct()
 {
 	parent::__construct();
@@ -13,7 +13,7 @@ class Reutilizable_ingreso_model extends CI_Model
     {
         $query = $this->db->query("SELECT cprima.id_cat_mprima,
                                     cprima.nombre,
-                                    cprima.caracteristica,
+                                    -- cprima.caracteristica,
                                     -- cprima.tipo,
                                     cprima.tipo_m,
                                     cprima.ancho,
@@ -26,9 +26,9 @@ class Reutilizable_ingreso_model extends CI_Model
 
                                     FROM cat_mprima_reutilizable AS cprima, resistencia_mprima AS resistencia
                                     WHERE resistencia.id_resistencia_mprima=cprima.resistencia_mprima_id_resistencia_mprima
-                                    AND cprima.activo = 1 
-                                    AND cprima.tipo = 'reutilizable' 
-                                    ORDER BY $sidx $sord 
+                                    AND cprima.activo = 1
+                                    AND cprima.tipo = 'reutilizable'
+                                    ORDER BY $sidx $sord
                                     LIMIT $start, $limite;");
                                 return ($query->num_rows() > 0)? $query->result() : NULL;
     }
@@ -50,7 +50,7 @@ public function get_resistencia_all()
     {
         $query = $this->db->query("SELECT
                                         cat_mprima.nombre,
-                                        cat_mprima.caracteristica,
+                                        -- cat_mprima.caracteristica,
                                         -- cat_mprima.tipo,
                                         cat_mprima.tipo_m,
                                         cat_mprima.ancho,
@@ -71,14 +71,14 @@ public function get_resistencia_all()
                                         ORDER BY
                                         cat_mprima.nombre ASC");
         $fila = $query->row();
-          return $fila;    
+          return $fila;
     }
 
    public function editar($id)
    {
         $data = array (
         'nombre'=>$this->input->post('nombre'),
-        'caracteristica'=>$this->input->post('caracteristica'),
+        // 'caracteristica'=>$this->input->post('caracteristica'),
         'ancho'=>$this->input->post('ancho'),
         'largo'=>$this->input->post('largo'),
         'resistencia_mprima_id_resistencia_mprima'=>$this->input->post('resistencia_mprima_id_resistencia_mprima'),
@@ -106,7 +106,7 @@ public function get_resistencia_all()
    {
         $data = array (
         'nombre'=>$this->input->post('nombre'),
-        'caracteristica'=>$this->input->post('caracteristica'),
+        // 'caracteristica'=>$this->input->post('caracteristica'),
         'ancho'=>$this->input->post('ancho'),
         'largo'=>$this->input->post('largo'),
         'resistencia_mprima_id_resistencia_mprima'=>$this->input->post('resistencia_mprima_id_resistencia_mprima'),
@@ -119,7 +119,7 @@ public function get_resistencia_all()
         'activo'=>1
         );
         $this->db->insert('cat_mprima_reutilizable', $data);
-        return $this->db->affected_rows(); 
+        return $this->db->affected_rows();
    }
 
 }

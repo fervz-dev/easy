@@ -1,4 +1,4 @@
-<script type="text/javascript"> 
+<script type="text/javascript">
 function cargar () {
   $("#tbl").jqGrid({
     url:'<?php echo base_url();?>catalogo_mprima/paginacion',
@@ -11,7 +11,7 @@ function cargar () {
                                   {name:'ancho', index:'ancho', width:60,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'largo', index:'largo', width:60,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:false,editable:true}
-                                ],                             
+                                ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
   rowNum:15,
@@ -30,7 +30,7 @@ function cargar () {
     //searchurl:'<?php echo base_url();?>empresas/buscando',
                 height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
+        $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
 }
   $(document).ready(function(){
 	$("#tbl").jqGrid({
@@ -44,7 +44,7 @@ function cargar () {
                                   {name:'ancho', index:'ancho', width:60,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'largo', index:'largo', width:60,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:false,editable:true}
-                                ],                             
+                                ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
 	rowNum:15,
@@ -63,7 +63,7 @@ function cargar () {
     //searchurl:'<?php echo base_url();?>empresas/buscando',
                 height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
+        $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
    });
 
 function edit(id)
@@ -83,7 +83,7 @@ $.ajax({
             $("#tipo_m").val(dato[1]);
             $("#ancho").val(dato[2]);
             $("#largo").val(dato[3]);
-            $("#resistencia_mprima_id_resistencia_mprima").val(dato[6]);
+            $("#resistencia_mprima_id_resistencia_mprima").val(dato[4]);
             },
                         error:function(datos){
                         notify("Error al procesar los datos " ,500,5000,'error');
@@ -99,7 +99,10 @@ $( "#dialog-procesos" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-          editar(id);
+            if (validarCampos()==true) {
+                editar(id);
+            }
+
             },
           Cancelar:function()
           {
@@ -131,17 +134,17 @@ function editar(id)
                                 "tipo_m":$("#tipo_m").val(),
                                 "ancho":$("#ancho").val(),
                                 "largo":$("#largo").val(),
-                                "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val()               
+                                "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val()
                               },
                         cache: false,
                         datatype:"html",
                         success:function(data, textStatus){
 
                         switch(data){
-                        case "0": 
+                        case "0":
                           notify("Error al procesar los datos " ,500,5000,'error');
                         break;
-                        case "1": 
+                        case "1":
                           $( "#dialog-procesos" ).dialog( "close" );
                          reloading();
                          notify('El registro se edito correctamente',500,5000,'aviso');
@@ -150,7 +153,7 @@ function editar(id)
                         default:
                           $( "#dialog-procesos" ).dialog( "close" );
 
-                        break; 
+                        break;
 
                         }//switch
                         },
@@ -176,21 +179,20 @@ function delete_id(id)
                       success:function(data, textStatus){
 
                              switch(data){
-                               case "0": 
+                               case "0":
 
                                notify("Error al procesar los datos " ,500,5000,'error');
                                break;
-                               case "1": 
+                               case "1":
                                $( "#dialog-procesos" ).dialog( "close" );
-
                                notify('El registro se ha eliminado correctamente',500,5000,'aviso');
                                  $("#tbl").jqGrid('GridUnload');
-                                  setTimeout("cargar()",1000);;
+                                  setTimeout("cargar()",1000);
                                break;
                                default:
                                $( "#dialog-procesos" ).dialog( "close" );
 
-                               break; 
+                               break;
 
                               }//switch
                              },
@@ -202,7 +204,6 @@ function delete_id(id)
 }
 function guardar()
 {
-  var sexo =   $("input[name='sexo']:checked").val(); 
 
 $.ajax({
           async:true,cache: false,
@@ -213,17 +214,17 @@ $.ajax({
                   "tipo_m":$("#tipo_m").val(),
                   "ancho":$("#ancho").val(),
                   "largo":$("#largo").val(),
-                  "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val()               
+                  "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val()
                 },
 
                      datatype:"html",
                       success:function(data, textStatus){
 
                              switch(data){
-                               case "0": 
+                               case "0":
                                 notify("Error al procesar los datos " ,500,5000,'error');
                                break;
-                               case "1": 
+                               case "1":
                                 reloading();
                                 notify('El registro se guardo correctamente',500,5000,'aviso');
                                 $( "#dialog-procesos" ).dialog( "close" );
@@ -232,14 +233,14 @@ $.ajax({
                                 $( "#dialog-procesos" ).dialog( "close" );
                                  var error='Error'+data;
                                  notify(error ,500,5000,'error');
-                               break; 
+                               break;
 
                               }//switch
                              },
                         error:function(datos){
                               notify("Error inesperado" ,500,5000,'error');
                              }//Error
-                         });//Ajax      
+                         });//Ajax
 
 }
 
@@ -256,11 +257,11 @@ $( "#dialog-procesos" ).dialog({
             if (validarCampos()==true) {
               guardar();
             }
-            
-                  
+
+
           },
           Cancelar:function()
-          {   
+          {
         $( "#dialog-procesos" ).dialog( "close" );
           }
       },
@@ -279,32 +280,32 @@ function validarCampos () {
             largo=$("#largo").val();
             resistencia=$("#resistencia_mprima_id_resistencia_mprima").val();
             if (validarVacio(nombre)==false) {
-              notify('* El campo <strong>Nombre</strong> no puede estar vacio!!!',500,5000,'error');
+              notify('* El campo <strong>NOMBRE</strong> no puede estar vacio!!!',500,5000,'error');
               $("#nombre").focus();
-              return false;    
+              return false;
             }else if (validarCombo(tipo_m)==false) {
-              notify('* Debe seleccionar almenos una opcion de la lista <strong>Grosor</strong>',500,5000,'error');
+              notify('* Debe seleccionar almenos una opcion de la lista <strong>CORRUGADO</strong>',500,5000,'error');
               $("#tipo_m").focus();
               return false;
             }else if (validarVacio(ancho)==false) {
-              notify('* El campo <strong>Ancho</strong> no puede estar vacio!!!',500,5000,'error');
+              notify('* El campo <strong>ANCHO</strong> no puede estar vacio!!!',500,5000,'error');
               $("#ancho").focus();
               return false;
 
             }else if (validarVacio(largo)==false) {
-              notify('* El campo <strong>Largo</strong> no puede estar vacio!!!',500,5000,'error');
+              notify('* El campo <strong>LARGO</strong> no puede estar vacio!!!',500,5000,'error');
               $("#largo").focus();
               return false;
             }else if (validarCombo(resistencia)==false) {
-              notify('* Debe seleccionar almenos una opcion de la lista <strong>Resistencia</strong>',500,5000,'error');
+              notify('* Debe seleccionar almenos una opcion de la lista <strong>RESISTENCIA</strong>',500,5000,'error');
               $("#resistencia").focus();
               return false;
             }else if (validarNUmero(largo)==false) {
-              notify('* El campo <strong>Largo</strong> no es numero!!!',500,5000,'error');
+              notify('* El campo <strong>LARGO</strong> no es numero!!!',500,5000,'error');
               $("#largo").focus();
               return false;
             }else if (validarNUmero(ancho)==false) {
-              notify('* El campo <strong>Ancho</strong> no es numero!!!',500,5000,'error');
+              notify('* El campo <strong>ANCHO</strong> no es numero!!!',500,5000,'error');
               $("#ancho").focus();
               return false;
             }else{
@@ -335,7 +336,7 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
 
 </script>
 <div id="dialog-confirm" title="Confirmacion" style="display: none;">
-  
+
 </div>
 <table >
 <tr>
@@ -347,7 +348,7 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
         <table id="tbl"></table>
         <div id="paginacion"> </div>
         <div style="display:none" id="dialog-procesos" title="Catalogo de Materia Prima">
-        <?php 
+        <?php
 
         $this->load->view('catalogo_mprima/formulario');?>
 

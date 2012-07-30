@@ -51,7 +51,7 @@ $( "#editar_directorio" ).dialog('open');
 }*/
 function delet_dir (id) {
   msg="Este artículo se eliminara. ¿Estás seguro?";
-  confirmacion(id,msg);
+  confirmacion_direccion(id,msg);
 }
 function delete_dir (id) {
   $.ajax({
@@ -341,7 +341,7 @@ function cargar_datos_municipios_direccion (id) {
     
   }
 ///////////////////dialogo de confirmacion////////////////////////////////////
-  function confirmacion (id,msg) {
+  function confirmacion_direccion (id,msg) {
 $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'+msg+'</p>');
 
     $( "#dialog-confirm" ).dialog({

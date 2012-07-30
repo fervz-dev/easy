@@ -224,7 +224,7 @@ a {
 .sidebar-left ul ul a {
 
     padding: 5px 8px 4px 15px;
-    
+
 }
 
 .sidebar-left a:hover {
@@ -350,6 +350,7 @@ body{
     padding: 10px;
 }*/
 .notify{
+	z-index: 1000;
     background-color: #333;
     color: #FFF;
     width: 250px;
@@ -389,6 +390,7 @@ border-bottom: 1px solid #DEDEDE;
     -moz-border-radius:0px;
     -webkit-border-radius:0px;
     border-radius:5px;
+    z-index: 1000;
 }
 .tipCampos p{
     padding: 10px;
@@ -441,4 +443,4 @@ height: 0;
 clear: both;
 visibility: hidden;
 }
-.clearfix {display: inline-block;} 
+.clearfix {display: inline-block;}

@@ -11,10 +11,10 @@ function cargar () {
               'ESTADO',
               'MUNICIPIO',
               'LOCALIDAD',
-              'DIRECCION', 
+              'DIRECCION',
               'CP',
-              'LADA', 
-              'TELEFONO', 
+              'LADA',
+              'TELEFONO',
               'EXT',
               'FAX',
               'EMAIL',
@@ -38,8 +38,8 @@ function cargar () {
               {name:'comentario', index:'comentario', width:90,resizable:false, sortable:true,search:false,editable:true},
               {name:'coordx', index:'coordx', width:90,resizable:false, sortable:true,search:false,editable:true},
               {name:'coordy', index:'coordy', width:90,resizable:false, sortable:true,search:false,editable:true}
-              
-            ],                             
+
+            ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
   rowNum:15,
@@ -50,7 +50,7 @@ function cargar () {
     viewrecords: true,
     sortorder: "asc",
   editable: true,
-    caption: 'Oficina',
+    caption: 'Catalogo de Oficinas',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
@@ -58,7 +58,7 @@ function cargar () {
     //searchurl:'<?php echo base_url();?>empresas/buscando',
                 height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_oficina").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
+        $("#tbl_oficina").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
 }
  $(document).ready(function(){
   $("#tbl_oficina").jqGrid({
@@ -72,10 +72,10 @@ function cargar () {
               'ESTADO',
               'MUNICIPIO',
               'LOCALIDAD',
-              'DIRECCION', 
+              'DIRECCION',
               'CP',
-              'LADA', 
-              'TELEFONO', 
+              'LADA',
+              'TELEFONO',
               'EXT',
               'FAX',
               'EMAIL',
@@ -99,8 +99,8 @@ function cargar () {
               {name:'comentario', index:'comentario', width:90,resizable:false, sortable:true,search:false,editable:true},
               {name:'coordx', index:'coordx', width:90,resizable:false, sortable:true,search:false,editable:true},
               {name:'coordy', index:'coordy', width:90,resizable:false, sortable:true,search:false,editable:true}
-              
-            ],                            
+
+            ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
   rowNum:15,
@@ -111,7 +111,7 @@ function cargar () {
     viewrecords: true,
     sortorder: "asc",
   editable: true,
-    caption: 'Oficina',
+    caption: 'Catalogo de Oficinas',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
@@ -119,7 +119,7 @@ function cargar () {
     //searchurl:'<?php echo base_url();?>empresas/buscando',
                 height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_oficina").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
+        $("#tbl_oficina").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
    });
 
 function alta()
@@ -141,7 +141,7 @@ $( "#dialog-procesos" ).dialog({
         }
         },
           Cancelar:function()
-          {   
+          {
         $( "#dialog-procesos" ).dialog( "close" );
           }
       },
@@ -179,17 +179,17 @@ function editar(id)
           datatype:"html",
           success:function(data, textStatus){
             switch(data){
-              case "0": 
+              case "0":
                 notify("Error al procesar los datos " ,500,5000,'error');
               break;
-              case "1": 
+              case "1":
                 $( "#dialog-procesos" ).dialog( "close" );
                 notify('El registro se edito correctamente',500,5000,'aviso');
                 reloading();
               break;
               default:
                 $( "#dialog-procesos" ).dialog( "close" );
-              break; 
+              break;
             }//switch
           },
           error:function(datos){
@@ -198,7 +198,7 @@ function editar(id)
       });//Ajax
 }
 
-  
+
 function edit(id)
 {
 document.editar_oficina.reset();
@@ -214,17 +214,17 @@ $.ajax({
                           $("#nombre_oficina").val(dato[1]);
                           $("#rfc").val(dato[2]);
                           $("#estado").val(dato[3]);
-                          cargarMunicipio(dato[3],dato[4]);              
+                          cargarMunicipio(dato[3],dato[4]);
                           cargarLocalidad(dato[4],dato[5]);
-                          $("#cp").val(dato[6]);
-                          $("#direccion").val(dato[7]);
+                          $("#cp").val(dato[7]);
+                          $("#direccion").val(dato[6]);
                           $("#lada").val(dato[8]);
                           $("#num_telefono").val(dato[9]);
                           $("#ext").val(dato[10]);
                           $("#fax").val(dato[11]);
-                          $("#email").val(dato[12]);  
-                          // $("#logo").val(dato[9]); 
-                          $("#comentario").val(dato[13]);     
+                          $("#email").val(dato[12]);
+                          // $("#logo").val(dato[9]);
+                          $("#comentario").val(dato[13]);
                           $("#coordx").val(dato[14]);
                           $("#coordy").val(dato[15]);
 
@@ -258,7 +258,7 @@ $( "#dialog-procesos" ).dialog({
         $( "#dialog-procesos" ).dialog( "open" );
 }
 
-    
+
 function reloading()
   {
   $("#tbl_oficina").trigger("reloadGrid")
@@ -294,28 +294,28 @@ $.ajax({
                       success:function(data, textStatus){
 
                            switch(data){
-                           case "0": 
+                           case "0":
                             notify("Error al procesar los datos " ,500,5000,'error');
                            break;
-                           
-                           case "1": 
+
+                           case "1":
                             reloading();
                             notify('El registro se guardo correctamente',500,5000,'aviso');
                            $( "#dialog-procesos" ).dialog( "close" );
                            break;
-                           
+
                            default:
                             $( "#dialog-procesos" ).dialog( "close" );
                             var error='Error'+data;
                             notify(error ,500,5000,'error');
-                           break; 
-                           
+                           break;
+
                            }//switch
                              },
                         error:function(datos){
                               notify("Error inesperado" ,500,5000,'error');
                              }//Error
-                         });//Ajax      
+                         });//Ajax
 
 }
 function delet (id) {
@@ -333,10 +333,10 @@ function delete_id(id)
                       success:function(data, textStatus){
 
                              switch(data){
-                               case "0": 
+                               case "0":
                                notify("Error al procesar los datos " ,500,5000,'error');
                                break;
-                               case "1": 
+                               case "1":
                                 $( "#dialog-procesos" ).dialog( "close" );
                                 notify('El registro se ha eliminado correctamente',500,5000,'aviso');
                                  $("#tbl_oficina").jqGrid('GridUnload');
@@ -344,7 +344,7 @@ function delete_id(id)
                                break;
                                default:
                                $( "#dialog-procesos" ).dialog( "close" );
-                               break;  
+                               break;
                                }//switch
                              },
                         error:function(datos){
@@ -358,7 +358,7 @@ $(function(){
 $('ul#icons li').hover(
 function() { $(this).addClass('ui-state-hover'); },
 function() { $(this).removeClass('ui-state-hover'); }
-); 
+);
 });
 function tip (tipo) {
   if (tipo=='direccion') {
@@ -384,12 +384,12 @@ function validarCamposForm1() {
   municipio=$("#municipio").val();
   localidad=$("#localidad").val();
   direccion=$("#direccion").val();
-  cp=$("#cp").val();  
+  cp=$("#cp").val();
   lada=$("#lada").val();
   num_telefono=$("#num_telefono").val();
   ext=$("#ext").val();
   fax=$("#fax").val();
-  email=$("#email").val();     
+  email=$("#email").val();
   comentario=$("#comentario").val();
   /*validar tipo de oficina*/
   if (validarCombo(tipo_oficina)==false) {
@@ -403,7 +403,7 @@ function validarCamposForm1() {
     $("#nombre_oficina").focus();
     return false;
   }
-  
+
   /*validar rfc*/
   else if (tipo_oficina==1) {
     if (validarVacio(rfc)==false) {
@@ -417,7 +417,7 @@ function validarCamposForm1() {
       $("#rfc").focus();
       return false;
     }
-    
+    return true;
   }
   /*validacion estado*/
   else if (validarCombo(estado)==false) {
@@ -454,7 +454,7 @@ function validarCamposForm1() {
     return false;
   }else if (validarCp(cp)==false) {
     notify('* El campo <strong>CODIGO POSTAL</strong> no es valido.!!!',500,5000,'error');
-   
+
     $("#cp").focus();
     return false;
   }
@@ -466,7 +466,7 @@ function validarCamposForm1() {
   }
   else if (validarNUmero(lada)==false) {
     notify('* El campo <strong>LADA</strong> no es un numero!!!',500,5000,'error');
-   
+
     $("#lada").focus();
     return false;
   }
@@ -509,12 +509,12 @@ function cargarLocalidad (municipio, localidad) {
                             $("#localidad").val(localidad);
                     }
                     });
-    
+
   }
   function cargarMunicipio (estado,municipio) {
       $.ajax({
                     url:"<?php echo base_url();?>direcciones/municipio/"+estado,
-                    type:"POST",  
+                    type:"POST",
                     beforeSend: function(){
                        $("#ajax_municipio").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
                     },
@@ -531,7 +531,7 @@ function cargarLocalidad (municipio, localidad) {
 function cargar_datos_municipios (id) {
      $.ajax({
                     url:"<?php echo base_url();?>direcciones/municipio/"+id,
-                    type:"POST",  
+                    type:"POST",
                     beforeSend: function(){
                        $("#ajax_municipio").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
                     },
@@ -554,7 +554,7 @@ function cargar_datos_municipios (id) {
                             $("#ajax_localidad").html("");
                     }
                     });
-    
+
   }
 ///////////////////dialogo de confirmacion////////////////////////////////////
   function confirmacion (id,msg) {
@@ -577,7 +577,7 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
     });
     }
 //////////////////////////////////////////////////////////////////////////////
-          			
+
 </script>
 <div id="dialog-confirm" title="Confirmacion" style="display: none;">
 </div>
@@ -591,7 +591,7 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
         <table id="tbl_oficina"></table>
         <div id="paginacion"> </div>
         <div style="display:none" id="dialog-procesos" title="Formulario OFicina">
-        <?php 
+        <?php
 
         $this->load->view('oficina/formulario');?>
         </div>

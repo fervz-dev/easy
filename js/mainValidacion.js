@@ -44,6 +44,11 @@
         return false;
       };
     }
+    function validarCelular (celular) {
+      if (!/^[0-9]{3}-? ?[0-9]{3}-? ?[0-9]{2}-? ?[0-9]{2}$/.test(celular)) {
+        return false;
+      };
+    }
     function validarRFC(rfc) {
       // validacion 12 o 13 dígitos con homoclave obligatoria
       if (!/^([A-ZÑ\x26]{3,4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[A-Z|\d]{3})$/.test(rfc)) {

@@ -9,21 +9,21 @@
 <tr>
 	<td><label>Proveedor</label></td>
 	<td><select name="proveedor_id_proveedor"  id="proveedor_id_proveedor">
-		<option value="0">Seleccione...</option>
+		<option value="">Seleccione...</option>
 		<?php foreach ($proveedor as $pvd) { ?>
 		<option value="<?php echo $pvd['id_proveedores']; ?>"><?php echo $pvd['nombre_empresa'] ?></option>
 		<?php } ?>
-	</select> 
+	</select>
 </tr>
 
 <tr>
 	<td><label>Oficina</label></td>
 	<td><select name="oficina"  id="oficina">
-		<option value="0">Seleccione...</option>
+		<option value="">Seleccione...</option>
 		<?php foreach ($oficinas as $ofn) { ?>
 		<option value="<?php echo $ofn['id_oficina']; ?>"><?php echo $ofn['nombre_oficina'] ?></option>
 		<?php } ?>
-	</select> 
+	</select>
 </td>
 </tr>
 <tr>

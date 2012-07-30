@@ -3,17 +3,17 @@ class Usuarios extends CI_Controller {
         public function __construct(){
 		parent::__construct();
 		$this->load->library('session');
-		// include the driver class  
-		$this->load->model("roles_model","roles"); 
-		$this->load->model("usuarios_model","usuarios"); 
-		$this->load->model("oficina_model","oficina"); 
-		
+		// include the driver class
+		$this->load->model("roles_model","roles");
+		$this->load->model("usuarios_model","usuarios");
+		$this->load->model("oficina_model","oficina");
+
 		if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
  			redirect(base_url().'inicio');
  		//echo 'denegado';
-		} 	 		
+		}
   }//****Constructor...
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	function oficina()
 	{
 	    $id_user= $this->session->userdata('id'); //id usuario
@@ -23,12 +23,12 @@ class Usuarios extends CI_Controller {
 	    $oficina = $oficina->oficina_id_oficina;
 	    return $oficina;
 	}
-	
-	
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-	
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	public function index()
-	{    
+	{
 	//$this->load->view('login/acceso');
 	$data['roles']=$this->roles->get();
 	$data['oficina']=$this->oficina();
@@ -111,7 +111,7 @@ $filters = $_POST['filters'];
             } else {
  			$where=' WHERE usuarios.id_roles = roles.id_roles and usuarios.status = 1 ';
             }
-        }    
+        }
 
  $page = $_POST['page'];  // Almacena el numero de pagina actual
     $limit = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
@@ -128,7 +128,7 @@ echo json_encode('null');
 
 exit();
 }
- 
+
     //En base al numero de registros se obtiene el numero de paginas
     if( $count >0 ) {
 	$total_pages = ceil($count/$limit);
@@ -160,7 +160,7 @@ exit();
          $onclik="onclick=delet('".$row->id."')";
 	     $onclikedit="onclick=edit('".$row->id."')";
          $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
-			 
+
         $data->rows[$i]['cell']=array($acciones,strtoupper($row->nombre),$row->user,$row->email,strtoupper($row->nombre_rol));
         $i++;
 

@@ -20,7 +20,7 @@ $( "#dialog-procesos" ).dialog({
         }
           },
           Cancelar:function()
-          {   
+          {
         $( "#dialog-procesos" ).dialog( "close" );
           }
       },
@@ -42,8 +42,8 @@ function dire(id)
     });
       $( "#dialog-directorio" ).dialog( "open" );
       $( "#editar_directorio" ).fadeOut();
-      $( "#id_cliente" ).val(id); 
-      directorio(id); 
+      $( "#id_cliente" ).val(id);
+      directorio(id);
 
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,7 @@ $.ajax({
                                   $("#tipo_persona").val(dato[2]);
                                   $("#rfc").val(dato[3]);
                                   $("#estado").val(dato[4]);
-                                  cargarMunicipio(dato[4],dato[5]);              
+                                  cargarMunicipio(dato[4],dato[5]);
                                   cargarLocalidad(dato[5],dato[6]);
                                   $("#cp").val(dato[8]);
                                   $("#direccion").val(dato[7]);
@@ -71,7 +71,7 @@ $.ajax({
                                   $("#num_telefono").val(dato[10]);
                                   $("#ext").val(dato[11]);
                                   $("#fax").val(dato[12]);
-                                  $("#email_").val(dato[13]);     
+                                  $("#email_").val(dato[13]);
                                   $("#comentario").val(dato[14]);
 
       },
@@ -115,7 +115,7 @@ function editar(id)
                          type:"POST",
                           url:"<?php echo base_url();?>clientes/editar_clientes/"+id,
                           data:{"nombre_empresa":$("#nombre_empresa").val(),
-                                "nombre_contacto":$("#nombre_contacto").val(),    
+                                "nombre_contacto":$("#nombre_contacto").val(),
                                 "tipo_persona":$("#tipo_persona").val(),
                                 "rfc":$("#rfc").val(),
                                 "estado":$("#estado").val(),
@@ -134,18 +134,18 @@ function editar(id)
                       success:function(data, textStatus){
 
                              switch(data){
-                               case "0": 
+                               case "0":
                                 var error='Error'+data;
                                 notify(error ,500,5000,'error');
                                break;
-                               case "1": 
+                               case "1":
                                 $( "#dialog-procesos" ).dialog( "close" );
                                 notify('El registro se edito correctamente',500,5000,'aviso');
                                 reloading();
                                break;
                                default:
                                 $( "#dialog-procesos" ).dialog( "close" );
-                               break; 
+                               break;
 
                               }//switch
                              },
@@ -164,7 +164,7 @@ $.ajax({
            type:"POST",
             url:"<?php echo base_url();?>clientes/guardar?da="+Math.random()*2312,
                           data:{"nombre_empresa":$("#nombre_empresa").val(),
-                                "nombre_contacto":$("#nombre_contacto").val(),    
+                                "nombre_contacto":$("#nombre_contacto").val(),
                                 "tipo_persona":$("#tipo_persona").val(),
                                 "rfc":$("#rfc").val(),
                                 "estado":$("#estado").val(),
@@ -183,10 +183,10 @@ $.ajax({
                       success:function(data, textStatus){
 
                              switch(data){
-                               case "0": 
+                               case "0":
                                 notify("Error al procesar los datos " ,500,5000,'error');
                                break;
-                               case "1": 
+                               case "1":
                                reloading();
                                notify('El registro se ha guardado correctamente',500,5000,'aviso');
                                $( "#dialog-procesos" ).dialog( "close" );
@@ -195,13 +195,13 @@ $.ajax({
                                $( "#dialog-procesos" ).dialog( "close" );
                                var error='Error'+data;
                                notify(error ,500,5000,'error');
-                               break; 
+                               break;
                               }//switch
                              },
                         error:function(datos){
                           notify("Error inesperado" ,500,5000,'error');
                              }//Error
-                         });//Ajax      
+                         });//Ajax
 
 }
 
@@ -220,10 +220,10 @@ function delete_id(id)
                       success:function(data, textStatus){
 
                              switch(data){
-                               case "0": 
+                               case "0":
                                 notify("Error al procesar los datos " ,500,5000,'error');
                                break;
-                               case "1": 
+                               case "1":
                                 $( "#dialog-procesos" ).dialog( "close" );
                                 notify('El registro se ha eliminado correctamente',500,5000,'aviso');
                                  $("#tbl_clientes").jqGrid('GridUnload');
@@ -232,7 +232,7 @@ function delete_id(id)
                                break;
                                default:
                                 $( "#dialog-procesos" ).dialog( "close" );
-                               break; 
+                               break;
 
                               }//switch
                              },
@@ -255,10 +255,10 @@ function cargar(){
                                     'ESTADO',
                                     'MUNICIPIO',
                                     'LOCALIDAD',
-                                    'DIRECCION', 
+                                    'DIRECCION',
                                     'CP',
-                                    'LADA', 
-                                    'TELEFONO', 
+                                    'LADA',
+                                    'TELEFONO',
                                     'EXT',
                                     'FAX',
                                     'EMAIL',
@@ -282,7 +282,7 @@ function cargar(){
                                   {name:'email', index:'email', width:180,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'comentario', index:'comentario', width:90,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'fecha_ingreso', index:'fecha_ingreso', width:90,resizable:false, sortable:true,search:false,editable:true}
-                                ],                             
+                                ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
   rowNum:15,
@@ -294,17 +294,17 @@ function cargar(){
      cache: false,
     sortorder: "asc",
   editable: true,
-    caption: 'clientes',
+    caption: 'Catalogo de Clientes',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
   width:"auto",
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_clientes").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
+        $("#tbl_clientes").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
 
 }
 
-////////////////////////////////////////////////////////////////////////   
+////////////////////////////////////////////////////////////////////////
     $(document).ready(function(){
        reloading();
 	$("#tbl_clientes").jqGrid({
@@ -319,10 +319,10 @@ function cargar(){
                                     'ESTADO',
                                     'MUNICIPIO',
                                     'LOCALIDAD',
-                                    'DIRECCION', 
+                                    'DIRECCION',
                                     'CP',
-                                    'LADA', 
-                                    'TELEFONO', 
+                                    'LADA',
+                                    'TELEFONO',
                                     'EXT',
                                     'FAX',
                                     'EMAIL',
@@ -346,7 +346,7 @@ function cargar(){
                                   {name:'email', index:'email', width:180,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'comentario', index:'comentario', width:90,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'fecha_ingreso', index:'fecha_ingreso', width:90,resizable:false, sortable:true,search:false,editable:true}
-                                ],                             
+                                ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
 	rowNum:15,
@@ -358,26 +358,25 @@ function cargar(){
      cache: false,
     sortorder: "asc",
 	editable: true,
-    caption: 'clientes',
+    caption: 'Catalogo de Clientes',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
 	width:"auto",
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_clientes").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
+        $("#tbl_clientes").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
    });
-
 function reloading()
   {
   $("#tbl_clientes").trigger("reloadGrid")
   }
-  
+
 ///////////////////////////////eventos input//////////////////////////////////////////////////////////
 $(function(){
 $('ul#icons li').hover(
 function() { $(this).addClass('ui-state-hover'); },
 function() { $(this).removeClass('ui-state-hover'); }
-); 
+);
 });
 function tip (tipo) {
   if (tipo=='direccion') {
@@ -404,12 +403,12 @@ function validarCamposForm1() {
   municipio=$("#municipio").val();
   localidad=$("#localidad").val();
   direccion=$("#direccion").val();
-  cp=$("#cp").val();  
+  cp=$("#cp").val();
   lada=$("#lada").val();
   num_telefono=$("#num_telefono").val();
   ext=$("#ext").val();
   fax=$("#fax").val();
-  email=$("#email_").val();     
+  email=$("#email_").val();
   comentario=$("#comentario").val();
   /*validar nombre empresa*/
   if (validarVacio(nombre_empresa)==false) {
@@ -474,7 +473,7 @@ function validarCamposForm1() {
     return false;
   }else if (validarCp(cp)==false) {
     notify('* El campo <strong>CODIGO POSTAL</strong> no es valido.!!!',500,5000,'error');
-   
+
     $("#cp").focus();
     return false;
   }
@@ -486,7 +485,7 @@ function validarCamposForm1() {
   }
   else if (validarNUmero(lada)==false) {
     notify('* El campo <strong>LADA</strong> no es un numero!!!',500,5000,'error');
-   
+
     $("#lada").focus();
     return false;
   }
@@ -529,12 +528,12 @@ function cargarLocalidad (municipio, localidad) {
                             $("#localidad").val(localidad);
                     }
                     });
-    
+
   }
   function cargarMunicipio (estado,municipio) {
       $.ajax({
                     url:"<?php echo base_url();?>direcciones/municipio/"+estado,
-                    type:"POST",  
+                    type:"POST",
                     beforeSend: function(){
                        $("#ajax_municipio").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
                     },
@@ -551,7 +550,7 @@ function cargarLocalidad (municipio, localidad) {
 function cargar_datos_municipios (id) {
      $.ajax({
                     url:"<?php echo base_url();?>direcciones/municipio/"+id,
-                    type:"POST",  
+                    type:"POST",
                     beforeSend: function(){
                        $("#ajax_municipio").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
                     },
@@ -574,7 +573,7 @@ function cargar_datos_municipios (id) {
                             $("#ajax_localidad").html("");
                     }
                     });
-    
+
   }
 ///////////////////dialogo de confirmacion////////////////////////////////////
   function confirmacion (id,msg) {
@@ -611,11 +610,11 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
         <table id="tbl_clientes"></table>
         <div id="paginacion"> </div>
         <div style="display:none" id="dialog-procesos" title="clientes">
-        <?php 
+        <?php
         $this->load->view('clientes/formulario');?>
         </div>
 
         <div style="display:none" id="dialog-directorio" title="Directorio Clientes">
-        <?php 
+        <?php
         $this->load->view('clientes/directorio');?>
         </div>

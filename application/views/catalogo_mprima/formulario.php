@@ -17,7 +17,7 @@
 			<option value="SENCILLO">SENCILLO</option>
 			<option value="DOBLE">DOBLE</option>
 
-		</select> 
+		</select>
 	</tr>
 
 
@@ -46,7 +46,7 @@
 			<?php foreach ($resistencia as $rst) { ?>
 			<option value="<?php echo $rst['id_resistencia_mprima']; ?>"><?php echo $rst['resistencia'] ?></option>
 			<?php } ?>
-		</select> 
+		</select>
 	</tr>
 </table>
 </form>

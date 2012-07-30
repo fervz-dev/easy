@@ -10,7 +10,7 @@ class Empleados extends CI_Controller
 		parent::__construct();
 		$this->load->model("empleados_model", "empleados");
         $this->load->model("puestos_model","puestos");
-        $this->load->model("estados_model","estados");
+        $this->load->model('direcciones_model','direcciones');  
         $this->load->model("oficina_model","oficina");
         if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
             redirect(base_url().'inicio');
@@ -24,11 +24,10 @@ class Empleados extends CI_Controller
 		
         $data['puestos']=$this->puestos->get_puestos_all();
         $data['oficinas']=$this->oficina->get_oficinas_all();
-        $data['estados']=$this->estados->get_estados_all();
+        $data['estados']=$this->direcciones->estados();
         $data['vista']='empleados/index';
-		$data['titulo']='empleados';
-        $data['vistaa']="menu_izquierda";
-        $data['vistab']="menu";
+		$data['titulo']='Empleados';
+
 		$this->load->view('principal',$data);
 	}
 
@@ -78,14 +77,19 @@ class Empleados extends CI_Controller
                                     strtoupper($row->fecha_nacimiento),
                                     strtoupper($row->estado_civil),
                                     strtoupper($row->sexo),
-                                    strtoupper($row->dsc_estado),
-                                    strtoupper($row->ciudad),
-                                    strtoupper($row->colonia),
-                                    strtoupper($row->direccion),
+                                    $row->estado,
+                                    $row->municipio,
+                                    $row->localidad,
+                                    strtoupper($row->cp),
+                                    $row->direccion,
+                                    strtoupper($row->lada),
+                                    strtoupper($row->num_telefono),
                                     strtoupper($row->celular),
-                                    strtoupper($row->telefono_casa),
+                                    $row->email,
                                     strtoupper($row->nombre),/*puesto*/
                                     strtoupper($row->nombre_oficina),
+                                    $row->comentario,
+                                    strtoupper($row->fecha_ingreso),
                                     
                                     
                                     );
@@ -100,20 +104,25 @@ class Empleados extends CI_Controller
     public function get($id)
     {
         $row=$this->empleados->get_id($id);
-        echo strtoupper($row->nombre_obrero).'~'.
-             strtoupper($row->a_paterno).'~'.
-             strtoupper($row->a_materno).'~'.
-             strtoupper($row->fecha_nacimiento).'~'.
-             strtoupper($row->direccion).'~'.
-             strtoupper($row->celular).'~'.
-             strtoupper($row->telefono_casa).'~'.
-             strtoupper($row->puestos_id_tipo_puesto).'~'.
-             strtoupper($row->oficina_id_oficina).'~'.
-             strtoupper($row->estado_civil).'~'.
-             strtoupper($row->sexo).'~'.
-             strtoupper($row->estado_id_estado).'~'.
-             strtoupper($row->colonia).'~'.
-             strtoupper($row->ciudad);
+        echo    strtoupper($row->nombre_obrero).'~'.
+                strtoupper($row->a_paterno).'~'.
+                strtoupper($row->a_materno).'~'.
+                strtoupper($row->fecha_nacimiento).'~'.
+                strtoupper($row->estado_civil).'~'.
+                strtoupper($row->sexo).'~'.
+                $row->estado.'~'.
+                $row->municipio.'~'.
+                $row->localidad.'~'.
+                strtoupper($row->cp).'~'.
+                $row->direccion.'~'.
+                strtoupper($row->lada).'~'.
+                strtoupper($row->num_telefono).'~'.
+                strtoupper($row->celular).'~'.
+                $row->email.'~'.
+                strtoupper($row->puestos_id_tipo_puesto).'~'./*puesto*/
+                strtoupper($row->oficina_id_oficina).'~'.
+                $row->comentario.'~'.
+                strtoupper($row->fecha_ingreso);
     }
 
     public function editar_empleado($id)

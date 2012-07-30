@@ -52,7 +52,7 @@ class Oficina_model extends CI_Model
 											tipo_oficina 
 											where
 											oficina.tipo_oficina_id_tipo_oficina = tipo_oficina.id_tipo_oficina AND
-											oficina.tipo_oficina_id_tipo_oficina = 2
+											oficina.tipo_oficina_id_tipo_oficina = 1
 											GROUP BY
 											oficina.id_oficina
 											ORDER BY

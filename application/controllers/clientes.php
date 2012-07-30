@@ -76,7 +76,7 @@ public function paginacion()
                                     $row->estado,
                                     $row->municipio,
                                     $row->localidad,
-                                    strtoupper($row->direccion), 
+                                    $row->direccion, 
                                     strtoupper($row->cp),
                                     strtoupper($row->lada),
                                     strtoupper($row->num_telefono),

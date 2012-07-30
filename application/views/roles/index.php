@@ -17,18 +17,18 @@ $.ajax({
                         success:function(data, textStatus){
                         dato= data.split('~');
                         $("#nombre").val(dato[0]);
-                        $("#descripcion").val(dato[1]);           
+                        $("#descripcion").val(dato[1]);
                         },
                         error:function(datos){
                         notify("Error al procesar los datos " ,500,5000,'error');
                           return false;
                         }//Error
                         });//Ajax
-						
-$("#respuesta_permisos").load('<?php echo base_url();?>roles/pantallas_permisos/'+id);						
-						
-						
-						
+
+$("#respuesta_permisos").load('<?php echo base_url();?>roles/pantallas_permisos/'+id);
+
+
+
 $( "#dialog-alta" ).dialog({
 			autoOpen: false,
 			height: 500,
@@ -36,11 +36,10 @@ $( "#dialog-alta" ).dialog({
 			modal: true,
 			buttons: {
 					Aceptar: function() {
-					//editar(id);
-          
-					document.form1.submit()
-
-				    },
+        if (validarCamposForm1()==true) {
+          document.form1.submit();
+        }
+      },
 					Cancelar:function()
 					{
         			$( "#dialog-alta" ).dialog( "close" );
@@ -65,31 +64,24 @@ if(r==true)
                       datatype:"html",
                       success:function(data, textStatus){
 
-                             switch(data){
-                               case "0": 
-							             // $("#ErrorListaProductos").fadeIn();
-                                          //$("#ErrorListaProductos").html("Error al procesar los datos.");
-                                          notify("Error al procesar los datos " ,500,5000,'error');
-										  break;
-                               case "1": 
-							      $( "#dialog-alta" ).dialog( "close" );
-  								 // alert('editado');
-								 // guardar_paciente(data);
-								   reloading();
-								   notify('El registro se elimino correctamente',500,5000,'aviso');
-								  break;
+                      switch(data){
+                        case "0":                                          notify("Error al procesar los datos " ,500,5000,'error');
+                      break;
+                      case "1":
+                        $( "#dialog-alta" ).dialog( "close" );
 
-                                   default:
-                                   $( "#dialog-alta" ).dialog( "close" );
-  								   //alert('Vacante guardada');
-								 // reloading();
-								   
-							     break; 
+                        reloading();
+                       notify('El registro se elimino correctamente',500,5000,'aviso');
+                      break;
+
+                      default:
+                        $( "#dialog-alta" ).dialog( "close" );
+                      break;
 
                               }//switch
                              },
                         error:function(datos){
-                              notify("Error inesperado" ,500,5000,'error');
+                                notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax
 }
@@ -116,16 +108,18 @@ document.forms.form1.action= "<?php echo base_url();?>roles/guardar/";
 $("#nombre_especialidad").val('');
 $( "#dialog-alta" ).dialog({
 			autoOpen: false,
-			height: 500,
-			width: 700,
+			height: 'auto',
+			width: 'auto',
 			modal: true,
 			buttons: {
 					Aceptar: function() {
-					//guardar();
-					document.form1.submit();
+					  if (validarCamposForm1()==true) {
+               document.form1.submit();
+            }
+
 					},
 					Cancelar:function()
-					{		
+					{
 				$( "#dialog-alta" ).dialog( "close" );
 					}
 			},
@@ -138,19 +132,19 @@ $( "#dialog-alta" ).dialog({
 
 </script>
 
-     <script type="text/javascript">   
+     <script type="text/javascript">
     $(document).ready(function(){
 	$("#tbl").jqGrid({
     url:'<?php echo base_url();?>roles/paginacion',
     datatype: "json",
     mtype: 'POST',
-		
+
                         colNames:['ACCI&Oacute;N','NOMBRE','DESCRIPCI&Oacute;N'],
                         colModel:[
                         {name:'acciones', index:'acciones', width:100, resizable:false, align:"center", search:false},
                         {name:'nombre_rol', index:'nombre_rol', width:300,resizable:false, sortable:true,search:true,editable:true},
                         {name:'dsc_rol', index:'dsc_rol', width:300,resizable:false, sortable:true,search:false,editable:true}
-                        
+
                     ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -170,10 +164,26 @@ $( "#dialog-alta" ).dialog({
     searchurl:'<?php echo base_url();?>roles/buscando',
                 height:"100%"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
-   });   
-          			
-        </script>
+        $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
+   });
+function validarCamposForm1 () {
+nombre=$('#nombre').val();
+descripcion=$('#descripcion').val();
+if (validarVacio(nombre)==false) {
+    notify('* El campo <strong>NOMBRE</strong> no puede estar vacio!!!',500,5000,'error');
+    $("#nombre").focus();
+    return false;
+}else if (validarVacio(descripcion)==false) {
+    notify('* El campo <strong>DESCRIPCION</strong> no puede estar vacio!!!',500,5000,'error');
+    $("#descripcion").focus();
+    return false;
+}else {
+  return true;
+}
+}
+</script>
+<div id="dialog-confirm" title="Confirmacion" style="display: none;">
+</div>
 <table >
 <tr>
 <td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
@@ -181,15 +191,15 @@ $( "#dialog-alta" ).dialog({
 <td >&nbsp;</td>
 </tr>
 </table>
-        
-        
-        
+
+
+
         <table id="tbl"></table>
         <div id="paginacion"> </div>
 <div style="display:none" id="dialog-alta" title="Roles">
 
 
-<?php 
+<?php
 
 $this->load->view('roles/alta');?>
 </div>

@@ -65,7 +65,7 @@ class Reutilizable_ingreso extends CI_Controller{
      	   $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
            $data->rows[$i]['cell']=array($acciones,
             strtoupper($row->nombre),
-            strtoupper($row->caracteristica),
+            //strtoupper($row->caracteristica),
             // strtoupper($row->tipo),
             strtoupper($row->tipo_m),
             strtoupper($row->ancho),
@@ -86,7 +86,7 @@ class Reutilizable_ingreso extends CI_Controller{
     {
         $row=$this->catalogo->get_id($id);
         echo strtoupper($row->nombre).'~'.
-             strtoupper($row->caracteristica).'~'.
+             //strtoupper($row->caracteristica).'~'.
              // strtoupper($row->tipo).'~'.
              strtoupper($row->tipo_m).'~'.
              strtoupper($row->ancho).'~'.

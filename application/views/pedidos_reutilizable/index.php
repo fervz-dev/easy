@@ -8,16 +8,16 @@ function cerrado () {
       width: 'auto',
       modal: true,
       buttons: {
-          
+
           Cerrar:function()
-          {   
+          {
         $( "#dialogo_cerrado" ).dialog( "close" );
           }
       },
       close: function() {}
     });
         $( "#dialogo_cerrado" ).dialog( "open" );
-   
+
 }
 //////////////////////////////////////////// Alerta producto - Pedido cerrado ////////////////////////////////////////////////
 
@@ -29,16 +29,16 @@ function pedido_cerrado () {
       width: 'auto',
       modal: true,
       buttons: {
-          
+
           Cerrar:function()
-          {   
+          {
         $( "#dialogo_cerrado" ).dialog( "close" );
           }
       },
       close: function() {}
     });
         $( "#dialogo_cerrado" ).dialog( "open" );
-   
+
 }
 //////////////////////////////////////////// Espera id del pedido y confirmacion para cerrarlo ////////////////////
 function cerrar_pedido(id,confirmacion)
@@ -52,35 +52,28 @@ if(confirmacion==true)
           url:"<?php echo base_url();?>pedidos_reutilizable/cerrar_pedido/"+id,
           datatype:"html",
           success:function(data, textStatus){
-                                            
-                                            switch(data){
-                                                          case "0": 
-                                                                  $("#ErrorDatos").fadeIn();
-                                                                  $("#ErrorDatos").html("Error al procesar los datos.");
-                                                                  //alert("Error al procesar los datos ");
-                                                          break;
-                                             
-                                                          case "1": 
-                                                          
-                                                                  $( "#dialogo" ).dialog( "close" );
-                                                                  // alert('editado');
-                                                                  // guardar_paciente(data);
-                                                                  $("#tbl_p_prove").trigger("reloadGrid"); 
-                                                                  msg('Pedido cerrado satisfacotiramente');
-                                                          break;
-                                                 
-                                                          default:
-                                                                  $( "#dialogo").dialog( "close" );
-                                                                  //alert('Vacante guardada');
-                                                                  // reloading();
-                                                          break; 
-                                            
-                                                        }//switch
-                                            },
-          error:function(datos){
-                                alert("Error inesparado");
-                             }//Error
-          });//Ajax
+
+            switch(data){
+              case "0":
+                notify("Error al procesar los datos " ,500,5000,'error');
+              break;
+
+              case "1":
+                $( "#dialogo" ).dialog( "close" );
+                $("#tbl_p_prove").trigger("reloadGrid");
+                notify('Pedido cerrado satisfactoriamente',500,5000,'aviso');
+              break;
+
+              default:
+                $( "#dialogo").dialog( "close" );
+              break;
+
+            }//switch
+          },
+              error:function(datos){
+                notify("Error inesperado" ,500,5000,'error');
+              }//Error
+    });//Ajax
 }
 
 }
@@ -93,10 +86,10 @@ function abierto (id) {
       buttons: {
           Aceptar: function() {
             var confirmacion=true;
-           cerrar_pedido(id,confirmacion);        
+           cerrar_pedido(id,confirmacion);
           },
           Cancelar:function()
-          {   
+          {
         $( "#dialogo" ).dialog( "close" );
           }
       },
@@ -123,26 +116,27 @@ $.ajax({
                       success:function(data, textStatus){
 
                           switch(data){
-                              case "0": 
-                                  alert("Error al procesar los datos ");
+                              case "0":
+                                  notify("Error al procesar los datos " ,500,5000,'error');
                               break;
-                              
-                              case "1": 
+
+                              case "1":
                                   $("#tbl_p_prove").trigger("reloadGrid");
-                                  msg('El registro se ha guardado correctamente');
+                                  notify('El registro se edito correctamente',500,5000,'aviso');
                                   $( "#dialog-procesos" ).dialog( "close" );
                               break;
 
                               default:
                                   $( "#dialog-procesos" ).dialog( "close" );
-                                  alert("Error "+data);
-                              break; 
+                                  var error='Error'+data;
+                                 notify(error ,500,5000,'error');
+                              break;
                               }//switch
                              },
-                        error:function(datos){
-                              alert("Error inesperado");
+                              error:function(datos){
+                             notify("Error inesperado" ,500,5000,'error');
                              }//Error
-                         });//Ajax      
+                         });//Ajax
 
 
 }
@@ -166,38 +160,40 @@ $.ajax({
                       success:function(data, textStatus){
 
                       switch(data){
-                               case "0": 
-                                  alert("Error al procesar los datos ");
+                               case "0":
+                                  notify("Error al procesar los datos " ,500,5000,'error');
                                 break;
-                                
-                                case "1": 
+
+                                case "1":
                                    $("#tbl_p_prove").trigger("reloadGrid");
-                                    msg('El registro se ha guardado correctamente');
+                                    notify('El registro se guardado correctamente',500,5000,'aviso');
                                    $( "#dialog-procesos" ).dialog( "close" );
                                 break;
 
                                 default:
                                    $( "#dialog-procesos" ).dialog( "close" );
-                                  alert("Error "+data);
-                                break; 
+                                  var error='Error'+data;
+                                 notify(error ,500,5000,'error');
+                                break;
 
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesperado");
+                             notify("Error inesperado" ,500,5000,'error');
                              }//Error
-                         });//Ajax      
+                         });//Ajax`
 
 }
 
 
-
+function eliminar_pedido(id) {
+  msg="Este pedido se eliminara. ¿Estás seguro?";
+  confirmacion_eliminar(id,msg);
+}
 //////////////////////////////////////////ELIMINAR PEDIDO////////////////////////////
 
-function eliminar_pedido(id)
-{
-r=confirm('Esta seguro de eliminar el registro?');
-if(r==true)
+function eliminar_pedido_(id)
+
 {
   $.ajax({
                       async:true,cache: false,
@@ -205,33 +201,30 @@ if(r==true)
                       type:"POST",
                       url:"<?php echo base_url();?>pedidos_reutilizable/eliminar_pedido/"+id,
                       datatype:"html",
-                      success:function(data, textStatus){
+                     success:function(data, textStatus){
 
                              switch(data){
-                               case "0": 
-                                  alert("Error al procesar los datos ");
+                               case "0":
+                                  notify("Error al procesar los datos " ,500,5000,'error');
                                 break;
-                               case "1": 
+                               case "1":
+                               $("#tbl_p_prove").jqGrid("GridUnload");
                                     $( "#dialog-procesos" ).dialog( "close" );
-                  
-                                 $("#tbl_p_prove").trigger("reloadGrid");
-                                 msg('Registro eliminado correctamente');
+                                 notify('El registro se elimino correctamente',500,5000,'aviso');
+                                  setTimeout("cargar()",1000);
                                 break;
 
                                    default:
-                                   $( "#dialog-procesos" ).dialog( "close" );                   
-                                 break; 
+                                   $( "#dialog-procesos" ).dialog( "close" );
+                                 break;
 
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesparado");
+                              notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax
 }
-
-}
-
 //////////////////////////////////////////EDITAR PEDIDO//////////////////////////////
 function edit(id)
 {
@@ -242,7 +235,7 @@ $.ajax({
             type:"GET",
             url:"<?php echo base_url();?>pedidos_reutilizable/get/"+id+"/"+Math.random()*10919939116744,
             datatype:"html",
-            success:function(data, textStatus){ 
+            success:function(data, textStatus){
             dato= data.split('~');
             $("#fecha_entrega").val(dato[0]);
             $("#proveedor_id_proveedor").val(dato[1]);
@@ -263,8 +256,9 @@ $( "#dialog-procesos" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-          editar(id);
-          msg('El registro se ha editado correctamente');
+            if (validarCamposForm1()==true) {
+              editar(id);
+              }
             },
           Cancelar:function()
           {
@@ -276,12 +270,6 @@ $( "#dialog-procesos" ).dialog({
         $( "#dialog-procesos" ).dialog( "open" );
 
 }
-
-
-
-
-
-
 ///////////////////////////////////////////////////////aLTA DE NUEVO PEDIDO REUTILIZABLE////////////
 
 function alta()
@@ -296,10 +284,12 @@ $( "#dialog-procesos" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-          guardar_pedido();        
+            if (validarCamposForm1()==true) {
+              guardar_pedido();
+            }
           },
           Cancelar:function()
-          {   
+          {
         $( "#dialog-procesos" ).dialog( "close" );
           }
       },
@@ -308,14 +298,12 @@ $( "#dialog-procesos" ).dialog({
         $( "#dialog-procesos" ).dialog( "open" );
 }
 
-
-////////////////////////////PAGINACIONES////////////////////////////////////////////   
-  $(document).ready(function(){
-	$("#tbl_p_prove").jqGrid({
+function cargar () {
+    $("#tbl_p_prove").jqGrid({
     url:'<?php echo base_url();?>pedidos_reutilizable/paginacion',
     datatype: "json",
     mtype: 'POST',
-		      
+
                         colNames:['Acciones',
                                     'FECHA DE PEDIDO',
                                     'FECHA DE ENTREGA',
@@ -329,7 +317,7 @@ $( "#dialog-procesos" ).dialog({
                                   {name:'cantidad', index:'cantidad', width:30,resizable:true, sortable:true,search:true,editable:true},
                                   {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:true, sortable:true,search:true,editable:true},
                                   {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:true,editable:true}
-                                ],                             
+                                ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
   rowNum:15,
@@ -344,12 +332,103 @@ $( "#dialog-procesos" ).dialog({
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
-  width:'950',  
+  width:'950',
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_p_prove").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
-   });                
-</script>
+        $("#tbl_p_prove").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
+}
+////////////////////////////PAGINACIONES////////////////////////////////////////////
+  $(document).ready(function(){
+	$("#tbl_p_prove").jqGrid({
+    url:'<?php echo base_url();?>pedidos_reutilizable/paginacion',
+    datatype: "json",
+    mtype: 'POST',
 
+                        colNames:['Acciones',
+                                    'FECHA DE PEDIDO',
+                                    'FECHA DE ENTREGA',
+                                    'CANTIDAD',
+                                    'PROVEEDOR',
+                                    'LUGAR DE ENVIO'
+                                    ],
+                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
+                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'cantidad', index:'cantidad', width:30,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:true,editable:true}
+                                ],
+    pager: jQuery('#paginacion'),
+    rownumbers:true,
+  rowNum:15,
+    rowList:[10,20,30],
+    imgpath: '<?php echo base_url();?>img/editar.jpg',
+    mtype: "POST",
+    sortname: 'id_pedido_reutilizable',
+    viewrecords: true,
+    sortorder: "asc",
+  editable: true,
+    caption: 'Pedido Reutilizable',
+    multiselect: false,
+    height:'auto',
+    loadtext: 'Cargando',
+  width:'950',
+        }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
+        $("#tbl_p_prove").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
+   });
+///////////////////dialogo de confirmacion////////////////////////////////////
+  function confirmacion_eliminar (id,msg) {
+$('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'+msg+'</p>');
+
+    $( "#dialog-confirm" ).dialog({
+      resizable: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+        "Eliminar": function() {
+          $( this ).dialog( "close" );
+          eliminar_pedido_(id);
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+    }
+    //////////////////////////////////////////////////////////////////////////////
+function validarCamposForm1 () {
+  fecha_entrega=$('#fecha_entrega').val();
+  proveedor_id_proveedor=$('#proveedor_id_proveedor').val();
+  oficina=$('#oficina').val();
+  cantidad=$('#cantidad').val();
+
+  if (validarVacio(fecha_entrega)==false) {
+      notify('* El campo <strong>FECHA DE ENTREGA</strong> no puede estar vacio!!!',500,5000,'error');
+      $("#fecha_entrega").focus();
+    return false;
+  }else if (validarCombo(proveedor_id_proveedor)==false) {
+      notify('* Debe seleccionar almenos una opcion de la lista <strong>PROVEEDORES</strong>',500,5000,'error');
+    $("#proveedor_id_proveedor").focus();
+    return false;
+  }else if (validarCombo(oficina)==false) {
+      notify('* Debe seleccionar almenos una opcion de la lista <strong>OFICINAS</strong>',500,5000,'error');
+    $("#oficina").focus();
+    return false;
+  }else if (validarVacio(cantidad)==false) {
+    notify('* El campo <strong>CANTIDAD</strong> no puede estar vacio!!!',500,5000,'error');
+    $("#cantidad").focus();
+    return false;
+  }else if (validarNUmero(cantidad)==false) {
+    notify('* El campo <strong>CANTIDAD</strong> no es un numero!!!',500,5000,'error');
+    $("#cantidad").focus();
+    return false
+  }else{
+    return true;
+  }
+}
+</script>
+<div id="dialog-confirm" title="Confirmacion" style="display: none;">
+</div>
 <table >
 <tr>
 <td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
@@ -359,9 +438,9 @@ $( "#dialog-procesos" ).dialog({
 </tr>
 </table>
         <table id="tbl_p_prove"></table>
-        <div id="paginacion"> </div>    
+        <div id="paginacion"> </div>
         <div style="display:none" id="dialog-procesos" title="Pedidos">
-        <?php 
+        <?php
         $this->load->view('pedidos_reutilizable/formulario');?>
         </div>
   <!-- Funcion dialogo -->

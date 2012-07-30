@@ -13,27 +13,28 @@ function guardar_producto (id) {
                       success:function(data, textStatus){
 
                              switch(data){
-                               case "0": 
-                            alert("Error al procesar los datos ");
+                               case "0":
+                             notify("Error al procesar los datos " ,500,5000,'error');
                       break;
-                              case "1": 
+                              case "1":
                             $("#tbl_p_prove_form").trigger("reloadGrid");
-                               alert('El registro se ha guardado correctamente');
+                               notify('El registro se guardado correctamente',500,5000,'aviso');
                          $( "#dialog-procesos_cantidad" ).dialog( "close" );
                      break;
 
                                    default:
                                    $( "#dialog-procesos_cantidad" ).dialog( "close" );
-                            alert("Error "+data);
-                    break; 
+                             var error='Error'+data;
+                                 notify(error ,500,5000,'error');
+                    break;
 
                               }//switch
                              },
                         error:function(datos){
-                              alert("Error inesperado");
+                              notify("Error inesperado" ,500,5000,'error');
                              }//Error
-                         });//Ajax 
-	
+                         });//Ajax
+
 }
 function agregar(id)
 {
@@ -45,12 +46,15 @@ $( "#dialog-procesos_cantidad" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-          guardar_producto(id);
-              $("#cantidad").val('');          
-            $("#tbl_p_prove_form").trigger("reloadGrid")        
-          },
+            if (validarCamposForm1_producto()==true) {
+              guardar_producto(id);
+              $("#cantidad").val('');
+            $("#tbl_p_prove_form").trigger("reloadGrid")
+
+            }
+                    },
           Cancelar:function()
-          {   
+          {
         $( "#dialog-procesos_cantidad" ).dialog( "close" );
           }
       },
@@ -64,16 +68,14 @@ $( "#dialog-procesos_cantidad" ).dialog({
     url:'<?php echo base_url();?>catalogo_mprima/paginacion_productos',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Agregar','NOMBRE','CARACTERISTICA','TIPO','GROSOR','ANCHO','LARGO','RESISTENCIA'],
+                        colNames:['Agregar','NOMBRE','CORRUGADO','ANCHO','LARGO','RESISTENCIA'],
                         colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:50,resizable:false,align:"center", sortable:true,search:false,editable:false},
                                   {name:'nombre', index:'nombre', width:150,resizable:false, sortable:true,search:false,editable:false,search:false,},
-                                  {name:'caracteristica', index:'caracteristica', width:120,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'tipo', index:'tipo', width:90,resizable:false, sortable:true,align:"center",editable:true,search:false,},
                                   {name:'tipo_m', index:'tipo_m', width:90,resizable:false, sortable:true,align:"center",editable:true,search:false,},
                                   {name:'ancho', index:'ancho', width:50,resizable:false, sortable:true,align:"center",editable:true,search:false,},
                                   {name:'largo', index:'largo', width:50,resizable:false, sortable:true,align:"center",editable:true,search:false,},
                                   {name:'resistencia', index:'resistencia', width:90,resizable:false, align:"center",sortable:true,search:false,editable:true}
-                                ],                             
+                                ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
   rowNum:15,
@@ -92,8 +94,21 @@ $( "#dialog-procesos_cantidad" ).dialog({
     //searchurl:'<?php echo base_url();?>empresas/buscando',
                 height:"auto"
         }).navGrid("#paginacion_form", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_p_prove_form").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
-   
+        $("#tbl_p_prove_form").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
+function validarCamposForm1_producto () {
+cantidad=$('#cantidad').val();
+if (validarVacio(cantidad)==false) {
+  notify('* El campo <strong>CANTIDAD</strong> no puede estar vacio!!!',500,5000,'error');
+    $("#cantidad").focus();
+  return false;
+}else if (validarNUmero(cantidad)==false) {
+  notify('* El campo <strong>CANTIDAD</strong> no es un numero!!!',500,5000,'error');
+    $("#cantidad").focus();
+  return false
+}else {
+  return true;
+}
+}
    </script>
 
     <table id="tbl_p_prove_form"></table>
