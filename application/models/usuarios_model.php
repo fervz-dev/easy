@@ -27,7 +27,7 @@ return $fila;
 public function guardar()
 {
 
-$password=crypt($this->input->post('password'),2);
+$password=$this->input->post('password');
         $data = array
 					(
 						'user' => $this->input->post('user'),
@@ -37,11 +37,11 @@ $password=crypt($this->input->post('password'),2);
 						'status' => 1,
 						'email' => $this->input->post('email'),
 						'nombre'=> $this->input->post('nombre'),
-						'oficina_id_oficina'=>$this->input->post('id_oficina')	
+						'oficina_id_oficina'=>$this->input->post('id_oficina')
 						);
 
 					$this->db->insert('usuarios', $data);
-					return $this->db->affected_rows(); 
+					return $this->db->affected_rows();
 }
 
 
@@ -49,24 +49,22 @@ $password=crypt($this->input->post('password'),2);
 
 public function editar($id)
 {
-
-
    $data = array
 					(
-						'user' => $this->input->post('user'),
-						'id_roles'=>$this->input->post('id_roles'),
-						'fecha_alta'=>date('Y-m-d-h:i:s'),
-						'status' => 1,
-						'email' => $this->input->post('email'),
-						'nombre'=> $this->input->post('nombre'),
-						'oficina_id_oficina'=>$this->input->post('id_oficina')
+					'user' => $this->input->post('user'),
+					'id_roles'=>$this->input->post('id_roles'),
+					'fecha_alta'=>date('Y-m-d-h:i:s'),
+					'status' => 1,
+					'email' => $this->input->post('email'),
+					'nombre'=> $this->input->post('nombre'),
+					'oficina_id_oficina'=>$this->input->post('id_oficina')
 						);
 	if($this->input->post('password') != '')
 	{
-	$password=crypt($this->input->post('password'),2);
-	$data['password']=$password;
+	// $password=crypt($this->input->post('password'),2);
+	$data['password']=$this->input->post('password');
 	}
-	
+
 	$this->db->where('id', $id);
 	$this->db->update('usuarios', $data);
 

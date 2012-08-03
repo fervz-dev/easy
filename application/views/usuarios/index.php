@@ -2,6 +2,7 @@
 <script>
 function edit(id)
 {
+  document.nuevo_usuario.reset();
 $.ajax({
                         async:true,cache: false,
                         beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
@@ -13,11 +14,13 @@ $.ajax({
                         //alert(data);
 						dato= data.split('~');
 						//alert(cadenaTexto);
-						$("#oficina").val(dato[0]);
-						$("#rol").val(dato[2]);
-						$("#nombre_completo").val(dato[4]);
+						$("#sucursal").val(dato[0]);
 						$("#usuario").val(dato[1]);
+            $("#rol").val(dato[2]);
 						$("#email").val(dato[3]);
+            $("#nombre_completo").val(dato[4]);
+
+
 
 						},
                         error:function(datos){

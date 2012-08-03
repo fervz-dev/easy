@@ -83,7 +83,7 @@
 					<label id="labelRight">Gramos:</label>
 				</td>
 				<td>
-					<input name="gramos" type="text" id="gramos" size="35" onblur="javascript:sumar();">
+					<input name="gramos" type="text" id="gramos" size="35">
 				</td>
 			</tr>
 			<tr>
@@ -132,14 +132,12 @@
 </form>
 
 <script type="text/javascript">
-function sumar () {
-var text1=$("#kilos").val();
-var text2=$("#gramos").val();
-var text=text1+'.'+text2;
-$("#peso").val(text);
-
-
-}
+  $('#gramos').change(function(e) {
+    var text1=$("#kilos").val();
+    var text2=$("#gramos").val();
+    var text=text1+'.'+text2;
+  $("#peso").val(text);
+  });
 function calcular1 () {
 	var peso_=$("#peso").val();
 	var cantidad=$("#cantidad").val();

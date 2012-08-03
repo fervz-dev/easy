@@ -2,7 +2,7 @@
 
 class Catalogo_mprima_model extends CI_Model
 {
-   
+
     function __construct()
 {
 	parent::__construct();
@@ -13,15 +13,14 @@ class Catalogo_mprima_model extends CI_Model
     {
         $query = $this->db->query("SELECT cprima.id_cat_mprima,
                                     cprima.nombre,
-
                                     cprima.tipo_m,
                                     cprima.ancho,
                                     cprima.largo,
                                     resistencia.resistencia
                                     FROM cat_mprima AS cprima, resistencia_mprima AS resistencia
                                     WHERE resistencia.id_resistencia_mprima=cprima.resistencia_mprima_id_resistencia_mprima
-                                    AND cprima.activo = 1 
-                                    ORDER BY $sidx $sord 
+                                    AND cprima.activo = 1  AND cprima.id_usuario=".$this->session->userdata('id')." AND cprima.id_sucursal = ".$this->session->userdata('oficina')."
+                                    ORDER BY $sidx $sord
                                     LIMIT $start, $limite;");
                                 return ($query->num_rows() > 0)? $query->result() : NULL;
     }
@@ -59,7 +58,7 @@ public function get_resistencia_all()
                                         ORDER BY
                                         cat_mprima.nombre ASC");
         $fila = $query->row();
-          return $fila;    
+          return $fila;
     }
 
    public function editar($id)
@@ -92,10 +91,12 @@ public function get_resistencia_all()
         'largo'=>$this->input->post('largo'),
         'resistencia_mprima_id_resistencia_mprima'=>$this->input->post('resistencia_mprima_id_resistencia_mprima'),
         'tipo_m'=>$this->input->post('tipo_m'),
-        'activo'=>1
+        'activo'=>1,
+        'id_usuario'=>$this->session->userdata('id'),
+        'id_sucursal'=>$this->session->userdata('oficina')
         );
         $this->db->insert('cat_mprima', $data);
-        return $this->db->affected_rows(); 
+        return $this->db->affected_rows();
    }
 
 }

@@ -19,10 +19,10 @@
 <!-- <link type="text/css" href="<?php echo base_url();?>css/cupertino/jquery-ui-1.8.20.custom.css" rel="stylesheet" /> -->
 <!-- <link type="text/css" rel="stylesheet"  href="<?php echo base_url();?>css/ui/demos.css" />
  -->
-<meta http-equiv="Expires" content="0"> 
+<meta http-equiv="Expires" content="0">
 <meta http-equiv="Last-Modified" content="0">
 <meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
-<meta http-equiv="Pragma" content="no-cache"> 
+<meta http-equiv="Pragma" content="no-cache">
 
 <script type="text/javascript">
 	/*function str_replace(busca, repla, orig)
@@ -66,18 +66,18 @@
 			changeYear: true,
 	    yearSuffix: ""};
 		$.datepicker.setDefaults($.datepicker.regional["es"]);
-		});    
+		});
         $(document).ready(function() {
-           
+
            $("#fecha_entrega").datepicker({ changeMonth: true });
            $("#fecha_nacimiento").datepicker({ changeMonth: true });
-           
+
         });
 		function oculta(id)
 		{
 		$(id).fadeOut();
 		}
-			
+
 
     </script>
     <!-- local gen ES -->

@@ -305,9 +305,8 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
     });
     }
   //////////////////////////////////////////////////////////////////////////////
-  $('#gramos').change (argument) {
-    // body...
-  };
+
+
 ////////////////////////////////////// validacion //////////////////////
 function validarCampos () {
 

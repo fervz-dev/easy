@@ -174,7 +174,12 @@ exit();
 public function get($id)
 {
 $result=$this->usuarios->get_id($id);
-echo $result->id_oficina.'~'.$result->user.'~'.strtoupper($result->id_roles).'~'.$result->email.'~'.strtoupper($result->nombre);
+echo
+    $result->oficina_id_oficina.'~'.
+    $result->user.'~'.
+    strtoupper($result->id_roles).'~'.
+    $result->email.'~'.
+    strtoupper($result->nombre);
 }
 
 

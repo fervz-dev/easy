@@ -8,7 +8,7 @@ class Inicio extends CI_Controller {
 	$this->load->view('login/index.php');
 	//echo crypt('admin',2);
 	}
-	
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //validando login de usuario
 public function validar_usuario()
@@ -18,13 +18,13 @@ public function validar_usuario()
 	 $redux =$this->redux_auth->login($user,$pass);
 
 	 switch($redux){
-	 case false: 
+	 case false:
                  $Data["ErrorDatos"]="Error en usuario/contrase&ntilde;a, verifique de nuevo por favor.";
-				 $this->load->view('login/index.php',$Data);           
+				 $this->load->view('login/index.php',$Data);
 				break;
-	  case true: 
+	  case true:
 	            redirect(base_url()."panel?m=1","refresh");
-			    break;				
+			    break;
 	 }
 	}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +34,7 @@ public function validar_usuario()
   		//redirecciona al formulario de login
 		redirect(base_url().'inicio','refresh');
   }
-	
+
 
 }//fin clase
 ?>

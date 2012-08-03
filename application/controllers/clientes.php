@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-* 
+*
 */
 class Clientes extends CI_Controller
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -76,7 +76,7 @@ public function paginacion()
                                     $row->estado,
                                     $row->municipio,
                                     $row->localidad,
-                                    $row->direccion, 
+                                    $row->direccion,
                                     strtoupper($row->cp),
                                     strtoupper($row->lada),
                                     strtoupper($row->num_telefono),
@@ -85,7 +85,7 @@ public function paginacion()
                                     $row->email,
                                     $row->comentario,
                                     strtoupper($row->fecha_ingreso),
-                                    );                        
+                                    );
            $i++;
         }
         // La respuesta se regresa como json
@@ -109,7 +109,7 @@ public function paginacion()
                     strtoupper($row->ext).'~'.
                     strtoupper($row->fax).'~'.
                     $row->email.'~'.
-                    $row->comentario;                        
+                    $row->comentario;
     }
 
     public function editar_clientes($id)
@@ -186,13 +186,13 @@ public function paginacion()
                                     $row->localidad,
                                     $row->direccion,
                                     $row->comentario,
-                                    );                        
+                                    );
            $i++;
         }
         // La respuesta se regresa como json
         echo json_encode($data);
     }
-    
+
 ///////////////////////////   Directorio    ///////////////////////////
     public function get_directorio($id)
     {
@@ -202,7 +202,7 @@ public function paginacion()
                     $row->municipio.'~'.
                     $row->localidad.'~'.
                     $row->direccion.'~'.
-                    $row->comentario;                        
+                    $row->comentario;
     }
    public function editar_directorio_all()
     {
@@ -233,6 +233,6 @@ public function paginacion()
             echo 0;
         }
     }
-    
+
 
 }
