@@ -13,7 +13,7 @@ class Inicio extends CI_Controller {
 //validando login de usuario
 public function validar_usuario()
 	{
-	 $user = $this->input->post('user');
+	 $user = $this->input->post('usuario');
 	 $pass = $this->input->post('password');
 	 $redux =$this->redux_auth->login($user,$pass);
 

@@ -50,8 +50,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 			//existe informacion se encuentra en la db de lo contrario no se encuentra registrado
 			if($result){
 				//Comparamos las contraseñas
-				    //$pass = crypt($password,2);
-				$pass=$password;
+				    $pass = crypt($password,2);
 					if ($pass == $result->password){
 						$this->ci->session->set_userdata(array('id'=> $result->id));
                         $this->ci->session->set_userdata(array('rol'=> $result->id_roles));

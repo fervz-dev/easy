@@ -30,7 +30,7 @@ public function guardar()
 $password=$this->input->post('password');
         $data = array
 					(
-						'user' => $this->input->post('user'),
+						'user' => $this->input->post('usuario'),
 						'password' => $password,
 						'id_roles'=>$this->input->post('id_roles'),
 						'fecha_alta'=>date('Y-m-d-h:i:s'),
@@ -51,7 +51,7 @@ public function editar($id)
 {
    $data = array
 					(
-					'user' => $this->input->post('user'),
+					'user' => $this->input->post('usuario'),
 					'id_roles'=>$this->input->post('id_roles'),
 					'fecha_alta'=>date('Y-m-d-h:i:s'),
 					'status' => 1,
@@ -61,8 +61,8 @@ public function editar($id)
 						);
 	if($this->input->post('password') != '')
 	{
-	// $password=crypt($this->input->post('password'),2);
-	$data['password']=$this->input->post('password');
+	$password=crypt($this->input->post('password'),2);
+	$data['password']=$password;
 	}
 
 	$this->db->where('id', $id);
