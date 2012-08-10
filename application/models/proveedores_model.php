@@ -1,9 +1,9 @@
 <?php /**
-* 
+*
 */
 class Proveedores_model extends CI_Model
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -29,14 +29,16 @@ class Proveedores_model extends CI_Model
 										FROM
 										proveedores
 										WHERE
-										proveedores.activo = 1 
-										ORDER BY $sidx $sord 
+										proveedores.activo = 1
+										AND
+										proveedores.id_sucursal =".$this->session->userdata('oficina')."
+										ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
 	}
 
-	public function get_proveedores_all()			
+	public function get_proveedores_all()
 	{
 		$query = $this->db->query("SELECT
 											proveedores.id_proveedores,
@@ -45,6 +47,8 @@ class Proveedores_model extends CI_Model
 											proveedores
 											WHERE
 											proveedores.activo = 1
+											AND
+											proveedores.id_sucursal =".$this->session->userdata('oficina')."
 											GROUP BY
 											proveedores.id_proveedores
 											ORDER BY
@@ -78,7 +82,7 @@ class Proveedores_model extends CI_Model
 										ORDER BY
 										proveedores.nombre_empresa ASC");
         $fila = $query->row();
-          return $fila;    
+          return $fila;
     }
 
    public function editar($id)
@@ -96,7 +100,9 @@ class Proveedores_model extends CI_Model
 		'ext'=>$this->input->post('ext'),
 		'fax'=>$this->input->post('fax'),
 		'email'=>$this->input->post('email'),
-		'comentario'=>$this->input->post('comentario')
+		'comentario'=>$this->input->post('comentario'),
+		'id_usuario'=>$this->session->userdata('id'),
+		'id_sucursal'=>$this->session->userdata('oficina')
 	);
 
 	$this->db->where('id_proveedores', $id);
@@ -119,10 +125,12 @@ class Proveedores_model extends CI_Model
 				'fax'=>$this->input->post('fax'),
 				'email'=>$this->input->post('email'),
 				'comentario'=>$this->input->post('comentario'),
-				'activo'=>'1'
+				'activo'=>'1',
+				'id_usuario'=>$this->session->userdata('id'),
+				'id_sucursal'=>$this->session->userdata('oficina')
 			);
    		$this->db->insert('proveedores', $data);
-		return $this->db->affected_rows(); 
+		return $this->db->affected_rows();
    }
 
    public function eliminar($id)
@@ -131,6 +139,6 @@ class Proveedores_model extends CI_Model
 				$this->db->where('id_proveedores', $id);
 				$this->db->update('proveedores', $data);
 				return $this->db->affected_rows();
-   }	
+   }
 }
 ?>

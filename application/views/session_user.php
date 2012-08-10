@@ -1,11 +1,11 @@
-<?php 
+<?php
 $query="SELECT
 usuarios.nombre,
 oficina.nombre_oficina
 from usuarios, oficina
 WHERE
 usuarios.id = ".$this->session->userdata('id')." AND
-usuarios.oficina_id_oficina = ".$this->session->userdata('oficina')."";
+oficina.id_oficina = ".$this->session->userdata('oficina')."";
 $query=$this->db->query($query);
 $query=$query->row();
 ?>

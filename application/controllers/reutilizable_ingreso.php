@@ -5,9 +5,28 @@ class Reutilizable_ingreso extends CI_Controller{
 		parent::__construct();
         $this->load->model("resistencia_mprima_model","resistencia");
 		$this->load->model("reutilizable_ingreso_model","catalogo");
-        if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
-            redirect(base_url().'inicio');
-        //echo 'denegado';
+
+
+            if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
+                redirect(base_url().'inicio');
+            //echo 'denegado';
+            }
+ //inicializamos las variables MENU Y SIBMENU, por si no se enviaran desde la url
+        $menu=0;
+        $submenu=0;
+        //verificamos si se enviaron las variables GET->m "(menu)" GET->submain"(submenu)"
+        if (isset($_GET['m'])||isset($_GET['submain'])) {
+            //si se enviaorn las variables GET condicionamos que sean solo numericas
+            if (!is_numeric($_GET['m']) || !is_numeric($_GET['submain'])) {
+                //si no son njumericas que cierre la session actual
+                 redirect(base_url().'inicio/logout');
+            }else{
+                //en caso de que si fueran numericas agregamos la variables GET a las variables previamente creadas.
+                $menu=$_GET['m'];
+                $submenu=$_GET['submain'];
+                //validamos el menu y submenu
+                $this->permisos->permisosURL($menu,$submenu);
+               }
         }
 
 	}

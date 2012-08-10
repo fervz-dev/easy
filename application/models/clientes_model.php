@@ -1,10 +1,10 @@
-<?php 
+<?php
 /**
-* 
+*
 */
 class Clientes_model extends CI_Model
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -34,7 +34,8 @@ class Clientes_model extends CI_Model
 										clientes
 										WHERE
 										clientes.activo = 1
-									ORDER BY $sidx $sord 
+
+										ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
@@ -68,7 +69,7 @@ class Clientes_model extends CI_Model
 											ORDER BY
 											clientes.nombre_empresa ASC");
 				        $fila = $query->row();
-				          return $fila;    
+				          return $fila;
 	}
 
    public function editar($id)
@@ -88,7 +89,9 @@ class Clientes_model extends CI_Model
 		'ext'=>$this->input->post('ext'),
 		'fax'=>$this->input->post('fax'),
 		'email'=>$this->input->post('email'),
-		'comentario'=>$this->input->post('comentario')
+		'comentario'=>$this->input->post('comentario'),
+        'id_usuario'=>$this->session->userdata('id'),
+        'id_sucursal'=>$this->session->userdata('oficina')
 	);
 
 	$this->db->where('id_clientes', $id);
@@ -114,10 +117,12 @@ class Clientes_model extends CI_Model
 						'email'=>$this->input->post('email'),
 						'comentario'=>$this->input->post('comentario'),
 						'fecha_ingreso'=>date('y-m-d'),
-						'activo'=>1
+						'activo'=>1,
+        				'id_usuario'=>$this->session->userdata('id'),
+        				'id_sucursal'=>$this->session->userdata('oficina')
 						);
    		$this->db->insert('clientes', $data);
-		return $this->db->affected_rows(); 
+		return $this->db->affected_rows();
    }
 
    public function eliminar($id)
@@ -128,6 +133,6 @@ class Clientes_model extends CI_Model
 				return $this->db->affected_rows();
    }
 
-   
+
 }
 ?>

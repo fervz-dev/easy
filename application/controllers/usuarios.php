@@ -8,10 +8,30 @@ class Usuarios extends CI_Controller {
 		$this->load->model("usuarios_model","usuarios");
 		$this->load->model("oficina_model","oficina");
 
-		if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
- 			redirect(base_url().'inicio');
- 		//echo 'denegado';
-		}
+
+
+            if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
+                redirect(base_url().'inicio');
+            //echo 'denegado';
+            }
+ //inicializamos las variables MENU Y SIBMENU, por si no se enviaran desde la url
+        $menu=0;
+        $submenu=0;
+        //verificamos si se enviaron las variables GET->m "(menu)" GET->submain"(submenu)"
+        if (isset($_GET['m'])||isset($_GET['submain'])) {
+            //si se enviaorn las variables GET condicionamos que sean solo numericas
+            if (!is_numeric($_GET['m']) || !is_numeric($_GET['submain'])) {
+                //si no son njumericas que cierre la session actual
+                 redirect(base_url().'inicio/logout');
+            }else{
+                //en caso de que si fueran numericas agregamos la variables GET a las variables previamente creadas.
+                $menu=$_GET['m'];
+                $submenu=$_GET['submain'];
+                //validamos el menu y submenu
+                $this->permisos->permisosURL($menu,$submenu);
+               }
+        }
+
   }//****Constructor...
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	function oficina()
@@ -69,7 +89,11 @@ public function paginacion()
     //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
     $start = $limit*$page - $limit;
     //Consulta que devuelve los registros de una sola pagina
-    if ($start < 0) $start = 0;
+    //if ($start < 0) $start = 0;
+    if ($start < 0){
+        $start = 0;
+        $data();
+    }else{
     $consulta = "SELECT usuarios.email, usuarios.id,usuarios.nombre, roles.nombre_rol, usuarios.`user` FROM usuarios , roles  ".$where." ORDER BY $sidx $sord LIMIT $start , $limit;";
     $result1 = $this->db->query($consulta);
 
@@ -78,14 +102,34 @@ public function paginacion()
     $data->total = $total_pages;
     $data->records = $count;
     $i=0;
+    if ($this->permisos->permisos(2,2)==1) {
+
     foreach($result1->result() as $row) {
+
        $data->rows[$i]['id']=$row->id;
+    if (($this->permisos->permisos(2,1)==1)&&($this->permisos->permisos(2,3)==1)){
+
        $onclik="onclick=delet('".$row->id."')";
 	   $onclikedit="onclick=edit('".$row->id."')";
- $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+       $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+    }elseif (($this->permisos->permisos(2,1)==1)&&($this->permisos->permisos(2,3)==0)) {
+       //$onclik="onclick=delet('".$row->id."')";
+       $onclikedit="onclick=edit('".$row->id."')";
+       $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>';
+
+        }elseif (($this->permisos->permisos(2,1)==0)&&($this->permisos->permisos(2,3)==1)) {
+       $onclik="onclick=delet('".$row->id."')";
+       //$onclikedit="onclick=edit('".$row->id."')";
+       $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+        }elseif (($this->permisos->permisos(2,1)==0)&&($this->permisos->permisos(2,3)==0)) {
+          $acciones='';
+
+            }
         $data->rows[$i]['cell']=array($acciones,strtoupper($row->nombre),$row->user,$row->email,strtoupper($row->nombre_rol));
         $i++;
+        }
     }
+}
 	// La respuesta se regresa como json
     echo json_encode($data);
 }

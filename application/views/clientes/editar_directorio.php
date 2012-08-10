@@ -7,7 +7,7 @@
 			<?php foreach ($estados as $est) { ?>
 			<option value="<?php echo $est['nombre']; ?>"><?php echo $est['nombre'] ?></option>
 			<?php } ?>
-		</select> 
+		</select>
 	</tr>
 
 	<tr>
@@ -25,12 +25,21 @@
 	<tr>
 		<td><label>Direccion</label></td>
 		<td><input name="direccion_d" type="text" id="direccion_d" size="35"></td>
+		<td>
+			<div onclick="tip1('direccion')">
+				<ul id="icons" class="ui-widget ui-helper-clearfix">
+					<li class="ui-state-default ui-corner-all" title="¿Qué es esto?">
+						<span class="ui-icon ui-icon-info"></span>
+					</li>
+				</ul>
+			</div>
+		</td>
 	</tr>
 	<tr>
 		<td><label>Observaciones</label></td>
 		<td><input name="comentario_d" type="text" id="comentario_d" size="35"></td>
 		<input name="id_direcciones" type="hidden" id="id_direcciones" size="35">
 
-	</tr>	
+	</tr>
 </table>
 </form>

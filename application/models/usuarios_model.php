@@ -27,7 +27,7 @@ return $fila;
 public function guardar()
 {
 
-$password=$this->input->post('password');
+$password=crypt($this->input->post('password'),2);
         $data = array
 					(
 						'user' => $this->input->post('usuario'),

@@ -28,6 +28,7 @@ class Reutilizable_ingreso_model extends CI_Model
                                     WHERE resistencia.id_resistencia_mprima=cprima.resistencia_mprima_id_resistencia_mprima
                                     AND cprima.activo = 1
                                     AND cprima.tipo = 'reutilizable'
+                                    AND cprima.id_sucursal =".$this->session->userdata('oficina')."
                                     ORDER BY $sidx $sord
                                     LIMIT $start, $limite;");
                                 return ($query->num_rows() > 0)? $query->result() : NULL;
@@ -87,7 +88,9 @@ public function get_resistencia_all()
         'peso'=>$this->input->post('peso'),
         'cantidad'=>$this->input->post('cantidad'),
         'peso_total'=>$this->input->post('peso_total'),
-        'restan'=>$this->input->post('restan')
+        'restan'=>$this->input->post('restan'),
+        'id_usuario'=>$this->session->userdata('id'),
+        'id_sucursal'=>$this->session->userdata('oficina')
     );
 
     $this->db->where('id_cat_mprima', $id);
@@ -116,7 +119,9 @@ public function get_resistencia_all()
         'cantidad'=>$this->input->post('cantidad'),
         'peso_total'=>$this->input->post('peso_total'),
         'restan'=>$this->input->post('cantidad'),
-        'activo'=>1
+        'activo'=>1,
+        'id_usuario'=>$this->session->userdata('id'),
+        'id_sucursal'=>$this->session->userdata('oficina')
         );
         $this->db->insert('cat_mprima_reutilizable', $data);
         return $this->db->affected_rows();

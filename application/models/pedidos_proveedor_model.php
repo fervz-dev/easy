@@ -1,10 +1,10 @@
-<?php 
+<?php
 /**
-* 
+*
 */
 class Pedidos_proveedor_model extends CI_Model
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -18,16 +18,17 @@ class Pedidos_proveedor_model extends CI_Model
 									pedido_proveedor.fecha_entrega,
 									proveedores.nombre_empresa,
 									oficina.nombre_oficina,
-									pedido_proveedor.activo									
+									pedido_proveedor.activo
 									FROM
 									pedido_proveedor ,
 									proveedores ,
 									oficina
 									WHERE
-									pedido_proveedor.proveedores_id_proveedores = proveedores.id_proveedores 
+									pedido_proveedor.proveedores_id_proveedores = proveedores.id_proveedores
 									AND
 									pedido_proveedor.oficina = oficina.id_oficina
-									ORDER BY $sidx $sord 
+
+									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
@@ -51,7 +52,7 @@ class Pedidos_proveedor_model extends CI_Model
 									cantidad_pedido.catalogo_producto = cat_mprima.id_cat_mprima AND
 									cat_mprima.resistencia_mprima_id_resistencia_mprima = resistencia_mprima.id_resistencia_mprima AND
 									resistencia_mprima.activo = 1
-									ORDER BY $sidx $sord 
+									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
@@ -70,7 +71,7 @@ class Pedidos_proveedor_model extends CI_Model
 										WHERE
 										pedido_proveedor.id_pedido = $id");
         $fila = $query->row();
-          return $fila;    
+          return $fila;
     }
 
    public function editar($id)
@@ -78,7 +79,9 @@ class Pedidos_proveedor_model extends CI_Model
 	   	$data = array (
 			   	'fecha_entrega'=>$this->input->post('fecha_entrega'),
 				'proveedores_id_proveedores'=>$this->input->post('proveedor_id_proveedor'),
-				'oficina'=>$this->input->post('oficina')
+				'oficina'=>$this->input->post('oficina'),
+				'id_usuario'=>$this->session->userdata('id'),
+				'id_sucursal'=>$this->session->userdata('oficina')
 						);
 
 	$this->db->where('id_pedido', $id);
@@ -91,9 +94,11 @@ class Pedidos_proveedor_model extends CI_Model
 					   	'catalogo_producto'=>$this->input->post('catalogo_producto'),
 						'cantidad'=>$this->input->post('cantidad'),
 						'id_pedido'=>$this->input->post('id_pedido'),
+        				'id_usuario'=>$this->session->userdata('id'),
+        				'id_sucursal'=>$this->session->userdata('oficina')
 						);
    		$this->db->insert('cantidad_pedido', $data);
-		return $this->db->affected_rows(); 
+		return $this->db->affected_rows();
    }
 
    public function eliminar_pedido($id)
@@ -129,10 +134,12 @@ public function guardar_pedido()
 			   	'fecha_entrega'=>$this->input->post('fecha_entrega'),
 				'proveedores_id_proveedores'=>$this->input->post('proveedor_id_proveedor'),
 				'oficina'=>$this->input->post('oficina'),
-				
+				'id_usuario'=>$this->session->userdata('id'),
+				'id_sucursal'=>$this->session->userdata('oficina')
+
 			);
    		$this->db->insert('pedido_proveedor', $data);
-		return $this->db->affected_rows(); 
+		return $this->db->affected_rows();
 	}
 /////////////////////cerrar pedido /////////////////////
 public function cerrar($id)
@@ -154,18 +161,18 @@ public function get_pedido_proveedor_almacen($sidx, $sord, $start, $limite)
 									proveedores.nombre_empresa,
 									oficina.nombre_oficina,
 									pedido_proveedor.activo,
-									pedido_proveedor.verificacion_almacen								
+									pedido_proveedor.verificacion_almacen
 									FROM
 									pedido_proveedor ,
 									proveedores ,
 									oficina
 									WHERE
-									pedido_proveedor.proveedores_id_proveedores = proveedores.id_proveedores 
+									pedido_proveedor.proveedores_id_proveedores = proveedores.id_proveedores
 									AND
 									pedido_proveedor.oficina = oficina.id_oficina
 									AND
 									pedido_proveedor.activo=0
-									ORDER BY $sidx $sord 
+									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
@@ -178,18 +185,18 @@ public function get_pedido_proveedor_almacen($sidx, $sord, $start, $limite)
 	$this->db->where('id_pedido', $id);
 	$this->db->update('pedido_proveedor',$data);
 	return $this->db->affected_rows();
-		
+
 	}
 	/////////////////////////enviar los datos del produto a pedidos provedor/bajar_stock_liena///////////
-	public function get_producto_($id)	
+	public function get_producto_($id)
 	{
-		$query = $this->db->query("SELECT	
+		$query = $this->db->query("SELECT
 				cat_mprima.nombre,
 				cat_mprima.ancho,
 				cat_mprima.largo,
 				cat_mprima.tipo_m,
 				resistencia_mprima.resistencia,
-				cantidad_pedido.cantidad				
+				cantidad_pedido.cantidad
 				FROM
 				cantidad_pedido ,
 				cat_mprima ,
@@ -200,7 +207,7 @@ public function get_pedido_proveedor_almacen($sidx, $sord, $start, $limite)
 				cat_mprima.resistencia_mprima_id_resistencia_mprima = resistencia_mprima.id_resistencia_mprima AND
 				resistencia_mprima.activo = 1");
 				$fila = $query->row();
-				          return $fila; 		
+				          return $fila;
 	}
 
    }

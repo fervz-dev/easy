@@ -23,8 +23,8 @@ public function validar_usuario()
 				 $this->load->view('login/index.php',$Data);
 				break;
 	  case true:
-	            redirect(base_url()."panel?m=1","refresh");
-			    break;
+	            redirect(base_url()."panel?m=inicio","refresh");
+	  break;
 	 }
 	}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

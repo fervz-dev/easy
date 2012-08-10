@@ -1,10 +1,10 @@
-<?php 
+<?php
 /**
-* 
+*
 */
 class Directorio_model extends CI_Model
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -22,8 +22,10 @@ class Directorio_model extends CI_Model
 										FROM
 										direcciones
 										WHERE
-										direcciones.clientes_id_clientes = $id 
-									ORDER BY $sidx $sord 
+										direcciones.clientes_id_clientes = $id
+										AND
+										direcciones.id_sucursal =".$this->session->userdata('oficina')."
+									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
@@ -45,7 +47,7 @@ class Directorio_model extends CI_Model
 										direcciones.id_direcciones = $id
 											");
 				        $fila = $query->row();
-				          return $fila;    
+				          return $fila;
 	}
 
    public function editar()
@@ -58,7 +60,6 @@ class Directorio_model extends CI_Model
 						'comentario'=>$this->input->post('comentario_d'),
 );
 	$id=$this->input->post('id_direcciones');
-
 	$this->db->where('id_direcciones', $id);
 	$this->db->update('direcciones',$data);
    }
@@ -72,10 +73,13 @@ class Directorio_model extends CI_Model
 									'localidad'=>$this->input->post('localidad_d'),
 									'direccion'=>$this->input->post('direccion_d'),
 									'comentario'=>$this->input->post('comentario_d'),
-									'activo'=>1
+									'activo'=>1,
+			        				'id_usuario'=>$this->session->userdata('id'),
+			        				'id_sucursal'=>$this->session->userdata('oficina')
+
 									);
    		$this->db->insert('direcciones', $data);
-		return $this->db->affected_rows(); 
+		return $this->db->affected_rows();
    }
 
    public function eliminar($id)
@@ -95,7 +99,7 @@ class Directorio_model extends CI_Model
 											direcciones.id_direcciones = $id
 											");
 				        $fila = $query->row();
-				          return $fila;    
+				          return $fila;
 	}
 public function eliminar_direccion($id)
    {

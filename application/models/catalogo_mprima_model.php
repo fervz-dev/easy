@@ -19,7 +19,7 @@ class Catalogo_mprima_model extends CI_Model
                                     resistencia.resistencia
                                     FROM cat_mprima AS cprima, resistencia_mprima AS resistencia
                                     WHERE resistencia.id_resistencia_mprima=cprima.resistencia_mprima_id_resistencia_mprima
-                                    AND cprima.activo = 1  AND cprima.id_usuario=".$this->session->userdata('id')." AND cprima.id_sucursal = ".$this->session->userdata('oficina')."
+                                    AND cprima.activo = 1
                                     ORDER BY $sidx $sord
                                     LIMIT $start, $limite;");
                                 return ($query->num_rows() > 0)? $query->result() : NULL;

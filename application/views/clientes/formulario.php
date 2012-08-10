@@ -1,9 +1,9 @@
 <form name="editar_clientes" id="editar_clientes" >
 <table>
-	
+
 	<tr>
 		<td><label id="labelRight">Nombre Empresa:</label></td>
-		<td><input name="nombre_empresa" type="text" id="nombre_empresa" size="35"></td>
+		<td><input name="nombre_empresa" type="text" id="nombre_empresa1" size="35"></td>
 	</tr>
 
 	<tr>
@@ -34,7 +34,7 @@
 			</div>
 		</td>
 	</tr>
-	
+
 	<tr>
 		<td><label id="labelRight">Estado:</label></td>
 		<td><select  name="estado" id="estado" onchange="cargar_datos_municipios(this.value);">
@@ -42,7 +42,7 @@
 			<?php foreach ($estados as $est) { ?>
 			<option value="<?php echo $est['nombre']; ?>"><?php echo $est['nombre'] ?></option>
 			<?php } ?>
-		</select> 
+		</select>
 	</tr>
 
 	<tr>
@@ -85,7 +85,7 @@
 		</td>
 	</tr>
 
-	
+
 
 	<tr>
 		<td><label id="labelRight">Lada:</label></td>
@@ -141,8 +141,8 @@
 	<tr>
 		<td><label id="labelRight">Observaciones:</label></td>
 		<td><input name="comentario" type="text" id="comentario" size="35"></td>
-	</tr>				
+	</tr>
 
 </table>
-</form> 
+</form>
 

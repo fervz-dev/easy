@@ -5,10 +5,30 @@ class Catalogo_mprima extends CI_Controller{
 		parent::__construct();
         $this->load->model("resistencia_mprima_model","resistencia");
 		$this->load->model("catalogo_mprima_model","catalogo");
-        if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
-            redirect(base_url().'inicio');
-        //echo 'denegado';
-        }   
+
+
+
+            if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
+                redirect(base_url().'inicio');
+            //echo 'denegado';
+            }
+ //inicializamos las variables MENU Y SIBMENU, por si no se enviaran desde la url
+        $menu=0;
+        $submenu=0;
+        //verificamos si se enviaron las variables GET->m "(menu)" GET->submain"(submenu)"
+        if (isset($_GET['m'])||isset($_GET['submain'])) {
+            //si se enviaorn las variables GET condicionamos que sean solo numericas
+            if (!is_numeric($_GET['m']) || !is_numeric($_GET['submain'])) {
+                //si no son njumericas que cierre la session actual
+                 redirect(base_url().'inicio/logout');
+            }else{
+                //en caso de que si fueran numericas agregamos la variables GET a las variables previamente creadas.
+                $menu=$_GET['m'];
+                $submenu=$_GET['submain'];
+                //validamos el menu y submenu
+                $this->permisos->permisosURL($menu,$submenu);
+               }
+        }
 
 	}
 
@@ -51,7 +71,7 @@ class Catalogo_mprima extends CI_Controller{
         //Consulta que devuelve los registros de una sola pagina
         if ($start < 0){
           $start = 0;
-         $data();   
+         $data();
         }else{
         $resultado_catalogo =$this->catalogo->get_cat_mprima($sidx, $sord, $start, $limite);
         // Se agregan los datos de la respuesta del servidor
@@ -59,21 +79,47 @@ class Catalogo_mprima extends CI_Controller{
         $data->total = $total_pages;
         $data->records = $count;
         $i=0;
-        foreach($resultado_catalogo as $row) {
-           $data->rows[$i]['id']=$row->id_cat_mprima;
-           $onclik="onclick=delet('".$row->id_cat_mprima."')";
-    	   $onclikedit="onclick=edit('".$row->id_cat_mprima."')";
-     	   $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
-           $data->rows[$i]['cell']=array($acciones,
-            strtoupper($row->nombre),
-            strtoupper($row->tipo_m),
-            strtoupper($row->ancho),
-            strtoupper($row->largo),
-            strtoupper($row->resistencia)
-            );
-           $i++;
+if ($this->permisos->permisos(4,2)==1) {
+
+                foreach($resultado_catalogo as $row) {
+                   $data->rows[$i]['id']=$row->id_cat_mprima;
+
+                   if (($this->permisos->permisos(4,1)==1)&&($this->permisos->permisos(4,3)==1)){
+
+                        $onclikedit="onclick=edit('".$row->id_cat_mprima."')";
+                        $onclik="onclick=delet('".$row->id_cat_mprima."')";
+                        $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+
+                   }elseif (($this->permisos->permisos(4,1)==1)&&($this->permisos->permisos(4,3)==0)) {
+
+                        $onclikedit="onclick=edit('".$row->id_cat_mprima."')";
+                        //$onclik="onclick=delet('".$row->id_cat_mprima."')";
+                        $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>';
+
+                   }elseif (($this->permisos->permisos(4,1)==0)&&($this->permisos->permisos(4,3)==1)) {
+
+                        //$onclikedit="onclick=edit('".$row->id_cat_mprima."')";
+                        $onclik="onclick=delet('".$row->id_cat_mprima."')";
+                        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+
+                   }elseif (($this->permisos->permisos(4,1)==0)&&($this->permisos->permisos(4,3)==0)) {
+
+                        //$onclikedit="onclick=edit('".$row->id_cat_mprima."')";
+                        //$onclik="onclick=delet('".$row->id_cat_mprima."')";
+                        $acciones='';
+
+                   }
+                   $data->rows[$i]['cell']=array($acciones,
+                    strtoupper($row->nombre),
+                    strtoupper($row->tipo_m),
+                    strtoupper($row->ancho),
+                    strtoupper($row->largo),
+                    strtoupper($row->resistencia)
+                    );
+                   $i++;
+                }
         }
-        }
+    }
     	// La respuesta se regresa como json
         echo json_encode($data);
     }
@@ -165,6 +211,24 @@ class Catalogo_mprima extends CI_Controller{
         // La respuesta se regresa como json
         echo json_encode($data);
     }
+    /////////////////////////////////////////////////// P E R M I S O S ////////////////////////////////////////////
+    function permisos($id_pan,$permiso){
+
+        //id_pantalla $a,
+        //$b=status permiso
+        //0 alta
+        //1 Modificar
+        //2 Cobnsultar
+        //3 elminar
+        $usuario=$this->permisos->get_permisos($id_pan);
+        if($usuario[0][permiso][$permiso]==0){ // no hay permiso
+            return 0;
+        }else{
+            return 1;
+        }
+        //echo $usuario[0][permiso][$b];
+        /////////////////////////////////////////////////// P E R M I S O S ////////////////////////////////////////////
+ }
 
 
 }

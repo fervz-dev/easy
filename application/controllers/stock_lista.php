@@ -1,16 +1,36 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class Stock_lista extends CI_Controller
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
+
 		$this->load->model("stock_lista_model", "stock");
-        if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
-            redirect(base_url().'inicio');
-        //echo 'denegado';
+
+
+            if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
+                redirect(base_url().'inicio');
+            //echo 'denegado';
+            }
+             //inicializamos las variables MENU Y SIBMENU, por si no se enviaran desde la url
+        $menu=0;
+        $submenu=0;
+        //verificamos si se enviaron las variables GET->m "(menu)" GET->submain"(submenu)"
+        if (isset($_GET['m'])||isset($_GET['submain'])) {
+            //si se enviaorn las variables GET condicionamos que sean solo numericas
+            if (!is_numeric($_GET['m']) || !is_numeric($_GET['submain'])) {
+                //si no son njumericas que cierre la session actual
+                 redirect(base_url().'inicio/logout');
+            }else{
+                //en caso de que si fueran numericas agregamos la variables GET a las variables previamente creadas.
+                $menu=$_GET['m'];
+                $submenu=$_GET['submain'];
+                //validamos el menu y submenu
+                $this->permisos->permisosURL($menu,$submenu);
+               }
         }
-	}
+        }
 
 	public function index()
 	{
@@ -42,7 +62,7 @@ class Stock_lista extends CI_Controller
         }
         if ($page > $total_pages)
             $page=$total_pages;
-        
+
         //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
         $start = $limite*$page - $limite;
         //Consulta que devuelve los registros de una sola pagina
@@ -54,7 +74,7 @@ class Stock_lista extends CI_Controller
         $data->records = $count;
         $i=0;
         foreach($resultado_ as $row) {
-        
+
            $data->rows[$i]['id']=$row->id_stock_linea;
            $data->rows[$i]['cell']=array(
                                     strtoupper($row->nombre),
@@ -117,7 +137,7 @@ class Stock_lista extends CI_Controller
         $data->records = $count;
         $i=0;
         foreach($resultado_ as $row) {
-        
+
            $data->rows[$i]['id']=$row->id_stock_reutilizable;
            $data->rows[$i]['cell']=array(
                                     strtoupper($row->proveedor),
@@ -128,5 +148,5 @@ class Stock_lista extends CI_Controller
         }
         // La respuesta se regresa como json
         echo json_encode($data);
-    }	
+    }
 }

@@ -6,8 +6,13 @@
 <div class="content">
 
 				<?php //$this->load->view('login/acceso');?>
-				<?php $this->load->view($vista); ?>
+				<?php
+				if (isset($vista)) {
+				 	$this->load->view($vista);
+				 }
+
+				?>
 			</div>
    		</div>
 	</div>
-<?php $this->load->view('footer');?>a
+<?php $this->load->view('footer');?>

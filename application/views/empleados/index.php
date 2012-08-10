@@ -5,7 +5,7 @@ function cargar () {
     url:'<?php echo base_url();?>empleados/paginacion',
     datatype: "json",
     mtype: 'POST',
-         
+
                         colNames:['Acciones',
                                     'NOMBRE',
                                     'APELLIDO PATERNO',
@@ -17,12 +17,12 @@ function cargar () {
                                     'MUNICIPIO',
                                     'LOCALIDAD',
                                     'CP',
-                                    'DIRECCION', 
-                                    'LADA', 
-                                    'TELEFONO', 
+                                    'DIRECCION',
+                                    'LADA',
+                                    'TELEFONO',
                                     'CELULAR',
                                     'EMAIL',
-                                    'PUESTO', 
+                                    'PUESTO',
                                     'OFICINA',
                                     'COMENTARIO',
                                     'FECHA DE INGRESO'],
@@ -46,11 +46,11 @@ function cargar () {
                                   {name:'nombre_oficina', index:'nombre_oficina', width:170,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'comentario',index:'comentario', width:90,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'fecha_ingreso',index:'fecha_ingreso',width:90,resizable:false, sortable:true,search:false,editable:true}
-                                  
-                                  
 
-                                  
-                                ],                             
+
+
+
+                                ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
   rowNum:15,
@@ -69,7 +69,7 @@ function cargar () {
     //searchurl:'<?php echo base_url();?>empresas/buscando',
                 height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_empleados").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
+        $("#tbl_empleados").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
 
 }
 function alta()
@@ -87,7 +87,7 @@ $( "#dialog-procesos" ).dialog({
         }
         },
           Cancelar:function()
-          {   
+          {
         $( "#dialog-procesos" ).dialog( "close" );
           }
       },
@@ -112,20 +112,20 @@ $.ajax({
             $("#a_materno").val(dato[2]);
             $("#fecha_nacimiento").val(dato[3]);
             $("#estado_civil").val(dato[4]);
-            document.getElementById('sexo_'+ dato[5]).setAttribute('checked','checked'); 
+            document.getElementById('sexo_'+ dato[5]).setAttribute('checked','checked');
             $("#estado").val(dato[6]);
-            cargarMunicipio(dato[6],dato[7]);              
+            cargarMunicipio(dato[6],dato[7]);
             cargarLocalidad(dato[7],dato[8]);
             $("#cp").val(dato[9]);
             $("#direccion").val(dato[10]);
             $("#lada").val(dato[11]);
             $("#num_telefono").val(dato[12]);
             $("#celular").val(dato[13]);
-            $("#email").val(dato[14]); 
+            $("#email").val(dato[14]);
             $("#puestos_id_tipo_puesto").val(dato[15]);
             $("#oficina_id_oficina").val(dato[16]);
             $("#comentario").val(dato[17]);
-                
+
             },
                         error:function(datos){
                         notify("Error al procesar los datos " ,500,5000,'error');
@@ -159,7 +159,7 @@ $( "#dialog-procesos" ).dialog({
 
 function editar(id)
 {
-  var sexo =   $("input[name='sexo']:checked").val(); 
+  var sexo =   $("input[name='sexo']:checked").val();
   $.ajax({
                         async:true,
                         beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
@@ -188,11 +188,11 @@ function editar(id)
                           success:function(data, textStatus){
 
                           switch(data){
-                          case "0": 
+                          case "0":
 
                            notify("Error al procesar los datos " ,500,5000,'error');
                           break;
-                          case "1": 
+                          case "1":
                             $( "#dialog-procesos" ).dialog( "close" );
                             notify('El registro se edito correctamente',500,5000,'aviso');
                             reloading();
@@ -201,7 +201,7 @@ function editar(id)
                           default:
                            $( "#dialog-procesos" ).dialog( "close" );
 
-                          break; 
+                          break;
 
                           }//switch
                              },
@@ -215,7 +215,7 @@ function editar(id)
 
 function guardar()
 {
-  var sexo =   $("input[name='sexo']:checked").val(); 
+  var sexo =   $("input[name='sexo']:checked").val();
 
 $.ajax({
           async:true,cache: false,
@@ -258,7 +258,7 @@ $.ajax({
         error:function(datos){
       notify("Error inesperado" ,500,5000,'error');
         }//Error
-        });//Ajax      
+        });//Ajax
 
 }
 
@@ -278,10 +278,10 @@ function delete_id(id)
                       success:function(data, textStatus){
 
                              switch(data){
-                               case "0": 
+                               case "0":
                                 notify("Error al procesar los datos " ,500,5000,'error');
                                break;
-                               case "1": 
+                               case "1":
                                 $( "#dialog-procesos" ).dialog( "close" );
                                 notify('El registro se ha eliminado correctamente',500,5000,'aviso');
                                  $("#tbl_empleado").jqGrid('GridUnload');
@@ -289,7 +289,7 @@ function delete_id(id)
                                break;
                                default:
                                 $( "#dialog-procesos" ).dialog( "close" );
-                               break; 
+                               break;
 
                               }//switch
                              },
@@ -299,13 +299,13 @@ function delete_id(id)
                          });//Ajax
 }
 
-////////////////////////////////////////////////////////////////////////   
+////////////////////////////////////////////////////////////////////////
     $(document).ready(function(){
 	$("#tbl_empleado").jqGrid({
     url:'<?php echo base_url();?>empleados/paginacion',
     datatype: "json",
     mtype: 'POST',
-		     
+
                         colNames:['Acciones',
                                     'NOMBRE',
                                     'APELLIDO PATERNO',
@@ -317,12 +317,12 @@ function delete_id(id)
                                     'MUNICIPIO',
                                     'LOCALIDAD',
                                     'CP',
-                                    'DIRECCION', 
-                                    'LADA', 
-                                    'TELEFONO', 
+                                    'DIRECCION',
+                                    'LADA',
+                                    'TELEFONO',
                                     'CELULAR',
                                     'EMAIL',
-                                    'PUESTO', 
+                                    'PUESTO',
                                     'OFICINA',
                                     'COMENTARIO',
                                     'FECHA DE INGRESO'],
@@ -346,11 +346,11 @@ function delete_id(id)
                                   {name:'nombre_oficina', index:'nombre_oficina', width:170,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'comentario',index:'comentario', width:90,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'fecha_ingreso',index:'fecha_ingreso',width:90,resizable:false, sortable:true,search:false,editable:true}
-                                  
-                                  
 
-                                  
-                                ],                             
+
+
+
+                                ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
 	rowNum:15,
@@ -369,7 +369,7 @@ function delete_id(id)
     //searchurl:'<?php echo base_url();?>empresas/buscando',
                 height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_empleados").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
+        $("#tbl_empleados").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
    });
 function reloading()
   {
@@ -380,7 +380,7 @@ $(function(){
 $('ul#icons li').hover(
 function() { $(this).addClass('ui-state-hover'); },
 function() { $(this).removeClass('ui-state-hover'); }
-); 
+);
 });
 function tip (tipo) {
   if (tipo=='direccion') {
@@ -408,12 +408,12 @@ function validarCamposForm1() {
   estado=$("#estado").val();
   municipio=$("#municipio").val();
   localidad=$("#localidad").val();
-  direccion=$("#direccion").val();  
-  cp=$("#cp").val();  
+  direccion=$("#direccion").val();
+  cp=$("#cp").val();
   lada=$("#lada").val();
   num_telefono=$("#num_telefono").val();
 
-  email=$("#email").val();     
+  email=$("#email").val();
   comentario=$("#comentario").val();
   /*validar nombre obrero*/
 if (validarVacio(nombre_obrero)==false) {
@@ -445,7 +445,7 @@ if (validarVacio(nombre_obrero)==false) {
   /*validar sexo*/
   else if(!$("#editar_empleado input[name='sexo']:radio").is(':checked')) {
        notify('* El Campo<strong>SEXO</strong> no esta seleccionado!!!',500,5000,'error');
-   }   
+   }
   /*validacion estado*/
   else if (validarCombo(estado)==false) {
     notify('Debe seleccionar almenos una opcion de la lista <strong>ESTADOS</strong>',500,5000,'error');
@@ -481,7 +481,7 @@ if (validarVacio(nombre_obrero)==false) {
     return false;
   }else if (validarCp(cp)==false) {
     notify('* El campo <strong>CODIGO POSTAL</strong> no es valido.!!!',500,5000,'error');
-   
+
     $("#cp").focus();
     return false;
   }
@@ -493,7 +493,7 @@ if (validarVacio(nombre_obrero)==false) {
   }
   else if (validarNUmero(lada)==false) {
     notify('* El campo <strong>LADA</strong> no es un numero!!!',500,5000,'error');
-   
+
     $("#lada").focus();
     return false;
   }
@@ -520,7 +520,7 @@ if (validarVacio(nombre_obrero)==false) {
           notify('* El campo <strong>CELULAR</strong> no es valido!!',500,5000,'error');
           $("#celular").focus();
       return false;
-  } 
+  }
     return true;
   }
   else if (validarEmail(email)==false) {
@@ -556,12 +556,12 @@ function cargarLocalidad (municipio, localidad) {
                             $("#localidad").val(localidad);
                     }
                     });
-    
+
   }
   function cargarMunicipio (estado,municipio) {
       $.ajax({
                     url:"<?php echo base_url();?>direcciones/municipio/"+estado,
-                    type:"POST",  
+                    type:"POST",
                     beforeSend: function(){
                        $("#ajax_municipio").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
                     },
@@ -578,7 +578,7 @@ function cargarLocalidad (municipio, localidad) {
 function cargar_datos_municipios (id) {
      $.ajax({
                     url:"<?php echo base_url();?>direcciones/municipio/"+id,
-                    type:"POST",  
+                    type:"POST",
                     beforeSend: function(){
                        $("#ajax_municipio").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
                     },
@@ -601,7 +601,7 @@ function cargar_datos_municipios (id) {
                             $("#ajax_localidad").html("");
                     }
                     });
-    
+
   }
 ///////////////////dialogo de confirmacion////////////////////////////////////
   function confirmacion (id,msg) {
@@ -624,13 +624,21 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
     });
     }
 //////////////////////////////////////////////////////////////////////////////
- 
+
 </script>
 <div id="dialog-confirm" title="Confirmacion" style="display: none;">
 </div>
 <table >
 <tr>
-<td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/add_empleado.png" width="30" height="30" alta="Agregar Empleado"></div>
+<td>
+<?php
+if (!isset($_GET['submain'])) {
+}
+elseif (($this->permisos->permisos_submenus($_GET['m'],$_GET['submain'],0)==1)&&($this->permisos->permisos($_GET['submain'],2)==1)) {?>
+  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/add_empleado.png" width="30" height="30" alta="Agregar Empleado"></div>
+<?php } ?>
+
+
 </td>
 <td >&nbsp;</td>
 </tr>
@@ -638,7 +646,7 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
         <table id="tbl_empleado"></table>
         <div id="paginacion"> </div>
         <div style="display:none" id="dialog-procesos" title="Empleados">
-        <?php 
+        <?php
 
         $this->load->view('empleados/formulario');?>
         </div>

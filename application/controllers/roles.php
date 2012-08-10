@@ -4,14 +4,34 @@ class Roles extends CI_Controller {
 		parent::__construct();
 		$this->load->library('session');
 		// include the driver class
-   
-		$this->load->model("roles_model","roles"); 
-		if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
- 			redirect(base_url().'inicio');
- 		//echo 'denegado';
-		} 	 		
+
+		$this->load->model("roles_model","roles");
+
+
+            if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
+                redirect(base_url().'inicio');
+            //echo 'denegado';
+            }
+             //inicializamos las variables MENU Y SIBMENU, por si no se enviaran desde la url
+        $menu=0;
+        $submenu=0;
+        //verificamos si se enviaron las variables GET->m "(menu)" GET->submain"(submenu)"
+        if (isset($_GET['m'])||isset($_GET['submain'])) {
+            //si se enviaorn las variables GET condicionamos que sean solo numericas
+            if (!is_numeric($_GET['m']) || !is_numeric($_GET['submain'])) {
+                //si no son njumericas que cierre la session actual
+                 redirect(base_url().'inicio/logout');
+            }else{
+                //en caso de que si fueran numericas agregamos la variables GET a las variables previamente creadas.
+                $menu=$_GET['m'];
+                $submenu=$_GET['submain'];
+                //validamos el menu y submenu
+                $this->permisos->permisosURL($menu,$submenu);
+               }
+        }
+
   }//****Constructor...
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	function oficinas()
 	{
 	    $id_user= $this->session->userdata('id'); //id usuario
@@ -21,11 +41,11 @@ class Roles extends CI_Controller {
 	    $sucursal = $sucursal->oficina_id_oficina;
 	    return $sucursal;
 	}
-	
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-	
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	public function index()
-	{    
+	{
 	//$this->load->view('login/acceso');
 	$data['pantallas']=$this->roles->pantallas();
 	$data['sucursal']=$this->oficinas();
@@ -65,7 +85,12 @@ public function paginacion()
     //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
     $start = $limit*$page - $limit;
     //Consulta que devuelve los registros de una sola pagina
-    if ($start < 0) $start = 0;
+    //if ($start < 0) $start = 0;
+    if ($start < 0){
+        $start = 0;
+        $data();
+    }else{
+
     $consulta = "SELECT * FROM roles ".$where." ORDER BY $sidx $sord LIMIT $start , $limit;";
     $result1 = $this->db->query($consulta);
 
@@ -74,14 +99,33 @@ public function paginacion()
     $data->total = $total_pages;
     $data->records = $count;
     $i=0;
-    foreach($result1->result() as $row) {
-       $data->rows[$i]['id']=$row->id_roles;
-       $onclik="onclick=delet('".$row->id_roles."')";
-	   $onclikedit="onclick=edit('".$row->id_roles."')";
- $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
-        $data->rows[$i]['cell']=array($acciones,strtoupper($row->nombre_rol),strtoupper($row->dsc_rol));
-        $i++;
+        if ($this->permisos->permisos(3,2)==1) {
+            foreach($result1->result() as $row) {
+               $data->rows[$i]['id']=$row->id_roles;
+        if (($this->permisos->permisos(3,1)==1)&&($this->permisos->permisos(3,3)==1)){
+
+               $onclik="onclick=delet('".$row->id_roles."')";
+        	   $onclikedit="onclick=edit('".$row->id_roles."')";
+               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+        }elseif (($this->permisos->permisos(3,1)==1)&&($this->permisos->permisos(3,3)==0)) {
+               //$onclik="onclick=delet('".$row->id_roles."')";
+               $onclikedit="onclick=edit('".$row->id_roles."')";
+               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>';
+         }elseif (($this->permisos->permisos(3,1)==0)&&($this->permisos->permisos(3,3)==1)) {
+
+               $onclik="onclick=delet('".$row->id_roles."')";
+               //$onclikedit="onclick=edit('".$row->id_roles."')";
+               $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+        }elseif (($this->permisos->permisos(3,1)==0)&&($this->permisos->permisos(3,3)==0)) {
+                  $acciones='';
+
+        }
+            $data->rows[$i]['cell']=array($acciones,strtoupper($row->nombre_rol),strtoupper($row->dsc_rol));
+            $i++;
+        }
     }
+}
+
 	// La respuesta se regresa como json
     echo json_encode($data);
 }
@@ -109,7 +153,7 @@ $filters = $_POST['filters'];
             } else {
                 $where = " where status = 1 ";
             }
-        }    
+        }
 
  $page = $_POST['page'];  // Almacena el numero de pagina actual
     $limit = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
@@ -129,7 +173,7 @@ echo json_encode('null');
 
 exit();
 }
- 
+
     //En base al numero de registros se obtiene el numero de paginas
     if( $count >0 ) {
 	$total_pages = ceil($count/$limit);
@@ -161,7 +205,7 @@ exit();
          $onclik="onclick=delet('".$row->id_roles."')";
 	     $onclikedit="onclick=edit('".$row->id_roles."')";
          $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
-			 
+
 		 $data->rows[$i]['cell']=array($acciones,strtoupper($row->nombre_rol),strtoupper($row->dsc_rol));
         $i++;
 

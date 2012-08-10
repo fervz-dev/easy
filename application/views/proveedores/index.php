@@ -20,7 +20,7 @@ $( "#dialog-procesos" ).dialog({
         }
           },
           Cancelar:function()
-          {   
+          {
         $( "#dialog-procesos" ).dialog( "close" );
           }
       },
@@ -43,7 +43,7 @@ $.ajax({
                                   $("#nombre_contacto").val(dato[0]);
                                   $("#nombre_empresa").val(dato[1] );
                                   $("#estado").val(dato[2]);
-                                  cargarMunicipio(dato[2],dato[3]);              
+                                  cargarMunicipio(dato[2],dato[3]);
                                   cargarLocalidad(dato[3],dato[4]);
                                   $("#cp").val(dato[5]);
                                   $("#direccion").val(dato[6]);
@@ -51,7 +51,7 @@ $.ajax({
                                   $("#num_telefono").val(dato[8]);
                                   $("#ext").val(dato[9]);
                                   $("#fax").val(dato[10]);
-                                  $("#email").val(dato[11]);     
+                                  $("#email").val(dato[11]);
                                   $("#comentario").val(dato[12]);
                                   },
                         error:function(datos){
@@ -95,7 +95,7 @@ function editar(id)
                   "nombre_empresa":$("#nombre_empresa").val(),
                   "estado":$("#estado").val(),
                   "municipio":$("#municipio").val(),
-                  "localidad":$("#localidad").val(),                                
+                  "localidad":$("#localidad").val(),
                   "cp":$("#cp").val(),
                   "direccion":$("#direccion").val(),
                   "lada":$("#lada").val(),
@@ -108,17 +108,17 @@ function editar(id)
           datatype:"html",
           success:function(data, textStatus){
             switch(data){
-              case "0": 
+              case "0":
                 notify("Error al procesar los datos " ,500,5000,'error');
               break;
-              
-              case "1": 
+
+              case "1":
                 $( "#dialog-procesos" ).dialog( "close" );
                 reloading();
               break;
               default:
                 $( "#dialog-procesos" ).dialog( "close" );
-              break; 
+              break;
             }//switch
           },
        error:function(datos){
@@ -157,10 +157,10 @@ $.ajax({
           success:function(data, textStatus){
 
           switch(data){
-            case "0": 
+            case "0":
               notify("Error al procesar los datos " ,500,5000,'error');
             break;
-            case "1": 
+            case "1":
               reloading();
               notify('El registro se guardado correctamente',500,5000,'aviso');
               $("#dialog-procesos" ).dialog( "close" );
@@ -169,13 +169,13 @@ $.ajax({
               $( "#dialog-procesos" ).dialog( "close" );
               var error='Error'+data;
               notify(error ,500,5000,'error');
-            break; 
+            break;
             }//switch
           },
          error:function(datos){
            notify("Error inesperado" ,500,5000,'error');
          }//Error
-      });//Ajax      
+      });//Ajax
 }
 
 function delet (id) {
@@ -193,10 +193,10 @@ function delete_id(id)
             success:function(data, textStatus){
 
             switch(data){
-              case "0": 
+              case "0":
                 notify("Error al procesar los datos " ,500,5000,'error');
               break;
-              case "1": 
+              case "1":
                 $( "#dialog-procesos" ).dialog( "close" );
                 reloading();
                 notify('El registro se elimino correctamente',500,5000,'aviso');
@@ -205,7 +205,7 @@ function delete_id(id)
               break;
               default:
                 $( "#dialog-procesos" ).dialog( "close" );
-              break; 
+              break;
               }//switch
             },
             error:function(datos){
@@ -213,7 +213,7 @@ function delete_id(id)
             }//Error
           });//Ajax
         }
-///////////////////////recargar grid/////////////////////////////////////////////////   
+///////////////////////recargar grid/////////////////////////////////////////////////
 function cargar () {
   $("#tbl_proveedores").jqGrid({
     url:'<?php echo base_url();?>proveedores/paginacion',
@@ -226,9 +226,9 @@ function cargar () {
                 'MUNICIPIO',
                 'LOCALIDAD',
                 'CP',
-                'DIRECCION', 
-                'LADA', 
-                'TELEFONO', 
+                'DIRECCION',
+                'LADA',
+                'TELEFONO',
                 'EXT',
                 'FAX',
                 'EMAIL',
@@ -248,7 +248,7 @@ function cargar () {
               {name:'fax', index:'fax', width:80,resizable:false, sortable:true,search:false,editable:true},
               {name:'email', index:'email', width:40,resizable:false, sortable:true,search:false,editable:true},
               {name:'comentario', index:'comentario', width:90,resizable:false, sortable:true,search:false,editable:true}
-            ],                             
+            ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
     rowNum:15,
@@ -267,9 +267,9 @@ function cargar () {
     //searchurl:'<?php echo base_url();?>empresas/buscando',
         height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_proveedores").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;  
+        $("#tbl_proveedores").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
 }
-////////////////////////////////////////////////////////////////////////   
+////////////////////////////////////////////////////////////////////////
     $(document).ready(function(){
 	$("#tbl_proveedores").jqGrid({
     url:'<?php echo base_url();?>proveedores/paginacion',
@@ -282,9 +282,9 @@ function cargar () {
                 'MUNICIPIO',
                 'LOCALIDAD',
                 'CP',
-                'DIRECCION', 
-                'LADA', 
-                'TELEFONO', 
+                'DIRECCION',
+                'LADA',
+                'TELEFONO',
                 'EXT',
                 'FAX',
                 'EMAIL',
@@ -304,7 +304,7 @@ function cargar () {
               {name:'fax', index:'fax', width:80,resizable:false, sortable:true,search:false,editable:true},
               {name:'email', index:'email', width:40,resizable:false, sortable:true,search:false,editable:true},
               {name:'comentario', index:'comentario', width:90,resizable:false, sortable:true,search:false,editable:true}
-            ],                             
+            ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
 	  rowNum:15,
@@ -323,7 +323,7 @@ function cargar () {
     //searchurl:'<?php echo base_url();?>empresas/buscando',
         height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_proveedores").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
+        $("#tbl_proveedores").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
    });
 function reloading()
   {
@@ -342,12 +342,12 @@ function cargarLocalidad (municipio, localidad) {
                             $("#localidad").val(localidad);
                     }
                     });
-    
+
   }
   function cargarMunicipio (estado,municipio) {
       $.ajax({
                     url:"<?php echo base_url();?>direcciones/municipio/"+estado,
-                    type:"POST",  
+                    type:"POST",
                     beforeSend: function(){
                        $("#ajax_municipio").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
                     },
@@ -364,7 +364,7 @@ function cargarLocalidad (municipio, localidad) {
 function cargar_datos_municipios (id) {
      $.ajax({
                     url:"<?php echo base_url();?>direcciones/municipio/"+id,
-                    type:"POST",  
+                    type:"POST",
                     beforeSend: function(){
                        $("#ajax_municipio").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
                     },
@@ -387,7 +387,7 @@ function cargar_datos_municipios (id) {
                             $("#ajax_localidad").html("");
                     }
                     });
-    
+
   }
   //////////////////////////////validacion////////////////////////////////////////////////////////////////
 function validarCampos() {
@@ -397,12 +397,12 @@ function validarCampos() {
   municipio=$("#municipio").val();
   localidad=$("#localidad").val();
   direccion=$("#direccion").val();
-  cp=$("#cp").val();  
+  cp=$("#cp").val();
   lada=$("#lada").val();
   num_telefono=$("#num_telefono").val();
   ext=$("#ext").val();
   fax=$("#fax").val();
-  email=$("#email").val();     
+  email=$("#email").val();
   comentario=$("#comentario").val();
   /*validar nombre empresa*/
   if (validarVacio(nombre_empresa)==false) {
@@ -451,7 +451,7 @@ function validarCampos() {
     return false;
   }else if (validarCp(cp)==false) {
     notify('* El campo <strong>CODIGO POSTAL</strong> no es valido.!!!',500,5000,'error');
-   
+
     $("#cp").focus();
     return false;
   }
@@ -463,7 +463,7 @@ function validarCampos() {
   }
   else if (validarNUmero(lada)==false) {
     notify('* El campo <strong>LADA</strong> no es un numero!!!',500,5000,'error');
-   
+
     $("#lada").focus();
     return false;
   }
@@ -518,7 +518,7 @@ $(function(){
 $('ul#icons li').hover(
 function() { $(this).addClass('ui-state-hover'); },
 function() { $(this).removeClass('ui-state-hover'); }
-); 
+);
 });
 function tip (tipo) {
   if (tipo=='direccion') {
@@ -538,7 +538,11 @@ function tip (tipo) {
 </div>
 <table >
 <tr>
-<td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/add_proveedor.png" width="30" height="30"></div>
+<td><?php
+  if (!isset($_GET['submain'])) {
+}  elseif (($this->permisos->permisos_submenus($_GET['m'],$_GET['submain'],0)==1)&&($this->permisos->permisos($_GET['submain'],2)==1)) {?>
+<div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/add_proveedor.png" width="30" height="30"></div>
+    <?php  }?>
 </td>
 <td >&nbsp;</td>
 </tr>
@@ -546,6 +550,6 @@ function tip (tipo) {
         <table id="tbl_proveedores"></table>
         <div id="paginacion"> </div>
         <div style="display:none" id="dialog-procesos" title="proveedores">
-        <?php 
+        <?php
         $this->load->view('proveedores/formulario');?>
         </div>

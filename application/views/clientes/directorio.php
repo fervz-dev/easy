@@ -20,7 +20,7 @@ $( "#editar_directorio" ).dialog({
         }
           },
           Cancelar:function()
-          {   
+          {
         $( "#editar_directorio" ).dialog( "close" );
           }
       },
@@ -63,10 +63,10 @@ function delete_dir (id) {
                       success:function(data, textStatus){
 
                              switch(data){
-                               case "0": 
+                               case "0":
                                 notify("Error al procesar los datos " ,500,5000,'error');
                                break;
-                               case "1": 
+                               case "1":
                                 $( "#editar_directorio" ).dialog( "close" );
                                 notify('El registro se ha eliminado correctamente',500,5000,'aviso');
                                  $("#tbl_directorio").jqGrid('GridUnload');
@@ -76,7 +76,7 @@ function delete_dir (id) {
                                break;
                                default:
                                 $( "#editar_directorio" ).dialog( "close" );
-                               break; 
+                               break;
 
                               }//switch
                              },
@@ -84,7 +84,7 @@ function delete_dir (id) {
                               notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax
-  
+
 }
 
 ///////////////////////////////  Guardar Directorio ////////////////////////////////////////////////
@@ -106,15 +106,15 @@ $.ajax({
 
           cache: false,
           datatype:"html",
-          
+
           success:function(data, textStatus){
-          
+
           switch(data){
-          case "0": 
+          case "0":
                   notify("Error al procesar los datos " ,500,5000,'error');
           break;
-          
-          case "1": 
+
+          case "1":
                   $( "#tbl_directorio" ).trigger("reloadGrid");
                   notify('El registro se ha guardado correctamente',500,5000,'aviso');
                   $( "#editar_directorio" ).dialog( "close" );
@@ -123,8 +123,8 @@ $.ajax({
              $( "#editar_directorio" ).dialog( "close" );
              var error='Error'+data;
              notify(error ,500,5000,'error');
-             break; 
-          
+             break;
+
           }//switch
           },
           error:function(datos)
@@ -132,7 +132,7 @@ $.ajax({
                   notify("Error al inesperado" ,500,5000,'error');
                 }//Error
           });//Ajax
-           
+
 
 
 }
@@ -154,7 +154,7 @@ $.ajax({
             dato= data.split('~');
                                   $("#id_direcciones").val(dato[0]);
                                   $("#estado_d").val(dato[1]);
-                                  cargarMunicipio_direccion(dato[1],dato[2]);              
+                                  cargarMunicipio_direccion(dato[1],dato[2]);
                                   cargarLocalidad_direccion(dato[2],dato[3]);
                                   $("#direccion_d").val(dato[4]);
                                   $("#comentario_d").val(dato[5]);
@@ -177,7 +177,7 @@ $( "#editar_directorio" ).dialog({
         }
           },
           Cancelar:function()
-          {   
+          {
         $( "#editar_directorio" ).dialog( "close" );
           }
       },
@@ -199,7 +199,7 @@ function editar_directorio_all()
                         beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
                          type:"POST",
                           url:"<?php echo base_url();?>clientes/editar_directorio_all/",
-                          data:{                                
+                          data:{
                                 "estado_d":$("#estado_d").val(),
                                 "municipio_d":$("#municipio_d").val(),
                                 "localidad_d":$("#localidad_d").val(),
@@ -212,10 +212,10 @@ function editar_directorio_all()
                       success:function(data, textStatus){
 
                              switch(data){
-                               case "0": 
+                               case "0":
                                   notify("Error al procesar los datos " ,500,5000,'error');
                                break;
-                               case "1": 
+                               case "1":
                             $( "#tbl_directorio" ).trigger("reloadGrid");
                             $( "#editar_directorio" ).dialog( "close" );
                             notify('El registro se edito correctamente',500,5000,'aviso');
@@ -235,7 +235,7 @@ function directorio (id) {
   $("#tbl_directorio").jqGrid('GridUnload');
 
 
-  
+
 	$("#tbl_directorio").jqGrid({
     url:'<?php echo base_url();?>clientes/paginacion_directorio/',
     datatype: "json",
@@ -245,7 +245,7 @@ function directorio (id) {
                                     'ESTADO',
                                     'MUNICIPIO',
                                     'LOCALIDAD',
-                                    'DIRECCION', 
+                                    'DIRECCION',
                                     'COMENTARIO'
                                      ],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:false, align:"center", search:false},
@@ -254,9 +254,9 @@ function directorio (id) {
                                   {name:'localidad', index:'localidad', width:80,resizable:false, sortable:true,search:false,editable:false},
                                   {name:'direccion', index:'direccion', width:90,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'comentario', index:'comentario', width:100,resizable:false, sortable:true,search:false,editable:true}
-                                ],                             
+                                ],
     pager: jQuery('#paginacion_directorio'),
-    postData: {id: id},  
+    postData: {id: id},
     rownumbers:true,
 	  rowNum:15,
     rowList:[10,20,30],
@@ -278,7 +278,7 @@ function directorio (id) {
    //});
 //$("#tbl_directorio").jqGrid('setGridParam', {id: id}).trigger("reloadGrid");
     // console.log( typeof($('#tb1_directorio')));
-    
+
 }
 function cargarLocalidad_direccion (municipio, localidad) {
      $.ajax({
@@ -293,12 +293,12 @@ function cargarLocalidad_direccion (municipio, localidad) {
                             $("#localidad_d").val(localidad);
                     }
                     });
-    
+
   }
   function cargarMunicipio_direccion (estado,municipio) {
       $.ajax({
                     url:"<?php echo base_url();?>direcciones/municipio/"+estado,
-                    type:"POST",  
+                    type:"POST",
                     beforeSend: function(){
                        $("#ajax_municipio_d").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
                     },
@@ -315,7 +315,7 @@ function cargarLocalidad_direccion (municipio, localidad) {
 function cargar_datos_municipios_direccion (id) {
      $.ajax({
                     url:"<?php echo base_url();?>direcciones/municipio/"+id,
-                    type:"POST",  
+                    type:"POST",
                     beforeSend: function(){
                        $("#ajax_municipio_d").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
                     },
@@ -338,13 +338,13 @@ function cargar_datos_municipios_direccion (id) {
                             $("#ajax_localidad_d").html("");
                     }
                     });
-    
+
   }
 ///////////////////dialogo de confirmacion////////////////////////////////////
   function confirmacion_direccion (id,msg) {
-$('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'+msg+'</p>');
+$('#dialog-confirm1').html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'+msg+'</p>');
 
-    $( "#dialog-confirm" ).dialog({
+    $( "#dialog-confirm1" ).dialog({
       resizable: false,
       height: 'auto',
       width: 'auto',
@@ -366,9 +366,9 @@ $(function(){
 $('ul#icons li').hover(
 function() { $(this).addClass('ui-state-hover'); },
 function() { $(this).removeClass('ui-state-hover'); }
-); 
+);
 });
-function tip (tipo) {
+function tip1 (tipo) {
   if (tipo=='direccion') {
     tipCampos('Tipo de vialidad, Nombre vialidad, Numero interior y/o exterior, Asentamiento' ,500,8000,'tip');
   }
@@ -381,7 +381,7 @@ function validarCampos_direccion() {
   localidad=$("#localidad_d").val();
   direccion=$("#direccion_d").val();
   comentario=$("#comentario_d").val();
-  
+
   /*validacion estado*/
   if (validarCombo(estado)==false) {
     notify('Debe seleccionar almenos una opcion de la lista <strong>ESTADOS</strong>',500,5000,'error');
@@ -412,12 +412,14 @@ function validarCampos_direccion() {
 
 }
    </script>
+   <div id="dialog-confirm1" title="Confirmacion" style="display: none;">
+</div>
    <div>
      <table>
        <tr>
-         <td> 
+         <td>
           <button onclick="alta_directorio()">
-            <div style="width:135x; height:25px;"><img src="<?php echo base_url();?>img/add_address.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Nueva dirección</p></div></div>  
+            <div style="width:135x; height:25px;"><img src="<?php echo base_url();?>img/add_address.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Nueva dirección</p></div></div>
 
          </button>
 
@@ -426,12 +428,12 @@ function validarCampos_direccion() {
      </table>
    </div>
    <table id="tbl_directorio"></table>
-   
+
         <div id="paginacion_directorio"></div>
 
 <div id="editar_directorio" style="display:none">
 
-        <?php 
+        <?php
         $this->load->view('clientes/editar_directorio');?>
 
 </div>

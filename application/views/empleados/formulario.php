@@ -4,7 +4,7 @@
 <tr>
 	<td><label id="labelRight">Nombre:</label></td>
 	<td> <input name="nombre_obrero" type="text" id="nombre_obrero" size="35"> </td>
-</tr>	
+</tr>
 
 <tr>
 	<td><label id="labelRight">Apellido Paterno:</label></td>
@@ -33,9 +33,9 @@
       <input type="radio" name="sexo" value="M" id="sexo_M">
       Masculino
   	</label>
-  
+
     <label>
-   
+
       <input type="radio" name="sexo" value="F" id="sexo_F">
       Femenino</label>
     </td>
@@ -47,7 +47,7 @@
 			<?php foreach ($estados as $est) { ?>
 			<option value="<?php echo $est['nombre']; ?>"><?php echo $est['nombre'] ?></option>
 			<?php } ?>
-		</select> 
+		</select>
 	</tr>
 
 	<tr>
@@ -138,7 +138,7 @@
 		</td>
 	</tr>
 
-	
+
 
 <tr>
 	<td><label id="labelRight">Puesto:</label></td>
@@ -147,7 +147,7 @@
 			<?php foreach ($puestos as $puesto) { ?>
 			<option value="<?php echo $puesto['id_tipo_puesto']; ?>"><?php echo $puesto['nombre'] ?></option>
 			<?php } ?>
-		</select> 
+		</select>
 </tr>
 
 <tr>
@@ -157,7 +157,7 @@
 		<?php foreach ($oficinas as $ofn) { ?>
 		<option value="<?php echo $ofn['id_oficina']; ?>"><?php echo $ofn['nombre_oficina'] ?></option>
 		<?php } ?>
-	</select> 
+	</select>
 	</tr>
 </tr>
 <tr>

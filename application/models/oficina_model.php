@@ -1,10 +1,10 @@
-<?php 
+<?php
 /**
-* 
+*
 */
 class Oficina_model extends CI_Model
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -32,12 +32,12 @@ class Oficina_model extends CI_Model
 											oficina.coordy
 											FROM
 											oficina ,
-											tipo_oficina 
+											tipo_oficina
 											WHERE
 											oficina.tipo_oficina_id_tipo_oficina = tipo_oficina.id_tipo_oficina AND
 											oficina.activo = 1 AND
-											tipo_oficina.activo = 1										
-											ORDER BY $sidx $sord 
+											tipo_oficina.activo = 1
+											ORDER BY $sidx $sord
 											LIMIT $start, $limite;"
 											);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
@@ -49,16 +49,16 @@ class Oficina_model extends CI_Model
 											oficina.nombre_oficina
 											FROM
 											oficina,
-											tipo_oficina 
+											tipo_oficina
 											where
 											oficina.tipo_oficina_id_tipo_oficina = tipo_oficina.id_tipo_oficina AND
-											oficina.tipo_oficina_id_tipo_oficina = 1
+	  										oficina.tipo_oficina_id_tipo_oficina = 1
 											GROUP BY
 											oficina.id_oficina
 											ORDER BY
 											oficina.nombre_oficina ASC");
 		return ($query->num_rows() > 0)? $query->result_array() : NULL;
-			
+
 	}
 
 	public function get_id($id)
@@ -79,14 +79,14 @@ class Oficina_model extends CI_Model
 											oficina.email,
 											oficina.comentario,
 											oficina.coordx,
-											oficina.coordy									
+											oficina.coordy
 										FROM
 										oficina
 										WHERE
 										oficina.id_oficina = $id AND
 										oficina.activo = 1");
         $fila = $query->row();
-          return $fila;    
+          return $fila;
     }
 
     public function editar($id)
@@ -138,7 +138,7 @@ class Oficina_model extends CI_Model
 							'activo'=>1
 						 );
    		$this->db->insert('oficina', $data);
-		return $this->db->affected_rows(); 
+		return $this->db->affected_rows();
    }
 
    public function eliminar($id)

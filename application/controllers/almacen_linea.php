@@ -1,27 +1,48 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-* 
+*
 */
 class Almacen_linea extends CI_Controller
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
+
     		$this->load->model("pedidos_proveedor_model", "pedidos");
             $this->load->model("proveedores_model","proveedores");
             $this->load->model("catalogo_mprima_model","catalogo_mprima");
             $this->load->model("oficina_model","oficina");
-            if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
-            redirect(base_url().'inicio');
-        //echo 'denegado';
-        }   
 
-	}
+
+            if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
+                redirect(base_url().'inicio');
+            //echo 'denegado';
+            }
+
+ //inicializamos las variables MENU Y SIBMENU, por si no se enviaran desde la url
+        $menu=0;
+        $submenu=0;
+        //verificamos si se enviaron las variables GET->m "(menu)" GET->submain"(submenu)"
+        if (isset($_GET['m'])||isset($_GET['submain'])) {
+            //si se enviaorn las variables GET condicionamos que sean solo numericas
+            if (!is_numeric($_GET['m']) || !is_numeric($_GET['submain'])) {
+                //si no son njumericas que cierre la session actual
+                 redirect(base_url().'inicio/logout');
+            }else{
+                //en caso de que si fueran numericas agregamos la variables GET a las variables previamente creadas.
+                $menu=$_GET['m'];
+                $submenu=$_GET['submain'];
+                //validamos el menu y submenu
+                $this->permisos->permisosURL($menu,$submenu);
+               }
+        }
+
+}
 
 	public function index()
 	{
-		
+
         //$data['pedidos']=$this->pedidos->get_pedidos_proveedores_all();
         $data['oficinas']=$this->oficina->get_oficinas_all();
         $data['proveedor']=$this->proveedores->get_proveedores_all();
@@ -29,13 +50,13 @@ class Almacen_linea extends CI_Controller
         //$data['mprima']=$this->catalogo_mprima->get_cat_mprima();
         $data['vista']='almacen_linea/menu';
 		$data['titulo']='Pedidos Proveedores';
-        
+
 		$this->load->view('principal',$data);
 	}
     ///////////////////////verificacion de producto ////////////////////////
     public function verificacion_producto($id)
     {
-        
+
     }
     ///////////////////////verificacion del pedido en la tabla pedidos//////
      public function cerrar_pedido($id)
@@ -45,7 +66,7 @@ class Almacen_linea extends CI_Controller
     {
         echo 1;
     }
-    else
+   else
     {
         echo 0;
     }
@@ -58,8 +79,8 @@ class Almacen_linea extends CI_Controller
         if ($verificar>0) {
                    echo 1;
                }else{
-                echo 0; 
-               }       
+                echo 0;
+               }
     }
 
     //////////////////////////////////crear codigo de pedido ///////////////////////////////////////////
@@ -125,13 +146,13 @@ class Almacen_linea extends CI_Controller
         echo json_encode($data);
     }
 
-   
+
 
     ///////////////////////////////////////////////////////////////////Sub paginacion ///////////////////////////////////////////////////////////////////////////////////
 public function subpaginacion($id)
-{   
-       
- 
+{
+
+
     $page = $_POST['page'];  // Almacena el numero de pagina actual
     $limit = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
     $sidx = $_POST['sidx'];  // Almacena el indice por el cual se hará la ordenación de los datos
@@ -226,7 +247,7 @@ $consulta_veri_1=$consulta_veri_0->verificacion_almacen;
 
 
 ///condicion para asegurar que el pedido ya se alla verifcado////////////////////
-if ($consulta_veri_1==0) 
+if ($consulta_veri_1==0)
 {
     $N=1;
     foreach($result1->result() as $row) {
@@ -234,7 +255,7 @@ if ($consulta_veri_1==0)
         if ($row->verificacion==0) {
             $data->rows[$i]['id']=$row->id_cantidad_pedido;
             $onclik="onclick=verificacion_producto_pedido('".$row->id_cantidad_pedido."')";
-            $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/alert-icon.png" width="18" title="verificar producto" height="18" /></span>';   
+            $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/alert-icon.png" width="18" title="verificar producto" height="18" /></span>';
             $data->rows[$i]['cell']=array($acciones,
                                                 ($N),
                                     strtoupper($row->nombre),
@@ -250,10 +271,10 @@ if ($consulta_veri_1==0)
         {
             $data->rows[$i]['id']=$row->id_cantidad_pedido;
             $onclik="";
-            $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/verificado-icon.png" width="18" title="Verificado" height="18" /></span>';   
-          
-          
-           
+            $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/verificado-icon.png" width="18" title="Verificado" height="18" /></span>';
+
+
+
             $data->rows[$i]['cell']=array($acciones,
                                                     ($N),
                                         strtoupper($row->nombre),
@@ -275,7 +296,7 @@ elseif($consulta_veri_1==1)
     $N=1;
     foreach($result1->result() as $row) {
             $data->rows[$i]['id']=$row->id_cantidad_pedido;
-            $acciones='';   
+            $acciones='';
             $data->rows[$i]['cell']=array($acciones,
                                                     ($N),
                                         strtoupper($row->nombre),
@@ -289,10 +310,10 @@ elseif($consulta_veri_1==1)
 
     }
 }
-    
+
 
     // La respuesta se regresa como json
-    echo json_encode($data);   
+    echo json_encode($data);
 }
 
 }

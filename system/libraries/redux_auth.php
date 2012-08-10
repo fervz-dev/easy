@@ -89,6 +89,8 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 		public function logout ()
 		{
 			$this->ci->session->unset_userdata('id');
+			$this->ci->session->unset_userdata('rol');
+			$this->ci->session->unset_userdata('oficina');
 			$this->ci->session->sess_destroy();
 		}
 

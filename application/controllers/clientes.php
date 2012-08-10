@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+    <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
 *
 */
@@ -11,11 +11,29 @@ class Clientes extends CI_Controller
         $this->load->model('direcciones_model','direcciones');
         $this->load->model("directorio_model","directorio");
         $this->load->model("clientes_model","clientes_");
-        if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
-            redirect(base_url().'inicio');
-        //echo 'denegado';
-        }
 
+
+            if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
+                redirect(base_url().'inicio');
+            //echo 'denegado';
+            }
+ //inicializamos las variables MENU Y SIBMENU, por si no se enviaran desde la url
+        $menu=0;
+        $submenu=0;
+        //verificamos si se enviaron las variables GET->m "(menu)" GET->submain"(submenu)"
+        if (isset($_GET['m'])||isset($_GET['submain'])) {
+            //si se enviaorn las variables GET condicionamos que sean solo numericas
+            if (!is_numeric($_GET['m']) || !is_numeric($_GET['submain'])) {
+                //si no son njumericas que cierre la session actual
+                 redirect(base_url().'inicio/logout');
+            }else{
+                //en caso de que si fueran numericas agregamos la variables GET a las variables previamente creadas.
+                $menu=$_GET['m'];
+                $submenu=$_GET['submain'];
+                //validamos el menu y submenu
+                $this->permisos->permisosURL($menu,$submenu);
+               }
+        }
 	}
 
 	public function index()
@@ -95,19 +113,19 @@ public function paginacion()
     public function get($id)
     {
         $row=$this->clientes_->get_id($id);
-               echo strtoupper($row->nombre_empresa).'~'.
-                    strtoupper($row->nombre_contacto).'~'.
-                    strtoupper($row->tipo_persona).'~'.
-                    strtoupper($row->rfc).'~'.
+               echo $row->nombre_empresa.'~'.
+                    $row->nombre_contacto.'~'.
+                    $row->tipo_persona.'~'.
+                    $row->rfc.'~'.
                     $row->estado.'~'.
                     $row->municipio.'~'.
                     $row->localidad.'~'.
-                    strtoupper($row->direccion).'~'.
-                    strtoupper($row->cp).'~'.
-                    strtoupper($row->lada).'~'.
-                    strtoupper($row->num_telefono).'~'.
-                    strtoupper($row->ext).'~'.
-                    strtoupper($row->fax).'~'.
+                    $row->direccion.'~'.
+                    $row->cp.'~'.
+                    $row->lada.'~'.
+                    $row->num_telefono.'~'.
+                    $row->ext.'~'.
+                    $row->fax.'~'.
                     $row->email.'~'.
                     $row->comentario;
     }

@@ -1,10 +1,10 @@
-<?php 
+<?php
 /**
-* 
+*
 */
 class Stock_lista_model extends CI_Model
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -22,7 +22,8 @@ class Stock_lista_model extends CI_Model
 									stock_linea.cantidad
 									FROM
 									stock_linea
-									ORDER BY $sidx $sord 
+									WHERE stock_linea.id_sucursal =".$this->session->userdata('oficina')."
+									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
@@ -37,7 +38,9 @@ class Stock_lista_model extends CI_Model
 									stock_reutilizable.cantidad
 									FROM
 									stock_reutilizable
-									ORDER BY $sidx $sord 
+									WHERE
+									AND stock_reutilizable.id_sucursal =".$this->session->userdata('oficina')."
+									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
@@ -73,7 +76,7 @@ class Stock_lista_model extends CI_Model
 				$id_stock=$respuesta->id_stock_linea;
 				$cantidad_bd=$respuesta->cantidad;
 				$cantidad_total=$cantidad_bd + $cant;
-				
+
 				$data = array ('cantidad'=>$cantidad_total);
 				$this->db->where('id_stock_linea', $id_stock);
 				$this->db->update('stock_linea',$data);
@@ -86,11 +89,11 @@ class Stock_lista_model extends CI_Model
 					$this->db->update('cantidad_pedido',$data_cantidad);
 					return $this->db->affected_rows();
 				}
-				
 
-				
+
+
 		}else{
-			
+
 			$data= array (
 						'nombre'=>$this->input->post('nombre'),
 						'ancho'=>$this->input->post('ancho'),
@@ -98,7 +101,9 @@ class Stock_lista_model extends CI_Model
 						'corrugado'=>$this->input->post('tipo_m'),
 						'resistencia'=>$this->input->post('resistencia'),
 						'cantidad'=>$this->input->post('cantidad'),
-						'fecha_ingreso'=>date('y-m-d')
+						'fecha_ingreso'=>date('y-m-d'),
+						'id_usuario'=>$this->session->userdata('id'),
+						'id_sucursal'=>$this->session->userdata('oficina')
 						);
 
 			$num_rows_insert=$this->db->insert('stock_linea', $data);
@@ -110,21 +115,23 @@ class Stock_lista_model extends CI_Model
 					$this->db->update('cantidad_pedido',$data_cantidad);
 				return $this->db->affected_rows();
 			}
-			 
+
 		}
 
-		
+
 	}
 public function add_stock_reutilizable($id)
 	{
 		$data=array (	'fecha_ingreso'=>date('y-m-d'),
 						'proveedor'=>$this->input->post('proveedor_'),
 						'cantidad'=>$this->input->post('cantidad_'),
-						'id_pedido'=>$id
-						);
+						'id_pedido'=>$id,
+						'id_usuario'=>$this->session->userdata('id'),
+						'id_sucursal'=>$this->session->userdata('oficina')
+				);
 		$this->db->insert('stock_reutilizable',$data);
 		$cantidad_rows=$this->db->affected_rows();
-		
+
 		if (count($cantidad_rows>0)) {
 			$data_pedido= array ('verificacion_almacen'=>0);
 			$this->db->where('id_pedido_reutilizable',$id);
@@ -133,6 +140,6 @@ public function add_stock_reutilizable($id)
 		}else{
 			return $cantidad_rows;
 		}
-		
+
 	}
 }?>

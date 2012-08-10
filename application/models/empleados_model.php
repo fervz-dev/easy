@@ -1,10 +1,10 @@
-<?php 
+<?php
 /**
-* 
+*
 */
 class Empleados_model extends CI_Model
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -24,7 +24,7 @@ class Empleados_model extends CI_Model
 											ob.localidad,
 											ob.cp,
 											ob.direccion,
-											ob.lada,										
+											ob.lada,
 											ob.num_telefono,
 											ob.celular,
 											ob.email,
@@ -36,7 +36,7 @@ class Empleados_model extends CI_Model
 									WHERE ob.puestos_id_tipo_puesto = pt.id_tipo_puesto
 									AND ob.oficina_id_oficina = ofn.id_oficina
 									AND ob.activo = 1
-									ORDER BY $sidx $sord 
+									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
@@ -56,7 +56,7 @@ class Empleados_model extends CI_Model
 										obrero.localidad,
 										obrero.cp,
 										obrero.direccion,
-										obrero.lada,										
+										obrero.lada,
 										obrero.celular,
 										obrero.num_telefono,
 										obrero.email,
@@ -67,10 +67,10 @@ class Empleados_model extends CI_Model
 										FROM
 										obrero
 										WHERE
-										obrero.id_obrero = $id 
+										obrero.id_obrero = $id
 										AND	obrero.activo = 1");
         $fila = $query->row();
-          return $fila;    
+          return $fila;
     }
 
    public function editar($id)
@@ -93,7 +93,9 @@ class Empleados_model extends CI_Model
 		'email'=>$this->input->post('email'),
 		'puestos_id_tipo_puesto'=>$this->input->post('puestos_id_tipo_puesto'),
 		'oficina_id_oficina'=>$this->input->post('oficina_id_oficina'),
-		'comentario'=>$this->input->post('comentario')
+		'comentario'=>$this->input->post('comentario'),
+        'id_usuario'=>$this->session->userdata('id'),
+        'id_sucursal'=>$this->session->userdata('oficina')
 
 	);
 
@@ -123,10 +125,12 @@ class Empleados_model extends CI_Model
 						'oficina_id_oficina'=>$this->input->post('oficina_id_oficina'),
 						'comentario'=>$this->input->post('comentario'),
 						'fecha_ingreso'=>date('y-m-d'),
-						'activo'=>1
+						'activo'=>1,
+				        'id_usuario'=>$this->session->userdata('id'),
+				        'id_sucursal'=>$this->session->userdata('oficina')
 						);
    		$this->db->insert('obrero', $data);
-		return $this->db->affected_rows(); 
+		return $this->db->affected_rows();
    }
 
    public function eliminar($id)
@@ -135,6 +139,6 @@ class Empleados_model extends CI_Model
 				$this->db->where('id_obrero', $id);
 				$this->db->update('obrero', $data);
 				return $this->db->affected_rows();
-   }	
+   }
 }
 ?>

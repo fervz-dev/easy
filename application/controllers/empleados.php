@@ -1,27 +1,45 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-* 
+*
 */
 class Empleados extends CI_Controller
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->model("empleados_model", "empleados");
         $this->load->model("puestos_model","puestos");
-        $this->load->model('direcciones_model','direcciones');  
+        $this->load->model('direcciones_model','direcciones');
         $this->load->model("oficina_model","oficina");
-        if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
-            redirect(base_url().'inicio');
-        //echo 'denegado';
-        }
 
+
+            if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
+                redirect(base_url().'inicio');
+            //echo 'denegado';
+            }
+ //inicializamos las variables MENU Y SIBMENU, por si no se enviaran desde la url
+        $menu=0;
+        $submenu=0;
+        //verificamos si se enviaron las variables GET->m "(menu)" GET->submain"(submenu)"
+        if (isset($_GET['m'])||isset($_GET['submain'])) {
+            //si se enviaorn las variables GET condicionamos que sean solo numericas
+            if (!is_numeric($_GET['m']) || !is_numeric($_GET['submain'])) {
+                //si no son njumericas que cierre la session actual
+                 redirect(base_url().'inicio/logout');
+            }else{
+                //en caso de que si fueran numericas agregamos la variables GET a las variables previamente creadas.
+                $menu=$_GET['m'];
+                $submenu=$_GET['submain'];
+                //validamos el menu y submenu
+                $this->permisos->permisosURL($menu,$submenu);
+               }
+        }
 	}
 
 	public function index()
 	{
-		
+
         $data['puestos']=$this->puestos->get_puestos_all();
         $data['oficinas']=$this->oficina->get_oficinas_all();
         $data['estados']=$this->direcciones->estados();
@@ -58,18 +76,41 @@ class Empleados extends CI_Controller
         //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
         $start = $limite*$page - $limite;
         //Consulta que devuelve los registros de una sola pagina
-        if ($start < 0) $start = 0;
+        //if ($start < 0) $start = 0;
+        if ($start < 0){
+          $start = 0;
+         $data();
+        }else{
         $resultado_catalogo =$this->empleados->get_empleado($sidx, $sord, $start, $limite);
         // Se agregan los datos de la respuesta del servidor
         $data->page = $page;
         $data->total = $total_pages;
         $data->records = $count;
         $i=0;
+        if ($this->permisos->permisos(1,2)==1) {
+
         foreach($resultado_catalogo as $row) {
+
            $data->rows[$i]['id']=$row->id_obrero;
+        if (($this->permisos->permisos(1,1)==1)&&($this->permisos->permisos(1,3)==1)){
+
            $onclik="onclick=delet('".$row->id_obrero."')";
     	   $onclikedit="onclick=edit('".$row->id_obrero."')";
      	   $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+        }elseif (($this->permisos->permisos(1,1)==1)&&($this->permisos->permisos(1,3)==0)) {
+           //$onclik="onclick=delet('".$row->id_obrero."')";
+           $onclikedit="onclick=edit('".$row->id_obrero."')";
+           $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>';
+        }elseif (($this->permisos->permisos(1,1)==0)&&($this->permisos->permisos(1,3)==1)) {
+
+           $onclik="onclick=delet('".$row->id_obrero."')";
+           //$onclikedit="onclick=edit('".$row->id_obrero."')";
+           $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+
+        }elseif (($this->permisos->permisos(1,1)==0)&&($this->permisos->permisos(1,3)==0)) {
+          $acciones='';
+
+            }
            $data->rows[$i]['cell']=array($acciones,
                                     strtoupper($row->nombre_obrero),
                                     strtoupper($row->a_paterno),
@@ -90,13 +131,13 @@ class Empleados extends CI_Controller
                                     strtoupper($row->nombre_oficina),
                                     $row->comentario,
                                     strtoupper($row->fecha_ingreso),
-                                    
-                                    
-                                    );
 
-                                    
+
+                                    );
            $i++;
         }
+    }
+}
     	// La respuesta se regresa como json
         echo json_encode($data);
     }
@@ -149,5 +190,5 @@ class Empleados extends CI_Controller
             echo 0;
         }
     }
-		
+
 }

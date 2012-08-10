@@ -583,7 +583,15 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
 </div>
 <table >
 <tr>
-<td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/add_oficina.png" width="30" height="30"></div>
+<td>
+<?php
+if (!isset($_GET['submain'])) {
+}
+elseif (($this->permisos->permisos_submenus($_GET['m'],$_GET['submain'],0)==1)&&($this->permisos->permisos($_GET['submain'],2)==1)) {?>
+
+  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/add_oficina.png" width="30" height="30"></div>
+<?php } ?>
+
 </td>
 <td >&nbsp;</td>
 </tr>

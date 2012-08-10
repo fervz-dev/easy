@@ -31,8 +31,8 @@ $("#respuesta_permisos").load('<?php echo base_url();?>roles/pantallas_permisos/
 
 $( "#dialog-alta" ).dialog({
 			autoOpen: false,
-			height: 500,
-			width: 800,
+			height: 'auto',
+			width: 'auto',
 			modal: true,
 			buttons: {
 					Aceptar: function() {
@@ -186,7 +186,12 @@ if (validarVacio(nombre)==false) {
 </div>
 <table >
 <tr>
-<td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
+<td>
+  <?php if (!isset($_GET['submain'])) {
+}  elseif (($this->permisos->permisos_submenus($_GET['m'],$_GET['submain'],0)==1)&&($this->permisos->permisos($_GET['submain'],2)==1)) {?>
+
+  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
+    <?php  }?>
 </td>
 <td >&nbsp;</td>
 </tr>

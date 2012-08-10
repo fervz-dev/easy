@@ -1,4 +1,3 @@
-
 <script>
 
 function alta()
@@ -15,9 +14,9 @@ $( "#dialog-procesos" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-            if (validarCamposForm1()==true) {
+            // if (validarCamposForm1()==true) {
           guardar();
-        }
+        // }
           },
           Cancelar:function()
           {
@@ -90,9 +89,9 @@ $( "#dialog-procesos" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-                       if (validarCamposForm1()==true) {
+                       // if (validarCamposForm1()==true) {
           editar(id);
-        }
+        // }
             },
           Cancelar:function()
           {
@@ -307,7 +306,7 @@ function cargar(){
 ////////////////////////////////////////////////////////////////////////
     $(document).ready(function(){
        reloading();
-	$("#tbl_clientes").jqGrid({
+  $("#tbl_clientes").jqGrid({
     url:'<?php echo base_url();?>clientes/paginacion',
     datatype: "json",
     mtype: 'POST',
@@ -349,7 +348,7 @@ function cargar(){
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
-	rowNum:15,
+  rowNum:15,
     rowList:[10,20,30],
     imgpath: '<?php echo base_url();?>img/editar.jpg',
     mtype: "POST",
@@ -357,12 +356,12 @@ function cargar(){
     viewrecords: true,
      cache: false,
     sortorder: "asc",
-	editable: true,
+  editable: true,
     caption: 'Catalogo de Clientes',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
-	width:"auto",
+  width:"auto",
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl_clientes").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
    });

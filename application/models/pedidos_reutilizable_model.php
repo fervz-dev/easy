@@ -1,10 +1,10 @@
-<?php 
+<?php
 /**
-* 
+*
 */
 class Pedidos_reutilizable_model extends CI_Model
 {
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -25,10 +25,12 @@ class Pedidos_reutilizable_model extends CI_Model
 									proveedores ,
 									oficina
 									WHERE
-									pedidos_reutilizable.proveedores_id_proveedores = proveedores.id_proveedores 
+									pedidos_reutilizable.proveedores_id_proveedores = proveedores.id_proveedores
 									AND
 									pedidos_reutilizable.oficina = oficina.id_oficina
-									ORDER BY $sidx $sord 
+									AND
+									pedidos.id_sucursal =".$this->session->userdata('oficina')."
+									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
@@ -54,7 +56,8 @@ class Pedidos_reutilizable_model extends CI_Model
 									pedidos_reutilizable.oficina = oficina.id_oficina AND
 									pedidos_reutilizable.activo = '0' AND
 									pedidos_reutilizable.verificacion_almacen = '1'
-									ORDER BY $sidx $sord 
+									pedidos_reutilizable.id_sucursal =".$this->session->userdata('oficina')."
+									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
@@ -77,7 +80,7 @@ class Pedidos_reutilizable_model extends CI_Model
 									cantidad_pedido.catalogo_producto = cat_mprima.id_cat_mprima AND
 									cat_mprima.resistencia_mprima_id_resistencia_mprima = resistencia_mprima.id_resistencia_mprima AND
 									resistencia_mprima.activo = 1
-									ORDER BY $sidx $sord 
+									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
@@ -97,7 +100,7 @@ class Pedidos_reutilizable_model extends CI_Model
 										WHERE
 										pedidos_reutilizable.id_pedido_reutilizable = $id");
         $fila = $query->row();
-          return $fila;    
+          return $fila;
     }
 
    public function editar($id)
@@ -106,7 +109,10 @@ class Pedidos_reutilizable_model extends CI_Model
 			   	'fecha_entrega'=>$this->input->post('fecha_entrega'),
 				'proveedores_id_proveedores'=>$this->input->post('proveedor_id_proveedor'),
 				'oficina'=>$this->input->post('oficina'),
-				'cantidad'=>$this->input->post('cantidad')
+				'cantidad'=>$this->input->post('cantidad'),
+				'id_usuario'=>$this->session->userdata('id'),
+				'id_sucursal'=>$this->session->userdata('oficina')
+
 						);
 
 	$this->db->where('id_pedido_reutilizable', $id);
@@ -119,9 +125,11 @@ class Pedidos_reutilizable_model extends CI_Model
 					   	'catalogo_producto'=>$this->input->post('catalogo_producto'),
 						'cantidad'=>$this->input->post('cantidad'),
 						'id_pedido'=>$this->input->post('id_pedido'),
+						'id_usuario'=>$this->session->userdata('id'),
+						'id_sucursal'=>$this->session->userdata('oficina')
 						);
    		$this->db->insert('cantidad_pedido', $data);
-		return $this->db->affected_rows(); 
+		return $this->db->affected_rows();
    }
 
    public function eliminar_pedido($id)
@@ -147,10 +155,12 @@ public function guardar_pedido()
 			   	'fecha_entrega'=>$this->input->post('fecha_entrega'),
 				'proveedores_id_proveedores'=>$this->input->post('proveedor_id_proveedor'),
 				'cantidad'=>$this->input->post('cantidad'),
-				'oficina'=>$this->input->post('oficina')
+				'oficina'=>$this->input->post('oficina'),
+				'id_usuario'=>$this->session->userdata('id'),
+				'id_sucursal'=>$this->session->userdata('oficina')
 			);
    		$this->db->insert('pedidos_reutilizable', $data);
-		return $this->db->affected_rows(); 
+		return $this->db->affected_rows();
 	}
 
 
@@ -163,7 +173,7 @@ public function cerrar($id)
 			return $this->db->affected_rows();
 }
 /////////////////////////enviar los datos del produto a pedidos provedor/bajar_stock_reutilizable//////////
-	public function get_pedido_reutilizable($id)	
+	public function get_pedido_reutilizable($id)
 	{
 		$query = $this->db->query("SELECT
 										proveedores.nombre_empresa,
@@ -175,7 +185,7 @@ public function cerrar($id)
 										pedidos_reutilizable.id_pedido_reutilizable = $id AND
 										pedidos_reutilizable.proveedores_id_proveedores = proveedores.id_proveedores");
 				$fila = $query->row();
-				          return $fila; 		
+				          return $fila;
 	}
    }
 ?>
