@@ -4,7 +4,7 @@ class inicio_ extends CI_Controller {
 		parent::__construct();
 /*		$this->load->library('session');
 		if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
- 			redirect(base_url().'inicio');
+ 			redirect(base_url().'inicio/logout');
  		//echo 'denegado';*/
 		//}
 

@@ -3,7 +3,7 @@
 
 	<tr>
 		<td><label id="labelRight">Nombre Empresa:</label></td>
-		<td><input name="nombre_empresa" type="text" id="nombre_empresa1" size="35"></td>
+		<td><input name="nombre_empresa" type="text" id="nombre_empresa" size="35"></td>
 	</tr>
 
 	<tr>

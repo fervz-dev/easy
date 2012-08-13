@@ -15,7 +15,7 @@ class Pedidos_proveedor extends CI_Controller
 
 
             if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
-                redirect(base_url().'inicio');
+                redirect(base_url().'inicio/logout');
             //echo 'denegado';
             }
  //inicializamos las variables MENU Y SIBMENU, por si no se enviaran desde la url
@@ -78,15 +78,22 @@ class Pedidos_proveedor extends CI_Controller
         //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
         $start = $limite*$page - $limite;
         //Consulta que devuelve los registros de una sola pagina
-        if ($start < 0) $start = 0;
+        //if ($start < 0) $start = 0;
+        if ($start < 0){
+          $start = 0;
+         $data();
+        }else{
         $resultado_ =$this->pedidos->get_pedido_proveedor($sidx, $sord, $start, $limite);
         // Se agregan los datos de la respuesta del servidor
         $data->page = $page;
         $data->total = $total_pages;
         $data->records = $count;
         $i=0;
+if ($this->permisos->permisos(10,2)==1) {
         foreach($resultado_ as $row) {
            $data->rows[$i]['id']=$row->id_pedido;
+ if (($this->permisos->permisos(10,1)==1)&&($this->permisos->permisos(10,3)==1)){
+
            $onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
            $onclick_add="onclick=add('".$row->id_pedido."')";
     	   $onclikedit="onclick=edit('".$row->id_pedido."')";
@@ -97,8 +104,38 @@ class Pedidos_proveedor extends CI_Controller
                 $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
            }elseif ($row->activo == 0) {
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
-               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
+               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
            }
+ }elseif (($this->permisos->permisos(10,1)==1)&&($this->permisos->permisos(10,3)==0)) {
+        //$onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
+           $onclick_add="onclick=add('".$row->id_pedido."')";
+           $onclikedit="onclick=edit('".$row->id_pedido."')";
+
+           if($row->activo == 1)
+           {
+                $onclikabierto="onclick=abierto('".$row->id_pedido."')";
+                $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
+           }elseif ($row->activo == 0) {
+               $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
+               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
+           }
+}elseif (($this->permisos->permisos(10,1)==0)&&($this->permisos->permisos(10,3)==1)) {
+           $onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
+           $onclick_add="onclick=add('".$row->id_pedido."')";
+           //$onclikedit="onclick=edit('".$row->id_pedido."')";
+
+           if($row->activo == 1)
+           {
+                $onclikabierto="onclick=abierto('".$row->id_pedido."')";
+                $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
+           }elseif ($row->activo == 0) {
+               $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
+               $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
+           }
+        }elseif (($this->permisos->permisos(10,1)==0)&&($this->permisos->permisos(10,3)==0)) {
+          $acciones='';
+
+            }
            $data->rows[$i]['cell']=array($acciones,
                                     strtoupper($row->id_pedido),
                                     strtoupper($row->fecha_pedido),
@@ -107,6 +144,8 @@ class Pedidos_proveedor extends CI_Controller
                                     strtoupper($row->nombre_oficina));
            $i++;
         }
+    }
+}
     	// La respuesta se regresa como json
         echo json_encode($data);
     }

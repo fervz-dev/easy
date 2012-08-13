@@ -418,11 +418,15 @@ function validarCampos_direccion() {
      <table>
        <tr>
          <td>
+            <?php
+if (!isset($_GET['submain'])) {
+}  elseif (($this->permisos->permisos_submenus($_GET['m'],$_GET['submain'],0)==1)&&($this->permisos->permisos($_GET['submain'],2)==1)) {?>
+
           <button onclick="alta_directorio()">
             <div style="width:135x; height:25px;"><img src="<?php echo base_url();?>img/add_address.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Nueva dirección</p></div></div>
 
          </button>
-
+  <?php  }?>
           </td>
        </tr>
      </table>
@@ -431,7 +435,7 @@ function validarCampos_direccion() {
 
         <div id="paginacion_directorio"></div>
 
-<div id="editar_directorio" style="display:none">
+<div id="editar_directorio" style="display:none" title="Nueva Dirección Cliente">
 
         <?php
         $this->load->view('clientes/editar_directorio');?>

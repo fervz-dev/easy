@@ -14,9 +14,9 @@ $( "#dialog-procesos" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-            // if (validarCamposForm1()==true) {
+             if (validarCamposForm11()==true) {
           guardar();
-        // }
+         }
           },
           Cancelar:function()
           {
@@ -40,7 +40,7 @@ function dire(id)
       close: function() {reloading();}
     });
       $( "#dialog-directorio" ).dialog( "open" );
-      $( "#editar_directorio" ).fadeOut();
+      //$( "#editar_directorio" ).fadeOut();
       $( "#id_cliente" ).val(id);
       directorio(id);
 
@@ -103,7 +103,7 @@ $( "#dialog-procesos" ).dialog({
         $( "#dialog-procesos" ).dialog( "open" );
 
 }
-//Funcion editar empleado
+// //Funcion editar empleado
 
 
 function editar(id)
@@ -178,7 +178,7 @@ $.ajax({
                                 "email":$("#email_").val(),
                                 "comentario":$("#comentario").val()},
 
-                     datatype:"html",
+datatype:"html",
                       success:function(data, textStatus){
 
                              switch(data){
@@ -393,7 +393,7 @@ function tip (tipo) {
   }
 }
 //////////////////////////////validacion////////////////////////////////////////////////////////////////
-function validarCamposForm1() {
+function validarCamposForm11() {
   nombre_empresa=$("#nombre_empresa").val();
   nombre_contacto=$("#nombre_contacto").val();
   tipo_persona=$("#tipo_persona").val();
@@ -601,7 +601,11 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
 </div>
 <table >
 <tr>
-<td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
+<td><?php if (!isset($_GET['submain'])) {
+}  elseif (($this->permisos->permisos_submenus($_GET['m'],$_GET['submain'],0)==1)&&($this->permisos->permisos($_GET['submain'],2)==1)) {?>
+
+  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
+  <?php  }?>
 </td>
 <td >&nbsp;</td>
 </tr>
@@ -615,5 +619,5 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
 
         <div style="display:none" id="dialog-directorio" title="Directorio Clientes">
         <?php
-        $this->load->view('clientes/directorio');?>
+         $this->load->view('clientes/directorio');?>
         </div>

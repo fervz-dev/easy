@@ -6,7 +6,7 @@ public function __construct()
    parent::__construct();
    $this->load->model('direcciones_model','direcciones');
    //      if(!$this->redux_auth->logged_in()|| $this->permisos->permisosURL()){//verificar si el el usuario ha iniciado sesion
-   //          redirect(base_url().'inicio');
+   //          redirect(base_url().'inicio/logout');
    //      //echo 'denegado';
    //      }
 }

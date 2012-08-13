@@ -9,7 +9,7 @@ class Oficina_model extends CI_Model
 	{
 		parent::__construct();
         // if(!$this->redux_auth->logged_in()|| !$this->permisos->permisosURL()){//verificar si el el usuario ha iniciado sesion
-        //     redirect(base_url().'inicio');
+        //     redirect(base_url().'inicio/logout');
         // //echo 'denegado';
         // }
 	}

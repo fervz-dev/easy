@@ -8,7 +8,7 @@ public function __construct()
 
 
             if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
-                redirect(base_url().'inicio');
+                redirect(base_url().'inicio/logout');
             //echo 'denegado';
             }
  //inicializamos las variables MENU Y SIBMENU, por si no se enviaran desde la url
