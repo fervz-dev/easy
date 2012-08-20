@@ -523,10 +523,12 @@ if (validarVacio(nombre_obrero)==false) {
   }
     return true;
   }
-  else if (validarEmail(email)==false) {
+  else if (email!=''){
+  if (validarEmail(email)==false) {
     notify('* El campo <strong>EMAIL</strong> es invalido!!!',500,5000,'error');
     $("#email").focus();
     return false;
+  }
   }/*validar puesto*/
   else if (validarCombo(puestos_id_tipo_puesto)==false) {
       notify('Debe seleccionar almenos una opcion de la lista <strong>PUESTO</strong>',500,5000,'error');
