@@ -2,11 +2,11 @@
 class inicio_ extends CI_Controller {
         public function __construct(){
 		parent::__construct();
-/*		$this->load->library('session');
-		if(!$this->redux_auth->logged_in() ){//verificar si el el usuario ha iniciado sesion
- 			redirect(base_url().'inicio/logout');
- 		//echo 'denegado';*/
-		//}
+            if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
+                redirect(base_url().'inicio/logout');
+            //echo 'denegado';
+            }
+
 
   }//****Constructor...
 	public function index()

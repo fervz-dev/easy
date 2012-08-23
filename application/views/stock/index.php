@@ -1,6 +1,7 @@
 
 <?php $this->load->view('hed');?>
 <script type="text/javascript">
+
 ////////////////////////////////////mostara la lista de pedidos para confirma y guardar en la lista////
 function ver_pedidos_reutilizable_dialog()
 {
@@ -13,7 +14,6 @@ function ver_pedidos_reutilizable_dialog()
       close: function() {$("#tbl_stock_reutilizable").trigger("reloadGrid");}
     });
         $( "#grid_reutilizable" ).dialog( "open" );
-
 }
 
 ////////////////////////////////////mostara la lista de pedidos para confirma y guardar en la lista////
@@ -28,10 +28,9 @@ function ver_pedidos()
       close: function() {reloading();}
     });
         $( "#grid_linea" ).dialog( "open" );
-
 }
 
-////////////////////////////////////Stock lista ////////////////////////////////////   
+////////////////////////////////////Stock lista ////////////////////////////////////
     $(document).ready(function(){
        reloading();
        $("#tabs").tabs();
@@ -46,7 +45,7 @@ function ver_pedidos()
                                   'LARGO',
                                   'CORRUGADO',
                                   'RESISTENCIA',
-                                  'CANTIDAD'               
+                                  'CANTIDAD'
                                      ],
                         colModel:[{name:'nombre', index:'nombre', width:100,resizable:false,sortable:true,search:false,editable:false},
                                   {name:'ancho', index:'ancho', width:100,resizable:false,sortable:true,search:false,editable:false},
@@ -54,7 +53,7 @@ function ver_pedidos()
                                   {name:'corrugado', index:'corrugado', width:100,resizable:false,sortable:true,search:false,editable:false},
                                   {name:'resistencia', index:'resistencia', width:100,resizable:false,sortable:true,search:false,editable:false},
                                   {name:'cantidad', index:'cantidad', width:100,resizable:false,sortable:true,search:false,editable:false}
-                                 ],                             
+                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
   rowNum:15,
@@ -72,11 +71,11 @@ function ver_pedidos()
     loadtext: 'Cargando',
   width:'auto',
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_stock_linea").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
+        $("#tbl_stock_linea").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
    });
 function reloading()
   {
-  $("#tbl_stock_linea").trigger("reloadGrid")
+    $("#tbl_stock_linea").trigger("reloadGrid")
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////funcion para ver el gid dealmacen reutilizable/////////////////////////////////////////////////
@@ -86,16 +85,16 @@ function reloading()
     $("#tbl_stock_reutilizable").jqGrid({
     url:'<?php echo base_url();?>stock_lista/paginacion_reutilizable',
     datatype: "json",
-    mtype: 'POST',         
+    mtype: 'POST',
                         colNames:[
                                   'PROVEEDOR',
                                   'CANTIDAD',
-                                  'FECHA DE INGRESO'       
+                                  'FECHA DE INGRESO'
                                      ],
                         colModel:[{name:'proveedor', index:'proveedor', width:100,resizable:false,sortable:true,search:false,editable:false},
                                   {name:'cantidad', index:'cantidad', width:100,resizable:false,sortable:true,search:false,editable:false},
                                   {name:'fecha_ingreso', index:'fecha_ingreso', width:100,resizable:false,sortable:true,search:false,editable:false}
-                                 ],                             
+                                 ],
     pager: jQuery('#paginacion_reutilizable'),
     rownumbers:true,
   rowNum:15,
@@ -113,7 +112,43 @@ function reloading()
     loadtext: 'Cargando',
   width:'600',
         }).navGrid("#paginacion_reutilizable", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_stock_reutilizable").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
+        $("#tbl_stock_reutilizable").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
+   });
+  }
+  function ver_pedidos_bodega () {
+    $(document).ready(function(){
+    $("#tbl_stock_reutilizable").trigger("reloadGrid")
+    $("#tbl_stock_reutilizable").jqGrid({
+    url:'<?php echo base_url();?>stock_lista/paginacion_reutilizable',
+    datatype: "json",
+    mtype: 'POST',
+                        colNames:[
+                                  'PROVEEDOR',
+                                  'CANTIDAD',
+                                  'FECHA DE INGRESO'
+                                     ],
+                        colModel:[{name:'proveedor', index:'proveedor', width:100,resizable:false,sortable:true,search:false,editable:false},
+                                  {name:'cantidad', index:'cantidad', width:100,resizable:false,sortable:true,search:false,editable:false},
+                                  {name:'fecha_ingreso', index:'fecha_ingreso', width:100,resizable:false,sortable:true,search:false,editable:false}
+                                 ],
+    pager: jQuery('#paginacion_reutilizable'),
+    rownumbers:true,
+  rowNum:15,
+    rowList:[10,20,30],
+    imgpath: '<?php echo base_url();?>img/editar.jpg',
+    mtype: "POST",
+    sortname: 'id_stock_reutilizable',
+    viewrecords: true,
+     cache: false,
+    sortorder: "asc",
+  editable: true,
+    caption: 'Stock de Reutilizable',
+    multiselect: false,
+    height:'auto',
+    loadtext: 'Cargando',
+  width:'600',
+        }).navGrid("#paginacion_reutilizable", { edit: false, add: false, search: false, del: false, refresh:true });
+        $("#tbl_stock_reutilizable").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
    });
   }
 
@@ -122,7 +157,8 @@ function reloading()
 <div class="demo">
 <div id="tabs">
   <ul>
-    <li><a href="#linea" onclick="paginacion_linea">Linea</a></li>
+    <!-- onclick="paginacion_linea" -->
+    <li><a href="#linea" >Linea</a></li>
     <li><a href="#reutilizable" onclick="ver_pedidos_reutilizable();">Reutilizable</a></li>
   </ul>
   <div id="linea">
@@ -130,22 +166,22 @@ function reloading()
             <tr>
               <td>
                 <button onclick="javascrip:ver_pedidos();" title="Bajar pedido de linea">
-                  <div style="width:120px; height:30px;"><img src="img/bajar_stock.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Proveedor</p></div></div>  
+                  <div style="width:120px; height:30px;"><img src="img/bajar_stock.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Proveedor</p></div></div>
                 </button>
               </td>
               <td>
-                <button onclick="javascrip:stock();" title="Bajar pedido de linea">
-                  <div style="width:120px; height:30px;"><img src="img/bajar_stock.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Nave</p></div></div>  
+                <button onclick="javascrip:ver_pedidos_bodega();" title="Bajar pedido de Bodega">
+                  <div style="width:120px; height:30px;"><img src="img/bajar_stock.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Nave</p></div></div>
                 </button>
               </td>
             </tr>
           </table>
     <table id="tbl_stock_linea"></table>
-        <div id="paginacion"> </div>    
+        <div id="paginacion"> </div>
         <div style="display:none" id="dialog-procesos" title="Pedidos">
 
 
-        <?php 
+        <?php
         //$this->load->view('pedidos_proveedores/formulario');?>
         </div>
   </div>
@@ -154,7 +190,7 @@ function reloading()
       <tr>
         <td>
           <button onclick="ver_pedidos_reutilizable_dialog();" title="bajar Pedidos Reutilizable">
-            <div style="width:120px; height:30px;"><img src="img/bajar_stock.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Proveedor</p></div></div>     
+            <div style="width:120px; height:30px;"><img src="img/bajar_stock.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Proveedor</p></div></div>
           </button>
         </td>
       </tr>
@@ -162,7 +198,7 @@ function reloading()
     <table id="tbl_stock_reutilizable">
       <div id="paginacion_reutilizable"></div>
       <div style="display:none" id="dialog-procesos_reutilizable" title="Pedidos Reutilizable">
-        <?php 
+        <?php
           //$this->load->view()
         ?>
       </div>
@@ -174,15 +210,19 @@ function reloading()
 
 <!-- Entrega pedidos de linea -->
 <div style="display:none" id="grid_linea" title="Lista de pedidos de linea">
-  <?php 
+  <?php
     $this->load->view('stock/bajar_stock_linea');
    ?>
 </div>
-
+<!-- Pedidos reutilizable  -->
 <div style="display:none" id="grid_reutilizable" title="Lista de pedidos de linea">
-  <?php 
+  <?php
     $this->load->view('stock/bajar_stock_reutilizable');
    ?>
 </div>
-
-
+<!-- Pedidos Bodega -->
+<div style="display:none" id="grid_bodegas" title="Lista de pedidos de Bodega">
+  <?php
+    $this->load->view('stock/bajar_stock_bodega');
+   ?>
+</div>

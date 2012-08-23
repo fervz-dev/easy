@@ -39,7 +39,7 @@ class Stock_lista_model extends CI_Model
 									FROM
 									stock_reutilizable
 									WHERE
-									AND stock_reutilizable.id_sucursal =".$this->session->userdata('oficina')."
+								    stock_reutilizable.id_sucursal =".$this->session->userdata('oficina')."
 									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
