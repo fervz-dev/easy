@@ -497,24 +497,31 @@ if (validarVacio(nombre_obrero)==false) {
     $("#lada").focus();
     return false;
   }
-  else if (validarLada(lada)==false) {
+  else if (lada!='') {
+  if (validarLada(lada)==false) {
     notify('* El campo <strong>LADA</strong> no es un numero!!!',500,5000,'error');
     tipCampos('* El campo <strong>LADA</strong> debe de tener <strong>"3"</strong> dígitos toda república, excepto D.F., MTY y GDL que son <strong>"2"</strong>. sin guiones, ni espacios' ,500,8000,'tip');
     $("#lada").focus();
     return false;
   }
+  return true;
+}
   /*validar telefono*/
   else if (validarVacio(num_telefono)==false) {
     notify('* El campo <strong>TELEFONO</strong> no puede estar vacio!!!',500,5000,'error');
     tipCampos('* El campo <strong>TELEFONO</strong> debe de tener 7 dígitos toda la república formato (XXXXXXX) ó (xxx-xxxxx), excepto D.F., MTY y GDL que son 8 formato (XXXXXXXx) ó (xxxx-xxxxx)' ,500,5000,'tip');
     $("#num_telefono").focus();
     return false;
-  }
-  else if (validarTelefono(num_telefono)==false) {
+  }else if (num_telefono!='') {
+
+  if (validarTelefono(num_telefono)==false) {
     notify('* El campo <strong>TELEFONO</strong> no es valido!!',500,5000,'error');
     $("#num_telefono").focus();
     return false;
-  }  /*validar celular*/
+  }
+  return true;
+  }
+  /*validar celular*/
   else if (validarVacio(celular)==true) {
         if (validarCe(celular)==false) {
           notify('* El campo <strong>CELULAR</strong> no es valido!!',500,5000,'error');
@@ -529,6 +536,7 @@ if (validarVacio(nombre_obrero)==false) {
     $("#email").focus();
     return false;
   }
+  return true;
   }/*validar puesto*/
   else if (validarCombo(puestos_id_tipo_puesto)==false) {
       notify('Debe seleccionar almenos una opcion de la lista <strong>PUESTO</strong>',500,5000,'error');
