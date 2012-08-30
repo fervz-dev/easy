@@ -37,6 +37,7 @@ public function permisosURL($menu,$submenu)
         //3 elminar
 
         $usuario = $this->ci->db->query("SELECT
+<<<<<<< HEAD
                                                 permisos.permiso
                                                 FROM
                                                 usuarios ,
@@ -49,6 +50,20 @@ public function permisosURL($menu,$submenu)
                                                 usuarios.id_roles = permisos.id_roles AND
                                                 permisos.status=1 ");
 
+=======
+                                    permisos.permiso
+                                FROM
+                                usuarios ,
+                                permisos ,
+                                pantallas
+                                WHERE
+                                usuarios.id=".$this->ci->session->userdata('id')." AND
+                                pantallas.id_menu =".$id_pan." AND
+                                permisos.id_pantalla = pantallas.id_pantalla AND
+                                usuarios.id_roles = permisos.id_roles AND
+                                permisos.status=1 ");
+    //$usuarios=$usuario->row_array();
+>>>>>>> origin/PedidosBodega
         $usuarios=$usuario->num_rows();
 
         if($usuarios==0){ // no hay permiso

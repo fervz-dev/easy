@@ -29,7 +29,7 @@ class Pedidos_reutilizable_model extends CI_Model
 									AND
 									pedidos_reutilizable.oficina = oficina.id_oficina
 									AND
-									pedidos.id_sucursal =".$this->session->userdata('oficina')."
+									pedidos_reutilizable.id_sucursal =".$this->session->userdata('oficina')."
 									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
@@ -55,7 +55,7 @@ class Pedidos_reutilizable_model extends CI_Model
 									pedidos_reutilizable.proveedores_id_proveedores = proveedores.id_proveedores AND
 									pedidos_reutilizable.oficina = oficina.id_oficina AND
 									pedidos_reutilizable.activo = '0' AND
-									pedidos_reutilizable.verificacion_almacen = '1'
+									pedidos_reutilizable.verificacion_almacen = '1' AND
 									pedidos_reutilizable.id_sucursal =".$this->session->userdata('oficina')."
 									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"

@@ -60,6 +60,22 @@ class Oficina_model extends CI_Model
 		return ($query->num_rows() > 0)? $query->result_array() : NULL;
 
 	}
+		public function get_oficinas_all_pedidos()
+	{
+		$query = $this->db->query("SELECT
+											oficina.id_oficina,
+											oficina.nombre_oficina
+											FROM
+											oficina
+											where
+											oficina.activo=1
+											GROUP BY
+											oficina.id_oficina
+											ORDER BY
+											oficina.nombre_oficina ASC");
+		return ($query->num_rows() > 0)? $query->result_array() : NULL;
+
+	}
 
 	public function get_id($id)
     {
