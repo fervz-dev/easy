@@ -8,6 +8,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 			$this->ci =& get_instance();
 
 		}
+// permisos por URL
 public function permisosURL($menu,$submenu)
 {
 
@@ -25,7 +26,7 @@ public function permisosURL($menu,$submenu)
 
 
 }
-
+// verifico que por lomenos tenga un permiso en submenus para poder ser mostrado el menu
    public function permisos_($id_pan){
    		//$this->ci->load->model('permisos_model','permisos');
         //id_pantalla $a,
@@ -47,9 +48,8 @@ public function permisosURL($menu,$submenu)
                                                 permisos.id_pantalla = pantallas.id_pantalla AND
                                                 usuarios.id_roles = permisos.id_roles AND
                                                 permisos.status=1 ");
-        //$usuarios=$usuario->row_array();
+
         $usuarios=$usuario->num_rows();
-    	//$usuario=$this->ci->permisos->get_permisos($id_pan);
 
         if($usuarios==0){ // no hay permiso
             return 0;
@@ -58,6 +58,7 @@ public function permisosURL($menu,$submenu)
         }
 
  		}
+// verifico los permisos del submenu  donde le paso el ID de la pantalla y el permisoq ue quiero verificar
         public function permisos($id_pan,$permisos){
         //$this->ci->load->model('permisos_model','permisos');
         //id_pantalla $a,
@@ -89,6 +90,7 @@ public function permisosURL($menu,$submenu)
         }
 
         }
+        // busco si por lo menos tiene un permiso el usuario para poder ingresar por URL
         public function permisosArrayURL($id_pan){
         //$this->ci->load->model('permisos_model','permisos');
         //id_pantalla $a,
@@ -162,14 +164,7 @@ public function permisosURL($menu,$submenu)
         //1 Modificar
         //2 Cobnsultar
         //3 elminar
-        // $ext_idPan=$this->ci->db->query("SELECT
-        //                                 submenus.id_submenu
-        //                                 FROM
-        //                                 submenus
-        //                                 WHERE
-        //                                 submenus.id_menu=".$id_pan." AND
-        //                                 submenus.id_submenu=".$submenu."");
-        // $id_pantalla=$ext_idPan->row_array();
+
         $usuario = $this->ci->db->query("SELECT
                                                 permisos.permiso
                                                 FROM
@@ -180,10 +175,6 @@ public function permisosURL($menu,$submenu)
                                                 usuarios.id_roles = permisos.id_roles AND
                                                 permisos.status = 1 AND
                                                 permisos.id_pantalla = ".$submenu."");
-       // $usuarios=$usuario->row_array();
-
-        //$usuariosArray=$usuario->num_rows();
-        //$usuario=$this->ci->permisos->get_permisos($id_pan);
 
         if($usuario->num_rows()>0){ // si hay permiso
             return 1;
@@ -192,6 +183,7 @@ public function permisosURL($menu,$submenu)
         }
 
         }
+        // verifico si el submenu tiene permisos
         public function permisos_submenus($id_pan, $submenu, $permisos){
         //$this->ci->load->model('permisos_model','permisos');
         //id_pantalla $a,
@@ -220,9 +212,6 @@ public function permisosURL($menu,$submenu)
                                                 permisos.id_pantalla = ".$id_pantalla['id_submenu']."");
         $usuarios=$usuario->row_array();
 
-        //$usuariosArray=$usuario->num_rows();
-        //$usuario=$this->ci->permisos->get_permisos($id_pan);
-
         if($usuarios['permiso'][$permisos]==0){ // no hay permiso
             return 0;
         }else{
@@ -230,6 +219,7 @@ public function permisosURL($menu,$submenu)
         }
 
         }
+        // Modo de implementacion
 	}
 
  ?>
