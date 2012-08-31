@@ -4,7 +4,7 @@ class Catalogo_producto extends CI_Controller {
 	public function __construct()
 	{
 	   parent::__construct();
-<<<<<<< HEAD
+
 	   $this->load->model('catalogo_producto_model','producto');
 	   $this->load->model('resistencia_mprima_model','resistencia');
 	   //$this->load->model('archivo_model','archivo');
@@ -14,18 +14,7 @@ class Catalogo_producto extends CI_Controller {
     //echo 'denegado';
     }
  //inicializamos las variables MENU Y SIBMENU, por si no se enviaran desde la url
-=======
-    	   $this->load->model('catalogo_producto','producto');
-    	   $this->load->model('resistencia_mprima_model','resistencia');
-    	   $this->load->model('archivo_model','archivo');
 
-
-       if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
-            redirect(base_url().'inicio/logout');
-        //echo 'denegado';
-        }
-        //inicializamos las variables MENU Y SUBMENU, por si no se enviaran desde la url
->>>>>>> origin/PedidosBodega
         $menu=0;
         $submenu=0;
         //verificamos si se enviaron las variables GET->m "(menu)" GET->submain"(submenu)"
@@ -42,12 +31,8 @@ class Catalogo_producto extends CI_Controller {
                 $this->permisos->permisosURL($menu,$submenu);
                }
         }
-<<<<<<< HEAD
 
     }
-=======
-	}
->>>>>>> origin/PedidosBodega
     public function index()
     {
     	$data['resistencia']=$this->resistencia->get_resistencia_mprima_all();
@@ -55,7 +40,6 @@ class Catalogo_producto extends CI_Controller {
     	$data['titulo']='Catalogo de Productos';
     	$this->load->view('principal', $data);
     }
-<<<<<<< HEAD
     public function paginacion()
     {
 
@@ -147,9 +131,6 @@ if ($this->permisos->permisos(4,2)==1) {
         echo json_encode($data);
     }
 
-
-=======
->>>>>>> origin/PedidosBodega
 }
 
 /* End of file catalogo_producto.php */

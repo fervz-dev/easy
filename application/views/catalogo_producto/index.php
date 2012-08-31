@@ -1,4 +1,30 @@
 <script type="text/javascript">
+// alta de producto
+function alta()
+{
+document.cat_producto.reset();
+$( "#dialog-procesos" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+            if (validarCampos()==true) {
+              guardar();
+            }
+
+
+          },
+          Cancelar:function()
+          {
+        $( "#dialog-procesos" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialog-procesos" ).dialog( "open" );
+}
 	$(document).ready(function(){
 	$("#tbl").jqGrid({
     url:'<?php echo base_url();?>catalogo_producto/paginacion',
