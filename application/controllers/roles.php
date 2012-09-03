@@ -51,8 +51,7 @@ class Roles extends CI_Controller {
 	$data['sucursal']=$this->oficinas();
 	$data['vista']='roles/index';
 	$data['titulo']='Roles';
-    $data['vistaa']="menu_izquierda";
-    $data['vistab']="menu";
+
     $this->load->view('principal',$data);
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////7

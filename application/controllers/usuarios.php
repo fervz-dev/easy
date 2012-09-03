@@ -52,8 +52,7 @@ class Usuarios extends CI_Controller {
 	$data['oficina']=$this->oficina->get();
 	$data['vista']='usuarios/index';;
 	$data['titulo']='Usuarios';
-    $data['vistaa']="menu_izquierda";
-    $data['vistab']="menu";
+
     $this->load->view('principal',$data);
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////7

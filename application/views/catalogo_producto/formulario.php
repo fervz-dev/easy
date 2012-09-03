@@ -45,9 +45,8 @@
 	</tr>
 	<tr>
 		<td><label id="labelRight">Corrugado:</label></td>
-		<td><select id="tipo_m" name="tipo_m">
+		<td><select id="corrugado" name="corrugado">
 			<option value="">Seleccione...</option>
-
 			<option value="SENCILLO">SENCILLO</option>
 			<option value="DOBLE">DOBLE</option>
 
@@ -74,5 +73,6 @@
 
 		</td>
 	</tr>
+
 </table>
 </form>

@@ -1,13 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Catalogo_producto extends CI_Controller {
-	public function __construct()
-	{
-	   parent::__construct();
 
-	   $this->load->model('catalogo_producto_model','producto');
-	   $this->load->model('resistencia_mprima_model','resistencia');
-	   //$this->load->model('archivo_model','archivo');
+    public function __construct()
+    {
+
+       parent::__construct();
+
+       $this->load->model('catalogo_producto_model','producto');
+       $this->load->model('resistencia_mprima_model','resistencia');
+       //$this->load->model('archivo_model','archivo');
 
     if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
         redirect(base_url().'inicio/logout');
@@ -34,13 +36,16 @@ class Catalogo_producto extends CI_Controller {
 
     }
     public function index()
+
     {
-    	$data['resistencia']=$this->resistencia->get_resistencia_mprima_all();
-    	$data['vista']='catalogo_producto/index';
-    	$data['titulo']='Catalogo de Productos';
-    	$this->load->view('principal', $data);
+        
+        $data['resistencia']=$this->resistencia->get_resistencia_mprima_all();
+        $data['vista']='catalogo_producto/index';
+        $data['titulo']='Catalogo de Productos';
+        $data['error']='';
+        $this->load->view('principal', $data);
     }
-    public function paginacion()
+        public function paginacion()
     {
 
 
@@ -75,8 +80,9 @@ class Catalogo_producto extends CI_Controller {
         $start = $limite*$page - $limite;
         //Consulta que devuelve los registros de una sola pagina
         if ($start < 0){
+
           $start = 0;
-         $data();
+         $data[]=0;
         }else{
         $resultado_catalogo =$this->producto->get_cat_productos($sidx, $sord, $start, $limite);
         // Se agregan los datos de la respuesta del servidor
@@ -88,25 +94,48 @@ if ($this->permisos->permisos(4,2)==1) {
 
                 foreach($resultado_catalogo as $row) {
                    $data->rows[$i]['id']=$row->id_catalogo;
-
+                   ///todos lo permisos
                    if (($this->permisos->permisos(4,1)==1)&&($this->permisos->permisos(4,3)==1)){
 
                         $onclikedit="onclick=edit('".$row->id_catalogo."')";
                         $onclik="onclick=delet('".$row->id_catalogo."')";
-                        $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
-
+                        
+                        if ($row->id_archivos!=0) {
+                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."')";
+                        $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';  
+                        }else{
+                        $picture="onclick=picture('".$row->id_catalogo."')";
+                        $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/view_picture.png" width="18" height="18" /></span>';  
+                        }
+                        
+                        
+                        // permisos solo para editar
                    }elseif (($this->permisos->permisos(4,1)==1)&&($this->permisos->permisos(4,3)==0)) {
 
                         $onclikedit="onclick=edit('".$row->id_catalogo."')";
                         //$onclik="onclick=delet('".$row->id_catalogo."')";
-                        $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>';
-
+                        if ($row->id_archivos!=0) {
+                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."')";  
+                        $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';
+                        }else{
+                        $picture="onclick=picture('".$row->id_catalogo."')";  
+                        $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/view_picture.png" width="18" height="18" /></span>';
+                        }
+                        
+                        // permisos solo para eliminar
                    }elseif (($this->permisos->permisos(4,1)==0)&&($this->permisos->permisos(4,3)==1)) {
 
                         //$onclikedit="onclick=edit('".$row->id_catalogo."')";
                         $onclik="onclick=delet('".$row->id_catalogo."')";
-                        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
-
+                        if ($row->id_archivos!=0) {
+                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."')";  
+                        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';
+                        }else{
+                        $picture="onclick=picture('".$row->id_catalogo."')";  
+                        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/view_picture.png" width="18" height="18" /></span>';
+                        }
+                        
+// sin permisos
                    }elseif (($this->permisos->permisos(4,1)==0)&&($this->permisos->permisos(4,3)==0)) {
 
                         //$onclikedit="onclick=edit('".$row->id_catalogo."')";
@@ -130,7 +159,115 @@ if ($this->permisos->permisos(4,2)==1) {
         // La respuesta se regresa como json
         echo json_encode($data);
     }
+ public function get_imagen($id)
+    {
+        $row=$this->producto->get_imagen($id);
+                    echo   $row->id_file.'~'.
+                           $row->nombre_archivo;
 
+    }
+  ///extraer la imagen
+ public function get($id)
+    {
+        $row=$this->producto->get_id($id);
+                    echo   $row->nombre.'~'.
+                           $row->largo.'~'.
+                           $row->ancho.'~'.
+                           $row->alto.'~'.
+                           $row->resistencia.'~'.
+                           $row->corrugado.'~'.
+                           $row->score.'~'.
+                           $row->descripcion;
+    }
+// funcion para guardar formulario
+public function guardar()
+    {
+        $save=$this->producto->guardar();
+        echo $save;
+    }
+
+public function eliminar($id)
+    {
+        $delete=$this->producto->eliminar($id);
+        if($delete > 0)
+        {
+            echo 1;
+        }
+        else
+        {
+            echo 0;
+        }
+    }
+public function eliminar_imagen($id,$id_catalogo)
+{
+    $delete=$this->producto->eliminar_imagen($id,$id_catalogo);
+    if($delete > 0)
+    {
+        echo 1;
+    }
+    else
+    {
+        echo 0;
+    }
+}
+public function editar_producto($id)
+    {
+        $editar=$this->producto->editar($id);
+        echo 1;
+    }
+function do_upload()
+{
+
+$data = array (
+'nombre'=>$this->input->post('nombre_archivo'),
+'descripcion'=>$this->input->post('descripcion_archivo')
+ );
+$id_catalogo=$this->input->post('id_cat');
+$this->db->insert('archivo', $data);
+$insert_id = $this->db->insert_id();
+
+$path = $_SERVER['DOCUMENT_ROOT'].'/easy/uploads/';
+    $tamano_archivo = $_FILES['userfile']['size']; 
+    $nombre_archivo = $_FILES['userfile']['name']; 
+    $tipo_archivo = $_FILES['userfile']['type']; 
+  if (!strpos($tipo_archivo, "jpeg")){
+    $this->session->set_flashdata('message', array('4'));
+     redirect(base_url().'catalogo_producto?m=2&submain=8','refresh');
+  }else{
+    $numero_archivo=$insert_id.".jpg";
+    move_uploaded_file($_FILES['userfile']['tmp_name'], $path.$numero_archivo);
+     $data = array (
+      'nombre_archivo'=>$numero_archivo
+      );
+    $this->db->where('id_file', $insert_id);
+    $this->db->update('archivo',$data);
+$catalogo = array (
+'id_archivos'=>$insert_id
+ );
+    $this->db->where('id_catalogo', $id_catalogo);
+    $this->db->update('catalogo_producto',$catalogo);
+
+    $this->session->set_flashdata('message', array('3'));
+    redirect(base_url().'catalogo_producto?m=2&submain=8','refresh');
+  }
+
+// $config['upload_path'] ='./uploads';
+// $config['allowed_types'] = 'gif|jpg|png';
+// $config['max_size'] = '100';
+// $config['max_width'] = '1024';
+// $config['max_height'] = '768';
+// $this->load->library('upload', $config);
+// if ( ! $this->upload->do_upload())
+// {
+// // $this->session->set_flashdata('message', array('4'));
+// // redirect(base_url().'catalogo_producto?m=2&submain=8','refresh');
+// }
+// else
+// {
+// // $this->session->set_flashdata('message', array('3'));
+// // redirect(base_url().'catalogo_producto?m=2&submain=8','refresh');
+// }
+ }
 }
 
 /* End of file catalogo_producto.php */

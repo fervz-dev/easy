@@ -12,12 +12,18 @@ if(!empty($messageArray)){
 <script type="text/javascript">
 	notify('El registro se edito correctamente',500,5000,'aviso');
 </script>		
-	<?php }else {?>
+	<?php }elseif($messageArray[0] == '3') {?>
 <script type="text/javascript">
 		/*alert("<?php var_dump($messageArray); ?>");*/
-		notify('El registro se guardado correctamente',500,5000,'aviso');
+		notify('El archivos se subio correctamente',500,5000,'aviso');
+		</script>
+	<?php  }elseif($messageArray[0] == '4') {?>
+<script type="text/javascript">
+		/*alert("<?php var_dump($messageArray); ?>");*/
+		notify('Error al cargar el archivo...',500,5000,'error');
 		</script>
 	<?php  }
+
 	 }
 ?>
 
