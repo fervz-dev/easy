@@ -10,6 +10,18 @@ class Clientes_model extends CI_Model
 		parent::__construct();
 	}
 
+	public function get_clientes_all()
+	{
+		$query = $this->db->query("SELECT
+											clientes.nombre_empresa,
+											clientes.id_clientes
+											FROM
+											clientes
+											WHERE
+											clientes.activo = 1
+								  ");
+		return ($query->num_rows() > 0)? $query->result_array() : NULL;
+	}
 	public function get_clientes($sidx, $sord, $start, $limite)
 	{
 		$query = $this->db->query("SELECT

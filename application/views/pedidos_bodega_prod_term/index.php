@@ -1,4 +1,307 @@
 <script type="text/javascript">
+
+
+//////////////////////////////////////////// Alerta Pedido cerrado ///////////////////////////////////////////////////////////
+function cerrado () {
+
+   $( "#dialogo_cerrado" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+      Cerrar:function()
+        {
+         $( "#dialogo_cerrado" ).dialog( "close" );
+        }
+      },
+      close: function() {}
+    });
+        $( "#dialogo_cerrado" ).dialog( "open" );
+
+}
+///////////////////dialogo de confirmacion////////////////////////////////////
+  function confirmacion_eliminar (id,msg) {
+$('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'+msg+'</p>');
+
+    $( "#dialog-confirm" ).dialog({
+      resizable: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+        "Eliminar": function() {
+          $( this ).dialog( "close" );
+          eliminar_pedido_(id);
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+    }
+function confirmacion_producto_ (id,msg) {
+$('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'+msg+'</p>');
+
+    $( "#dialog-confirm" ).dialog({
+      resizable: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+        "Eliminar": function() {
+          $( this ).dialog( "close" );
+          eliminar_producto_(id);
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+    }
+///eliminar producto
+function eliminar_producto(id) {
+  msg="Este producto se eliminara. ¿Estás seguro?";
+  confirmacion_producto_(id,msg);
+}
+function eliminar_producto_(id)
+{
+
+  $.ajax({
+                      async:true,cache: false,
+                      beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+                      type:"POST",
+                      url:"<?php echo base_url();?>pedidos_bodega_prod_term/eliminar_producto/"+id,
+                      datatype:"html",
+                      success:function(data, textStatus){
+
+                             switch(data){
+                               case "0":
+                                  notify("Error al procesar los datos " ,500,5000,'error');
+                                break;
+                               case "1":
+                                    $( "#dialog-procesos" ).dialog( "close" );
+
+                                 $("#tbl_p_prove").trigger("reloadGrid");
+                                 notify('El registro se elimino correctamente',500,5000,'aviso');
+                                break;
+
+                                   default:
+                                   $( "#dialog-procesos" ).dialog( "close" );
+                                 break;
+
+                              }//switch
+                             },
+                        error:function(datos){
+                              notify("Error inesperado" ,500,5000,'error');
+                             }//Error
+                         });//Ajax
+}
+
+//////////////////////////////////////////// Espera id del pedido y confirmacion para cerrarlo ////////////////////
+function cerrar_pedido(id,confirmacion)
+{
+if(confirmacion==true)
+{
+  $.ajax({
+          async:true,cache: false,
+          beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+          type:"POST",
+          url:"<?php echo base_url();?>pedidos_bodega_prod_term/cerrar_pedido/"+id,
+          datatype:"html",
+          success:function(data, textStatus){
+
+              switch(data){
+                case "0":
+                  notify("Error al procesar los datos " ,500,5000,'error');
+                break;
+                case "1":
+                  $( "#dialogo" ).dialog( "close" );
+                  $("#tbl_p_prove").trigger("reloadGrid");
+                  notify('Pedido cerrado satisfactoriamente',500,5000,'aviso');
+
+              break;
+
+              default:
+              $( "#dialogo").dialog( "close" );
+
+              break;
+
+              }//switch
+              },
+              error:function(datos){
+              notify("Error inesperado" ,500,5000,'error');
+              }//Error
+              });//Ajax
+}
+
+}
+
+//////////////////////////////////////////// Alerta producto - Pedido cerrado ////////////////////////////////////////////////
+
+function pedido_cerrado () {
+
+   $( "#dialogo_cerrado" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+
+          Cerrar:function()
+          {
+        $( "#dialogo_cerrado" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialogo_cerrado" ).dialog( "open" );
+
+}
+//////////////////////////////////////////// Funcion para cerrar Pedido a bodegas /////////////////////////////
+function abierto (id) {
+  $( "#dialogo" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+            var confirmacion=true;
+           cerrar_pedido(id,confirmacion);
+          },
+          Cancelar:function()
+          {
+        $( "#dialogo" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialogo" ).dialog( "open" );
+
+}
+//eliminar pedido
+function eliminar_pedido(id) {
+  msg="Este pedido se eliminara. ¿Estás seguro?";
+  confirmacion_eliminar(id,msg);
+}
+///////////////////////////////////////eliminar pedido con sus productos ////////////////////////////////////////
+function eliminar_pedido_(id)
+{
+  $.ajax({
+                      async:true,cache: false,
+                      beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+                      type:"POST",
+                      url:"<?php echo base_url();?>pedidos_bodega_prod_term/eliminar_pedido/"+id,
+                      datatype:"html",
+                      success:function(data, textStatus){
+
+                             switch(data){
+                               case "0":
+                                  notify("Error al procesar los datos " ,500,5000,'error');
+                                break;
+                               case "1":
+                               $("#tbl_p_prove").jqGrid("GridUnload");
+                                    $( "#dialog-procesos" ).dialog( "close" );
+                                 notify('El registro se elimino correctamente',500,5000,'aviso');
+                                  setTimeout("cargar()",1000);
+                                break;
+
+                                   default:
+                                   $( "#dialog-procesos" ).dialog( "close" );
+                                 break;
+
+                              }//switch
+                             },
+                        error:function(datos){
+                              notify("Error inesperado" ,500,5000,'error');
+                             }//Error
+                         });//Ajax
+}
+function editar(id)
+{
+
+$.ajax({
+          async:true,cache: false,
+          beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+           type:"POST",
+            url:"<?php echo base_url();?>pedidos_bodega_prod_term/editar_pedido/"+id,
+          data:{"fecha_entrega":$("#fecha_entrega").val(),
+                  "oficina_pedido":$("#oficina_pedido").val(),
+                  "oficina":$("#oficina").val()},
+
+                     datatype:"html",
+                      success:function(data, textStatus){
+
+                          switch(data){
+                              case "0":
+                                  notify("Error al procesar los datos " ,500,5000,'error');
+                              break;
+
+                              case "1":
+                                  $("#tbl_p_prove").trigger("reloadGrid");
+                                  notify('El registro se guardado correctamente',500,5000,'aviso');
+                                  $( "#dialog-procesos" ).dialog( "close" );
+                              break;
+
+                              default:
+                                  $( "#dialog-procesos" ).dialog( "close" );
+                                  var error='Error'+data;
+                                 notify(error ,500,5000,'error');
+                              break;
+                              }//switch
+                             },
+                        error:function(datos){
+                             notify("Error inesperado" ,500,5000,'error');
+                             }//Error
+                         });//Ajax
+
+
+}
+function edit(id)
+{
+document.editar_pedido.reset();
+$.ajax({
+            async:true,cache: false,
+            beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+            type:"GET",
+            url:"<?php echo base_url();?>pedidos_bodega_prod_term/get/"+id+"/"+Math.random()*10919939116744,
+            datatype:"html",
+            success:function(data, textStatus){
+            dato= data.split('~');
+            $("#fecha_entrega").val(dato[0]);
+            $("#oficina_pedido").val(dato[1]);
+            $("#oficina").val(dato[2]);
+            },
+        error:function(datos){
+        notify("Error al procesar los datos " ,500,5000,'error');
+          return false;
+        }//Error
+        });//Ajax
+
+
+$( "#dialog-procesos" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+            if (validarCamposForm1()==true) {
+          editar(id);
+           }
+            },
+          Cancelar:function()
+          {
+              $( "#dialog-procesos" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialog-procesos" ).dialog( "open" );
+
+}
+
 ///////////////////////Guardar pedido
 function guardar_pedido()
 {
@@ -38,6 +341,27 @@ $.ajax({
                              }//Error
                          });//Ajax
 
+}
+////////////////////////////////////////////agregar producto///////////////////////////////////////////////////////
+function add(id)
+{
+
+$( "#id_pedido").val(id);
+$( "#dialog-procesos_producto" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+          $( "#dialog-procesos_producto" ).dialog( "close" );
+          $("#tbl_p_prove").trigger("reloadGrid");
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialog-procesos_producto" ).dialog( "open" );
+        $("#tbl_p_prove").trigger("reloadGrid");
 }
 
 /////////////////////////////////////////////////////////////////
@@ -128,7 +452,7 @@ $( "#dialog-procesos" ).dialog({
    rowNum:10,
    rowList:[10,15],
    pager: pager_id,
-   sortname: 'id_cantidad',
+   sortname: 'id_cantidad_pedido',
    height:'auto',
    sortorder: "asc" });
 
@@ -137,6 +461,31 @@ $( "#dialog-procesos" ).dialog({
         $("#tbl_p_prove").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
       $("#tbl_p_prove").jqGrid('navGrid','#paginacion',{add:false,edit:false,del:false,search:false});
    });
+
+
+//////////////////////////////////////////////////////////////////////////////
+function validarCamposForm1 () {
+  fecha_entrega=$('#fecha_entrega').val();
+  proveedor_id_proveedor=$('#oficina_pedido').val();
+  oficina=$('#oficina').val();
+  if (validarVacio(fecha_entrega)==false) {
+      notify('* El campo <strong>FECHA DE ENTREGA</strong> no puede estar vacio!!!',500,5000,'error');
+    $("#fecha_entrega").focus();
+    return false;
+  }else if (validarCombo(proveedor_id_proveedor)==false) {
+      notify('* Debe seleccionar almenos una opcion de la lista <strong>PROVEEDORES</strong>',500,5000,'error');
+    $("#oficina_pedido").focus();
+    return false;
+  }else if (validarCombo(oficina)==false) {
+      notify('* Debe seleccionar almenos una opcion de la lista <strong>OFICINAS</strong>',500,5000,'error');
+    $("#oficina").focus();
+    return false;
+  }else{
+    return true;
+  }
+}
+
+
 </script>
 <div id="dialog-confirm" title="Confirmacion" style="display: none;">
 </div>
@@ -158,12 +507,12 @@ if (!isset($_GET['submain'])) {
         <div id="paginacion"> </div>
         <div style="display:none" id="dialog-procesos" title="Pedidos">
         <?php
-        $this->load->view('pedidos_bodega/formulario');?>
+        $this->load->view('pedidos_bodega_prod_term/formulario');?>
         </div>
 <!-- formulario de nuevo producto -->
         <div style="display:none" id="dialog-procesos_producto" title="Pedidos">
         <?php
-        $this->load->view('pedidos_bodega/formulario_producto');?>
+        $this->load->view('pedidos_bodega_prod_term/formulario_producto');?>
         </div>
         <!-- Funcion dialogo -->
         <div style="display:none;" id="dialogo" >

@@ -34,8 +34,8 @@ function guardar_producto (id) {
                               notify("Error inesperado" ,500,5000,'error');
                              }//Error
                          });//Ajax
-
 }
+
 function agregar(id)
 {
 $( "#id_catalogo").val(id);

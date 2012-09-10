@@ -8,7 +8,7 @@ function editar(id)
                         beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
                          type:"POST",
                           url:"<?php echo base_url();?>catalogo_producto/editar_producto/"+id,
-                          data:{                  
+                          data:{
                                   "nombre":$("#nombre").val(),
                                   "largo":$("#largo").val(),
                                   "ancho":$("#ancho").val(),
@@ -16,7 +16,7 @@ function editar(id)
                                   "resistencia":$("#resistencia_mprima_id_resistencia_mprima").val(),
                                   "corrugado":$("#corrugado").val(),
                                   "score":$("#score").val(),
-                                  "descripcion":$("#descripcion").val()     
+                                  "descripcion":$("#descripcion").val()
                                },
                         cache: false,
                         datatype:"html",
@@ -119,8 +119,8 @@ function cargar () {
                               {name:'alto', index:'alto', width:170,resizable:false, sortable:true,search:false,editable:false},
                               {name:'resistencia', index:'resistencia', width:170,resizable:false, sortable:true,search:false,editable:false},
                               {name:'corrugado', index:'corrugado', width:170,resizable:false, sortable:true,search:false,editable:false},
-                                    {name:'score', index:'score', width:170,resizable:false, sortable:true,search:false,editable:false},
-                                    {name:'descripcion', index:'descripcion', width:170,resizable:false, sortable:true,search:false,editable:false}
+                              {name:'score', index:'score', width:170,resizable:false, sortable:true,search:false,editable:false},
+                              {name:'descripcion', index:'descripcion', width:170,resizable:false, sortable:true,search:false,editable:false}
 
 
                                 ],
@@ -144,7 +144,7 @@ editable: true,
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
       }
-// guardar formulario  
+// guardar formulario
 function guardar()
 {
 
@@ -226,9 +226,9 @@ $( "#dialog-procesos" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-            if (validarCampos()==true) {
+            // if (validarCampos()==true) {
                 editar(id);
-            }
+            // }
 
             },
           Cancelar:function()
@@ -239,7 +239,7 @@ $( "#dialog-procesos" ).dialog({
       close: function() {}
     });
         $( "#dialog-procesos" ).dialog( "open" );
-  
+
 }
 function reloading()
 {
@@ -264,7 +264,7 @@ function picture_existe(id,id_cata)
                         notify("Error al procesar los datos " ,500,5000,'error');
             return false;
                         }//Error
-                        });//Ajax 
+                        });//Ajax
 $( "#dialog-procesos-picture_view" ).dialog({
       autoOpen: false,
       height: 'auto',
@@ -361,7 +361,7 @@ $( "#dialog-procesos" ).dialog({
             // if (validarCampos()==true) {
               guardar();
             // }
-document.archivo.submit();
+// document.archivo.submit();
 
 
           },

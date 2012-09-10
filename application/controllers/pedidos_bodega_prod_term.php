@@ -34,8 +34,8 @@ class Pedidos_bodega_prod_term extends CI_Controller {
     {
     	$data['oficinas']=$this->oficina->get_oficinas_all_pedidos();
     	$data['vista']='pedidos_bodega_prod_term/index';
-        $data['titulo']='Pedidos Productos Terminados a Bodegas';
-        $this->load->view('principal',$data);
+      $data['titulo']='Pedidos Productos Terminados a Bodegas';
+       $this->load->view('principal',$data);
     }
 public function paginacion()
     {
@@ -156,7 +156,7 @@ $verificacion = $this->db->query("SELECT
                                         pedido_bodega_producto_terminado.id_pedido = '$id'"
                                 );
  $consul = $this->db->query("SELECT
-									cantidad_pedido_producto.id_cantidad,
+									cantidad_pedido_producto.id_cantidad_pedido,
 									catalogo_producto.nombre,
 									cantidad_pedido_producto.cantidad
 									-- cantidad_pedido_producto.observaciones
@@ -167,7 +167,7 @@ $verificacion = $this->db->query("SELECT
                                     cantidad_pedido_producto.id_pedido = '$id' AND
                                     cantidad_pedido_producto.catalogo_producto = catalogo_producto.id_catalogo
                                     GROUP BY
-                                    cantidad_pedido_producto.id_cantidad
+                                    cantidad_pedido_producto.id_cantidad_pedido
                                     ORDER BY
                                     catalogo_producto.nombre ASC
                         ");
@@ -194,9 +194,9 @@ exit();
     //Consulta que devuelve los registros de una sola pagina
     if ($start < 0) $start = 0;
     $consulta = "SELECT
-									cantidad_pedido_producto.id_cantidad,
+									cantidad_pedido_producto.id_cantidad_pedido,
 									catalogo_producto.nombre,
-									cantidad_pedido_producto.cantidad
+									cantidad_pedido_producto.cantidad,
 									cantidad_pedido_producto.observaciones
 									FROM
 									cantidad_pedido_producto ,
@@ -204,7 +204,7 @@ exit();
                                     WHERE
                                     cantidad_pedido_producto.id_pedido = '$id' AND
                                     cantidad_pedido_producto.catalogo_producto = catalogo_producto.id_catalogo
-                        GROUP BY cantidad_pedido_producto.id_cantidad
+                        GROUP BY cantidad_pedido_producto.id_cantidad_pedido
                         ORDER BY $sidx $sord LIMIT $start , $limit;";
     $result1 = $this->db->query($consulta);
 
@@ -220,9 +220,9 @@ if ($valor == 1) {
     $N=1;
     foreach($result1->result() as $row) {
 
-      $data->rows[$i]['id']=$row->id_cantidad;
+      $data->rows[$i]['id']=$row->id_cantidad_pedido;
 
-        $onclik="onclick=eliminar_producto('".$row->id_cantidad."')";
+        $onclik="onclick=eliminar_producto('".$row->id_cantidad_pedido."')";
         $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
 
 
@@ -240,9 +240,9 @@ if ($valor == 1) {
  $N=1;
     foreach($result1->result() as $row) {
 
-      $data->rows[$i]['id']=$row->id_cantidad;
+      $data->rows[$i]['id']=$row->id_cantidad_pedido;
 
-        $onclik="onclick=pedido_cerrado('".$row->id_cantidad."')";
+        $onclik="onclick=pedido_cerrado('".$row->id_cantidad_pedido."')";
         $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Eliminar" height="18" /></span>';
 
 
@@ -269,6 +269,69 @@ if ($valor == 1) {
         echo $save;
     }
 
+  public function guardar()
+  {
+    $save=$this->productos->guardar();
+    echo $save;
+  }
+ public function get($id)
+    {
+        $row=$this->productos->get_id($id);
+        echo strtoupper($row->fecha_entrega).'~'.
+             strtoupper($row->oficina_pedido).'~'.
+             strtoupper($row->oficina);
+    }
+
+  public function editar_pedido($id)
+  {
+      $editar=$this->productos->editar($id);
+      echo 1;
+  }
+   public function eliminar_pedido($id)
+   {
+
+    $this->db->trans_start();
+
+    $data = array('id_pedido' => $id);
+    $this->db->delete('cantidad_pedido_producto',$data);
+    $data = array('id_pedido' => $id);
+    $this->db->delete('pedido_bodega_producto_terminado',$data);
+
+    $this->db->trans_complete();
+
+    if ($this->db->trans_status()===FALSE) {
+      return 0;
+    }else{
+      return 1;
+    }
+   }
+  public function eliminar_producto($id)
+  {
+      $delete=$this->productos->eliminar_producto($id);
+      if($delete > 0)
+      {
+          echo 1;
+      }
+      else
+      {
+          echo 0;
+      }
+  }
+
+  //////////////////////////// cerrar pedido ///////////////////////////////////
+    public function cerrar_pedido($id)
+    {
+        $cerrar=$this->productos->cerrar($id);
+        if($cerrar > 0)
+    {
+        echo 1;
+    }
+    else
+    {
+        echo 0;
+    }
+
+    }
 }
 
 /* End of file pedidos_bodega_prod_term.php */

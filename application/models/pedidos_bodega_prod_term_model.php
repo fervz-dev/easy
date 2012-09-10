@@ -39,6 +39,61 @@ public function get_pedido_bodega_producto($sidx, $sord, $start, $limite)
 		return $this->db->affected_rows();
 	}
 
+public function guardar()
+   {
+   		$data = array (
+					   	'catalogo_producto'=>$this->input->post('catalogo_producto'),
+						'cantidad'=>$this->input->post('cantidad'),
+						'id_pedido'=>$this->input->post('id_pedido'),
+        				'id_usuario'=>$this->session->userdata('id'),
+        				'id_sucursal'=>$this->session->userdata('oficina')
+						);
+   		$this->db->insert('cantidad_pedido_producto', $data);
+		return $this->db->affected_rows();
+   }
+
+   public function get_id($id)
+    {
+        $query = $this->db->query("SELECT
+        								pedido_bodega_producto_terminado.fecha_entrega,
+										pedido_bodega_producto_terminado.oficina_pedido,
+										pedido_bodega_producto_terminado.oficina
+										FROM
+										pedido_bodega_producto_terminado
+										WHERE
+										pedido_bodega_producto_terminado.id_pedido = $id");
+        $fila = $query->row();
+          return $fila;
+    }
+
+   public function editar($id)
+   {
+	   	$data = array (
+			   	'fecha_entrega'=>$this->input->post('fecha_entrega'),
+				'oficina_pedido'=>$this->input->post('oficina_pedido'),
+				'oficina'=>$this->input->post('oficina'),
+				'id_usuario'=>$this->session->userdata('id'),
+				'id_sucursal'=>$this->session->userdata('oficina')
+						);
+
+	$this->db->where('id_pedido', $id);
+	$this->db->update('pedido_bodega_producto_terminado',$data);
+   }
+
+      public function eliminar_producto($id)
+   {
+	    $data = array('id_cantidad_pedido' => $id);
+				$this->db->delete('cantidad_pedido_producto',$data);
+				return $this->db->affected_rows();
+   }
+	/////////////////////cerrar pedido /////////////////////
+	public function cerrar($id)
+	{
+	    $data = array('activo' => 0);
+				$this->db->where('id_pedido', $id);
+				$this->db->update('pedido_bodega_producto_terminado', $data);
+				return $this->db->affected_rows();
+	}
 }
 
 /* End of file pedidos_bodega_prod_term_model.php */

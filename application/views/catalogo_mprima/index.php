@@ -1,6 +1,6 @@
 <script type="text/javascript">
-function cargar () {
-  $("#tbl").jqGrid({
+      function cargar () {
+        $("#tbl").jqGrid({
     url:'<?php echo base_url();?>catalogo_mprima/paginacion',
     datatype: "json",
     mtype: 'POST',
