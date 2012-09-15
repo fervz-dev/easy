@@ -17,6 +17,7 @@
 	<input name="id_cat" type="hidden" id="id_cat" size="35">
 	<td><label id="labelRight">Agregar...</label></td>
 	<td><input type="file" name="userfile"   id="userfile" size="20" /></td>
+	<td><label for="">*Solo archivos con extensión (*.jpg)</label></td>
 </tr>
 <!-- <input  type="submit" value="enviar"> -->
 </form>

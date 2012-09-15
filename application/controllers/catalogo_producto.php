@@ -226,7 +226,7 @@ $id_catalogo=$this->input->post('id_cat');
 $this->db->insert('archivo', $data);
 $insert_id = $this->db->insert_id();
 
-$path = $_SERVER['DOCUMENT_ROOT'].'/easy/uploads/';
+$path = $_SERVER['DOCUMENT_ROOT'].'/sistema/uploads/';
     $tamano_archivo = $_FILES['userfile']['size'];
     $nombre_archivo = $_FILES['userfile']['name'];
     $tipo_archivo = $_FILES['userfile']['type'];

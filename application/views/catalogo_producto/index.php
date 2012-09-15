@@ -226,9 +226,9 @@ $( "#dialog-procesos" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-            // if (validarCampos()==true) {
+             if (validarCampos()==true) {
                 editar(id);
-            // }
+             }
 
             },
           Cancelar:function()
@@ -333,10 +333,11 @@ $( "#dialog-procesos-picture" ).dialog({
       buttons: {
           Aceptar: function() {
 
-            // if (validarCampos()==true) {
+             if (validarCamposPicture()==true) {
               // guardar();
-            // }
-document.archivo.submit();
+              document.archivo.submit();
+             }
+
 
           },
           Cancelar:function()
@@ -358,9 +359,9 @@ $( "#dialog-procesos" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-            // if (validarCampos()==true) {
+             if (validarCampos()==true) {
               guardar();
-            // }
+             }
 // document.archivo.submit();
 
 
@@ -374,6 +375,79 @@ $( "#dialog-procesos" ).dialog({
     });
         $( "#dialog-procesos" ).dialog( "open" );
 }
+//////////////////////////////////////validar compos picture////////////
+function validarCamposPicture () {
+nombre_archivo=$('#nombre_archivo').val();
+descripcion_archivo=$('#descripcion_archivo').val();
+userfile=$('#userfile').val();
+
+if (validarVacio(nombre_archivo)==false) {
+
+  notify('* El campo <strong>NOMBRE</strong> no puede estar vacio!!!',500,5000,'error');
+  $("#nombre_archivo").focus();
+  return false;
+
+}else if (validarVacio(descripcion_archivo)==false) {
+
+  notify('* El campo <strong>DESCRIPCION</strong> no puede estar vacio!!!',500,5000,'error');
+  $("#descripcion_archivo").focus();
+  return false;
+
+}else if (validarVacio(userfile)==false) {
+
+  notify('* Debe de seleccionar un archivos!!!',500,5000,'error');
+  $("#userfile").focus();
+  return false;
+
+}else {
+
+  return true;
+
+}
+
+}
+////////////////////////////////////// validacion //////////////////////
+function validarCampos () {
+
+            nombre=$("#nombre").val();
+            ancho=$("#ancho").val();
+            largo=$("#largo").val();
+            corrugado=$("#corrugado").val();
+            resistencia=$("#resistencia_mprima_id_resistencia_mprima").val();
+
+            if (validarVacio(nombre)==false) {
+              notify('* El campo <strong>NOMBRE</strong> no puede estar vacio!!!',500,5000,'error');
+              $("#nombre").focus();
+              return false;
+            }else if (validarVacio(ancho)==false) {
+              notify('* El campo <strong>ANCHO</strong> no puede estar vacio!!!',500,5000,'error');
+              $("#ancho").focus();
+              return false;
+
+            }else if (validarVacio(largo)==false) {
+              notify('* El campo <strong>LARGO</strong> no puede estar vacio!!!',500,5000,'error');
+              $("#largo").focus();
+              return false;
+            }else if (validarCombo(corrugado)==false) {
+              notify('* Debe seleccionar almenos una opcion de la lista <strong>CORRUGADO</strong>',500,5000,'error');
+              $("#tipo_m").focus();
+              return false;
+            }else if (validarCombo(resistencia)==false) {
+              notify('* Debe seleccionar almenos una opcion de la lista <strong>RESISTENCIA</strong>',500,5000,'error');
+              $("#resistencia").focus();
+              return false;
+            }else if (validarNUmero(largo)==false) {
+              notify('* El campo <strong>LARGO</strong> no es numero!!!',500,5000,'error');
+              $("#largo").focus();
+              return false;
+            }else if (validarNUmero(ancho)==false) {
+              notify('* El campo <strong>ANCHO</strong> no es numero!!!',500,5000,'error');
+              $("#ancho").focus();
+              return false;
+            }else{
+              return true;
+            }
+  }
   $(document).ready(function(){
   $("#tbl").jqGrid({
     url:'<?php echo base_url();?>catalogo_producto/paginacion',
