@@ -6,6 +6,7 @@ class Pedidos_bodega_prod_term extends CI_Controller {
 		$this->load->model('pedidos_bodega_prod_term_model','productos');
 		$this->load->model('catalogo_producto_model','catalogo');
 		$this->load->model('oficina_model','oficina');
+    $this->load->model('clientes_model','clientes');
 
 	   if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
             redirect(base_url().'inicio/logout');
@@ -32,10 +33,11 @@ class Pedidos_bodega_prod_term extends CI_Controller {
 
     public function index()
     {
+      $data['clientes']=$this->clientes->get_clientes_all();
     	$data['oficinas']=$this->oficina->get_oficinas_all_pedidos();
     	$data['vista']='pedidos_bodega_prod_term/index';
       $data['titulo']='Pedidos Productos Terminados a Bodegas';
-       $this->load->view('principal',$data);
+      $this->load->view('principal',$data);
     }
 public function paginacion()
     {
@@ -126,8 +128,10 @@ if ($this->permisos->permisos(10,2)==1) {
                                     strtoupper($row->id_pedido),
                                     strtoupper($row->fecha_pedido),
                                     strtoupper($row->fecha_entrega),
-                                    strtoupper($row->oficina_pedido),
-                                    strtoupper($row->oficina_envio));
+                                    strtoupper($row->nombre_oficina),
+                                    strtoupper($row->nombre_empresa),
+                                    strtoupper($row->fecha_entrega)
+                                    );
            $i++;
         }
     }
@@ -156,20 +160,24 @@ $verificacion = $this->db->query("SELECT
                                         pedido_bodega_producto_terminado.id_pedido = '$id'"
                                 );
  $consul = $this->db->query("SELECT
-									cantidad_pedido_producto.id_cantidad_pedido,
-									catalogo_producto.nombre,
-									cantidad_pedido_producto.cantidad
-									-- cantidad_pedido_producto.observaciones
-									FROM
-									cantidad_pedido_producto ,
-									catalogo_producto
-                                    WHERE
-                                    cantidad_pedido_producto.id_pedido = '$id' AND
-                                    cantidad_pedido_producto.catalogo_producto = catalogo_producto.id_catalogo
-                                    GROUP BY
-                                    cantidad_pedido_producto.id_cantidad_pedido
-                                    ORDER BY
-                                    catalogo_producto.nombre ASC
+                                cantidad_pedido_producto.id_cantidad_pedido,
+                                catalogo_producto.nombre,
+                                cantidad_pedido_producto.cantidad,
+                                cantidad_pedido_producto.observaciones,
+                                oficina.nombre_oficina,
+                                cantidad_pedido_producto.fecha_entrega
+                                FROM
+                                cantidad_pedido_producto ,
+                                catalogo_producto ,
+                                oficina
+                                WHERE
+                                cantidad_pedido_producto.id_pedido = '$id' AND
+                                cantidad_pedido_producto.catalogo_producto = catalogo_producto.id_catalogo AND
+                                cantidad_pedido_producto.id_bodega_hacer = oficina.id_oficina
+                                GROUP BY
+                                cantidad_pedido_producto.id_cantidad_pedido
+                                ORDER BY
+                                catalogo_producto.nombre ASC
                         ");
 
 if($consul->num_rows()==0)
@@ -197,15 +205,19 @@ exit();
 									cantidad_pedido_producto.id_cantidad_pedido,
 									catalogo_producto.nombre,
 									cantidad_pedido_producto.cantidad,
-									cantidad_pedido_producto.observaciones
+									cantidad_pedido_producto.observaciones,
+                  oficina.nombre_oficina,
+                  cantidad_pedido_producto.fecha_entrega
 									FROM
 									cantidad_pedido_producto ,
-									catalogo_producto
-                                    WHERE
-                                    cantidad_pedido_producto.id_pedido = '$id' AND
-                                    cantidad_pedido_producto.catalogo_producto = catalogo_producto.id_catalogo
-                        GROUP BY cantidad_pedido_producto.id_cantidad_pedido
-                        ORDER BY $sidx $sord LIMIT $start , $limit;";
+									catalogo_producto ,
+                  oficina
+                  WHERE
+                  cantidad_pedido_producto.id_pedido = '$id' AND
+                  cantidad_pedido_producto.catalogo_producto = catalogo_producto.id_catalogo AND
+                  cantidad_pedido_producto.id_bodega_hacer = oficina.id_oficina
+                  GROUP BY cantidad_pedido_producto.id_cantidad_pedido
+                  ORDER BY $sidx $sord LIMIT $start , $limit;";
     $result1 = $this->db->query($consulta);
 
     // Se agregan los datos de la respuesta del servidor
@@ -231,7 +243,9 @@ if ($valor == 1) {
                                                 ($N),
                                     $row->nombre,
                                     $row->cantidad,
-                                    $row->observaciones);
+                                    $row->observaciones,
+                                    $row->nombre_oficina,
+                                    $row->fecha_entrega);
         $i++;
         $N++;
     }
@@ -251,7 +265,9 @@ if ($valor == 1) {
                                                 ($N),
                                    $row->nombre,
                                     $row->cantidad,
-                                    $row->observaciones);
+                                    $row->observaciones,
+                                    $row->nombre_oficina,
+                                    $row->fecha_entrega);
         $i++;
         $N++;
     }
@@ -279,7 +295,8 @@ if ($valor == 1) {
         $row=$this->productos->get_id($id);
         echo strtoupper($row->fecha_entrega).'~'.
              strtoupper($row->oficina_pedido).'~'.
-             strtoupper($row->oficina);
+             strtoupper($row->cliente)
+             ;
     }
 
   public function editar_pedido($id)

@@ -227,6 +227,7 @@ $.ajax({
            type:"POST",
             url:"<?php echo base_url();?>pedidos_bodega_prod_term/editar_pedido/"+id,
           data:{"fecha_entrega":$("#fecha_entrega").val(),
+                "clientes":$("#clientes").val(),
                   "oficina_pedido":$("#oficina_pedido").val(),
                   "oficina":$("#oficina").val()},
 
@@ -270,8 +271,8 @@ $.ajax({
             success:function(data, textStatus){
             dato= data.split('~');
             $("#fecha_entrega").val(dato[0]);
+            $("#clientes").val(dato[2]);
             $("#oficina_pedido").val(dato[1]);
-            $("#oficina").val(dato[2]);
             },
         error:function(datos){
         notify("Error al procesar los datos " ,500,5000,'error');
@@ -311,8 +312,10 @@ $.ajax({
            type:"POST",
             url:"<?php echo base_url();?>pedidos_bodega_prod_term/guardar_pedido?da="+Math.random()*2312,
           data:{"fecha_entrega":$("#fecha_entrega").val(),
-                            "oficina_pedido":$("#oficina_pedido").val(),
-                  "oficina":$("#oficina").val()},
+                  "clientes":$("#clientes").val(),
+                  "oficina_pedido":$("#oficina_pedido").val(),
+                   "clientes":$("#clientes").val()
+                },
 
                      datatype:"html",
                       success:function(data, textStatus){
@@ -402,15 +405,16 @@ $( "#dialog-procesos" ).dialog({
                                     'ID PEDIDO',
                                     'FECHA DE PEDIDO',
                                     'FECHA DE ENTREGA',
-                                    'PROVEEDOR',
-                                    'LUGAR DE ENVIO'
+                                    'BODEGA',
+                                    'CLIENTE'
                                     ],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                                  {name:'id_pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:100,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:true,editable:true}
+                                  {name:'id pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'fecha pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'fecha entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'Nombre Bodega', index:'nombre_oficina', width:100,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'Cliente', index:'nombre_empresa', width:100,resizable:true, sortable:true,search:true,editable:true}
+                                  // {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:true,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -440,13 +444,16 @@ $( "#dialog-procesos" ).dialog({
    url:"<?php echo base_url();?>pedidos_bodega_prod_term/subpaginacion/"+row_id,
    datatype: "json",
    mtype: 'POST',
-   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','CANTIDAD','OBSERVACIONES'],
+   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','CANTIDAD','OBSERVACIONES','NOMBRE BODEGA','FECHA ENTREGA'],
    colModel: [
              {name:"acciones",index:"acciones",width:56,align:"center"},
              {name:"No",index:"No",width:56,align:"center"},
              {name:"nombre",index:"nombre",search: false,align:"center"},
-             {name:"cantidad",index:"ancho",align:"left",search: false},
-             {name:"observaciones",index:"largo",align:"left",search: false}
+             {name:"cantidad",index:"ancho",width:70,align:"left",search: false},
+             {name:"observaciones",index:"observaciones",align:"left",search: false},
+             {name:"Bodega a hacer",index:"nombre_oficina",align:"left",search: false},
+             {name:"Fecha de entrega",index:"fecha_entrega",width:100,align:"left",search: false}
+
               ],
    rows:10,
    rowNum:10,
@@ -468,11 +475,13 @@ function validarCamposForm1 () {
   fecha_entrega=$('#fecha_entrega').val();
   proveedor_id_proveedor=$('#oficina_pedido').val();
   oficina=$('#oficina').val();
+
   if (validarVacio(fecha_entrega)==false) {
       notify('* El campo <strong>FECHA DE ENTREGA</strong> no puede estar vacio!!!',500,5000,'error');
     $("#fecha_entrega").focus();
     return false;
-  }else if (validarCombo(proveedor_id_proveedor)==false) {
+  }else
+  if (validarCombo(proveedor_id_proveedor)==false) {
       notify('* Debe seleccionar almenos una opcion de la lista <strong>PROVEEDORES</strong>',500,5000,'error');
     $("#oficina_pedido").focus();
     return false;

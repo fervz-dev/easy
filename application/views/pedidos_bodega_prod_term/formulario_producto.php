@@ -5,9 +5,15 @@ function guardar_producto (id) {
           beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
            type:"POST",
             url:"<?php echo base_url();?>pedidos_bodega_prod_term/guardar?da="+Math.random()*2312,
-          data:{"catalogo_producto":id,
+          data:{
+                  "catalogo_producto":id,
                   "cantidad":$("#cantidad").val(),
-                  "id_pedido":$("#id_pedido").val()},
+                  "id_pedido":$("#id_pedido").val(),
+                  'fecha_entrega_pedido':$('#fecha_entrega_pedido').val(),
+                  'oficina_pedido_hacer':$('#oficina_pedido_hacer').val(),
+                  'observaciones_bodega_pedido':$('#observaciones_bodega_pedido').val(),
+
+                },
 
                      datatype:"html",
                       success:function(data, textStatus){
@@ -123,13 +129,35 @@ if (validarVacio(cantidad)==false) {
         <table>
           <form name="form_cantidad" id="form_cantidad">
         	<tr>
-        		<td><label>cantidad</label></td>
+        		<td><label  id="labelRight">cantidad:</label></td>
         		<td><input type="text" name="cantidad" id="cantidad"></td>
+          </tr>
+          <tr>
+            <td>
+              <label for="" id="labelRight">Bodega a realizar:</label>
+            </td>
+            <td><select name="oficina_pedido_hacer"  id="oficina_pedido_hacer">
+                    <option value="">Seleccione...</option>
+                    <?php foreach ($oficinas as $ofn) { ?>
+                    <option value="<?php echo $ofn['id_oficina']; ?>"><?php echo $ofn['nombre_oficina'] ?></option>
+                    <?php } ?>
+                  </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="" id="labelRight">Fecha de entrega:</label>
+            </td>
+           <td><input type="text" nombre="fecha_entrega_pedido"  id="fecha_entrega_pedido"></td>
             <td><input type="hidden" name="id_pedido" id="id_pedido"></td>
             <td><input type="hidden" name="id_catalogo" id="id_catalogo"></td>
-
-
         	</tr>
+          <tr>
+            <td><label for="" id="labelRight">Observaciones:</label> </td>
+            <td>
+              <textarea id="observaciones_bodega_pedido" name="observaciones_bodega_pedido" colspan="18" rowspan="30"></textarea>
+            </td>
+          </tr>
           </form>
         </table>
         </div>

@@ -10,21 +10,23 @@ class Catalogo_producto_model extends CI_Model {
 public function get_cat_productos($sidx, $sord, $start, $limite)
 {
 	$query = $this->db->query("SELECT
-								catalogo_producto.id_catalogo,
-								catalogo_producto.nombre,
-								catalogo_producto.largo,
-								catalogo_producto.ancho,
-								catalogo_producto.alto,
-								catalogo_producto.resistencia,
-								catalogo_producto.corrugado,
-								catalogo_producto.score,
-								catalogo_producto.descripcion,
-								catalogo_producto.fecha_ingreso,
-								catalogo_producto.id_archivos
-								FROM
-								catalogo_producto
-								WHERE
-								catalogo_producto.activo = 1 ORDER BY $sidx $sord
+                                    catalogo_producto.id_catalogo,
+                                    catalogo_producto.nombre,
+                                    catalogo_producto.largo,
+                                    catalogo_producto.ancho,
+                                    catalogo_producto.alto,
+                                    resistencia_mprima.resistencia,
+                                    catalogo_producto.corrugado,
+                                    catalogo_producto.score,
+                                    catalogo_producto.descripcion,
+                                    catalogo_producto.fecha_ingreso,
+                                    catalogo_producto.id_archivos
+                                    FROM
+                                    catalogo_producto ,
+                                    resistencia_mprima
+                                    WHERE
+                                    catalogo_producto.activo = 1 AND
+                                    catalogo_producto.resistencia = resistencia_mprima.id_resistencia_mprima  ORDER BY $sidx $sord
                                 LIMIT $start, $limite;");
     return ($query->num_rows() > 0)? $query->result() : NULL;
 }
@@ -79,7 +81,7 @@ public function guardar()
         'score'=>$this->input->post('score'),
         'descripcion'=>$this->input->post('descripcion'),
         'fecha_ingreso'=>date('y-m-d'),
-        'activo'=>1, 	
+        'activo'=>1,
         'id_usuario'=>$this->session->userdata('id'),
         'id_sucursal'=>$this->session->userdata('oficina')
         );
@@ -99,13 +101,13 @@ public function eliminar_imagen($id_file,$id_catalogo)
     $data = array('activo' => 0);
      $archivo = array('id_archivos' => '');
 
-            
+
             $this->db->where('id_file', $id_file);
             $this->db->update('archivo', $data);
 
             $this->db->where('id_catalogo', $id_catalogo);
             $this->db->update('catalogo_producto', $archivo);
-            
+
             return $this->db->affected_rows();
 }
 public function editar($id)

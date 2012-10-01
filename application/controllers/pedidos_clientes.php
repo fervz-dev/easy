@@ -5,16 +5,16 @@ class Pedidos_clientes extends CI_Controller {
 	public function __construct()
 	{
 	   parent::__construct();
-	   	$this->load->model('pedidos_bodega_prod_term_model','productos');
-		$this->load->model('catalogo_producto_model','catalogo');
-		$this->load->model('oficina_model','oficina');
- 		$this->load->model("clientes_model","clientes_");
+	   	$this->load->model('pedidos_clientes_model','productos');
+  		$this->load->model('catalogo_producto_model','catalogo');
+  		$this->load->model('oficina_model','oficina');
+   		$this->load->model("clientes_model","clientes_");
 
 		if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
             redirect(base_url().'inicio/logout');
         //echo 'denegado';
         }
- //inicializamos las variables MENU Y SIBMENU, por si no se enviaran desde la url
+ //inicializamos las variables MENU Y SUBMENU, por si no se enviaran desde la url
         $menu=0;
         $submenu=0;
         //verificamos si se enviaron las variables GET->m "(menu)" GET->submain"(submenu)"
@@ -36,8 +36,8 @@ class Pedidos_clientes extends CI_Controller {
     {
     	$data['clientes']=$this->clientes_->get_clientes_all();
     	$data['oficinas']=$this->oficina->get_oficinas_all_pedidos();
-    	$data['vista']='pedidos_bodega_prod_term/index';
-        $data['titulo']='Pedidos Productos Terminados a Clientes';
+    	$data['vista']='pedidos_clientes/index';
+        $data['titulo']='Pedidos de Clientes';
         $this->load->view('principal',$data);
     }
 
@@ -55,7 +55,7 @@ class Pedidos_clientes extends CI_Controller {
         // $conexion = new mysqli("servidor","usuario","password","basededatos");
         // Se hace una consulta para saber cuantos registros se van a mostrar
 
-     $consul = $this->db->query('SELECT * from pedido_bodega_producto_terminado ');
+     $consul = $this->db->query('SELECT * from pedidos_cliente');
      $count = $consul->num_rows();
         //En base al numero de registros se obtiene el numero de paginas
         if( $count >0 ) {
@@ -74,16 +74,16 @@ class Pedidos_clientes extends CI_Controller {
           $start = 0;
          $data();
         }else{
-        $resultado_ =$this->productos->get_pedido_bodega_producto($sidx, $sord, $start, $limite);
+        $resultado_ =$this->productos->get_pedidos_clientes($sidx, $sord, $start, $limite);
         // Se agregan los datos de la respuesta del servidor
         $data->page = $page;
         $data->total = $total_pages;
         $data->records = $count;
         $i=0;
-if ($this->permisos->permisos(10,2)==1) {
+  if ($this->permisos->permisos(10,2)==1) {
         foreach($resultado_ as $row) {
            $data->rows[$i]['id']=$row->id_pedido;
- if (($this->permisos->permisos(10,1)==1)&&($this->permisos->permisos(10,3)==1)){
+  if (($this->permisos->permisos(10,1)==1)&&($this->permisos->permisos(10,3)==1)){
 
            $onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
            $onclick_add="onclick=add('".$row->id_pedido."')";
@@ -97,7 +97,7 @@ if ($this->permisos->permisos(10,2)==1) {
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
                $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
            }
- }elseif (($this->permisos->permisos(10,1)==1)&&($this->permisos->permisos(10,3)==0)) {
+  }elseif (($this->permisos->permisos(10,1)==1)&&($this->permisos->permisos(10,3)==0)) {
         //$onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
            $onclick_add="onclick=add('".$row->id_pedido."')";
            $onclikedit="onclick=edit('".$row->id_pedido."')";
@@ -110,7 +110,7 @@ if ($this->permisos->permisos(10,2)==1) {
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
                $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
            }
-}elseif (($this->permisos->permisos(10,1)==0)&&($this->permisos->permisos(10,3)==1)) {
+  }elseif (($this->permisos->permisos(10,1)==0)&&($this->permisos->permisos(10,3)==1)) {
            $onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
            $onclick_add="onclick=add('".$row->id_pedido."')";
            //$onclikedit="onclick=edit('".$row->id_pedido."')";

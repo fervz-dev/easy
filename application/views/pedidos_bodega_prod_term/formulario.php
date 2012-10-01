@@ -7,6 +7,17 @@
 </tr>
 
 <tr>
+	<td><label>Cliente</label></td>
+	<td><select name="clientes"  id="clientes">
+		<option value="">Seleccione...</option>
+		<?php foreach ($clientes as $clt) { ?>
+		<option value="<?php echo $clt['id_clientes']; ?>"><?php echo $clt['nombre_empresa'] ?></option>
+		<?php } ?>
+	</select>
+</td>
+</tr>
+
+<tr>
 	<td><label>Bodega (Origen de Pedido)</label></td>
 	<td><select name="oficina_pedido"  id="oficina_pedido">
 		<option value="">Seleccione...</option>
@@ -17,7 +28,7 @@
 </td>
 </tr>
 
-<tr>
+<!-- <tr>
 	<td><label>Bodega (Destino Pedido)</label></td>
 	<td><select name="oficina"  id="oficina">
 		<option value="">Seleccione...</option>
@@ -26,5 +37,5 @@
 		<?php } ?>
 	</select>
 </td>
-</tr>
+</tr> -->
 </table>
