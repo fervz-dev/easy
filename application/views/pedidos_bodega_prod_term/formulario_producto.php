@@ -55,6 +55,9 @@ $( "#dialog-procesos_cantidad" ).dialog({
             if (validarCamposForm1_producto()==true) {
               guardar_producto(id);
               $("#cantidad").val('');
+              $("#oficina_pedido_hacer").val('');
+              $("#observaciones_bodega_pedido").val('');
+              $("#fecha_entrega_pedido").val('');
             $("#tbl_p_prove_form").trigger("reloadGrid")
 
             }

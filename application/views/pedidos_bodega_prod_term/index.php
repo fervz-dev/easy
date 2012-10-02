@@ -1,5 +1,80 @@
 <script type="text/javascript">
+//////////////////////////////////////////// Espera id del pedido y confirmacion para terminarlo ////////////////////
+function terminar_pedido(id,confirmacion)
+{
+if(confirmacion==true)
+{
+  $.ajax({
+          async:true,cache: false,
+          beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+          type:"POST",
+          url:"<?php echo base_url();?>pedidos_bodega_prod_term/terminar_pedido/"+id,
+          datatype:"html",
+          success:function(data, textStatus){
 
+              switch(data){
+                case "0":
+                  notify("Error al procesar los datos " ,500,5000,'error');
+                break;
+                case "1":
+                  $( "#dialogo_pedido" ).dialog( "close" );
+                  $("#tbl_p_prove").trigger("reloadGrid");
+                  notify('Pedido se marco como terminado satisfactoriamente',500,5000,'aviso');
+
+              break;
+
+              default:
+              $( "#dialogo_pedido").dialog( "close" );
+
+              break;
+
+              }//switch
+              },
+              error:function(datos){
+              notify("Error inesperado" ,500,5000,'error');
+              }//Error
+              });//Ajax
+}
+
+}
+//////////////////////////////////////////// Espera id del producto y confirmacion para terminarlo ////////////////////
+function terminar_producto(id,confirmacion)
+{
+if(confirmacion==true)
+{
+  $.ajax({
+          async:true,cache: false,
+          beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+          type:"POST",
+          url:"<?php echo base_url();?>pedidos_bodega_prod_term/terminar_producto/"+id,
+          datatype:"html",
+          success:function(data, textStatus){
+
+              switch(data){
+                case "0":
+                  notify("Error al procesar los datos " ,500,5000,'error');
+                break;
+                case "1":
+                  $( "#dialogo_producto" ).dialog( "close" );
+                  $("#tbl_p_prove").trigger("reloadGrid");
+                  notify('Producto se marco como terminado satisfactoriamente',500,5000,'aviso');
+
+              break;
+
+              default:
+              $( "#dialogo_producto").dialog( "close" );
+
+              break;
+
+              }//switch
+              },
+              error:function(datos){
+              notify("Error inesperado" ,500,5000,'error');
+              }//Error
+              });//Ajax
+}
+
+}
 
 //////////////////////////////////////////// Alerta Pedido cerrado ///////////////////////////////////////////////////////////
 function cerrado () {
@@ -494,7 +569,79 @@ function validarCamposForm1 () {
   }
 }
 
+function verificaEnvio(id) {
+  $( "#dialogo_pedido" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+            var confirmacion=true;
+           terminar_pedido(id,confirmacion);
+          },
+          Cancelar:function()
+          {
+        $( "#dialogo_pedido" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialogo_pedido" ).dialog( "open" );
+}
+function verificadoEnvio () {
+  $( "#dialogo_pedido_terminado" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+      Cerrar:function()
+        {
+         $( "#dialogo_pedido_terminado" ).dialog( "close" );
+        }
+      },
+      close: function() {}
+    });
+        $( "#dialogo_pedido_terminado" ).dialog( "open" );
+}
+function verficaPrudctoPedido (id) {
+  $( "#dialogo_producto" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+            var confirmacion=true;
+           terminar_producto(id,confirmacion);
+          },
+          Cancelar:function()
+          {
+        $( "#dialogo_producto" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialogo_producto" ).dialog( "open" );
 
+}
+function verficadoPrudctoPedido () {
+  $( "#dialogo_producto_termina" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+      Cerrar:function()
+        {
+         $( "#dialogo_producto_termina" ).dialog( "close" );
+        }
+      },
+      close: function() {}
+    });
+        $( "#dialogo_producto_termina" ).dialog( "open" );
+}
 </script>
 <div id="dialog-confirm" title="Confirmacion" style="display: none;">
 </div>
@@ -532,12 +679,50 @@ if (!isset($_GET['submain'])) {
             </div>
           </div>
         </div>
+        <!-- Funcion dialogo pedido-->
+        <div style="display:none;" id="dialogo_pedido" >
+          <div class="ui-widget">
+            <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+              <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+              <strong>Precaución:</strong> Esta seguro de marcar como terminado el pedido?</p>
+            </div>
+          </div>
+        </div>
+        <!-- Funcion dialogo producto -->
+        <div style="display:none;" id="dialogo_producto" >
+          <div class="ui-widget">
+            <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
+              <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
+              <strong>Precaución:</strong> Esta seguro de marcar como terminado el producto?</p>
+            </div>
+          </div>
+        </div>
         <!-- Pedido cerrado -->
         <div style="display:none;" id="dialogo_cerrado" >
           <div class="ui-widget">
             <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
               <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
               <strong>Alerta:</strong> El Pedido ya esta cerrado!!!</p>
+            </div>
+          </div>
+        </div>
+
+                <!-- Pedido terminado -->
+        <div style="display:none;" id="dialogo_pedido_terminado" >
+          <div class="ui-widget">
+            <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+              <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+              <strong>Alerta:</strong> El Pedido ya esta finalizado!!!</p>
+            </div>
+          </div>
+        </div>
+
+                <!-- Producto terminado -->
+        <div style="display:none;" id="dialogo_producto_termina" >
+          <div class="ui-widget">
+            <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
+              <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
+              <strong>Alerta:</strong> El Pedido ya esta finalizado!!!</p>
             </div>
           </div>
         </div>

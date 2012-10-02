@@ -10,7 +10,8 @@ public function get_pedido_bodega_producto($sidx, $sord, $start, $limite)
 										pedido_bodega_producto_terminado.fecha_entrega,
 										oficina.nombre_oficina,
 										clientes.nombre_empresa,
-										pedido_bodega_producto_terminado.activo
+										pedido_bodega_producto_terminado.activo,
+										pedido_bodega_producto_terminado.verificacion_almacen
 										FROM
 										pedido_bodega_producto_terminado ,
 										oficina,
@@ -95,6 +96,24 @@ public function guardar()
 	    $data = array('activo' => 0);
 				$this->db->where('id_pedido', $id);
 				$this->db->update('pedido_bodega_producto_terminado', $data);
+				return $this->db->affected_rows();
+	}
+
+		/////////////////////cerrar pedido /////////////////////
+	public function terminar_pedido($id)
+	{
+	    $data = array('verificacion_almacen' => 0);
+				$this->db->where('id_pedido', $id);
+				$this->db->update('pedido_bodega_producto_terminado', $data);
+				return $this->db->affected_rows();
+	}
+
+		/////////////////////cerrar pedido /////////////////////
+	public function terminar_producto($id)
+	{
+	    $data = array('verificacion' => 0);
+				$this->db->where('id_cantidad_pedido', $id);
+				$this->db->update('cantidad_pedido_producto', $data);
 				return $this->db->affected_rows();
 	}
 }

@@ -91,8 +91,22 @@ if ($this->permisos->permisos(10,2)==1) {
                 $onclikabierto="onclick=abierto('".$row->id_pedido."')";
                 $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
            }elseif ($row->activo == 0) {
+            //0=terminado
+            //1= no terminado
+            if ($row->verificacion_almacen==1) {
+               $onclikverificaEnvio="onclick=verificaEnvio('".$row->id_pedido."')";
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
-               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
+               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificaEnvio.'><img src="'.base_url().'img/alert-icon.png" width="18" title="Verificar como terminado" height="18" /></span>';
+
+            }elseif ($row->verificacion_almacen==0) {
+               $onclikverificadoEnvio="onclick=verificadoEnvio('".$row->id_pedido."')";
+
+               $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
+
+               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificadoEnvio.'><img src="'.base_url().'img/verificado-icon.png" width="18" title="Producto terminado" height="18" /></span>';
+
+            }
+
            }
  }elseif (($this->permisos->permisos(10,1)==1)&&($this->permisos->permisos(10,3)==0)) {
         //$onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
@@ -104,8 +118,20 @@ if ($this->permisos->permisos(10,2)==1) {
                 $onclikabierto="onclick=abierto('".$row->id_pedido."')";
                 $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
            }elseif ($row->activo == 0) {
+            //0=terminado
+            //1= no terminado
+            if ($row->verificacion_almacen==1) {
+               $onclikverificaEnvio="onclick=verificaEnvio('".$row->id_pedido."')";
+
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
-               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
+               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificaEnvio.'><img src="'.base_url().'img/alert-icon.png" width="18" title="Verificar como terminado" height="18" /></span>';
+             }elseif ($row->verificacion_almacen==0) {
+               $onclikverificadoEnvio="onclick=verificadoEnvio('".$row->id_pedido."')";
+               $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
+               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificadoEnvio.'><img src="'.base_url().'img/verificado-icon.png" width="18" title="Producto terminado" height="18" /></span>';
+
+
+             }
            }
 }elseif (($this->permisos->permisos(10,1)==0)&&($this->permisos->permisos(10,3)==1)) {
            $onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
@@ -117,8 +143,20 @@ if ($this->permisos->permisos(10,2)==1) {
                 $onclikabierto="onclick=abierto('".$row->id_pedido."')";
                 $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
            }elseif ($row->activo == 0) {
+            //0=terminado
+            //1= no terminado
+            if ($row->verificacion_almacen==1) {
+               $onclikverificaEnvio="onclick=verificaEnvio('".$row->id_pedido."')";
+
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
-               $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
+               $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificaEnvio.'><img src="'.base_url().'img/alert-icon.png" width="18" title="Verificar como terminado" height="18" /></span>';
+            }elseif ($row->verificacion_almacen==0) {
+               $onclikverificadoEnvio="onclick=verificadoEnvio('".$row->id_pedido."')";
+               $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
+               $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificadoEnvio.'><img src="'.base_url().'img/verificado-icon.png" width="18" title="Producto terminado" height="18" /></span>';
+
+            }
+
            }
         }elseif (($this->permisos->permisos(10,1)==0)&&($this->permisos->permisos(10,3)==0)) {
           $acciones='';
@@ -207,7 +245,8 @@ exit();
 									cantidad_pedido_producto.cantidad,
 									cantidad_pedido_producto.observaciones,
                   oficina.nombre_oficina,
-                  cantidad_pedido_producto.fecha_entrega
+                  cantidad_pedido_producto.fecha_entrega,
+                  cantidad_pedido_producto.verificacion
 									FROM
 									cantidad_pedido_producto ,
 									catalogo_producto ,
@@ -232,12 +271,9 @@ if ($valor == 1) {
     $N=1;
     foreach($result1->result() as $row) {
 
-      $data->rows[$i]['id']=$row->id_cantidad_pedido;
-
+        $data->rows[$i]['id']=$row->id_cantidad_pedido;
         $onclik="onclick=eliminar_producto('".$row->id_cantidad_pedido."')";
         $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
-
-
 
         $data->rows[$i]['cell']=array($acciones,
                                                 ($N),
@@ -251,28 +287,47 @@ if ($valor == 1) {
     }
 
     }elseif ($valor == 0) {
- $N=1;
-    foreach($result1->result() as $row) {
+      $N=1;
+        foreach($result1->result() as $row) {
+          if ($row->verificacion==1) {
 
-      $data->rows[$i]['id']=$row->id_cantidad_pedido;
+                  $data->rows[$i]['id']=$row->id_cantidad_pedido;
+                  $onclikverficaPrudctoPedido="onclick=verficaPrudctoPedido('".$row->id_cantidad_pedido."')";
+                  $onclik="onclick=pedido_cerrado('".$row->id_cantidad_pedido."')";
+                  $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverficaPrudctoPedido.'><img src="'.base_url().'img/alert-icon.png" width="18" title="verificar producto como terminado" height="18" /></span>';
+                  $data->rows[$i]['cell']=array($acciones,
+                                                        ($N),
+                                           $row->nombre,
+                                            $row->cantidad,
+                                            $row->observaciones,
+                                            $row->nombre_oficina,
+                                            $row->fecha_entrega);
+                  $i++;
+                  $N++;
+          }elseif ($row->verificacion==0) {
+             $data->rows[$i]['id']=$row->id_cantidad_pedido;
+              $onclikverficadoPrudctoPedido="onclick=verficadoPrudctoPedido('".$row->id_cantidad_pedido."')";
+              $onclik="onclick=pedido_cerrado('".$row->id_cantidad_pedido."')";
+              $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverficadoPrudctoPedido.'><img src="'.base_url().'img/verificado-icon.png" width="18" title="verificar producto como terminado" height="18" /></span>';
+              $data->rows[$i]['cell']=array($acciones,
+                                                    ($N),
+                                       $row->nombre,
+                                        $row->cantidad,
+                                        $row->observaciones,
+                                        $row->nombre_oficina,
+                                        $row->fecha_entrega);
+              $i++;
+              $N++;
 
-        $onclik="onclick=pedido_cerrado('".$row->id_cantidad_pedido."')";
-        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Eliminar" height="18" /></span>';
+          }
+
+        }
+
+        }
 
 
 
-        $data->rows[$i]['cell']=array($acciones,
-                                                ($N),
-                                   $row->nombre,
-                                    $row->cantidad,
-                                    $row->observaciones,
-                                    $row->nombre_oficina,
-                                    $row->fecha_entrega);
-        $i++;
-        $N++;
-    }
 
-    }
 
 
     // La respuesta se regresa como json
@@ -339,6 +394,36 @@ if ($valor == 1) {
     public function cerrar_pedido($id)
     {
         $cerrar=$this->productos->cerrar($id);
+        if($cerrar > 0)
+    {
+        echo 1;
+    }
+    else
+    {
+        echo 0;
+    }
+
+    }
+
+      //////////////////////////// terminar pedido ///////////////////////////////////
+    public function terminar_pedido($id)
+    {
+        $cerrar=$this->productos->terminar_pedido($id);
+        if($cerrar > 0)
+    {
+        echo 1;
+    }
+    else
+    {
+        echo 0;
+    }
+
+    }
+
+      //////////////////////////// cerrar producto ///////////////////////////////////
+    public function terminar_producto($id)
+    {
+        $cerrar=$this->productos->terminar_producto($id);
         if($cerrar > 0)
     {
         echo 1;
