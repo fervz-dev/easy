@@ -21,14 +21,7 @@
 	</tr>
 
 
-	<tr>
-		<td>
-			<label id="labelRight">Ancho:</label>
-		</td>
-		<td>
-			<input name="ancho" type="text" id="ancho" size="35">
-		</td>
-	</tr>
+
 
 	<tr>
 		<td>
@@ -36,6 +29,15 @@
 		</td>
 		<td>
 			<input name="largo" type="text" id="largo" size="35">
+		</td>
+	</tr>
+
+	<tr>
+		<td>
+			<label id="labelRight">Ancho:</label>
+		</td>
+		<td>
+			<input name="ancho" type="text" id="ancho" size="35">
 		</td>
 	</tr>
 

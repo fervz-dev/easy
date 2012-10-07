@@ -127,6 +127,7 @@ class Proveedores extends CI_Controller
         }
     }
 }
+
     	// La respuesta se regresa como json
         echo json_encode($data);
     }

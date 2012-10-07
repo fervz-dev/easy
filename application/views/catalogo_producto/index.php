@@ -45,7 +45,7 @@ function editar(id)
                         });//Ajax
 }
 function delet (id) {
-  msg="Este artículo se eliminara. ¿Estás seguro?";
+  msg="Este registro se eliminara. ¿Estás seguro?";
   confirmacion(id,msg);
 }
 function delete_id(id)
@@ -114,19 +114,19 @@ function cargar () {
                         colNames:['Acciones','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:false, align:"center", search:false},
                               {name:'nombre', index:'nombre', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'largo', index:'largo', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'ancho', index:'ancho', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'alto', index:'alto', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'resistencia', index:'resistencia', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'corrugado', index:'corrugado', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'score', index:'score', width:170,resizable:false, sortable:true,search:false,editable:false},
+                              {name:'largo', index:'largo', width:50,resizable:false, sortable:true,search:false,editable:false},
+                              {name:'ancho', index:'ancho', width:50,resizable:false, sortable:true,search:false,editable:false},
+                              {name:'alto', index:'alto', width:50,resizable:false, sortable:true,search:false,editable:false},
+                              {name:'resistencia', index:'resistencia', width:100,resizable:false, sortable:true,search:false,editable:false},
+                              {name:'corrugado', index:'corrugado', width:80,resizable:false, sortable:true,search:false,editable:false},
+                              {name:'score', index:'score', width:50,resizable:false, sortable:true,search:false,editable:false},
                               {name:'descripcion', index:'descripcion', width:170,resizable:false, sortable:true,search:false,editable:false}
 
 
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
-  rowNum:15,
+  rowNum:10,
     rowList:[10,20,30],
     imgpath: '<?php echo base_url();?>img/editar.jpg',
     mtype: "POST",
@@ -456,19 +456,19 @@ function validarCampos () {
                         colNames:['Acciones','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:false, align:"center", search:false},
                               {name:'nombre', index:'nombre', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'largo', index:'largo', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'ancho', index:'ancho', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'alto', index:'alto', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'resistencia', index:'resistencia', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'corrugado', index:'corrugado', width:170,resizable:false, sortable:true,search:false,editable:false},
-                                    {name:'score', index:'score', width:170,resizable:false, sortable:true,search:false,editable:false},
+                              {name:'largo', index:'largo', width:50,resizable:false, sortable:true,search:false,editable:false},
+                              {name:'ancho', index:'ancho', width:50,resizable:false, sortable:true,search:false,editable:false},
+                              {name:'alto', index:'alto', width:50,resizable:false, sortable:true,search:false,editable:false},
+                              {name:'resistencia', index:'resistencia', width:100,resizable:false, sortable:true,search:false,editable:false},
+                              {name:'corrugado', index:'corrugado', width:80,resizable:false, sortable:true,search:false,editable:false},
+                                    {name:'score', index:'score', width:50,resizable:false, sortable:true,search:false,editable:false},
                                     {name:'descripcion', index:'descripcion', width:170,resizable:false, sortable:true,search:false,editable:false}
 
 
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
-  rowNum:15,
+  rowNum:10,
     rowList:[10,20,30],
     imgpath: '<?php echo base_url();?>img/editar.jpg',
     mtype: "POST",
@@ -493,7 +493,11 @@ function validarCampos () {
 </div>
 <table >
 <tr>
-<td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
+<td><?php if (!isset($_GET['submain'])) {
+}  elseif (($this->permisos->permisos_submenus($_GET['m'],$_GET['submain'],0)==1)&&($this->permisos->permisos($_GET['submain'],2)==1)) {?>
+
+  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico" title="Nuevo Registro"></div>
+  <?php  }?>
 </td>
 <td >&nbsp;</td>
 </tr>

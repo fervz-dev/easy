@@ -1,12 +1,12 @@
 <?php $this->load->view('hed');?>
 <script type="text/javascript">
 //////////////////////////////////////////// agrega el producto verificado a stock ////////////////////////////////
-function add_stock (id) {
+function add_stock_bodega (id) {
    $.ajax({
             async:true,
             beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
             type:"POST",
-            url:"<?php echo base_url();?>stock_lista/add_stock/"+id,
+            url:"<?php echo base_url();?>stock_lista/add_stock_bodega/"+id,
             data:{"nombre":$("#nombre").val(),
                   "largo":$("#largo").val(),
                   "ancho":$("#ancho").val(),
@@ -24,7 +24,7 @@ function add_stock (id) {
                         break;
                         case "1":
                                   $( "#dialog-procesos12" ).dialog( "close" );
-                        $("#tbl_linea").trigger("reloadGrid");
+                        $("#tbl_bodega").trigger("reloadGrid");
                         notify("El registro se agrego correctamente." ,500,5000,'aviso');
                         break;
                         default:
@@ -39,7 +39,7 @@ function add_stock (id) {
                          });//Ajax
 }
 //////////////////////////////////////////// Funcion para verificar que llego  PEDIDO /////////////////////////////
-function abierto (id) {
+function abierto_bodega (id) {
   $( "#dialogo" ).dialog({
       autoOpen: false,
       height: 'auto',
@@ -48,7 +48,7 @@ function abierto (id) {
       buttons: {
           Aceptar: function() {
             var confirmacion=true;
-           verificacion_pedido(id,confirmacion);
+           verificacion_pedido_bodega(id,confirmacion);
           },
           Cancelar:function()
           {
@@ -61,13 +61,13 @@ function abierto (id) {
 
 }
 ///////////////////////////////////////////////Verificacion producto proveedor de linea //////////////////////////////////////////
-function verificacion_producto_pedido(id) {
+function verificacion_producto_pedido_bodega(id) {
 
 $.ajax({
                         async:true,cache: false,
                         beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
                         type:"GET",
-                        url:"<?php echo base_url();?>pedidos_proveedor/verificacion_pedido/"+id+"/"+Math.random()*10919939116744,
+                        url:"<?php echo base_url();?>pedidos_bodega/verificacion_pedido/"+id+"/"+Math.random()*10919939116744,
                         datatype:"html",
                         success:function(data, textStatus){
                                   dato= data.split('~');
@@ -93,7 +93,7 @@ $( "#dialog-procesos12" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-              add_stock(id);
+              add_stock_bodega(id);
             },
           Cancelar:function()
           {
@@ -107,13 +107,13 @@ $( "#dialog-procesos12" ).dialog({
 
 }
 ///////////////////////////////////////////////Verificar pedido proveedor de linea ///////////////////////////////////////////////
-function verificacion_pedido (id, confirmacion) {
+function verificacion_pedido_bodega (id, confirmacion) {
   if (confirmacion==true && id !='') {
      $.ajax({
           async:true,cache: false,
           beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
           type:"POST",
-          url:"<?php echo base_url();?>almacen_linea/verificacion_pedido/"+id,
+          url:"<?php echo base_url();?>almacen_linea/verificacion_pedido_bodega/"+id,
           datatype:"html",
           success:function(data, textStatus){
 
@@ -129,7 +129,7 @@ function verificacion_pedido (id, confirmacion) {
                                                                   $("#verificadoPedido").show();
 
                                                                  setTimeout("$('#verificadoPedido').fadeOut(6000)", 8000);
-                                                                  $("#tbl_linea").trigger("reloadGrid");
+                                                                  $("#tbl_bodega").trigger("reloadGrid");
 
                                                           break;
 
@@ -151,7 +151,7 @@ function verificacion_pedido (id, confirmacion) {
 	$(document).ready(function(){
   $("#tbl_bodega").jqGrid('GridUnload');
 		$("#tbl_bodega").jqGrid({
-			url:'<?php echo base_url();?>almacen_linea/paginacion',
+			url:'<?php echo base_url();?>almacen_linea/paginacion_bodega',
 			 datatype: "json",
     mtype: 'POST',
 
@@ -166,7 +166,7 @@ function verificacion_pedido (id, confirmacion) {
                                   {name:'id_pedido', index:'id_pedido', width:30,resizable:true,sortable:true,search:false,editable:false},
                                   {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true,sortable:true,search:false,editable:false},
                                   {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true,sortable:true,search:false,editable:false},
-                                  {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:true,sortable:true,search:false,editable:false},
+                                  {name:'nombre_oficina', index:'nombre_oficina', width:100,resizable:true,sortable:true,search:false,editable:false},
                                   {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true,sortable:true,search:false,editable:false}
                                 ],
     pager: jQuery('#paginacion'),
@@ -194,7 +194,7 @@ function verificacion_pedido (id, confirmacion) {
 
    $("#"+subgrid_table_id).jqGrid({
    //url:"subgrid.php?q=2&id="+row_id,
-   url:"<?php echo base_url();?>almacen_linea/subpaginacion/"+row_id,
+   url:"<?php echo base_url();?>almacen_linea/subpaginacion_bodega/"+row_id,
    datatype: "json",
    mtype: 'POST',
    colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','ANCHO','LARGO','CORRUGADO','RESISTENCIA','CANTIDAD'],

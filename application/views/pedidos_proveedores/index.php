@@ -567,7 +567,7 @@ function validarCamposForm1 () {
 if (!isset($_GET['submain'])) {
 }  elseif (($this->permisos->permisos_submenus($_GET['m'],$_GET['submain'],0)==1)&&($this->permisos->permisos($_GET['submain'],2)==1)) {?>
 
-  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
+  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico" title="Nuevo Registro"></div>
 <?php  }?>
 </td>
 <td></td>

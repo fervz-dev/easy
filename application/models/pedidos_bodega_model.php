@@ -161,21 +161,25 @@ public function get_pedido_bodega_almacen($sidx, $sord, $start, $limite)
 									pedido_bodega.id_pedido,
 									pedido_bodega.fecha_pedido,
 									pedido_bodega.fecha_entrega,
-									oficina.nombre_oficina,
-									oficina.nombre_oficina,
+									oficina_pedido.nombre_oficina AS oficina_pedido,
+									oficina_envio.nombre_oficina AS oficina_envio,
 									pedido_bodega.activo,
 									pedido_bodega.verificacion_almacen
 									FROM
-									pedido_bodega ,
-									oficina
-									WHERE
-									pedido_bodega.oficina_pedido = oficina.id_oficina
+										pedido_bodega ,
+										oficina AS oficina_pedido ,
+										oficina AS oficina_envio
+								WHERE
+									pedido_bodega.oficina_pedido = oficina_pedido.id_oficina
 									AND
-									pedido_bodega.oficina = oficina.id_oficina
+									pedido_bodega.oficina = oficina_envio.id_oficina
 									AND
 									pedido_bodega.activo=0
 									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
+
+
+
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
 	}
@@ -204,7 +208,7 @@ public function get_pedido_bodega_almacen($sidx, $sord, $start, $limite)
 				cat_mprima ,
 				resistencia_mprima
 				WHERE
-				cantidad_pedido_bodega.cantidad_pedido_bodega = $id AND
+				cantidad_pedido_bodega.id_cantidad_pedido = $id AND
 				cantidad_pedido_bodega.catalogo_producto = cat_mprima.id_cat_mprima AND
 				cat_mprima.resistencia_mprima_id_resistencia_mprima = resistencia_mprima.id_resistencia_mprima AND
 				resistencia_mprima.activo = 1");

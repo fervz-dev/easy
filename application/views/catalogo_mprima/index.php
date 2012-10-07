@@ -4,17 +4,17 @@
     url:'<?php echo base_url();?>catalogo_mprima/paginacion',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Acciones','NOMBRE','CORRUGADO','ANCHO','LARGO','RESISTENCIA'],
+                        colNames:['Acciones','NOMBRE','CORRUGADO','LARGO','ANCHO','RESISTENCIA'],
                         colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:50,resizable:false, sortable:true,search:false,editable:false},
                                   {name:'nombre', index:'nombre', width:70,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'tipo_m', index:'tipo_m', width:100,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'ancho', index:'ancho', width:60,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'largo', index:'largo', width:60,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'ancho', index:'ancho', width:60,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:false,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
-  rowNum:15,
+  rowNum:10,
     rowList:[10,20,30],
     imgpath: '<?php echo base_url();?>img/editar.jpg',
     mtype: "POST",
@@ -37,17 +37,17 @@
     url:'<?php echo base_url();?>catalogo_mprima/paginacion',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Acciones','NOMBRE','CORRUGADO','ANCHO','LARGO','RESISTENCIA'],
+                        colNames:['Acciones','NOMBRE','CORRUGADO','LARGO','ANCHO','RESISTENCIA'],
                         colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:50,resizable:false, sortable:true,search:false,editable:false},
                                   {name:'nombre', index:'nombre', width:70,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'tipo_m', index:'tipo_m', width:100,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'ancho', index:'ancho', width:60,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'largo', index:'largo', width:60,resizable:false, sortable:true,search:false,editable:true},
+                                  {name:'ancho', index:'ancho', width:60,resizable:false, sortable:true,search:false,editable:true},
                                   {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:false,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
-	rowNum:15,
+	rowNum:10,
     rowList:[10,20,30],
     imgpath: '<?php echo base_url();?>img/editar.jpg',
     mtype: "POST",
@@ -164,7 +164,7 @@ function editar(id)
 }
 
 function delet (id) {
-  msg="Este artículo se eliminara. ¿Estás seguro?";
+  msg="Este registro se eliminara. ¿Estás seguro?";
   confirmacion(id,msg);
 }
 function delete_id(id)
@@ -343,7 +343,7 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
   <?php
 if (!isset($_GET['submain'])) {
 }  elseif (($this->permisos->permisos_submenus($_GET['m'],$_GET['submain'],0)==1)&&($this->permisos->permisos($_GET['submain'],2)==1)) {?>
-        <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
+        <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico" title="Nuevo Registro"></div>
   <?php  }?>
 
 </td>

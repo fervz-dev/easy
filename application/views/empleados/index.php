@@ -263,7 +263,7 @@ $.ajax({
 }
 
 function delet (id) {
-  msg="Este artículo se eliminara. ¿Estás seguro?";
+  msg="Este registro se eliminara. ¿Estás seguro?";
   confirmacion(id,msg);
 }
 function delete_id(id)
@@ -645,7 +645,7 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
 if (!isset($_GET['submain'])) {
 }
 elseif (($this->permisos->permisos_submenus($_GET['m'],$_GET['submain'],0)==1)&&($this->permisos->permisos($_GET['submain'],2)==1)) {?>
-  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/add_empleado.png" width="30" height="30" alta="Agregar Empleado"></div>
+  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/add_empleado.png" width="30" height="30" alta="Agregar Empleado" title="Nuevo Registro"></div>
 <?php } ?>
 
 

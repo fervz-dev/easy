@@ -51,7 +51,7 @@ $( "#dialog-alta" ).dialog({
 
 }
 function delet (id) {
-  msg="Este artículo se eliminara. ¿Estás seguro?";
+  msg="Este registro se eliminara. ¿Estás seguro?";
   confirmacion(id,msg);
 }
 function delete_id(id)
@@ -369,7 +369,7 @@ if (validarCombo(sucursal)==false) {
   <?php
   if (!isset($_GET['submain'])) {
 }  elseif (($this->permisos->permisos_submenus($_GET['m'],$_GET['submain'],0)==1)&&($this->permisos->permisos($_GET['submain'],2)==1)) {?>
-  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/add_user.png" width="30" height="30"></div>
+  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/add_user.png" width="30" height="30" title="Nuevo Registro"></div>
     <?php  }?>
 </td>
 <td >&nbsp;</td>

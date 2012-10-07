@@ -52,7 +52,7 @@ if(confirmacion==true)
 
               switch(data){
                 case "0":
-                  notify("Error al procesar los datos " ,500,5000,'error');
+                   notify("El pedido aun no es enviado de la bodega " ,500,5000,'error');
                 break;
                 case "1":
                   $( "#dialogo_producto" ).dialog( "close" );
@@ -652,7 +652,7 @@ function verficadoPrudctoPedido () {
 if (!isset($_GET['submain'])) {
 }  elseif (($this->permisos->permisos_submenus($_GET['m'],$_GET['submain'],0)==1)&&($this->permisos->permisos($_GET['submain'],2)==1)) {?>
 
-  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
+  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico" title="Nuevo Registro"></div>
 <?php  }?>
 </td>
 <td></td>

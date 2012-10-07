@@ -7,7 +7,7 @@
 	<tr>
 		<td><label id="labelRight">Contacto:</label></td>
 		<td><input name="nombre_contacto" type="text" id="nombre_contacto" size="35"></td>
-	</tr>	
+	</tr>
 	<tr>
 		<td><label id="labelRight">Estado:</label></td>
 		<td><select  name="estado" id="estado" onchange="cargar_datos_municipios(this.value);">
@@ -15,7 +15,7 @@
 			<?php foreach ($estados as $est) { ?>
 			<option value="<?php echo $est['nombre']; ?>"><?php echo $est['nombre'] ?></option>
 			<?php } ?>
-		</select> 
+		</select>
 	</tr>
 	<tr>
 		<td><label id="labelRight">Municipio:</label></td>
@@ -30,7 +30,10 @@
 	</tr>
 	<tr>
 		<td><label id="labelRight">Direccion:</label></td>
-		<td><input name="direccion" type="text" id="direccion" size="35"></td>
+		<td>
+			<textarea name="direccion" id="direccion" cols="30" rows="3"></textarea>
+
+			<!-- <input name="direccion" type="text" id="direccion" size="35"></td> -->
 		<td>
 			<div onclick="tip('direccion')">
 				<ul id="icons" class="ui-widget ui-helper-clearfix">
@@ -111,7 +114,7 @@
 		<td><label id="labelRight">Observaciones:</label></td>
 		<!-- <td><textarea name="comentario" id="comentario" cols="32	"></textarea></td> -->
 		<td><input name="comentario" type="text" id="comentario" size="35"></td>
-	</tr>				
+	</tr>
 
 </table>
 </form>

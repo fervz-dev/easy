@@ -1,5 +1,9 @@
 ////////////////////////////////validacion//////////////////////////
-
+  function validarFloat (numero) {
+    if (!/^([0-9])*[.]?[0-9]*$/.test(numero)) {
+      return false;
+    }
+  }
   function validarNUmero (numero) {
     if (!/^([0-9])*[.]?[0-9]*$/.test(numero)){
       return false;
@@ -37,7 +41,7 @@
     function validarLada (lada) {
       if (!/^[0-9]{2,3}$/.test(lada)){
         return false;
-       }    
+       }
      }
     function validarTelefono (telefono) {
       if (!/^[0-9]{3,4}-? ?[0-9]{4}$/.test(telefono)) {

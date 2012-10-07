@@ -94,6 +94,11 @@ class Stock_lista extends CI_Controller
         $save=$this->stock->add_stock($id);
         echo $save;
         }
+ public function add_stock_bodega($id)
+    {
+    $save=$this->stock->add_stock_bodega($id);
+    echo $save;
+    }
     ////////////////////////////////////evniar a stock el embarque que se selecciono//////////////////
    public function add_stock_reutilizable($id)
     {

@@ -431,7 +431,7 @@ function validarCamposForm1 () {
 </div>
 <table >
 <tr>
-<td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
+<td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico" title="Nuevo Registro"></div>
 </td>
 <td></td>
 <td >&nbsp;</td>

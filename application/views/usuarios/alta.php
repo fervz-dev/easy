@@ -42,7 +42,7 @@
     </td>
 </tr>
 <tr>
-  <td><label id="labelRight">Repirte Password:</label></td>
+  <td><label id="labelRight">Repite Password:</label></td>
   <td><input name="password2" id="password2" type="password"></td>
 </tr>
 <tr>

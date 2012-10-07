@@ -103,6 +103,7 @@ public function guardar()
 	public function terminar_pedido($id)
 	{
 	    $data = array('verificacion_almacen' => 0);
+
 				$this->db->where('id_pedido', $id);
 				$this->db->update('pedido_bodega_producto_terminado', $data);
 				return $this->db->affected_rows();
@@ -112,6 +113,7 @@ public function guardar()
 	public function terminar_producto($id)
 	{
 	    $data = array('verificacion' => 0);
+	    		$this->db->where('validacion_bodega_hacer', 1);
 				$this->db->where('id_cantidad_pedido', $id);
 				$this->db->update('cantidad_pedido_producto', $data);
 				return $this->db->affected_rows();

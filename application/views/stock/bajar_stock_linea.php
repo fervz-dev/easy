@@ -19,24 +19,24 @@ function add_stock (id) {
             success:function(data, textStatus){
 
             switch(data){
-                        case "0": 
+                        case "0":
                                  notify("Error al procesar los datos " ,500,5000,'error');
                         break;
-                        case "1": 
+                        case "1":
                                   $( "#dialog-procesos12" ).dialog( "close" );
-                        $("#tbl_linea").trigger("reloadGrid"); 
+                        $("#tbl_linea").trigger("reloadGrid");
                         notify("El registro se agrego correctamente." ,500,5000,'aviso');
                         break;
                         default:
                                   $( "#dialog-procesos12" ).dialog( "close" );
-                           break; 
+                           break;
 
                               }//switch
                              },
                         error:function(data){
                               notify("Error al procesar los datos " ,500,5000,'error');
                              }//Error
-                         });//Ajax        
+                         });//Ajax
 }
 //////////////////////////////////////////// Funcion para verificar que llego  PEDIDO /////////////////////////////
 function abierto (id) {
@@ -48,10 +48,10 @@ function abierto (id) {
       buttons: {
           Aceptar: function() {
             var confirmacion=true;
-           verificacion_pedido(id,confirmacion);        
+           verificacion_pedido(id,confirmacion);
           },
           Cancelar:function()
-          {   
+          {
         $( "#dialogo" ).dialog( "close" );
           }
       },
@@ -77,7 +77,7 @@ $.ajax({
                                   $("#corrugado").val(dato[3]);
                                   $("#cantidad").val(dato[4]);
                                   $("#resistencia").val(dato[5]);
-                                  
+
                                   },
                         error:function(datos){
                         notify("Error al procesar los datos " ,500,5000,'error');
@@ -116,29 +116,29 @@ function verificacion_pedido (id, confirmacion) {
           url:"<?php echo base_url();?>almacen_linea/verificacion_pedido/"+id,
           datatype:"html",
           success:function(data, textStatus){
-                                            
+
                                             switch(data){
-                                                          case "0": 
+                                                          case "0":
                                                                   $("#ErrorDatos").show();
-                                                                  setTimeout("$('#ErrorDatos').fadeOut(6000)", 8000);      
+                                                                  setTimeout("$('#ErrorDatos').fadeOut(6000)", 8000);
                                                           break;
-                                             
-                                                          case "1": 
-                                                          
+
+                                                          case "1":
+
                                                                   $( "#dialogo" ).dialog( "close" );
                                                                   $("#verificadoPedido").show();
-                                                                  
+
                                                                  setTimeout("$('#verificadoPedido').fadeOut(6000)", 8000);
-                                                                  $("#tbl_linea").trigger("reloadGrid"); 
-                                                                  
+                                                                  $("#tbl_linea").trigger("reloadGrid");
+
                                                           break;
-                                                 
+
                                                           default:
                                                                   $( "#dialogo").dialog( "close" );
                                                                   //alert('Vacante guardada');
                                                                   // reloading();
-                                                          break; 
-                                            
+                                                          break;
+
                                                         }//switch
                                             },
           error:function(datos){
@@ -154,7 +154,7 @@ function verificacion_pedido (id, confirmacion) {
 			url:'<?php echo base_url();?>almacen_linea/paginacion',
 			 datatype: "json",
     mtype: 'POST',
-		      
+
                         colNames:['Acciones',
                                     'ID PEDIDO',
                                     'FECHA DE PEDIDO',
@@ -166,9 +166,9 @@ function verificacion_pedido (id, confirmacion) {
                                   {name:'id_pedido', index:'id_pedido', width:30,resizable:true,sortable:true,search:false,editable:false},
                                   {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true,sortable:true,search:false,editable:false},
                                   {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true,sortable:true,search:false,editable:false},
-                                  {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:true,sortable:true,search:false,editable:false},
+                                  {name:'nombre_empresa', index:'nombre_empresa', width:60,resizable:true,sortable:true,search:false,editable:false},
                                   {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true,sortable:true,search:false,editable:false}
-                                ],                             
+                                ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
   rowNum:15,
@@ -184,41 +184,41 @@ function verificacion_pedido (id, confirmacion) {
     height:'auto',
     loadtext: 'Cargando',
   width:960,
-  subGrid: true, 
+  subGrid: true,
     // searchurl:'<?php echo base_url();?>empresas/buscando',
     height:"auto",
    subGridRowExpanded: function(subgrid_id, row_id) {
    var subgrid_table_id, pager_id; subgrid_table_id = subgrid_id+"_t"; pager_id = "p_"+subgrid_table_id;
-   
-   $("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' alt='subtabla' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>"); 
-   
-   $("#"+subgrid_table_id).jqGrid({ 
-   //url:"subgrid.php?q=2&id="+row_id, 
+
+   $("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' alt='subtabla' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>");
+
+   $("#"+subgrid_table_id).jqGrid({
+   //url:"subgrid.php?q=2&id="+row_id,
    url:"<?php echo base_url();?>almacen_linea/subpaginacion/"+row_id,
    datatype: "json",
    mtype: 'POST',
-   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','ANCHO','LARGO','CORRUGADO','RESISTENCIA','CANTIDAD'],    
+   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','ANCHO','LARGO','CORRUGADO','RESISTENCIA','CANTIDAD'],
    colModel: [
              {name:"acciones",index:"acciones",width:56,align:"center",sortable:true,search:false,editable:false},
              {name:"No",index:"No",width:56,align:"center",sortable:true,search:false,editable:false},
-             {name:"nombre",index:"nombre",align:"center",sortable:true,search:false,editable:false},
-             {name:"ancho",index:"ancho",align:"left",sortable:true,search:false,editable:false},
-             {name:"largo",index:"largo",align:"left",sortable:true,search:false,editable:false},
-             {name:"tipo_m",index:"tipo_m",align:"left",sortable:true,search:false,editable:false},
-             {name:"resistencia",index:"resistencia",align:"left",sortable:true,search:false,editable:false},
-             {name:"cantidad",index:"cantidad",align:"left",sortable:true,search:false,editable:false}
+             {name:"nombre",index:"nombre",width:80,align:"center",sortable:true,search:false,editable:false},
+             {name:"ancho",index:"ancho",width:56,align:"left",sortable:true,search:false,editable:false},
+             {name:"largo",index:"largo",width:56,align:"left",sortable:true,search:false,editable:false},
+             {name:"tipo_m",index:"tipo_m",width:65,align:"left",sortable:true,search:false,editable:false},
+             {name:"resistencia",index:"resistencia",width:65,align:"left",sortable:true,search:false,editable:false},
+             {name:"cantidad",index:"cantidad",width:65,align:"left",sortable:true,search:false,editable:false}
               ],
-   rows:10, 
+   rows:10,
    rowNum:10,
    rowList:[10,15],
    pager: pager_id,
    sortname: 'id_cantidad_pedido',
    height:'auto',
-   sortorder: "asc" }); 
-   
+   sortorder: "asc" });
+
    $("#"+subgrid_table_id).jqGrid('navGrid',"#"+pager_id,{edit:false,add:false,del:false,search:false}) }
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_linea").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ; 
+        $("#tbl_linea").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
       $("#tbl_linea").jqGrid('navGrid','#paginacion',{add:false,edit:false,del:false,search:false});
 
 
@@ -228,7 +228,7 @@ function verificacion_pedido (id, confirmacion) {
 </script>
 
 		<table id="tbl_linea"></table>
-        <div id="paginacion"> </div>    
+        <div id="paginacion"> </div>
   <!-- Funcion dialogo -->
         <div style="display:none;" id="dialogo" >
           <div class="ui-widget">
@@ -250,7 +250,7 @@ function verificacion_pedido (id, confirmacion) {
         <!-- error al procesar los datos -->
         <div style="display:none;" id="verificadoPedido" >
           <div class="ui-widget">
-            <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;"> 
+            <div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
               <p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
               <strong>Ok!</strong> Pedido verificado correctamente, ahora puede verificar los productos!!!.</p>
             </div>

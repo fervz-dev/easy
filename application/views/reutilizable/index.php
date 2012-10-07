@@ -8,8 +8,8 @@ function cargar () {
                         colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:170,resizable:false, sortable:true,search:false,editable:false},
                                   {name:'nombre', index:'nombre', width:100,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'tipo_m', index:'tipo_m', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'ancho', index:'ancho', width:40,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'largo', index:'largo', width:40,resizable:false, sortable:true,search:true,editable:true},
+                                  {name:'ancho', index:'ancho', width:40,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'peso', index:'peso', width:40,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'cantidad', index:'cantidad', width:40,resizable:false, sortable:true,search:true,editable:true},
@@ -175,7 +175,7 @@ function editar(id)
                          });//Ajax
 }
 function delet (id) {
-  msg="Este artículo se eliminara. ¿Estás seguro?";
+  msg="Este registro se eliminara. ¿Estás seguro?";
   confirmacion(id,msg);
 }
 function delete_id(id)
@@ -271,6 +271,13 @@ $( "#dialog-procesos" ).dialog({
       buttons: {
           Aceptar: function() {
             if (validarCampos()==true) {
+                                var peso_=$("#peso").val();
+                  var cantidad=$("#cantidad").val();
+                  var total1=peso_*cantidad;
+                  var calcu=total1;
+                  $("#peso_total").val(calcu);
+                  alert(calcu);
+;
           guardar();
         }
           },
@@ -362,7 +369,7 @@ function validarCampos () {
 </div>
 <table >
 <tr>
-<td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico"></div>
+<td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico" title="Nuevo Registro"></div>
 </td>
 <td >&nbsp;</td>
 </tr>
