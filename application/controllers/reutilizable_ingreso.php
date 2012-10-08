@@ -5,6 +5,8 @@ class Reutilizable_ingreso extends CI_Controller{
 		parent::__construct();
         $this->load->model("resistencia_mprima_model","resistencia");
 		$this->load->model("reutilizable_ingreso_model","catalogo");
+        $this->load->model("historial_reutilizable_model","historial");
+
 
 
             if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
@@ -56,7 +58,7 @@ class Reutilizable_ingreso extends CI_Controller{
         // $conexion = new mysqli("servidor","usuario","password","basededatos");
         // Se hace una consulta para saber cuantos registros se van a mostrar
 
-     $consul = $this->db->query('SELECT * from cat_mprima_reutilizable WHERE activo= "1"');
+     $consul = $this->db->query("SELECT * from cat_mprima_reutilizable WHERE activo= '1' AND cat_mprima_reutilizable.id_sucursal =".$this->session->userdata('oficina')." AND cat_mprima_reutilizable.tipo = 'reutilizable' ");
      $count = $consul->num_rows();
         //En base al numero de registros se obtiene el numero de paginas
         if( $count >0 ) {
@@ -77,12 +79,23 @@ class Reutilizable_ingreso extends CI_Controller{
         $data->total = $total_pages;
         $data->records = $count;
         $i=0;
+
         foreach($resultado_catalogo as $row) {
            $data->rows[$i]['id']=$row->id_cat_mprima;
-           $onclik="onclick=delet('".$row->id_cat_mprima."')";
-    	   $onclikedit="onclick=edit('".$row->id_cat_mprima."')";
-     	   $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
-           $data->rows[$i]['cell']=array($acciones,
+
+            if ($row->restan>0) {
+                $onclickUsar="onclick=usar('".$row->id_cat_mprima."')";
+                $onclik="onclick=delet('".$row->id_cat_mprima."')";
+                $onclikedit="onclick=edit('".$row->id_cat_mprima."')";
+                $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclickUsar.'><img src="'.base_url().'img/usar.png" width="18" title="usar" height="18" /></span>';
+            }else{
+                  $onclik="onclick=delet('".$row->id_cat_mprima."')";
+                   $onclikedit="onclick=edit('".$row->id_cat_mprima."')";
+                   $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+
+            }
+
+            $data->rows[$i]['cell']=array($acciones,
             strtoupper($row->nombre),
             //strtoupper($row->caracteristica),
             // strtoupper($row->tipo),
@@ -139,7 +152,25 @@ class Reutilizable_ingreso extends CI_Controller{
     public function guardar()
     {
         $save=$this->catalogo->guardar();
-        echo $save;
+        if ($save==1) {
+            echo '1' ;
+        }elseif ($save==2) {
+            echo '2';
+        }elseif ($save==3) {
+            echo '3';
+        }
+
+    }
+    public function guardar_select()
+    {
+         $save=$this->historial->guardar_select();
+        if ($save==1) {
+            echo '1' ;
+        }elseif ($save==2) {
+            echo '2';
+        }elseif ($save==3) {
+            echo '3';
+        }
     }
 
 

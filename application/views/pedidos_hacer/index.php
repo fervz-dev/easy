@@ -1,5 +1,39 @@
 <?php $this->load->view('hed');?>
 <script>
+
+function finalizar_producto(id) {
+  $.ajax({
+          async:true,cache: false,
+          beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+          type:"POST",
+          url:"<?php echo base_url();?>pedidos_hacer/cerrar_producto/"+id,
+          datatype:"html",
+          success:function(data, textStatus){
+
+              switch(data){
+                case "0":
+                  notify("Error al procesar los datos " ,500,5000,'error');
+                break;
+                case "1":
+                  $( "#dialogo" ).dialog( "close" );
+                  $("#tbl_p_prove").trigger("reloadGrid");
+                  notify('Pedido cerrado satisfactoriamente',500,5000,'aviso');
+
+              break;
+
+              default:
+              $( "#dialogo").dialog( "close" );
+
+              break;
+
+              }//switch
+              },
+              error:function(datos){
+              notify("Error inesperado" ,500,5000,'error');
+              }//Error
+              });//Ajax
+
+}
 //////////////////////////////////////////// Alerta Pedido cerrado ///////////////////////////////////////////////////////////
 function cerrado () {
 

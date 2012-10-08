@@ -107,25 +107,89 @@ public function get_resistencia_all()
 
       public function guardar()
    {
-        $data = array (
-        'nombre'=>$this->input->post('nombre'),
-        // 'caracteristica'=>$this->input->post('caracteristica'),
-        'ancho'=>$this->input->post('ancho'),
-        'largo'=>$this->input->post('largo'),
-        'resistencia_mprima_id_resistencia_mprima'=>$this->input->post('resistencia_mprima_id_resistencia_mprima'),
-        'tipo'=>'reutilizable',
-        'tipo_m'=>$this->input->post('tipo_m'),
-        'peso'=>$this->input->post('peso'),
-        'cantidad'=>$this->input->post('cantidad'),
-        'peso_total'=>$this->input->post('peso_total'),
-        'restan'=>$this->input->post('cantidad'),
-        'activo'=>1,
-        'id_usuario'=>$this->session->userdata('id'),
-        'id_sucursal'=>$this->session->userdata('oficina')
-        );
-        $this->db->insert('cat_mprima_reutilizable', $data);
-        return $this->db->affected_rows();
-   }
+        $nombre=$this->input->post('nombre');
+        $ancho=$this->input->post('ancho');
+        $largo=$this->input->post('largo');
+        $resistencia_mprima_id_resistencia_mprima=$this->input->post('resistencia_mprima_id_resistencia_mprima');
+        $tipo='reutilizable';
+        $tipo_m=$this->input->post('tipo_m');
+        $peso=$this->input->post('peso');
+        $cantidad=$this->input->post('cantidad');
+        $peso_total=$this->input->post('peso_total');
+        $restan=$this->input->post('cantidad');
+        $activo=1;
+        $id_usuario=$this->session->userdata('id');
+        $id_sucursal=$this->session->userdata('oficina');
 
+        $query=$this->db->query("SELECT
+                                    cat_mprima_reutilizable.nombre,
+                                    cat_mprima_reutilizable.caracteristica,
+                                    cat_mprima_reutilizable.ancho,
+                                    cat_mprima_reutilizable.largo,
+                                    cat_mprima_reutilizable.resistencia_mprima_id_resistencia_mprima,
+                                    cat_mprima_reutilizable.tipo,
+                                    cat_mprima_reutilizable.tipo_m,
+                                    cat_mprima_reutilizable.cantidad,
+                                    cat_mprima_reutilizable.peso_total,
+                                    cat_mprima_reutilizable.restan,
+                                    cat_mprima_reutilizable.id_cat_mprima
+                                    FROM
+                                    cat_mprima_reutilizable
+                                    WHERE
+                                    cat_mprima_reutilizable.nombre='".$nombre."' AND
+                                    cat_mprima_reutilizable.ancho='".$ancho."' AND
+                                    cat_mprima_reutilizable.largo='".$largo."' AND
+                                    cat_mprima_reutilizable.resistencia_mprima_id_resistencia_mprima='".$resistencia_mprima_id_resistencia_mprima."' AND
+                                    cat_mprima_reutilizable.tipo='".$tipo."' AND
+                                    cat_mprima_reutilizable.tipo_m='".$tipo_m."' AND
+                                    cat_mprima_reutilizable.id_sucursal='".$id_sucursal."' LIMIT 1");
+    $respuesta=$query->row();
+            if (count($respuesta)>0) {
+            $id_reustilizable=$respuesta->id_cat_mprima;
+
+            $cantidad_db=$respuesta->cantidad;
+            $peso_total_db=$respuesta->peso_total;
+            $restan_db=$respuesta->restan;
+
+            $result=$peso_total+$peso_total_db;
+            $result_cantidad=$cantidad+$cantidad_db;
+            $result_restan=$restan_db+$cantidad;
+
+            $data= array ('cantidad'=>$result_cantidad,'peso_total'=>$result,'restan'=>$result_restan);
+            $this->db->where('id_cat_mprima',$id_reustilizable);
+            $this->db->update('cat_mprima_reutilizable',$data);
+            $numero_rows=$this->db->affected_rows();
+                if ($numero_rows>0) {
+                    return 1;
+                    }
+        }else{
+            $data = array (
+                'nombre'=>$this->input->post('nombre'),
+                // 'caracteristica'=>$this->input->post('caracteristica'),
+                'ancho'=>$this->input->post('ancho'),
+                'largo'=>$this->input->post('largo'),
+                'resistencia_mprima_id_resistencia_mprima'=>$this->input->post('resistencia_mprima_id_resistencia_mprima'),
+                'tipo'=>'reutilizable',
+                'tipo_m'=>$this->input->post('tipo_m'),
+                'peso'=>$this->input->post('peso'),
+                'cantidad'=>$this->input->post('cantidad'),
+                'peso_total'=>$this->input->post('peso_total'),
+                'restan'=>$this->input->post('cantidad'),
+                'activo'=>1,
+                'id_usuario'=>$this->session->userdata('id'),
+                'id_sucursal'=>$this->session->userdata('oficina'),
+                'fecha_ingreso'=>date('y-m-d')
+                );
+                $this->db->insert('cat_mprima_reutilizable', $data);
+                 $numero_rows1=$this->db->affected_rows();
+                if ($numero_rows1>0) {
+                        return 2;
+                    }else{
+                        return 3;
+                    }
+
+        }
+
+   }
 }
 ?>

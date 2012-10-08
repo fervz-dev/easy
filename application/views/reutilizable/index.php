@@ -1,4 +1,24 @@
 <script type="text/javascript">
+function usar(id)
+{
+$( "#id_reutilizable").val(id);
+$( "#dialog-procesos_producto" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+          $( "#dialog-procesos_producto" ).dialog( "close" );
+          $("#tbl_p_prove").trigger("reloadGrid");
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialog-procesos_producto" ).dialog( "open" );
+        $("#tbl_p_prove").trigger("reloadGrid");
+}
+
 function cargar () {
   $("#tbl").jqGrid({
     url:'<?php echo base_url();?>reutilizable_ingreso/paginacion',
@@ -242,7 +262,12 @@ $.ajax({
                                break;
                                case "1":
                                reloading();
-                               notify('El registro se guardado correctamente',500,5000,'aviso');
+                               notify('El registro se actualizo correctamente',500,5000,'aviso');
+                               $( "#dialog-procesos" ).dialog( "close" );
+                               break;
+                               case "2":
+                               reloading();
+                               notify('El registro se guardo correctamente',500,5000,'aviso');
                                $( "#dialog-procesos" ).dialog( "close" );
                                break;
                                default:
@@ -374,9 +399,20 @@ function validarCampos () {
 <td >&nbsp;</td>
 </tr>
 </table>
+
+
+
         <table id="tbl"></table>
         <div id="paginacion"> </div>
         <div style="display:none" id="dialog-procesos" title="Reutilizable">
         <?php
 
         $this->load->view('reutilizable/formulario');?>
+      </div>
+      <!-- formulario de nuevo producto -->
+        <div style="display:none" id="dialog-procesos_producto" title="Pedidos">
+        <?php
+        $this->load->view('reutilizable/ver_productos');?>
+        </div>
+
+
