@@ -492,7 +492,7 @@ exit();
                         catalogo_producto.largo,
                         catalogo_producto.ancho,
                         catalogo_producto.alto,
-                        catalogo_producto.resistencia,
+                        resistencia_mprima.resistencia,
                         catalogo_producto.corrugado,
                         catalogo_producto.score,
                         catalogo_producto.descripcion,
@@ -504,11 +504,13 @@ exit();
                         cantidad_pedido_producto ,
                         pedido_bodega_producto_terminado ,
                         catalogo_producto ,
-                        archivo
+                        archivo,
+                        resistencia_mprima
                         WHERE
                         cantidad_pedido_producto.id_pedido = $id AND
                         cantidad_pedido_producto.id_bodega_hacer =$oficina  AND
-                        cantidad_pedido_producto.catalogo_producto = catalogo_producto.id_catalogo
+                        cantidad_pedido_producto.catalogo_producto = catalogo_producto.id_catalogo AND
+                        catalogo_producto.resistencia = resistencia_mprima.id_resistencia_mprima
                         GROUP BY
                         cantidad_pedido_producto.id_cantidad_pedido
                         ORDER BY $sidx $sord LIMIT $start , $limit;";
@@ -538,9 +540,6 @@ exit();
 
         $data->rows[$i]['cell']=array($acciones,
                                                 ($N),
-                                                $row->cantidad,
-                                                $row->observaciones,
-                                                $row->fecha_entrega,
                                                 $row->nombre,
                                                 $row->largo,
                                                 $row->ancho,
@@ -549,6 +548,9 @@ exit();
                                                 $row->corrugado,
                                                 $row->score,
                                                 $row->descripcion,
+                                                $row->cantidad,
+                                                $row->observaciones,
+                                                $row->fecha_entrega,
                                                 $row->id_archivos);
         $i++;
         $N++;

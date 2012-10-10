@@ -9,14 +9,15 @@
 	</tr>
 
 	<tr>
+		<td><label>Largo</label></td>
+		<td><input type="text" id="largo" name="largo" readonly="readonly" ></td>
+	</tr>
+	<tr>
 		<td><label>Ancho</label></td>
 		<td><input type="text" id="ancho" name="ancho" readonly="readonly" ></td>
 	</tr>
 
-	<tr>
-		<td><label>Largo</label></td>
-		<td><input type="text" id="largo" name="largo" readonly="readonly" ></td>
-	</tr>
+
 	<tr>
 		<td><label>Corrugado</label></td>
 		<td><input type="text" id="corrugado" name="corrugado" readonly="readonly" ></td>

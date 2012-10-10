@@ -1,6 +1,25 @@
 
 <?php $this->load->view('hed');?>
 <script type="text/javascript">
+function usarLinea(id)
+{
+  $("#id_linea").val(id);
+$( "#dialog-procesos_producto" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+          $( "#dialog-procesos_producto" ).dialog( "close" );
+          $("#tbl_p_prove").trigger("reloadGrid");
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialog-procesos_producto" ).dialog( "open" );
+        $("#tbl_p_prove").trigger("reloadGrid");
+}
 ////////////////////////////////////ver pedido de bodega////
 function ver_pedidos_bodega()
 {
@@ -53,21 +72,21 @@ function ver_pedidos()
     url:'<?php echo base_url();?>stock_lista/paginacion',
     datatype: "json",
     mtype: 'POST',
-          //  $data->rows[$i]['cell']=array($acciones,strtoupper($row->nombre),strtoupper($row->descripcion),strtoupper($row->direccion),strtoupper($row->colonia),strtoupper($row->poblacion),strtoupper($row->contacto));
-                        colNames:[
+                        colNames:['ACCIONES',
                                   'NOMBRE',
-                                  'ANCHO',
                                   'LARGO',
+                                  'ANCHO',
                                   'CORRUGADO',
                                   'RESISTENCIA',
                                   'CANTIDAD'
                                      ],
-                        colModel:[{name:'nombre', index:'nombre', width:100,resizable:false,sortable:true,search:false,editable:false},
-                                  {name:'ancho', index:'ancho', width:100,resizable:false,sortable:true,search:false,editable:false},
-                                  {name:'largo', index:'largo', width:100,resizable:false,sortable:true,search:false,editable:false},
-                                  {name:'corrugado', index:'corrugado', width:100,resizable:false,sortable:true,search:false,editable:false},
-                                  {name:'resistencia', index:'resistencia', width:100,resizable:false,sortable:true,search:false,editable:false},
-                                  {name:'cantidad', index:'cantidad', width:100,resizable:false,sortable:true,search:false,editable:false}
+                        colModel:[{name:'Acciones', index:'Acciones', width:100,resizable:true,sortable:true,search:false,editable:false},
+                                  {name:'nombre', index:'nombre', width:100,resizable:true,sortable:true,search:false,editable:false},
+                                  {name:'largo', index:'largo', width:100,resizable:true,sortable:true,search:false,editable:false},
+                                  {name:'ancho', index:'ancho', width:100,resizable:true,sortable:true,search:false,editable:false},
+                                  {name:'corrugado', index:'corrugado', width:100,resizable:true,sortable:true,search:false,editable:false},
+                                  {name:'resistencia', index:'resistencia', width:100,resizable:true,sortable:true,search:false,editable:false},
+                                  {name:'cantidad', index:'cantidad', width:100,resizable:true,sortable:true,search:false,editable:false}
                                  ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -106,9 +125,12 @@ function reloading()
                                   'CANTIDAD',
                                   'FECHA DE INGRESO'
                                      ],
-                        colModel:[{name:'proveedor', index:'proveedor', width:100,resizable:false,sortable:true,search:false,editable:false},
-                                  {name:'cantidad', index:'cantidad', width:100,resizable:false,sortable:true,search:false,editable:false},
-                                  {name:'fecha_ingreso', index:'fecha_ingreso', width:100,resizable:false,sortable:true,search:false,editable:false}
+                        colModel:[{name:'proveedor', index:'proveedor', width:100,resizable:true
+                        ,sortable:true,search:false,editable:false},
+                                  {name:'cantidad', index:'cantidad', width:100,resizable:true
+                                  ,sortable:true,search:false,editable:false},
+                                  {name:'fecha_ingreso', index:'fecha_ingreso', width:100,resizable:true
+                                  ,sortable:true,search:false,editable:false}
                                  ],
     pager: jQuery('#paginacion_reutilizable'),
     rownumbers:true,
@@ -211,5 +233,8 @@ function reloading()
     $this->load->view('stock/bajar_stock_bodega');
    ?>
 </div>
-
+        <div style="display:none" id="dialog-procesos_producto" title="Pedidos">
+        <?php
+        $this->load->view('stock/ver_productos');?>
+        </div>
 

@@ -62,18 +62,17 @@ $( "#dialog-procesos_cantidad" ).dialog({
     });
         $( "#dialog-procesos_cantidad" ).dialog( "open" );
 }
-/*document.add_producto.reset();*/
 
   $("#tbl_p_prove_form").jqGrid({
     url:'<?php echo base_url();?>catalogo_mprima/paginacion_productos',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Agregar','NOMBRE','CORRUGADO','ANCHO','LARGO','RESISTENCIA'],
+                        colNames:['Agregar','NOMBRE','CORRUGADO','LARGO','ANCHO','RESISTENCIA'],
                         colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:50,resizable:false,align:"center", sortable:true,search:false,editable:false},
                                   {name:'nombre', index:'nombre', width:150,resizable:false, sortable:true,search:false,editable:false,search:false,},
                                   {name:'tipo_m', index:'tipo_m', width:90,resizable:false, sortable:true,align:"center",editable:true,search:false,},
-                                  {name:'ancho', index:'ancho', width:50,resizable:false, sortable:true,align:"center",editable:true,search:false,},
                                   {name:'largo', index:'largo', width:50,resizable:false, sortable:true,align:"center",editable:true,search:false,},
+                                  {name:'ancho', index:'ancho', width:50,resizable:false, sortable:true,align:"center",editable:true,search:false,},
                                   {name:'resistencia', index:'resistencia', width:90,resizable:false, align:"center",sortable:true,search:false,editable:true}
                                 ],
     pager: jQuery('#paginacion'),

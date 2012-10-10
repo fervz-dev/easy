@@ -339,8 +339,8 @@ if ($consulta_veri_1==0)
             $data->rows[$i]['cell']=array($acciones,
                                                 ($N),
                                     strtoupper($row->nombre),
-                                    strtoupper($row->ancho),
                                     strtoupper($row->largo),
+                                    strtoupper($row->ancho),
                                     strtoupper($row->tipo_m),
                                     strtoupper($row->resistencia),
                                     strtoupper($row->cantidad));
@@ -358,8 +358,8 @@ if ($consulta_veri_1==0)
             $data->rows[$i]['cell']=array($acciones,
                                                     ($N),
                                         strtoupper($row->nombre),
-                                        strtoupper($row->ancho),
                                         strtoupper($row->largo),
+                                        strtoupper($row->ancho),
                                         strtoupper($row->tipo_m),
                                         strtoupper($row->resistencia),
                                         strtoupper($row->cantidad));
@@ -380,8 +380,8 @@ elseif($consulta_veri_1==1)
             $data->rows[$i]['cell']=array($acciones,
                                                     ($N),
                                         strtoupper($row->nombre),
-                                        strtoupper($row->ancho),
                                         strtoupper($row->largo),
+                                        strtoupper($row->ancho),
                                         strtoupper($row->tipo_m),
                                         strtoupper($row->resistencia),
                                         strtoupper($row->cantidad));
@@ -507,8 +507,8 @@ if ($consulta_veri_1==0)
             $data->rows[$i]['cell']=array($acciones,
                                                 ($N),
                                     strtoupper($row->nombre),
-                                    strtoupper($row->ancho),
                                     strtoupper($row->largo),
+                                    strtoupper($row->ancho),
                                     strtoupper($row->tipo_m),
                                     strtoupper($row->resistencia),
                                     strtoupper($row->cantidad));
@@ -526,8 +526,8 @@ if ($consulta_veri_1==0)
             $data->rows[$i]['cell']=array($acciones,
                                                     ($N),
                                         strtoupper($row->nombre),
-                                        strtoupper($row->ancho),
                                         strtoupper($row->largo),
+                                        strtoupper($row->ancho),
                                         strtoupper($row->tipo_m),
                                         strtoupper($row->resistencia),
                                         strtoupper($row->cantidad));
@@ -548,8 +548,8 @@ elseif($consulta_veri_1==1)
             $data->rows[$i]['cell']=array($acciones,
                                                     ($N),
                                         strtoupper($row->nombre),
-                                        strtoupper($row->ancho),
                                         strtoupper($row->largo),
+                                        strtoupper($row->ancho),
                                         strtoupper($row->tipo_m),
                                         strtoupper($row->resistencia),
                                         strtoupper($row->cantidad));

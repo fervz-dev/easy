@@ -316,8 +316,8 @@ if ($valor == 1) {
         $data->rows[$i]['cell']=array($acciones,
                                                 ($N),
                                     strtoupper($row->nombre),
-                                    strtoupper($row->ancho),
                                     strtoupper($row->largo),
+                                    strtoupper($row->ancho),
                                     strtoupper($row->cantidad));
         $i++;
         $N++;
@@ -337,8 +337,8 @@ if ($valor == 1) {
         $data->rows[$i]['cell']=array($acciones,
                                                 ($N),
                                     strtoupper($row->nombre),
-                                    strtoupper($row->ancho),
                                     strtoupper($row->largo),
+                                    strtoupper($row->ancho),
                                     strtoupper($row->cantidad));
         $i++;
         $N++;

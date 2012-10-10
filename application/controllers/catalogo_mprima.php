@@ -202,8 +202,8 @@ if ($this->permisos->permisos(4,2)==1) {
            $data->rows[$i]['cell']=array($acciones,
             strtoupper($row->nombre),
             strtoupper($row->tipo_m),
-            strtoupper($row->ancho),
             strtoupper($row->largo),
+            strtoupper($row->ancho),
             strtoupper($row->resistencia)
             );
            $i++;

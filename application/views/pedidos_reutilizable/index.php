@@ -328,7 +328,7 @@ function cargar () {
     viewrecords: true,
     sortorder: "asc",
   editable: true,
-    caption: 'Pedido Reutilizable',
+    caption: 'Pedidos Reutilizable',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
@@ -367,7 +367,7 @@ function cargar () {
     viewrecords: true,
     sortorder: "asc",
   editable: true,
-    caption: 'Pedido Reutilizable',
+    caption: 'Pedidos Reutilizable',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
@@ -439,7 +439,7 @@ function validarCamposForm1 () {
 </table>
         <table id="tbl_p_prove"></table>
         <div id="paginacion"> </div>
-        <div style="display:none" id="dialog-procesos" title="Pedidos">
+        <div style="display:none" id="dialog-procesos" title="Formulario de Pedidos Reutilizable">
         <?php
         $this->load->view('pedidos_reutilizable/formulario');?>
         </div>

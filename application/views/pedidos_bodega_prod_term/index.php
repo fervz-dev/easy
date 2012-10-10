@@ -501,7 +501,7 @@ $( "#dialog-procesos" ).dialog({
     viewrecords: true,
     sortorder: "asc",
   editable: true,
-    caption: 'Pedidos Proveedor',
+    caption: 'Pedidos Clientes',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',

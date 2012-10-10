@@ -5,7 +5,7 @@ class Stock_lista extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-
+        $this->load->model("historial_linea_model","historial");
 		$this->load->model("stock_lista_model", "stock");
 
 
@@ -76,10 +76,19 @@ class Stock_lista extends CI_Controller
         foreach($resultado_ as $row) {
 
            $data->rows[$i]['id']=$row->id_stock_linea;
-           $data->rows[$i]['cell']=array(
+
+        if ($row->cantidad>0) {
+
+                $onclickUsar="onclick=usarLinea('".$row->id_stock_linea."')";
+                $acciones='<span style=" cursor:pointer" '.$onclickUsar.'><img src="'.base_url().'img/usar.png" width="18" title="usar" height="18" /></span>';
+
+        }else{
+                $acciones='';
+        }
+           $data->rows[$i]['cell']=array($acciones,
                                     strtoupper($row->nombre),
-                                    strtoupper($row->ancho),
                                     strtoupper($row->largo),
+                                    strtoupper($row->ancho),
                                     strtoupper($row->corrugado),
                                     strtoupper($row->resistencia),
                                     strtoupper($row->cantidad)
@@ -153,5 +162,18 @@ class Stock_lista extends CI_Controller
         }
         // La respuesta se regresa como json
         echo json_encode($data);
+    }
+     public function guardar_select()
+    {
+        $save=$this->historial->guardar_select();
+        if ($save==1) {
+            echo '1' ;
+        }elseif ($save==2) {
+            echo '2';
+        }elseif ($save==3) {
+            echo '3';
+        }elseif ($save==4) {
+            echo '4';
+        }
     }
 }

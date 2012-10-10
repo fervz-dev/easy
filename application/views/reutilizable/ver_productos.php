@@ -1,7 +1,7 @@
 <script type="text/javascript">
 
 
-function select_producto (id) {
+function select_producto (id_producto) {
 $( "#dialog-procesos_cantidad" ).dialog({
       autoOpen: false,
       height: 'auto',
@@ -9,11 +9,11 @@ $( "#dialog-procesos_cantidad" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-          	cantidad_select=$('#cantidad_reutilizable').val();
-          	guardar_select(id, cantidad_select);
-
-          // $( "#dialog-procesos_cantidad" ).dialog( "close" );
-          // $("#tbl_p_prove").trigger("reloadGrid");
+            id=$('#id_reutilizable').val();
+            cantidad_select=$('#cantidad_reutilizable').val();
+            if (validarCampos()==true) {
+              guardar_select(id, cantidad_select, id_producto);
+            };
           }
       },
       close: function() {}
@@ -22,7 +22,24 @@ $( "#dialog-procesos_cantidad" ).dialog({
         $("#tbl_p_prove").trigger("reloadGrid");
 }
 
-function guardar_select (id, cantidad) {
+function validarCampos () {
+  cantidad_select=$('#cantidad_reutilizable').val();
+
+  if (validarNUmero(cantidad_select)==false) {
+                notify('* El campo <strong>CANTIDAD</strong> no es numero!!!',500,5000,'error');
+                $("#cantidad_reutilizable").focus();
+                return false;
+  }else if (validarVacio(cantidad_select)==false) {
+              notify('* El campo <strong>CANTIDAD</strong> no puede estar vacio!!!',500,5000,'error');
+              $("#cantidad_select").focus();
+              return false;
+
+  }else{
+    return true;
+  }
+}
+
+function guardar_select (id, cantidad, id_producto) {
 $.ajax({
           async:true,cache: false,
           beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
@@ -30,37 +47,47 @@ $.ajax({
             url:"<?php echo base_url();?>reutilizable_ingreso/guardar_select?da="+Math.random()*2312,
           data:{
                   "cantidad":cantidad,
-                  "id_reutilizable":id
+                  "id_reutilizable":id,
+                  "id_producto":id_producto,
                 },
 
                      datatype:"html",
                       success:function(data, textStatus){
 
-                             switch(data){
-                               case "0":
-                             notify("Error al procesar los datos " ,500,5000,'error');
-                            $( "#dialog-procesos_cantidad" ).dialog( "close" );
-                         	$( "#dialog-procesos_producto" ).dialog( "close" );
-                      break;
+                              switch(data){
+                              case "0":
+                                  notify("Error al procesar los datos " ,500,5000,'error');
+                                  $( "#dialog-procesos_cantidad" ).dialog( "close" );
+                                  $( "#dialog-procesos_producto" ).dialog( "close" );
+                                   $('#cantidad_reutilizable').val('');
+                              break;
                               case "1":
-                            $("#tbl").trigger("reloadGrid");
-                               notify('El registro se guardado correctamente',500,5000,'aviso');
-                         	$( "#dialog-procesos_cantidad" ).dialog( "close" );
-                         	$( "#dialog-procesos_producto" ).dialog( "close" );
-                     break;
-                      case "2":
-                            $("#tbl").trigger("reloadGrid");
-                            notify("Error al procesar los datos " ,500,5000,'error');
-                            $( "#dialog-procesos_cantidad" ).dialog( "close" );
-                         	$( "#dialog-procesos_producto" ).dialog( "close" );
-                     break;
-
-                                   default:
+                                  $("#tbl").trigger("reloadGrid");
+                                  notify('El registro se guardado correctamente',500,5000,'aviso');
+                                  $( "#dialog-procesos_cantidad" ).dialog( "close" );
+                                  $( "#dialog-procesos_producto" ).dialog( "close" );
+                                   $('#cantidad_reutilizable').val('');
+                              break;
+                              case "2":
+                                  $("#tbl").trigger("reloadGrid");
+                                  notify("Error al procesar los datos " ,500,5000,'error');
+                                  $( "#dialog-procesos_cantidad" ).dialog( "close" );
+                                  $( "#dialog-procesos_producto" ).dialog( "close" );
+                                   $('#cantidad_reutilizable').val('');
+                              break;
+                              case "4":
+                                   // $("#tbl_stock_linea").trigger("reloadGrid")
+                                  notify("Error al procesar los datos " ,500,5000,'error');
+                                  // $( "#dialog-procesos_cantidad" ).dialog( "close" );
+                                  // $( "#dialog-procesos_producto" ).dialog( "close" );
+                                  $('#cantidad_reutilizable').val('');
+                              break;
+                              default:
                                    $( "#dialog-procesos_cantidad" ).dialog( "close" );
-                             var error='Error'+data;
-                                 notify(error ,500,5000,'error');
-                         	$( "#dialog-procesos_producto" ).dialog( "close" );
-                    break;
+                                   var error='Error'+data;
+                                   notify(error ,500,5000,'error');
+                         	        $( "#dialog-procesos_producto" ).dialog( "close" );
+                              break;
 
                               }//switch
                              },
@@ -147,6 +174,8 @@ $.ajax({
           <tr>
             <td><label  id="labelRight">cantidad:</label></td>
             <td><input type="text" name="cantidad_reutilizable" id="cantidad_reutilizable"></td>
+
+             <td><input type="hidden" name="id_reutilizable" id="id_reutilizable"></td>
           </tr>
           </form>
         </table>

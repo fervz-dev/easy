@@ -612,7 +612,7 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
 </table>
         <table id="tbl_clientes"></table>
         <div id="paginacion"> </div>
-        <div style="display:none" id="dialog-procesos" title="clientes">
+        <div style="display:none" id="dialog-procesos" title="Formulario de Clientes">
         <?php
         $this->load->view('clientes/formulario');?>
         </div>

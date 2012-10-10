@@ -50,7 +50,7 @@ function cargar () {
     viewrecords: true,
     sortorder: "asc",
   editable: true,
-    caption: 'Catalogo de BOdegas',
+    caption: 'Catalogo de Oficinas',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',

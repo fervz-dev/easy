@@ -163,13 +163,15 @@ class Reutilizable_ingreso extends CI_Controller{
     }
     public function guardar_select()
     {
-         $save=$this->historial->guardar_select();
+        $save=$this->historial->guardar_select();
         if ($save==1) {
             echo '1' ;
         }elseif ($save==2) {
             echo '2';
         }elseif ($save==3) {
             echo '3';
+        }elseif ($save==4) {
+            echo '4';
         }
     }
 

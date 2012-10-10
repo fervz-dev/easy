@@ -259,7 +259,7 @@ function cargar () {
     viewrecords: true,
     sortorder: "asc",
     editable: true,
-    caption: 'proveedores',
+    caption: 'Catalogo de Proveedores',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
@@ -315,7 +315,7 @@ function cargar () {
     viewrecords: true,
     sortorder: "asc",
 	  editable: true,
-    caption: 'proveedores',
+    caption: 'Catalogo de Proveedores',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
@@ -549,7 +549,7 @@ function tip (tipo) {
 </table>
         <table id="tbl_proveedores"></table>
         <div id="paginacion"> </div>
-        <div style="display:none" id="dialog-procesos" title="proveedores">
+        <div style="display:none" id="dialog-procesos" title="Formulario de Proveedores">
         <?php
         $this->load->view('proveedores/formulario');?>
         </div>

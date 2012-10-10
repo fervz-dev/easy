@@ -169,7 +169,7 @@ function verificacion_pedido (id, confirmacion) {
                                   {name:'nombre_empresa', index:'nombre_empresa', width:60,resizable:true,sortable:true,search:false,editable:false},
                                   {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true,sortable:true,search:false,editable:false}
                                 ],
-    pager: jQuery('#paginacion'),
+    pager: jQuery('#paginacion1'),
     rownumbers:true,
   rowNum:15,
     rowList:[10,20,30],
@@ -217,9 +217,9 @@ function verificacion_pedido (id, confirmacion) {
    sortorder: "asc" });
 
    $("#"+subgrid_table_id).jqGrid('navGrid',"#"+pager_id,{edit:false,add:false,del:false,search:false}) }
-        }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
+        }).navGrid("#paginacion1", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl_linea").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
-      $("#tbl_linea").jqGrid('navGrid','#paginacion',{add:false,edit:false,del:false,search:false});
+      $("#tbl_linea").jqGrid('navGrid','#paginacion1',{add:false,edit:false,del:false,search:false});
 
 
 	});
@@ -228,7 +228,7 @@ function verificacion_pedido (id, confirmacion) {
 </script>
 
 		<table id="tbl_linea"></table>
-        <div id="paginacion"> </div>
+        <div id="paginacion1"> </div>
   <!-- Funcion dialogo -->
         <div style="display:none;" id="dialogo" >
           <div class="ui-widget">

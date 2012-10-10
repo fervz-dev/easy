@@ -11,6 +11,7 @@ public function guardar_select()
 {
 		$cantidad=$this->input->post('cantidad');
 		$id_reutilizable=$this->input->post('id_reutilizable');
+		$id_producto_post=$this->input->post('id_producto');
 	$material=$this->db->query("SELECT
 									cat_mprima_reutilizable.nombre,
 									cat_mprima_reutilizable.largo,
@@ -18,13 +19,19 @@ public function guardar_select()
 									cat_mprima_reutilizable.resistencia_mprima_id_resistencia_mprima,
 									cat_mprima_reutilizable.tipo,
 									cat_mprima_reutilizable.tipo_m,
-									cat_mprima_reutilizable.restan
+									cat_mprima_reutilizable.restan,
+									cat_mprima_reutilizable.cantidad
 									FROM
 									cat_mprima_reutilizable
 									WHERE
 									cat_mprima_reutilizable.id_cat_mprima=$id_reutilizable");
 	$resultado=$material->row();
 	if (count($resultado)>0) {
+
+		$cantidad_sistema=$resultado->cantidad;
+		if ($cantidad>$cantidad_sistema) {
+			return 4;
+		}elseif (count($resultado)>0) {
 
 
 		$data=array (
@@ -36,7 +43,9 @@ public function guardar_select()
 	        'cantidad'=>$cantidad,
 	        'fecha_uso'=>date('y-m-d'),
 	        'id_usuario'=>$this->session->userdata('id'),
-	        'id_sucursal'=>$this->session->userdata('oficina')
+	        'id_sucursal'=>$this->session->userdata('oficina'),
+	        'id_producto_uso_material'=>$id_producto_post,
+
 			);
 
         $this->db->insert('historial_reutilizable', $data);
@@ -51,6 +60,8 @@ public function guardar_select()
 		}else{
 			return 2;
 		}
+	}
+
 	}else{
 		return 0;
 	}

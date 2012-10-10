@@ -352,7 +352,7 @@ if (!isset($_GET['submain'])) {
 </table>
         <table id="tbl"></table>
         <div id="paginacion"> </div>
-        <div style="display:none" id="dialog-procesos" title="Catalogo de Materia Prima">
+        <div style="display:none" id="dialog-procesos" title="Formulario de Materia Prima">
         <?php
 
         $this->load->view('catalogo_mprima/formulario');?>

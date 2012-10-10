@@ -169,7 +169,7 @@ function verificacion_pedido_bodega (id, confirmacion) {
                                   {name:'nombre_oficina', index:'nombre_oficina', width:100,resizable:true,sortable:true,search:false,editable:false},
                                   {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true,sortable:true,search:false,editable:false}
                                 ],
-    pager: jQuery('#paginacion'),
+    pager: jQuery('#paginacion2'),
     rownumbers:true,
   rowNum:15,
     rowList:[10,20,30],
@@ -197,13 +197,13 @@ function verificacion_pedido_bodega (id, confirmacion) {
    url:"<?php echo base_url();?>almacen_linea/subpaginacion_bodega/"+row_id,
    datatype: "json",
    mtype: 'POST',
-   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','ANCHO','LARGO','CORRUGADO','RESISTENCIA','CANTIDAD'],
+   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','LARGO','ANCHO','CORRUGADO','RESISTENCIA','CANTIDAD'],
    colModel: [
              {name:"acciones",index:"acciones",width:56,align:"center",sortable:true,search:false,editable:false},
              {name:"No",index:"No",width:56,align:"center",sortable:true,search:false,editable:false},
              {name:"nombre",index:"nombre",align:"center",sortable:true,search:false,editable:false},
-             {name:"ancho",index:"ancho",align:"left",sortable:true,search:false,editable:false},
              {name:"largo",index:"largo",align:"left",sortable:true,search:false,editable:false},
+              {name:"ancho",index:"ancho",align:"left",sortable:true,search:false,editable:false},
              {name:"tipo_m",index:"tipo_m",align:"left",sortable:true,search:false,editable:false},
              {name:"resistencia",index:"resistencia",align:"left",sortable:true,search:false,editable:false},
              {name:"cantidad",index:"cantidad",align:"left",sortable:true,search:false,editable:false}
@@ -217,9 +217,9 @@ function verificacion_pedido_bodega (id, confirmacion) {
    sortorder: "asc" });
 
    $("#"+subgrid_table_id).jqGrid('navGrid',"#"+pager_id,{edit:false,add:false,del:false,search:false}) }
-        }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
+        }).navGrid("#paginacion2", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl_linea").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
-      $("#tbl_linea").jqGrid('navGrid','#paginacion',{add:false,edit:false,del:false,search:false});
+      $("#tbl_linea").jqGrid('navGrid','#paginacion2',{add:false,edit:false,del:false,search:false});
 
 
 	});
@@ -228,7 +228,7 @@ function verificacion_pedido_bodega (id, confirmacion) {
 </script>
 
 		<table id="tbl_bodega"></table>
-        <div id="paginacion"> </div>
+        <div id="paginacion2"> </div>
   <!-- Funcion dialogo -->
         <div style="display:none;" id="dialogo" >
           <div class="ui-widget">

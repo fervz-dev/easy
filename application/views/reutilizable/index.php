@@ -1,7 +1,7 @@
 <script type="text/javascript">
 function usar(id)
 {
-$( "#id_reutilizable").val(id);
+  $("#id_reutilizable").val(id);
 $( "#dialog-procesos_producto" ).dialog({
       autoOpen: false,
       height: 'auto',
@@ -24,7 +24,7 @@ function cargar () {
     url:'<?php echo base_url();?>reutilizable_ingreso/paginacion',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Acciones','NOMBRE','CORRUGADO','ANCHO','LARGO','PESO','RESISTENCIA','CANTIDAD', 'PESO TOTAL', 'RESTAN'],
+                        colNames:['Acciones','NOMBRE','CORRUGADO','LARGO','ANCHO','PESO','RESISTENCIA','CANTIDAD', 'PESO TOTAL', 'RESTAN'],
                         colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:170,resizable:false, sortable:true,search:false,editable:false},
                                   {name:'nombre', index:'nombre', width:100,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'tipo_m', index:'tipo_m', width:100,resizable:false, sortable:true,search:true,editable:true},
@@ -404,13 +404,13 @@ function validarCampos () {
 
         <table id="tbl"></table>
         <div id="paginacion"> </div>
-        <div style="display:none" id="dialog-procesos" title="Reutilizable">
+        <div style="display:none" id="dialog-procesos" title="Formulario de Reutilizable">
         <?php
 
         $this->load->view('reutilizable/formulario');?>
       </div>
       <!-- formulario de nuevo producto -->
-        <div style="display:none" id="dialog-procesos_producto" title="Pedidos">
+        <div style="display:none" id="dialog-procesos_producto" title="Catalogo de Pedidos/ Productos">
         <?php
         $this->load->view('reutilizable/ver_productos');?>
         </div>

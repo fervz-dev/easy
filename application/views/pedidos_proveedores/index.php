@@ -386,7 +386,7 @@ function cargar () {
     viewrecords: true,
     sortorder: "asc",
   editable: true,
-    caption: 'Empresas',
+    caption: 'Pedidos Proveedor de Linea',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
@@ -404,14 +404,14 @@ function cargar () {
    url:"<?php echo base_url();?>pedidos_proveedor/subpaginacion/"+row_id,
    datatype: "json",
    mtype: 'POST',
-   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','ANCHO','LARGO','CANTIDAD'],
+   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','LARGO','ANCHO','CANTIDAD'],
    colModel: [
-             {name:"acciones",index:"acciones",width:56,align:"center"},
-             {name:"No",index:"No",width:56,align:"center"},
-             {name:"nombre",index:"nombre",search: false,align:"center"},
-             {name:"ancho",index:"ancho",align:"left",search: false},
-             {name:"largo",index:"largo",align:"left",search: false},
-             {name:"cantidad",index:"cantidad",align:"left",search: false}
+             {name:"acciones",index:"acciones",width:56,align:"center",resizable:true},
+             {name:"No",index:"No",width:56,align:"center",resizable:true},
+             {name:"nombre",index:"nombre",search: false,align:"center",resizable:true},
+             {name:"largo",index:"largo",align:"left",search: false,resizable:true},
+             {name:"ancho",index:"ancho",align:"left",search: false,resizable:true},
+             {name:"cantidad",index:"cantidad",align:"left",search: false,resizable:true}
               ],
    rows:10,
    rowNum:10,
@@ -428,7 +428,7 @@ function cargar () {
 }
 ////////////////////////////////////////////////////////////////////////
   $(document).ready(function(){
-	$("#tbl_p_prove").jqGrid({
+	       $("#tbl_p_prove").jqGrid({
     url:'<?php echo base_url();?>pedidos_proveedor/paginacion',
     datatype: "json",
     mtype: 'POST',
@@ -457,7 +457,7 @@ function cargar () {
     viewrecords: true,
     sortorder: "asc",
   editable: true,
-    caption: 'Pedidos Proveedor',
+    caption: 'Pedidos Proveedor de Linea',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
@@ -475,14 +475,14 @@ function cargar () {
    url:"<?php echo base_url();?>pedidos_proveedor/subpaginacion/"+row_id,
    datatype: "json",
    mtype: 'POST',
-   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','ANCHO','LARGO','CANTIDAD'],
+   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','LARGO','ANCHO','CANTIDAD'],
    colModel: [
-             {name:"acciones",index:"acciones",width:56,align:"center"},
-             {name:"No",index:"No",width:56,align:"center"},
-             {name:"nombre",index:"nombre",search: false,align:"center"},
-             {name:"ancho",index:"ancho",align:"left",search: false},
-             {name:"largo",index:"largo",align:"left",search: false},
-             {name:"cantidad",index:"cantidad",align:"left",search: false}
+             {name:"acciones",index:"acciones",width:56,align:"center",resizable:true},
+             {name:"No",index:"No",width:56,align:"center",resizable:true},
+             {name:"nombre",index:"nombre",search: false,align:"center",resizable:true},
+             {name:"largo",index:"largo",align:"left",search: false,resizable:true},
+             {name:"ancho",index:"ancho",align:"left",search: false,resizable:true},
+             {name:"cantidad",index:"cantidad",align:"left",search: false,resizable:true}
               ],
    rows:10,
    rowNum:10,
@@ -576,12 +576,12 @@ if (!isset($_GET['submain'])) {
 </table>
         <table id="tbl_p_prove"></table>
         <div id="paginacion"> </div>
-        <div style="display:none" id="dialog-procesos" title="Pedidos">
+        <div style="display:none" id="dialog-procesos" title="Formulario de Pedidos">
         <?php
         $this->load->view('pedidos_proveedores/formulario');?>
         </div>
 <!-- formulario de nuevo producto -->
-        <div style="display:none" id="dialog-procesos_producto" title="Pedidos">
+        <div style="display:none" id="dialog-procesos_producto" title="Formulario de Productos">
         <?php
         $this->load->view('pedidos_proveedores/formulario_producto');?>
         </div>

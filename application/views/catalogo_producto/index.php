@@ -134,7 +134,7 @@ function cargar () {
     viewrecords: true,
     sortorder: "asc",
 editable: true,
-    caption: 'Catalogo de Producto',
+    caption: 'Catalogo de Productos',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
@@ -476,7 +476,7 @@ function validarCampos () {
     viewrecords: true,
     sortorder: "asc",
   editable: true,
-    caption: 'Catalogo de Producto',
+    caption: 'Catalogo de Productos',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
@@ -504,10 +504,10 @@ function validarCampos () {
 </table>
         <table id="tbl"></table>
         <div id="paginacion"> </div>
-        <div style="display:none" id="dialog-procesos" title="Catalogo de Producto">
+        <div style="display:none" id="dialog-procesos" title="Formulario Producto">
         <?php $this->load->view('catalogo_producto/formulario');?>
       </div>
-      <div style="display:none" id="dialog-procesos-picture" title="Archivo de catalogo">
+      <div style="display:none" id="dialog-procesos-picture" title="Imagen para Producto">
       <?php $this->load->view('catalogo_producto/archivo');?>
       </div>
       <div style="display:none" id="dialog-procesos-picture_view" title="Imagen">
