@@ -158,7 +158,7 @@
 		<option value="<?php echo $ofn['id_oficina']; ?>"><?php echo $ofn['nombre_oficina'] ?></option>
 		<?php } ?>
 	</select>
-	</tr>
+	</td>
 </tr>
 <tr>
 		<td><label id="labelRight">Observaciones:</label></td>

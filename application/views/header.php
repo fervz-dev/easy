@@ -73,6 +73,7 @@
            $("#fecha_entrega").datepicker({ changeMonth: true });
            $("#fecha_entrega_pedido").datepicker({ changeMonth: true });
            $("#fecha_nacimiento").datepicker({ changeMonth: true });
+           $("#fecha_ingreso").datepicker({ changeMonth: true });
 
         });
 		function oculta(id)
