@@ -72,7 +72,8 @@ function ver_pedidos()
     url:'<?php echo base_url();?>stock_lista/paginacion',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['ACCIONES',
+                        colNames:['id',
+                                  'ACCIONES',
                                   'NOMBRE',
                                   'LARGO',
                                   'ANCHO',
@@ -80,7 +81,9 @@ function ver_pedidos()
                                   'RESISTENCIA',
                                   'CANTIDAD'
                                      ],
-                        colModel:[{name:'Acciones', index:'Acciones', width:100,resizable:true,sortable:true,search:false,editable:false},
+                        colModel:[
+                                  {name:'id_stock_linea', index:'id_stock_linea', width:20,resizable:true,sortable:true,search:false,editable:false},
+                                  {name:'acciones', index:'acciones', width:100,resizable:true,sortable:true,search:false,editable:false},
                                   {name:'nombre', index:'nombre', width:100,resizable:true,sortable:true,search:false,editable:false},
                                   {name:'largo', index:'largo', width:100,resizable:true,sortable:true,search:false,editable:false},
                                   {name:'ancho', index:'ancho', width:100,resizable:true,sortable:true,search:false,editable:false},
@@ -111,6 +114,9 @@ function reloading()
   {
   $("#tbl_stock_linea").trigger("reloadGrid")
   }
+
+
+
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////funcion para ver el gid de almacen reutilizable/////////////////////////////////////////////////
   function ver_pedidos_reutilizable () {
@@ -153,7 +159,29 @@ function reloading()
    });
   }
 
+function envios() {
+  var id_stock_linea = $("#tbl_stock_linea").jqGrid('getGridParam','selrow');
+  if (id_stock_linea) {
+    var ret = jQuery("#tbl_stock_linea").jqGrid('getRowData',id_stock_linea);
+    // alert("id="+ret.id_stock_linea+"...");
 
+
+  } else { alert("D");
+}
+}
+function ver_pedidosLista ()
+{
+
+ $( "#grid_linea" ).dialog({
+      autoOpen: false,
+      height: "auto" ,
+      width: "auto",
+      modal: true,
+      close: function() {reloading();}
+    });
+        $( "#grid_linea" ).dialog( "open" );
+
+}
 </script>
 
 <div class="demo">
@@ -163,20 +191,58 @@ function reloading()
     <li><a href="#reutilizable" onclick="ver_pedidos_reutilizable();">Reutilizable</a></li>
   </ul>
   <div id="linea">
+<div id="controles" style="floas:left; width:800px; height:90px;" >
+  <fieldset style="width: 350px; float:left;">
+          <legend>
+             Descargar pedidos a Stock
+          </legend>
     <table>
-            <tr>
-              <td>
-                <button onclick="javascrip:ver_pedidos();" title="Bajar pedido de linea">
-                  <div style="width:120px; height:30px;"><img src="img/bajar_stock.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Proveedor</p></div></div>
-                </button>
-              </td>
-              <td>
-                <button onclick="javascrip:ver_pedidos_bodega();" title="Bajar pedido de bodega">
-                  <div style="width:120px; height:30px;"><img src="img/bajar_stock.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Nave</p></div></div>
-                </button>
-              </td>
-            </tr>
-          </table>
+
+      <tr>
+
+                <table>
+                    <td>
+                      <button onclick="javascrip:ver_pedidos();" title="Bajar pedido de linea">
+                        <div style="width:120px; height:30px;"><img src="img/bajar_stock.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Proveedor</p></div></div>
+                      </button>
+                    </td>
+                    <td>
+                      <button onclick="javascrip:ver_pedidos_bodega();" title="Bajar pedido de bodega">
+                        <div style="width:120px; height:30px;"><img src="img/bajar_stock.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Nave</p></div></div>
+                      </button>
+                    </td>
+                </table>
+
+      </tr>
+
+    </table>
+</fieldset>
+<fieldset style="width: 350px; float:left;">
+          <legend>
+             Descontar para envios a Nave
+          </legend>
+    <table>
+
+    <tr>
+
+        <table>
+            <td>
+              <button onclick="envios()" title="Pedidos para enviar a Nave">
+                <div style="width:120px; height:30px;"><img src="img/envio.png" width="30" height="30" style="float:left;"><div style="float:left;"><p style="font-size:12px; color:#108de2; margin-top: 10px; margin-bottom: 0px;">&nbsp &nbsp Lista</p></div></div>
+              </button>
+            </td>
+
+        </table>
+
+    </tr>
+
+    </table>
+</fieldset>
+
+</div>
+
+
+
     <table id="tbl_stock_linea"></table>
         <div id="paginacion"> </div>
         <div style="display:none" id="dialog-procesos" title="Pedidos">

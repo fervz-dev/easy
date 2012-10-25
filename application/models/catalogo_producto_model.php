@@ -10,6 +10,7 @@ class Catalogo_producto_model extends CI_Model {
 public function get_cat_productos($sidx, $sord, $start, $limite)
 {
 	$query = $this->db->query("SELECT
+                                    clientes.nombre_empresa,
                                     catalogo_producto.id_catalogo,
                                     catalogo_producto.nombre,
                                     catalogo_producto.largo,
@@ -23,9 +24,11 @@ public function get_cat_productos($sidx, $sord, $start, $limite)
                                     catalogo_producto.id_archivos
                                     FROM
                                     catalogo_producto ,
-                                    resistencia_mprima
+                                    resistencia_mprima,
+                                    clientes
                                     WHERE
                                     catalogo_producto.activo = 1 AND
+                                    catalogo_producto.id_cliente=clientes.id_clientes AND
                                     catalogo_producto.resistencia = resistencia_mprima.id_resistencia_mprima  ORDER BY $sidx $sord
                                 LIMIT $start, $limite;");
     return ($query->num_rows() > 0)? $query->result() : NULL;
@@ -34,7 +37,8 @@ public function get_cat_productos($sidx, $sord, $start, $limite)
     public function get_id($id)
     {
         $query = $this->db->query("SELECT
-								catalogo_producto.nombre,
+								catalogo_producto.id_cliente,
+                                catalogo_producto.nombre,
 								catalogo_producto.largo,
 								catalogo_producto.ancho,
 								catalogo_producto.alto,
@@ -44,9 +48,11 @@ public function get_cat_productos($sidx, $sord, $start, $limite)
 								catalogo_producto.descripcion
                                 FROM
                                 catalogo_producto,
-                                resistencia_mprima
+                                resistencia_mprima,
+                                clientes
                                 WHERE
                                 catalogo_producto.id_catalogo = $id AND
+                                catalogo_producto.id_cliente=clientes.id_clientes AND
                                 catalogo_producto.activo = 1 ");
         $fila = $query->row();
           return $fila;
@@ -72,6 +78,7 @@ public function get_imagen($id)
 public function guardar()
    {
         $data = array (
+        'id_cliente'=>$this->input->post('clientesdb'),
         'nombre'=>$this->input->post('nombre'),
         'largo'=>$this->input->post('largo'),
         'ancho'=>$this->input->post('ancho'),
@@ -113,6 +120,7 @@ public function eliminar_imagen($id_file,$id_catalogo)
 public function editar($id)
    {
         $data = array (
+        'id_cliente'=>$this->input->post('clientesdb'),
         'nombre'=>$this->input->post('nombre'),
         'largo'=>$this->input->post('largo'),
         'ancho'=>$this->input->post('ancho'),

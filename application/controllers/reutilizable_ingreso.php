@@ -95,6 +95,7 @@ class Reutilizable_ingreso extends CI_Controller{
 
             }
 
+
             $data->rows[$i]['cell']=array($acciones,
             strtoupper($row->nombre),
             //strtoupper($row->caracteristica),
@@ -102,11 +103,11 @@ class Reutilizable_ingreso extends CI_Controller{
             strtoupper($row->tipo_m),
             strtoupper($row->ancho),
             strtoupper($row->largo),
-            strtoupper($row->peso),
+            // strtoupper($row->peso),
             strtoupper($row->resistencia),
-            strtoupper($row->cantidad),
-            strtoupper($row->peso_total),
-            strtoupper($row->restan)
+            strtoupper($row->cantidad)
+            // strtoupper($row->peso_total),
+            // strtoupper($row->restan)
             );
            $i++;
         }
@@ -124,10 +125,10 @@ class Reutilizable_ingreso extends CI_Controller{
              strtoupper($row->ancho).'~'.
              strtoupper($row->largo).'~'.
              strtoupper($row->resistencia_mprima_id_resistencia_mprima).'~'.
-             strtoupper($row->peso).'~'.
-             strtoupper($row->cantidad.'~'.
-             strtoupper($row->peso_total)
-             );
+             // strtoupper($row->peso).'~'.
+             strtoupper($row->cantidad);
+             // strtoupper($row->peso_total)
+
     }
 
     public function editar_mprima($id)

@@ -53,7 +53,7 @@ public function guardar_select()
         if ($numero_rows1>0) {
 				$cantidad_db=$resultado->restan;
 				$result=$cantidad_db-$cantidad;
-				$data2= array ('restan'=>$result);
+				$data2= array ('cantidad'=>$result);
            	 	$this->db->where('id_cat_mprima',$id_reutilizable);
         	    $this->db->update('cat_mprima_reutilizable',$data2);
         	    return 1;

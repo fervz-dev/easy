@@ -50,29 +50,40 @@ submenus.orden_submenu ASC
   $row =  $query_sub->row();
 
 ?>
-                         <?php
+        <?php
+$str=base_url();
+$uno=(explode('/', $str));
+$baseUrl= 'http:'.'//'.$uno[2].$_SERVER['REQUEST_URI'];
+          foreach ($query_sub->result_array() as $rows) {
+            if ($this->permisos->permisosArray($rows['id_submenu'])==1) {
 
-                          foreach ($query_sub->result_array() as $rows) {
-                            if ($this->permisos->permisosArray($rows['id_submenu'])==1) {
+              if (($this->permisos->permisos($rows['id_submenu'],0)==1)||($this->permisos->permisos($rows['id_submenu'],1)==1)||($this->permisos->permisos($rows['id_submenu'],2)==1)||($this->permisos->permisos($rows['id_submenu'],3)==1) )
+              {
+                if ($rows['url_submenu']=='') {
+                  $url="#";
+                }else{
 
-                              if (($this->permisos->permisos($rows['id_submenu'],0)==1)||($this->permisos->permisos($rows['id_submenu'],1)==1)||($this->permisos->permisos($rows['id_submenu'],2)==1)||($this->permisos->permisos($rows['id_submenu'],3)==1) )
-                              {
-                                if ($rows['url_submenu']=='') {
-                                  $url="#";
-                                }
-                                else
-                                {
-                                  $url=base_url().$rows['url_submenu'];
-                                }
-                            ?>
-                            <li><a href="<?php echo $url; ?>?m=<?php echo $rows['id_menu']; ?>&submain=<?php echo $rows['id_submenu']; ?>"><?php echo $rows['titulo_submenu'] ;?></a></li>
-                            <?php
-                          }
-                          }
-}
-                           }?>
-                    </ul>
+                  $url=base_url().$rows['url_submenu'];
+                }
 
-                </div>
-          </div>
-        </div>
+
+                  $urlActiva=$url.'?m='.$rows['id_menu'].'&submain='.$rows['id_submenu'];
+                  if ($baseUrl==$urlActiva) {
+                ?>
+                <li><a class="activo" href="<?php echo $url; ?>?m=<?php echo $rows['id_menu']; ?>&submain=<?php echo $rows['id_submenu']; ?>"><?php echo $rows['titulo_submenu'] ;?></a></li>
+                <?php }else{
+
+                  ?>
+              <li><a href="<?php echo $url; ?>?m=<?php echo $rows['id_menu']; ?>&submain=<?php echo $rows['id_submenu']; ?>"><?php echo $rows['titulo_submenu'] ;?></a></li>
+              <?php
+              }
+            }
+          }
+        }
+      }
+        ?>
+      </ul>
+    </div>
+  </div>
+</div>
+

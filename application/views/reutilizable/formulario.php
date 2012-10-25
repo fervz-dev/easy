@@ -49,7 +49,7 @@
 
 <tr>
 
-<td colspan="2">
+<!-- <td colspan="2">
 	<fieldset>
 		<legend>Peso por unidad</legend>
 		<table>
@@ -65,7 +65,7 @@
 		</table>
 	</fieldset>
 
-</td>
+</td> -->
 </tr>
 <tr>
 	<td colspan="2">
@@ -81,11 +81,11 @@
 					<td>
 						<input name="cantidad" id="cantidad" type="text" >
 					</td>
-					<td><input type="button" id="calcular" name="calcular"  value="Calcular" onclick="javascript:calcular1();"></td>
+					<!-- <td><input type="button" id="calcular" name="calcular"  value="Calcular" onclick="javascript:calcular1();"></td> -->
 					<tr>
-					<td>
+<!-- 					<td>
 						<input name="peso_total" id="peso_total" type="hidden">
-					</td>
+					</td> -->
 					</tr>
 				</tr>
 			</table>

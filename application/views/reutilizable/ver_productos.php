@@ -11,7 +11,7 @@ $( "#dialog-procesos_cantidad" ).dialog({
           Aceptar: function() {
             id=$('#id_reutilizable').val();
             cantidad_select=$('#cantidad_reutilizable').val();
-            if (validarCampos()==true) {
+            if (validarCamposSelec()==true) {
               guardar_select(id, cantidad_select, id_producto);
             };
           }
@@ -22,7 +22,7 @@ $( "#dialog-procesos_cantidad" ).dialog({
         $("#tbl_p_prove").trigger("reloadGrid");
 }
 
-function validarCampos () {
+function validarCamposSelec () {
   cantidad_select=$('#cantidad_reutilizable').val();
 
   if (validarNUmero(cantidad_select)==false) {

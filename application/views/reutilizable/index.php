@@ -24,17 +24,17 @@ function cargar () {
     url:'<?php echo base_url();?>reutilizable_ingreso/paginacion',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Acciones','NOMBRE','CORRUGADO','LARGO','ANCHO','PESO','RESISTENCIA','CANTIDAD', 'PESO TOTAL', 'RESTAN'],
+                        colNames:['Acciones','NOMBRE','CORRUGADO','LARGO','ANCHO','RESISTENCIA','CANTIDAD'],
                         colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:170,resizable:false, sortable:true,search:false,editable:false},
                                   {name:'nombre', index:'nombre', width:100,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'tipo_m', index:'tipo_m', width:100,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'largo', index:'largo', width:40,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'ancho', index:'ancho', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'peso', index:'peso', width:40,resizable:false, sortable:true,search:true,editable:true},
+                                  // {name:'peso', index:'peso', width:40,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'cantidad', index:'cantidad', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'peso_total', index:'peso_total', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'restan', index:'restan', width:80,resizable:false, sortable:true,search:true,editable:true}
+                                  {name:'cantidad', index:'cantidad', width:40,resizable:false, sortable:true,search:true,editable:true}
+                                  // {name:'peso_total', index:'peso_total', width:40,resizable:false, sortable:true,search:true,editable:true},
+                                  // {name:'restan', index:'restan', width:80,resizable:false, sortable:true,search:true,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -61,17 +61,17 @@ function cargar () {
     url:'<?php echo base_url();?>reutilizable_ingreso/paginacion',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Acciones','NOMBRE','CORRUGADO','ANCHO','LARGO','PESO','RESISTENCIA','CANTIDAD', 'PESO TOTAL', 'RESTAN'],
+                        colNames:['Acciones','NOMBRE','CORRUGADO','ANCHO','LARGO','RESISTENCIA','CANTIDAD'],
                         colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:170,resizable:false, sortable:true,search:false,editable:false},
                                   {name:'nombre', index:'nombre', width:100,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'tipo_m', index:'tipo_m', width:100,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'ancho', index:'ancho', width:40,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'largo', index:'largo', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'peso', index:'peso', width:40,resizable:false, sortable:true,search:true,editable:true},
+                                  // {name:'peso', index:'peso', width:40,resizable:false, sortable:true,search:true,editable:true},
                                   {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'cantidad', index:'cantidad', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'peso_total', index:'peso_total', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'restan', index:'restan', width:80,resizable:false, sortable:true,search:true,editable:true}
+                                  {name:'cantidad', index:'cantidad', width:40,resizable:false, sortable:true,search:true,editable:true}
+                                  // {name:'peso_total', index:'peso_total', width:40,resizable:false, sortable:true,search:true,editable:true},
+                                  // {name:'restan', index:'restan', width:80,resizable:false, sortable:true,search:true,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -110,12 +110,12 @@ $.ajax({
             $("#ancho").val(dato[2]);
             $("#largo").val(dato[3]);
             $("#resistencia_mprima_id_resistencia_mprima").val(dato[4]);
-              div_peso=dato[5].split('.');
-            $("#kilos").val(div_peso[0]);
-            $("#gramos").val(div_peso[1]);
-            $("#peso").val(dato[6]);
+              // div_peso=dato[5].split('.');
+            // $("#kilos").val(div_peso[0]);
+            // $("#gramos").val(div_peso[1]);
+            // $("#peso").val(dato[6]);
             $("#cantidad").val(dato[7]);
-            $("#peso_total").val(dato[8]);
+            // $("#peso_total").val(dato[8]);
             },
                         error:function(datos){
                         notify("Error al procesar los datos " ,500,5000,'error');
@@ -164,9 +164,9 @@ function editar(id)
                                 "ancho":$("#ancho").val(),
                                 "largo":$("#largo").val(),
                                 "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val(),
-                                "peso":$("#peso").val(),
+                                // "peso":$("#peso").val(),
                                 "cantidad":$("#cantidad").val(),
-                                "peso_total":$("#peso_total").val()
+                                // "peso_total":$("#peso_total").val()
                               },
                     cache: false,
                      datatype:"html",
@@ -248,9 +248,9 @@ $.ajax({
                   "ancho":$("#ancho").val(),
                   "largo":$("#largo").val(),
                   "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val(),
-                  "peso":$("#peso").val(),
+                  // "peso":$("#peso").val(),
                   "cantidad":$("#cantidad").val(),
-                  "peso_total":$("#peso_total").val()
+                  // "peso_total":$("#peso_total").val()
                 },
 
                      datatype:"html",

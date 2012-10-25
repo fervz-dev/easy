@@ -1,5 +1,15 @@
 <form name="cat_producto" id="cat_producto">
 <table id="tabla_formulario">
+<tr>
+	<td><label>Cliente:</label></td>
+	<td><select name="clientesdb"  id="clientesdb">
+		<option value="">Seleccione...</option>
+		<?php foreach ($clientes as $clt) { ?>
+		<option value="<?php echo $clt['id_clientes']; ?>"><?php echo $clt['nombre_empresa'] ?></option>
+		<?php } ?>
+	</select>
+</td>
+</tr>
 	<tr>
 		<td>
 			<label id="labelRight">Nombre:</label>

@@ -85,7 +85,9 @@ class Stock_lista extends CI_Controller
         }else{
                 $acciones='';
         }
-           $data->rows[$i]['cell']=array($acciones,
+           $data->rows[$i]['cell']=array(
+                                    $row->id_stock_linea,
+                                    $acciones,
                                     strtoupper($row->nombre),
                                     strtoupper($row->largo),
                                     strtoupper($row->ancho),

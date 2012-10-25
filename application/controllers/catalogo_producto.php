@@ -9,6 +9,7 @@ class Catalogo_producto extends CI_Controller {
 
        $this->load->model('catalogo_producto_model','producto');
        $this->load->model('resistencia_mprima_model','resistencia');
+              $this->load->model("clientes_model","clientes_");
        //$this->load->model('archivo_model','archivo');
 
     if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
@@ -38,7 +39,7 @@ class Catalogo_producto extends CI_Controller {
     public function index()
 
     {
-
+        $data['clientes']=$this->clientes_->get_clientes_all();
         $data['resistencia']=$this->resistencia->get_resistencia_mprima_all();
         $data['vista']='catalogo_producto/index';
         $data['titulo']='Catalogo de Productos';
@@ -144,6 +145,7 @@ if ($this->permisos->permisos(4,2)==1) {
 
                    }
                    $data->rows[$i]['cell']=array($acciones,
+                               $row->nombre_empresa,
                                $row->nombre,
                                $row->largo,
                                $row->ancho,
@@ -170,7 +172,8 @@ if ($this->permisos->permisos(4,2)==1) {
  public function get($id)
     {
         $row=$this->producto->get_id($id);
-                    echo   $row->nombre.'~'.
+                    echo   $row->id_cliente.'~'.
+                           $row->nombre.'~'.
                            $row->largo.'~'.
                            $row->ancho.'~'.
                            $row->alto.'~'.
@@ -296,6 +299,7 @@ $catalogo = array (
            $onclik="onclick=agregar('".$row->id_catalogo."')";
            $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar" height="18" /></span>';
            $data->rows[$i]['cell']=array($acciones,
+                $row->nombre_empresa,
                 $row->nombre,
                 $row->largo,
                 $row->ancho,

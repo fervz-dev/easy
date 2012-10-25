@@ -218,7 +218,7 @@ if ($this->permisos->permisos(10,2)==1) {
         }
     }
 
-    ///////////////////////////////////////////////////////////////////Sub paginacion ///////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////Sub paginacion ///////////////////////////////////////////////////////////////////////////////////
 public function subpaginacion($id)
 {
 
@@ -450,6 +450,204 @@ public function paginacion_producto($id)
              strtoupper($row->resistencia);
 
     }
+
+/////////////////////////////////////listar los pedidos por nave
+     public function paginacionLista()
+    {
+        $page = $_POST['page'];  // Almacena el numero de pagina actual
+        $limite = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
+        $sidx = $_POST['sidx'];  // Almacena el indice por el cual se hará la ordenación de los datos
+        $sord = $_POST['sord'];  // Almacena el modo de ordenación
+
+        if(!$sidx) $sidx =1;
+
+        // Se crea la conexión a la base de datos
+        // $conexion = new mysqli("servidor","usuario","password","basededatos");
+        // Se hace una consulta para saber cuantos registros se van a mostrar
+
+     $consul = $this->db->query('SELECT * from pedido_bodega ');
+     $count = $consul->num_rows();
+        //En base al numero de registros se obtiene el numero de paginas
+        if( $count >0 ) {
+        $total_pages = ceil($count/$limite);
+        } else {
+        $total_pages = 0;
+        }
+        if ($page > $total_pages)
+            $page=$total_pages;
+
+        //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
+        $start = $limite*$page - $limite;
+        //Consulta que devuelve los registros de una sola pagina
+        //if ($start < 0) $start = 0;
+        if ($start < 0){
+          $start = 0;
+         $data();
+        }else{
+        $resultado_ =$this->pedidos->get_pedido_bodegaNave($sidx, $sord, $start, $limite);
+        // Se agregan los datos de la respuesta del servidor
+        $data->page = $page;
+        $data->total = $total_pages;
+        $data->records = $count;
+        $i=0;
+if ($this->permisos->permisos(10,2)==1) {
+        foreach($resultado_ as $row) {
+           $data->rows[$i]['id']=$row->id_pedido;
+ if (($this->permisos->permisos(10,1)==1)&&($this->permisos->permisos(10,3)==1)){
+
+           $onclik="onclick=descontar_lista('".$row->id_pedido."')";
+
+ $acciones='<span style=" cursor:pointer" '.$onclik.'><img title="Seleccionar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
+
+
+ }
+           $data->rows[$i]['cell']=array($acciones,
+                                    strtoupper($row->id_pedido),
+                                    strtoupper($row->fecha_pedido),
+                                    strtoupper($row->fecha_entrega),
+                                    strtoupper($row->oficina_pedido),
+                                    strtoupper($row->oficina_envio));
+           $i++;
+        }
+    }
+}
+        // La respuesta se regresa como json
+        echo json_encode($data);
+    }
+
+    ////////subpaginacion de materia prima por pedido de cada nave
+    public function subpaginacionLista($id)
+{
+
+
+    $page = $_POST['page'];  // Almacena el numero de pagina actual
+    $limit = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
+    $sidx = $_POST['sidx'];  // Almacena el indice por el cual se hará la ordenación de los datos
+    $sord = $_POST['sord'];  // Almacena el modo de ordenación
+
+    if(!$sidx) $sidx =1;
+
+$verificacion = $this->db->query("SELECT
+                                        pedido_bodega.activo
+                                        FROM
+                                        pedido_bodega
+                                        WHERE
+                                        pedido_bodega.id_pedido = '$id'"
+                                );
+ $consul = $this->db->query("SELECT
+                                    cantidad_pedido_bodega.id_cantidad_pedido,
+                                    cat_mprima.nombre,
+                                    cat_mprima.ancho,
+                                    cat_mprima.largo,
+                                    cantidad_pedido_bodega.cantidad
+                                    FROM
+                                    cantidad_pedido_bodega ,
+                                    pedido_bodega ,
+                                    cat_mprima
+                                    WHERE
+                                    cantidad_pedido_bodega.id_pedido = '$id' AND
+                                    cantidad_pedido_bodega.catalogo_producto = cat_mprima.id_cat_mprima
+                                    GROUP BY
+                                    cantidad_pedido_bodega.id_cantidad_pedido
+                                    ORDER BY
+                                    cat_mprima.nombre ASC
+                        ");
+
+if($consul->num_rows()==0)
+{
+echo 0;
+
+exit();
+}
+
+ $count = $consul->num_rows();
+    //En base al numero de registros se obtiene el numero de paginas
+    if( $count >0 ) {
+    $total_pages = ceil($count/$limit);
+    } else {
+    $total_pages = 0;
+    }
+    if ($page > $total_pages)
+        $page=$total_pages;
+
+    //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
+    $start = $limit*$page - $limit;
+    //Consulta que devuelve los registros de una sola pagina
+    if ($start < 0) $start = 0;
+    $consulta = "SELECT
+                        cantidad_pedido_bodega.id_cantidad_pedido,
+                        cat_mprima.nombre,
+                        cat_mprima.ancho,
+                        cat_mprima.largo,
+                        cantidad_pedido_bodega.cantidad
+                        FROM
+                        cantidad_pedido_bodega ,
+                        pedido_bodega ,
+                        cat_mprima
+                        WHERE
+                        cantidad_pedido_bodega.id_pedido = '$id' AND
+                        cantidad_pedido_bodega.catalogo_producto = cat_mprima.id_cat_mprima
+                        GROUP BY cantidad_pedido_bodega.id_cantidad_pedido
+                        ORDER BY $sidx $sord LIMIT $start , $limit;";
+    $result1 = $this->db->query($consulta);
+
+    // Se agregan los datos de la respuesta del servidor
+    $data->page = $page;
+    $data->total = $total_pages;
+    $data->records = $count;
+    $i=0;
+$con = $verificacion->row();
+$valor = $con->activo;
+
+if ($valor == 1) {
+    $N=1;
+    foreach($result1->result() as $row) {
+
+      $data->rows[$i]['id']=$row->id_cantidad_pedido;
+
+        $onclik="onclick=eliminar_producto('".$row->id_cantidad_pedido."')";
+        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+
+
+
+        $data->rows[$i]['cell']=array($acciones,
+                                                ($N),
+                                    strtoupper($row->nombre),
+                                    strtoupper($row->largo),
+                                    strtoupper($row->ancho),
+                                    strtoupper($row->cantidad));
+        $i++;
+        $N++;
+    }
+
+    }elseif ($valor == 0) {
+ $N=1;
+    foreach($result1->result() as $row) {
+
+      $data->rows[$i]['id']=$row->id_cantidad_pedido;
+
+        $onclik="onclick=pedido_cerrado('".$row->id_cantidad_pedido."')";
+        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Eliminar" height="18" /></span>';
+
+
+
+        $data->rows[$i]['cell']=array($acciones,
+                                                ($N),
+                                    strtoupper($row->nombre),
+                                    strtoupper($row->ancho),
+                                    strtoupper($row->largo),
+                                    strtoupper($row->cantidad));
+        $i++;
+        $N++;
+    }
+
+    }
+
+
+    // La respuesta se regresa como json
+    echo json_encode($data);
+}
+
 
 
 }

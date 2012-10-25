@@ -34,6 +34,34 @@ class Pedidos_bodega_model extends CI_Model
 		return ($query->num_rows()> 0)? $query->result() : NULL;
 	}
 
+
+	public function get_pedido_bodegaNave($sidx, $sord, $start, $limite)
+	{
+		$oficina=$this->session->userdata('oficina');
+		$query = $this->db->query("SELECT
+										pedido_bodega.id_pedido,
+										pedido_bodega.fecha_pedido,
+										pedido_bodega.fecha_entrega,
+										oficina_pedido.nombre_oficina AS oficina_pedido,
+										oficina_envio.nombre_oficina AS oficina_envio,
+										pedido_bodega.activo,
+										pedido_bodega.enviado
+										FROM
+										pedido_bodega ,
+										oficina AS oficina_pedido ,
+										oficina AS oficina_envio
+										WHERE
+										pedido_bodega.oficina_pedido = oficina_pedido.id_oficina AND
+										pedido_bodega.oficina = oficina_envio.id_oficina AND
+										oficina_pedido.id_oficina= $oficina AND
+										oficina_envio.activo=1
+
+									ORDER BY $sidx $sord
+									LIMIT $start, $limite;"
+									);
+		return ($query->num_rows()> 0)? $query->result() : NULL;
+	}
+
 	public function get_pedido_id($sidx, $sord, $start, $limite, $id)
 	{
 		$query = $this->db->query("SELECT

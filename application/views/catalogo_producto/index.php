@@ -9,6 +9,7 @@ function editar(id)
                          type:"POST",
                           url:"<?php echo base_url();?>catalogo_producto/editar_producto/"+id,
                           data:{
+                                  "clientesdb":$("#clientesdb").val(),
                                   "nombre":$("#nombre").val(),
                                   "largo":$("#largo").val(),
                                   "ancho":$("#ancho").val(),
@@ -111,8 +112,9 @@ function cargar () {
     url:'<?php echo base_url();?>catalogo_producto/paginacion',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Acciones','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
+                        colNames:['Acciones','CLIENTE','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:false, align:"center", search:false},
+                              {name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:false, sortable:true,search:false,editable:false},
                               {name:'nombre', index:'nombre', width:170,resizable:false, sortable:true,search:false,editable:false},
                               {name:'largo', index:'largo', width:50,resizable:false, sortable:true,search:false,editable:false},
                               {name:'ancho', index:'ancho', width:50,resizable:false, sortable:true,search:false,editable:false},
@@ -154,6 +156,7 @@ $.ajax({
            type:"POST",
             url:"<?php echo base_url();?>catalogo_producto/guardar?da="+Math.random()*2312,
             data:{
+                  "clientesdb":$("#clientesdb").val(),
                   "nombre":$("#nombre").val(),
                   "largo":$("#largo").val(),
                   "ancho":$("#ancho").val(),
@@ -202,15 +205,15 @@ $.ajax({
                         success:function(data, textStatus){
 
             dato= data.split('~');
-
-            $("#nombre").val(dato[0]);
-            $("#largo").val(dato[1]);
-            $("#ancho").val(dato[2]);
-            $("#alto").val(dato[3]);
-            $('#resistencia_mprima_id_resistencia_mprima').val(dato[4]);
-            $('#corrugado').val(dato[5]);
-            $('#score').val(dato[6]);
-            $('#descripcion').val(dato[7]);
+            $("#clientesdb").val(dato[0]);
+            $("#nombre").val(dato[1]);
+            $("#largo").val(dato[2]);
+            $("#ancho").val(dato[3]);
+            $("#alto").val(dato[4]);
+            $('#resistencia_mprima_id_resistencia_mprima').val(dato[5]);
+            $('#corrugado').val(dato[6]);
+            $('#score').val(dato[7]);
+            $('#descripcion').val(dato[8]);
             },
                         error:function(datos){
                         notify("Error al procesar los datos " ,500,5000,'error');
@@ -453,8 +456,9 @@ function validarCampos () {
     url:'<?php echo base_url();?>catalogo_producto/paginacion',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Acciones','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
+                        colNames:['Acciones','CLIENTE','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:false, align:"center", search:false},
+                              {name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:false, sortable:true,search:false,editable:false},
                               {name:'nombre', index:'nombre', width:170,resizable:false, sortable:true,search:false,editable:false},
                               {name:'largo', index:'largo', width:50,resizable:false, sortable:true,search:false,editable:false},
                               {name:'ancho', index:'ancho', width:50,resizable:false, sortable:true,search:false,editable:false},

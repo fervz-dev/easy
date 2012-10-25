@@ -235,6 +235,15 @@ a {
     background-color: #c4c4c4;
 
 }
+
+.sidebar-left a.activo {
+	font-size: 12px;
+    font-weight: bold;
+    color: #FF0016;
+    text-decoration: none;
+    background-color: #c4c4c4;
+
+}
 .sidebar-left ul li {
 ;
     margin: 0;
