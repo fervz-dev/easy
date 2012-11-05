@@ -84,12 +84,12 @@ function ver_pedidos()
                         colModel:[
                                   {name:'id_stock_linea', index:'id_stock_linea', width:20,resizable:true,sortable:true,search:false,editable:false},
                                   {name:'acciones', index:'acciones', width:100,resizable:true,sortable:true,search:false,editable:false},
-                                  {name:'nombre', index:'nombre', width:100,resizable:true,sortable:true,search:false,editable:false},
-                                  {name:'largo', index:'largo', width:100,resizable:true,sortable:true,search:false,editable:false},
-                                  {name:'ancho', index:'ancho', width:100,resizable:true,sortable:true,search:false,editable:false},
-                                  {name:'corrugado', index:'corrugado', width:100,resizable:true,sortable:true,search:false,editable:false},
-                                  {name:'resistencia', index:'resistencia', width:100,resizable:true,sortable:true,search:false,editable:false},
-                                  {name:'cantidad', index:'cantidad', width:100,resizable:true,sortable:true,search:false,editable:false}
+                                  {name:'nombre', index:'nombre', width:100,resizable:true,sortable:true,search:true,editable:false},
+                                  {name:'largo', index:'largo', width:100,resizable:true,sortable:true,search:true,editable:false},
+                                  {name:'ancho', index:'ancho', width:100,resizable:true,sortable:true,search:true,editable:false},
+                                  {name:'corrugado', index:'corrugado', width:100,resizable:true,sortable:true,search:true,editable:false},
+                                  {name:'resistencia', index:'resistencia', width:100,resizable:true,sortable:true,search:true,editable:false},
+                                  {name:'cantidad', index:'cantidad', width:100,resizable:true,sortable:true,search:true,editable:false}
                                  ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -107,6 +107,7 @@ function ver_pedidos()
     height:'auto',
     loadtext: 'Cargando',
   width:'auto',
+  searchurl:'<?php echo base_url();?>stock_lista/buscando',
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl_stock_linea").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
    });
@@ -217,7 +218,7 @@ function ver_pedidosLista ()
 
     </table>
 </fieldset>
-<fieldset style="width: 350px; float:left;">
+<!-- <fieldset style="width: 350px; float:left;">
           <legend>
              Descontar para envios a Nave
           </legend>
@@ -237,7 +238,7 @@ function ver_pedidosLista ()
     </tr>
 
     </table>
-</fieldset>
+</fieldset> -->
 
 </div>
 
@@ -296,9 +297,10 @@ function ver_pedidosLista ()
 <!-- Entrega de pedido de bodega -->
 <div style="display:none" id="grid_bodega" title="Lista de pedidos de Bodega">
   <?php
-    $this->load->view('stock/bajar_stock_bodega');
+    $this->load->view('stock/formulario_producto1');
    ?>
 </div>
+
         <div style="display:none" id="dialog-procesos_producto" title="Pedidos">
         <?php
         $this->load->view('stock/ver_productos');?>

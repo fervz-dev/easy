@@ -129,7 +129,7 @@ class Almacen_linea extends CI_Controller
         // $conexion = new mysqli("servidor","usuario","password","basededatos");
         // Se hace una consulta para saber cuantos registros se van a mostrar
 
-     $consul = $this->db->query('SELECT * from pedido_proveedor where pedido_proveedor.activo=0 ');
+     $consul = $this->db->query("SELECT * from pedido_proveedor where pedido_proveedor.activo=0 AND  pedido_proveedor.oficina =".$this->session->userdata('oficina')." LIMIT 10 ");
      $count = $consul->num_rows();
         //En base al numero de registros se obtiene el numero de paginas
         if( $count >0 ) {
@@ -185,7 +185,7 @@ public function paginacion_bodega()
         // $conexion = new mysqli("servidor","usuario","password","basededatos");
         // Se hace una consulta para saber cuantos registros se van a mostrar
 
-     $consul = $this->db->query('SELECT * from pedido_bodega where pedido_bodega.activo=0 ');
+     $consul = $this->db->query('SELECT * from pedido_bodega where pedido_bodega.activo=0 LIMIT 10 ');
      $count = $consul->num_rows();
         //En base al numero de registros se obtiene el numero de paginas
         if( $count >0 ) {
@@ -502,7 +502,7 @@ if ($consulta_veri_1==0)
         ///////////////////////////////////verificamos si el produto ya esta verificado////////////
         if ($row->verificacion==0) {
             $data->rows[$i]['id']=$row->id_cantidad_pedido;
-            $onclik="onclick=verificacion_producto_pedido('".$row->id_cantidad_pedido."')";
+            $onclik="onclick=verificacion_producto_pedido_pedido('".$row->id_cantidad_pedido."')";
             $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/alert-icon.png" width="18" title="verificar producto" height="18" /></span>';
             $data->rows[$i]['cell']=array($acciones,
                                                 ($N),

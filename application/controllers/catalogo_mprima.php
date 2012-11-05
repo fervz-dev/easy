@@ -111,6 +111,7 @@ if ($this->permisos->permisos(4,2)==1) {
                    }
                    $data->rows[$i]['cell']=array($acciones,
                     strtoupper($row->nombre),
+                    strtoupper($row->descripcion),                    
                     strtoupper($row->tipo_m),
                     strtoupper($row->largo),
                     strtoupper($row->ancho),
@@ -124,14 +125,17 @@ if ($this->permisos->permisos(4,2)==1) {
         echo json_encode($data);
     }
 
+
      public function get($id)
     {
         $row=$this->catalogo->get_id($id);
         echo strtoupper($row->nombre).'~'.
+
              strtoupper($row->tipo_m).'~'.
              strtoupper($row->ancho).'~'.
              strtoupper($row->largo).'~'.
-             strtoupper($row->resistencia_mprima_id_resistencia_mprima);
+             strtoupper($row->resistencia_mprima_id_resistencia_mprima).'~'.
+              $row->descripcion;
     }
 
     public function editar_mprima($id)
@@ -200,11 +204,66 @@ if ($this->permisos->permisos(4,2)==1) {
            $onclik="onclick=agregar('".$row->id_cat_mprima."')";
            $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar" height="18" /></span>';
            $data->rows[$i]['cell']=array($acciones,
-            strtoupper($row->nombre),
-            strtoupper($row->tipo_m),
-            strtoupper($row->largo),
-            strtoupper($row->ancho),
-            strtoupper($row->resistencia)
+                    strtoupper($row->nombre),
+                    strtoupper($row->descripcion),
+                    strtoupper($row->tipo_m),
+                    strtoupper($row->largo),
+                    strtoupper($row->ancho),
+                    strtoupper($row->resistencia)
+                    );
+                   $i++;
+        }
+        // La respuesta se regresa como json
+        echo json_encode($data);
+    }
+    ////////////////////////////paginacion de productos requeriada para formulario productos
+    public function paginacion_productos_Stock()
+    {
+
+
+        $page = $_POST['page'];  // Almacena el numero de pagina actual
+        $limite = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
+        $sidx = $_POST['sidx'];  // Almacena el indice por el cual se hará la ordenación de los datos
+        $sord = $_POST['sord'];  // Almacena el modo de ordenación
+
+        if(!$sidx) $sidx =1;
+
+        // Se crea la conexión a la base de datos
+        // $conexion = new mysqli("servidor","usuario","password","basededatos");
+        // Se hace una consulta para saber cuantos registros se van a mostrar
+
+     $consul = $this->db->query('SELECT * from cat_mprima WHERE activo= "1"');
+     $count = $consul->num_rows();
+        //En base al numero de registros se obtiene el numero de paginas
+        if( $count >0 ) {
+        $total_pages = ceil($count/$limite);
+        } else {
+        $total_pages = 0;
+        }
+        if ($page > $total_pages)
+            $page=$total_pages;
+
+        //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
+        $start = $limite*$page - $limite;
+        //Consulta que devuelve los registros de una sola pagina
+        if ($start < 0) $start = 0;
+        $resultado_catalogo =$this->catalogo->get_cat_mprima($sidx, $sord, $start, $limite);
+        // Se agregan los datos de la respuesta del servidor
+        $data->page = $page;
+        $data->total = $total_pages;
+        $data->records = $count;
+        $i=0;
+        foreach($resultado_catalogo as $row) {
+           $data->rows[$i]['id']=$row->id_cat_mprima;
+           $onclik="onclick=verificacion_producto_pedido_materiaprima('".$row->id_cat_mprima."')";
+           $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar" height="18" /></span>';
+           $data->rows[$i]['cell']=array($acciones,
+                    strtoupper($row->nombre),
+                    strtoupper($row->descripcion),
+                    strtoupper($row->tipo_m),
+                    strtoupper($row->largo),
+                    strtoupper($row->ancho),
+                    strtoupper($row->resistencia)
             );
            $i++;
         }
@@ -229,6 +288,217 @@ if ($this->permisos->permisos(4,2)==1) {
         //echo $usuario[0][permiso][$b];
         /////////////////////////////////////////////////// P E R M I S O S ////////////////////////////////////////////
  }
+ 
+public function buscando()
+{
+
+$filters = $_POST['filters'];
+
+        $where = "";
+        if (isset($filters)) {
+            $filters = json_decode($filters);
+            $where = " where cprima.activo = 1 AND ";
+            $whereArray = array();
+            $rules = $filters->rules;
+
+            foreach($rules as $rule) {
+                if ($rule->field=='resistencia') {
+
+                    if (($rule->data=='SG')||($rule->data=='sg')) {
+                   $whereArray[] = "resistencia.resistencia LIKE '%".$rule->data."%'";
+                    }else{
+                   $whereArray[] = "resistencia.resistencia=".$rule->data." ";
+                    }
+                }else{
+                $whereArray[] = $rule->field." like '%".$rule->data."%'";
+                  }
+            }
+            if (count($whereArray)>0) {
+
+                $where .= join(" and ", $whereArray);
+            } else {
+                $where = " where cprima.activo = 1 ";
+            }
+        }
+
+ $page = $_POST['page'];  // Almacena el numero de pagina actual
+    $limite = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
+    $sidx = $_POST['sidx'];  // Almacena el indice por el cual se hará la ordenación de los datos
+    $sord = $_POST['sord'];  // Almacena el modo de ordenación
+
+    if(!$sidx) $sidx =1;
+
+    // Se crea la conexión a la base de datos
+//    $conexion = new mysqli("servidor","usuario","password","basededatos");
+    // Se hace una consulta para saber cuantos registros se van a mostrar
+ $consul = $this->db->query('SELECT * FROM cat_mprima AS cprima , resistencia_mprima AS resistencia '.$where);
+ $count = $consul->num_rows();
+    if($consul->num_rows()==0)
+{
+echo json_encode('null');
+
+exit();
+}
+        if( $count >0 ) {
+        $total_pages = ceil($count/$limite);
+        } else {
+        $total_pages = 0;
+        }
+        if ($page > $total_pages)
+            $page=$total_pages;
+
+        //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
+        $start = $limite*$page - $limite;
+        //Consulta que devuelve los registros de una sola pagina
+        if ($start < 0){
+          $start = 0;
+         $data();
+        }else{
+ $resultado_catalogo =$this->catalogo->get_cat_mprima_search($where, $sidx, $sord, $start, $limite);
+        // Se agregan los datos de la respuesta del servidor
+        $data->page = $page;
+        $data->total = $total_pages;
+        $data->records = $count;
+        $i=0;
+if ($this->permisos->permisos(4,2)==1) {
+
+                foreach($resultado_catalogo as $row) {
+                   $data->rows[$i]['id']=$row->id_cat_mprima;
+
+                   if (($this->permisos->permisos(4,1)==1)&&($this->permisos->permisos(4,3)==1)){
+
+                        $onclikedit="onclick=edit('".$row->id_cat_mprima."')";
+                        $onclik="onclick=delet('".$row->id_cat_mprima."')";
+                        $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+
+                   }elseif (($this->permisos->permisos(4,1)==1)&&($this->permisos->permisos(4,3)==0)) {
+
+                        $onclikedit="onclick=edit('".$row->id_cat_mprima."')";
+                        //$onclik="onclick=delet('".$row->id_cat_mprima."')";
+                        $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>';
+
+                   }elseif (($this->permisos->permisos(4,1)==0)&&($this->permisos->permisos(4,3)==1)) {
+
+                        //$onclikedit="onclick=edit('".$row->id_cat_mprima."')";
+                        $onclik="onclick=delet('".$row->id_cat_mprima."')";
+                        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+
+                   }elseif (($this->permisos->permisos(4,1)==0)&&($this->permisos->permisos(4,3)==0)) {
+
+                        //$onclikedit="onclick=edit('".$row->id_cat_mprima."')";
+                        //$onclik="onclick=delet('".$row->id_cat_mprima."')";
+                        $acciones='';
+
+                   }
+                   $data->rows[$i]['cell']=array($acciones,
+                    strtoupper($row->nombre),
+                    strtoupper($row->descripcion),                    
+                    strtoupper($row->tipo_m),
+                    strtoupper($row->largo),
+                    strtoupper($row->ancho),
+                    strtoupper($row->resistencia)
+                    );
+                   $i++;
+                }
+        }
+    }
+        // La respuesta se regresa como json
+        echo json_encode($data);
+}
 
 
+
+
+public function buscando_pedidos_proveedor()
+{
+
+$filters = $_POST['filters'];
+
+        $where = "";
+        if (isset($filters)) {
+            $filters = json_decode($filters);
+            $where = " where cprima.activo = 1 AND ";
+            $whereArray = array();
+            $rules = $filters->rules;
+
+            foreach($rules as $rule) {
+                if ($rule->field=='resistencia') {
+
+                    if (($rule->data=='SG')||($rule->data=='sg')) {
+                   $whereArray[] = "resistencia.resistencia LIKE '%".$rule->data."%'";
+                    }else{
+                   $whereArray[] = "resistencia.resistencia=".$rule->data." ";
+                    }
+                }else{
+                $whereArray[] = $rule->field." like '%".$rule->data."%'";
+                  }
+            }
+            if (count($whereArray)>0) {
+
+                $where .= join(" and ", $whereArray);
+            } else {
+                $where = " where cprima.activo = 1 ";
+            }
+        }
+
+ $page = $_POST['page'];  // Almacena el numero de pagina actual
+    $limite = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
+    $sidx = $_POST['sidx'];  // Almacena el indice por el cual se hará la ordenación de los datos
+    $sord = $_POST['sord'];  // Almacena el modo de ordenación
+
+    if(!$sidx) $sidx =1;
+
+    // Se crea la conexión a la base de datos
+//    $conexion = new mysqli("servidor","usuario","password","basededatos");
+    // Se hace una consulta para saber cuantos registros se van a mostrar
+ $consul = $this->db->query('SELECT * FROM cat_mprima AS cprima , resistencia_mprima AS resistencia '.$where);
+ $count = $consul->num_rows();
+    if($consul->num_rows()==0)
+{
+echo json_encode('null');
+
+exit();
+}
+        if( $count >0 ) {
+        $total_pages = ceil($count/$limite);
+        } else {
+        $total_pages = 0;
+        }
+        if ($page > $total_pages)
+            $page=$total_pages;
+
+        //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
+        $start = $limite*$page - $limite;
+        //Consulta que devuelve los registros de una sola pagina
+        if ($start < 0){
+          $start = 0;
+         $data();
+        }else{
+ $resultado_catalogo =$this->catalogo->get_cat_mprima_search($where, $sidx, $sord, $start, $limite);
+        // Se agregan los datos de la respuesta del servidor
+        $data->page = $page;
+        $data->total = $total_pages;
+        $data->records = $count;
+        $i=0;
+if ($this->permisos->permisos(4,2)==1) {
+
+                foreach($resultado_catalogo as $row) {
+           $data->rows[$i]['id']=$row->id_cat_mprima;
+           $onclik="onclick=agregar('".$row->id_cat_mprima."')";
+           $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar" height="18" /></span>';
+           $data->rows[$i]['cell']=array($acciones,
+                    strtoupper($row->nombre),
+                    strtoupper($row->descripcion),                    
+                    strtoupper($row->tipo_m),
+                    strtoupper($row->largo),
+                    strtoupper($row->ancho),
+                    strtoupper($row->resistencia)
+                    );
+                   $i++;
+                }
+        }
+    }
+        // La respuesta se regresa como json
+        echo json_encode($data);
+}
 }

@@ -178,4 +178,92 @@ class Stock_lista extends CI_Controller
             echo '4';
         }
     }
+public function buscando()
+{
+$oficina=$this->session->userdata('oficina');
+$filters = $_POST['filters'];
+
+        $where = "";
+        if (isset($filters)) {
+            $filters = json_decode($filters);
+            $where = " where id_sucursal=".$oficina." AND ";
+            $whereArray = array();
+            $rules = $filters->rules;
+
+            foreach($rules as $rule) {
+
+                $whereArray[] = $rule->field." like '%".$rule->data."%'";
+
+            }
+            if (count($whereArray)>0) {
+
+                $where .= join(" and ", $whereArray);
+            } else {
+                $where = " where id_sucursal=".$oficina." ";
+            }
+        }
+
+ $page = $_POST['page'];  // Almacena el numero de pagina actual
+    $limite = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
+    $sidx = $_POST['sidx'];  // Almacena el indice por el cual se hará la ordenación de los datos
+    $sord = $_POST['sord'];  // Almacena el modo de ordenación
+
+    if(!$sidx) $sidx =1;
+
+    // Se crea la conexión a la base de datos
+//    $conexion = new mysqli("servidor","usuario","password","basededatos");
+    // Se hace una consulta para saber cuantos registros se van a mostrar
+ $consul = $this->db->query('SELECT * FROM stock_linea '.$where);
+ $count = $consul->num_rows();
+    if($consul->num_rows()==0)
+{
+echo json_encode('null');
+
+exit();
+}
+ if( $count >0 ) {
+        $total_pages = ceil($count/$limite);
+        } else {
+        $total_pages = 0;
+        }
+        if ($page > $total_pages)
+            $page=$total_pages;
+
+        //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
+        $start = $limite*$page - $limite;
+        //Consulta que devuelve los registros de una sola pagina
+        if ($start < 0) $start = 0;
+        $resultado_ =$this->stock->get_stock_lista_search($where,$sidx, $sord, $start, $limite);
+        // Se agregan los datos de la respuesta del servidor
+        $data->page = $page;
+        $data->total = $total_pages;
+        $data->records = $count;
+        $i=0;
+        foreach($resultado_ as $row) {
+
+           $data->rows[$i]['id']=$row->id_stock_linea;
+
+        if ($row->cantidad>0) {
+
+                $onclickUsar="onclick=usarLinea('".$row->id_stock_linea."')";
+                $acciones='<span style=" cursor:pointer" '.$onclickUsar.'><img src="'.base_url().'img/usar.png" width="18" title="usar" height="18" /></span>';
+
+        }else{
+                $acciones='';
+        }
+           $data->rows[$i]['cell']=array(
+                                    $row->id_stock_linea,
+                                    $acciones,
+                                    strtoupper($row->nombre),
+                                    strtoupper($row->largo),
+                                    strtoupper($row->ancho),
+                                    strtoupper($row->corrugado),
+                                    strtoupper($row->resistencia),
+                                    strtoupper($row->cantidad)
+                                    );
+           $i++;
+        }
+        // La respuesta se regresa como json
+        echo json_encode($data);
+}
 }

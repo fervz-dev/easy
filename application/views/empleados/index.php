@@ -26,26 +26,26 @@ function cargar () {
                                     'OFICINA',
                                     'COMENTARIO',
                                     'FECHA DE INGRESO'],
-                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:false, align:"center", search:false},
-                                  {name:'nombre_obrero', index:'nombre_obrero', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'a_paterno', index:'a_paterno', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'a_materno', index:'a_materno', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'fecha_nacimiento', index:'fecha_nacimiento', width:60,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'estado_civil', index:'estado_civil', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'sexo', index:'sexo', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'estado', index:'estado', width:100,resizable:false, sortable:true,search:false,editable:false},
-                                  {name:'municipio', index:'municipio', width:80,resizable:false, sortable:true,search:false,editable:false},
-                                  {name:'localidad', index:'localidad', width:80,resizable:false, sortable:true,search:false,editable:false},
-                                  {name:'cp', index:'cp', width:40,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'direccion', index:'direccion', width:90,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'lada', index:'lada', width:30,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'num_telefono', index:'num_telefono', width:70,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'celular', index:'celular', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'email', index:'email', width:180,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'nombre', index:'nombre', width:120,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:170,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'comentario',index:'comentario', width:90,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'fecha_ingreso',index:'fecha_ingreso',width:90,resizable:false, sortable:true,search:false,editable:true}
+                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
+                                  {name:'nombre_obrero', index:'nombre_obrero', width:80,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'a_paterno', index:'a_paterno', width:100,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'a_materno', index:'a_materno', width:100,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'fecha_nacimiento', index:'fecha_nacimiento', width:60,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'estado_civil', index:'estado_civil', width:80,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'sexo', index:'sexo', width:40,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'estado', index:'estado', width:100,resizable:true, sortable:true,search:false,editable:false},
+                                  {name:'municipio', index:'municipio', width:80,resizable:true, sortable:true,search:false,editable:false},
+                                  {name:'localidad', index:'localidad', width:80,resizable:true, sortable:true,search:false,editable:false},
+                                  {name:'cp', index:'cp', width:40,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'direccion', index:'direccion', width:90,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'lada', index:'lada', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'num_telefono', index:'num_telefono', width:70,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'celular', index:'celular', width:80,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'email', index:'email', width:180,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'nombre', index:'nombre', width:120,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'nombre_oficina', index:'nombre_oficina', width:170,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'comentario',index:'comentario', width:90,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'fecha_ingreso',index:'fecha_ingreso',width:90,resizable:true, sortable:true,search:false,editable:true}
 
 
 
@@ -68,7 +68,7 @@ function cargar () {
   width:'100%',
     //searchurl:'<?php echo base_url();?>empresas/buscando',
                 height:"auto"
-        }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
+        }).navGrid("#paginacion", { edit: false, add: false, search:true, del: false, refresh:true });
         $("#tbl_empleados").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
 
 }
@@ -326,26 +326,26 @@ function delete_id(id)
                                     'OFICINA',
                                     'COMENTARIO',
                                     'FECHA DE INGRESO'],
-                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:false, align:"center", search:false},
-                                  {name:'nombre_obrero', index:'nombre_obrero', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'a_paterno', index:'a_paterno', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'a_materno', index:'a_materno', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'fecha_nacimiento', index:'fecha_nacimiento', width:60,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'estado_civil', index:'estado_civil', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'sexo', index:'sexo', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'estado', index:'estado', width:100,resizable:false, sortable:true,search:false,editable:false},
-                                  {name:'municipio', index:'municipio', width:80,resizable:false, sortable:true,search:false,editable:false},
-                                  {name:'localidad', index:'localidad', width:80,resizable:false, sortable:true,search:false,editable:false},
-                                  {name:'cp', index:'cp', width:40,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'direccion', index:'direccion', width:90,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'lada', index:'lada', width:30,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'num_telefono', index:'num_telefono', width:70,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'celular', index:'celular', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'email', index:'email', width:180,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'nombre', index:'nombre', width:120,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:170,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'comentario',index:'comentario', width:90,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'fecha_ingreso',index:'fecha_ingreso',width:90,resizable:false, sortable:true,search:false,editable:true}
+                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
+                                  {name:'nombre_obrero', index:'nombre_obrero', width:80,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'a_paterno', index:'a_paterno', width:100,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'a_materno', index:'a_materno', width:100,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'fecha_nacimiento', index:'fecha_nacimiento', width:60,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'estado_civil', index:'estado_civil', width:80,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'sexo', index:'sexo', width:40,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'estado', index:'estado', width:100,resizable:true, sortable:true,search:false,editable:false},
+                                  {name:'municipio', index:'municipio', width:80,resizable:true, sortable:true,search:false,editable:false},
+                                  {name:'localidad', index:'localidad', width:80,resizable:true, sortable:true,search:false,editable:false},
+                                  {name:'cp', index:'cp', width:40,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'direccion', index:'direccion', width:90,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'lada', index:'lada', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'num_telefono', index:'num_telefono', width:70,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'celular', index:'celular', width:80,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'email', index:'email', width:180,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'nombre', index:'nombre', width:120,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'nombre_oficina', index:'nombre_oficina', width:170,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'comentario',index:'comentario', width:90,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'fecha_ingreso',index:'fecha_ingreso',width:90,resizable:true, sortable:true,search:false,editable:true}
 
 
 
@@ -368,7 +368,7 @@ function delete_id(id)
 	width:'100%',
     //searchurl:'<?php echo base_url();?>empresas/buscando',
                 height:"auto"
-        }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
+        }).navGrid("#paginacion", { edit: false, add: false, search: true, del: false, refresh:true });
         $("#tbl_empleados").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
    });
 function reloading()

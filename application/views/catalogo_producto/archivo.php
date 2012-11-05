@@ -1,7 +1,6 @@
 
 
-<form action="<?php echo base_url();?>catalogo_producto/do_upload" method="post" accept-charset="utf-8" enctype="multipart/form-data" name="archivo" id="archivo"><table>
-<tr>
+<form action="<?php echo base_url();?>catalogo_producto/do_upload" method="post" accept-charset="utf-8" enctype="multipart/form-data" name="archivo" id="archivo">
 <table>
 <tr>
 	<td><label id="labelRight">Nombre de la imagen:</label></td>

@@ -83,10 +83,27 @@ class Merma extends CI_Controller {
         if ($this->permisos->permisos(6,2)==1) {
         foreach($resultado_ as $row) {
            $data->rows[$i]['id']=$row->id_merma;
+           if (($this->permisos->permisos(25,1)==1)&&($this->permisos->permisos(25,3)==1)){
+
            $onclik="onclick=delet('".$row->id_merma."')";
            $onclikedit="onclick=edit('".$row->id_merma."')";
            $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
 
+          }elseif (($this->permisos->permisos(25,1)==1)&&($this->permisos->permisos(25,3)==0)) {
+           //$onclik="onclick=delet('".$row->id_merma."')";
+                     $onclikedit="onclick=edit('".$row->id_merma."')";
+                     $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>';
+
+           }elseif (($this->permisos->permisos(25,1)==0)&&($this->permisos->permisos(25,3)==1)) {
+                      $onclik="onclick=delet('".$row->id_merma."')";
+                     //$onclikedit="onclick=edit('".$row->id_merma."')";
+                     $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+
+          }elseif (($this->permisos->permisos(25,1)==0)&&($this->permisos->permisos(25,3)==0)) {
+
+                                  $acciones='';
+
+                             }
 
            $data->rows[$i]['cell']=array($acciones,
                                   	$row->nombre_oficina,

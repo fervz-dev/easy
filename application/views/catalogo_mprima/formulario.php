@@ -8,6 +8,14 @@
 			<input name="nombre" type="text" id="nombre" size="35">
 		</td>
 	</tr>
+	<tr>
+		<td>
+			<label id="labelRight">Descripcion:</label>
+		</td>
+		<td>
+			<textarea name="descripcion" id="descripcion" cols="32" rows="4"></textarea>
+		</td>
+	</tr>
 
 	<tr>
 		<td><label id="labelRight">Corrugado:</label></td>
@@ -18,6 +26,7 @@
 			<option value="DOBLE">DOBLE</option>
 
 		</select>
+	</td>
 	</tr>
 
 

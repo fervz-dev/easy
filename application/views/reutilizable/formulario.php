@@ -17,6 +17,7 @@
 			<option value="DOBLE">DOBLE</option>
 
 		</select>
+		</td>
 	</tr>
 
 
@@ -36,18 +37,64 @@
 			<input name="ancho" type="text" id="ancho" size="35">
 		</td>
 	</tr>
+<tr>
+	<td>
+		
+	</td>
+</tr>
+<td colspan="2">
+	<fieldset>
+		<legend>
+			forma de ingresar al sistema
+		</legend>
+		<table>
+			<tr>
+				<td>
+					<select id="tipoIngreso" name="tipoIngreso">
+						<option value="1" onclick="tipo_Ingreso(1);">Default</option>
+						<option value="2" onclick="tipo_Ingreso(2);">Por peso Lamina</option>
+						<option value="3" onclick="tipo_Ingreso(3);">Por muestra</option>
+					</select>
+				<!-- Default<input type ="radio" name="tipoIngreso" value="1" checked="checked"onclick="tipo_Ingreso(1);">
+				Peso lamina<input type ="radio" name="tipoIngreso" value="2" onclick="tipo_Ingreso(2);">
+				Muestra<input type ="radio" name="tipoIngreso" value="3"onclick="tipo_Ingreso(3);"> -->
+				</td>
+			</tr>
 
+		</table>
+	</fieldset>
+</td>
+			<tr id="tipo1"style="display:none;">
+				<td>
+					<label id="labelRight">Peso Lamina:</label>
+				</td>
+				<td>
+					<input type="text"	name="pesoLamina" id="pesoLamina">
+				</td>
+			</tr>
+
+			<tr id="tipo2" style="display:none;">
+				<td>
+					<label id="labelRight">Peso Muestra:</label>
+				</td>
+				<td>
+					<input type="text"	name="pesoMuestra" id="pesoMuestra">
+					<label for="">El tamaño debe de ser:(10cm X 10cm)</label>
+				</td>
+			</tr>
 	<tr>
 	<td><label id="labelRight">Resitencia:</label></td>
 	<td><select id="resistencia_mprima_id_resistencia_mprima" name="resistencia_mprima_id_resistencia_mprima">
 			<option value="">Seleccione...</option>
 			<?php foreach ($resistencia as $rst) { ?>
-			<option value="<?php echo $rst['id_resistencia_mprima']; ?>"><?php echo $rst['resistencia'] ?></option>
-			<?php } ?>
+				<option value="<?php echo $rst['id_resistencia_mprima'];
+				?>"><?php echo $rst['resistencia'] ?></option>
+				<?php } ?>
 		</select> </td>
 	</tr>
 
 <tr>
+
 
 <!-- <td colspan="2">
 	<fieldset>
@@ -100,8 +147,23 @@
 </form>
 
 <script type="text/javascript">
+function tipo_Ingreso(radio) {
 
-
+	if (radio==1) {
+		$('#pesoLamina').val("");
+		$('#pesoMuestra').val("");
+		$('#tipo1').hide();
+		$('#tipo2').hide();
+	}else if (radio==2) {
+		$('#tipo1').show();
+		$('#pesoMuestra').val("");
+		$('#tipo2').hide();
+	}else if (radio==3) {
+		$('#pesoLamina').val("");
+		$('#tipo1').hide();
+		$('#tipo2').show();
+	}
+}
 
 
 </script>

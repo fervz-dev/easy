@@ -312,11 +312,11 @@ function cargar () {
                                     'LUGAR DE ENVIO'
                                     ],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'cantidad', index:'cantidad', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:true,editable:true}
+                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'cantidad', index:'cantidad', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:false,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -351,11 +351,11 @@ function cargar () {
                                     'LUGAR DE ENVIO'
                                     ],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'cantidad', index:'cantidad', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:true,editable:true}
+                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'cantidad', index:'cantidad', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:false,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -429,14 +429,24 @@ function validarCamposForm1 () {
 </script>
 <div id="dialog-confirm" title="Confirmacion" style="display: none;">
 </div>
+
 <table >
 <tr>
-<td><div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico" title="Nuevo Registro"></div>
+<td>
+    <?php
+if (!isset($_GET['submain'])) {
+}  elseif (($this->permisos->permisos_submenus($_GET['m'],$_GET['submain'],0)==1)&&($this->permisos->permisos($_GET['submain'],2)==1)) {?>
+
+  <div onclick="alta()" id="alta"><img src="<?php '.base_url().' ?>img/nuevo.ico" title="Nuevo Registro"></div>
+
+<?php  }?>
 </td>
 <td></td>
 <td >&nbsp;</td>
 </tr>
 </table>
+
+
         <table id="tbl_p_prove"></table>
         <div id="paginacion"> </div>
         <div style="display:none" id="dialog-procesos" title="Formulario de Pedidos Reutilizable">

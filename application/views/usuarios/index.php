@@ -213,11 +213,11 @@ $.ajax({
 
             colNames:['ACCI&Oacute;N','NOMBRE','USUARIO','EMAIL','ROL'],
                         colModel:[
-                        {name:'acciones', index:'acciones', width:100, resizable:false, align:"center", search:false},
-                        {name:'nombre', index:'nombre', width:230,resizable:false, sortable:true,search:true,editable:true},
-                        {name:'user', index:'user', width:180,resizable:false, sortable:true,search:true,editable:true},
-                        {name:'email', index:'email', width:180,resizable:false, sortable:true,search:true,editable:true},
-                       {name:'rol', index:'id_roles', width:120,resizable:false, sortable:true,search:true, stype:"select", searchoptions:{"value":":Seleccione;<?php $query=$this->db->query('select * from roles where status = 1 order by nombre_rol'); $q=$query->result_array(); $coma=';'; for($i=0; $i<count($q); $i++) { if($i==count($q)-1){$coma='';} echo $q[$i]['id_roles'].':'.$q[$i]['nombre_rol'].$coma; }?>"}}
+                        {name:'acciones', index:'acciones', width:100, resizable:true, align:"center", search:false},
+                        {name:'nombre', index:'nombre', width:230,resizable:true, sortable:true,search:true,editable:true},
+                        {name:'user', index:'user', width:180,resizable:true, sortable:true,search:true,editable:true},
+                        {name:'email', index:'email', width:180,resizable:true, sortable:true,search:true,editable:true},
+                       {name:'rol', index:'id_roles', width:120,resizable:true, sortable:true,search:true, stype:"select", searchoptions:{"value":":Seleccione;<?php $query=$this->db->query('select * from roles where status = 1 order by nombre_rol'); $q=$query->result_array(); $coma=';'; for($i=0; $i<count($q); $i++) { if($i==count($q)-1){$coma='';} echo $q[$i]['id_roles'].':'.$q[$i]['nombre_rol'].$coma; }?>"}}
                     ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -248,11 +248,11 @@ $(document).ready(function(){
 
 						colNames:['ACCI&Oacute;N','NOMBRE','USUARIO','EMAIL','ROL'],
                         colModel:[
-                        {name:'acciones', index:'acciones', width:100, resizable:false, align:"center", search:false},
-                        {name:'nombre', index:'nombre', width:230,resizable:false, sortable:true,search:true,editable:true},
-                        {name:'user', index:'user', width:180,resizable:false, sortable:true,search:true,editable:true},
-                        {name:'email', index:'email', width:180,resizable:false, sortable:true,search:true,editable:true},
-					             {name:'rol', index:'id_roles', width:120,resizable:false, sortable:true,search:true, stype:"select", searchoptions:{"value":":Seleccione;<?php $query=$this->db->query('select * from roles where status = 1 order by nombre_rol'); $q=$query->result_array(); $coma=';'; for($i=0; $i<count($q); $i++) { if($i==count($q)-1){$coma='';} echo $q[$i]['id_roles'].':'.$q[$i]['nombre_rol'].$coma; }?>"}}
+                        {name:'acciones', index:'acciones', width:100, resizable:true, align:"center", search:false},
+                        {name:'nombre', index:'nombre', width:230,resizable:true, sortable:true,search:true,editable:true},
+                        {name:'user', index:'user', width:180,resizable:true, sortable:true,search:true,editable:true},
+                        {name:'email', index:'email', width:180,resizable:true, sortable:true,search:true,editable:true},
+					             {name:'rol', index:'id_roles', width:120,resizable:true, sortable:true,search:true, stype:"select", searchoptions:{"value":":Seleccione;<?php $query=$this->db->query('select * from roles where status = 1 order by nombre_rol'); $q=$query->result_array(); $coma=';'; for($i=0; $i<count($q); $i++) { if($i==count($q)-1){$coma='';} echo $q[$i]['id_roles'].':'.$q[$i]['nombre_rol'].$coma; }?>"}}
                     ],
     pager: jQuery('#paginacion'),
     rownumbers:true,

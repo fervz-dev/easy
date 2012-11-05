@@ -39,6 +39,7 @@ class Pedidos_nave extends CI_Controller {
 	/////////////////////////////////////listar los pedidos por nave
      public function paginacionLista()
     {
+        $oficina=$this->session->userdata('oficina');
         $page = $_POST['page'];  // Almacena el numero de pagina actual
         $limite = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
         $sidx = $_POST['sidx'];  // Almacena el indice por el cual se hará la ordenación de los datos
@@ -50,7 +51,7 @@ class Pedidos_nave extends CI_Controller {
         // $conexion = new mysqli("servidor","usuario","password","basededatos");
         // Se hace una consulta para saber cuantos registros se van a mostrar
 
-     $consul = $this->db->query('SELECT * from pedido_bodega ');
+     $consul = $this->db->query("SELECT * from pedido_bodega WHERE pedido_bodega.oficina_pedido =  ".$this->session->userdata('oficina')." AND pedido_bodega.enviado=0");
      $count = $consul->num_rows();
         //En base al numero de registros se obtiene el numero de paginas
         if( $count >0 ) {
@@ -75,16 +76,18 @@ class Pedidos_nave extends CI_Controller {
         $data->total = $total_pages;
         $data->records = $count;
         $i=0;
-if ($this->permisos->permisos(24,2)==1) {
-        foreach($resultado_ as $row) {
-           $data->rows[$i]['id']=$row->id_pedido;
- if (($this->permisos->permisos(24,1)==1)&&($this->permisos->permisos(24,3)==1)){
+    if ($this->permisos->permisos(24,2)==1) {
+            foreach($resultado_ as $row) {
+               $data->rows[$i]['id']=$row->id_pedido;
+     if (($this->permisos->permisos(24,1)==1)&&($this->permisos->permisos(24,3)==1)){
 
-           $onclik="onclick=cargar_mprima('".$row->id_pedido."')";
-     $acciones='<span style=" cursor:pointer" '.$onclik.'><img title="Seleccionar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>';
+         $onclik="onclick=enviado('".$row->id_pedido."')";
+         $acciones='<span style=" cursor:pointer" '.$onclik.'><img title="Verificar" src="'.base_url().'img/alert-icon.png" width="18" height="18" /></span>';
 
 
- }
+     }else{
+        $acciones='';
+     }
            $data->rows[$i]['cell']=array($acciones,
                                     strtoupper($row->id_pedido),
                                     strtoupper($row->fecha_pedido),
@@ -188,7 +191,7 @@ if ($valor == 1) {
 
       $data->rows[$i]['id']=$row->id_cantidad_pedido;
         $onclik="onclick=eliminar_producto('".$row->id_cantidad_pedido."')";
-        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+        $acciones='';
         $data->rows[$i]['cell']=array($acciones,
         ($N),
         strtoupper($row->nombre),
@@ -204,7 +207,7 @@ if ($valor == 1) {
 
       $data->rows[$i]['id']=$row->id_cantidad_pedido;
         $onclik="onclick=pedido_cerrado('".$row->id_cantidad_pedido."')";
-        $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Eliminar" height="18" /></span>';
+        $acciones='';
         $data->rows[$i]['cell']=array($acciones,
         ($N),
         strtoupper($row->nombre),

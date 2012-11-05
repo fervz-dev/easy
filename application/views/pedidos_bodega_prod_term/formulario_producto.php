@@ -77,16 +77,17 @@ $( "#dialog-procesos_cantidad" ).dialog({
     url:'<?php echo base_url();?>catalogo_producto/paginacion_productos',
    datatype: "json",
     mtype: 'POST',
-                        colNames:['Acciones','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
+                        colNames:['Acciones','CLIENTE','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                              {name:'nombre', index:'nombre', width:120,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'largo', index:'largo', width:50,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'ancho', index:'ancho', width:50,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'alto', index:'alto', width:50,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'resistencia', index:'resistencia', width:50,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'corrugado', index:'corrugado', width:60,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'score', index:'score', width:50,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'descripcion', index:'descripcion', width:170,resizable:true, sortable:true,search:false,editable:false}
+                              {name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'nombre', index:'nombre', width:170,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'largo', index:'largo', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'ancho', index:'ancho', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'alto', index:'alto', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'resistencia', index:'resistencia', width:100,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'corrugado', index:'corrugado', width:80,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'score', index:'score', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'descripcion', index:'descripcion', width:170,resizable:true, sortable:true,search:true,editable:false}
 
 
                                 ],
@@ -105,7 +106,7 @@ editable: true,
     height:'auto',
     loadtext: 'Cargando',
   width:'100%',
-    //searchurl:'<?php echo base_url();?>empresas/buscando',
+    searchurl:'<?php echo base_url();?>catalogo_producto/buscando',
                 height:"auto"
         }).navGrid("#paginacion_form", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl_p_prove_form").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;

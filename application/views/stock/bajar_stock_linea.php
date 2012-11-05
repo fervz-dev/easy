@@ -7,12 +7,12 @@ function add_stock (id) {
             beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
             type:"POST",
             url:"<?php echo base_url();?>stock_lista/add_stock/"+id,
-            data:{"nombre":$("#nombre").val(),
-                  "largo":$("#largo").val(),
-                  "ancho":$("#ancho").val(),
-                  "tipo_m":$("#corrugado").val(),
-                  "resistencia":$("#resistencia").val(),
-                  "cantidad":$("#cantidad").val()
+            data:{"nombre":$("#nombre1").val(),
+                  "largo":$("#largo1").val(),
+                  "ancho":$("#ancho1").val(),
+                  "tipo_m":$("#corrugado1").val(),
+                  "resistencia":$("#resistencia1").val(),
+                  "cantidad":$("#cantidad1").val()
                 },
             cache: false,
             datatype:"html",
@@ -61,22 +61,22 @@ function abierto (id) {
 
 }
 ///////////////////////////////////////////////Verificacion producto proveedor de linea //////////////////////////////////////////
-function verificacion_producto_pedido(id) {
+function verificacion_producto_pedido_pedido(id) {
 
 $.ajax({
                         async:true,cache: false,
                         beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
                         type:"GET",
-                        url:"<?php echo base_url();?>pedidos_proveedor/verificacion_pedido/"+id+"/"+Math.random()*10919939116744,
+                        url:"<?php echo base_url();?>pedidos_proveedor/verificacion_pedido_pedido/"+id+"/"+Math.random()*10919939116744,
                         datatype:"html",
                         success:function(data, textStatus){
                                   dato= data.split('~');
-                                  $("#nombre").val(dato[0]);
-                                  $("#largo").val(dato[1]);
-                                  $("#ancho").val(dato[2]);
-                                  $("#corrugado").val(dato[3]);
-                                  $("#cantidad").val(dato[4]);
-                                  $("#resistencia").val(dato[5]);
+                                  $("#nombre1").val(dato[0]);
+                                  $("#largo1").val(dato[1]);
+                                  $("#ancho1").val(dato[2]);
+                                  $("#corrugado1").val(dato[3]);
+                                  $("#cantidad1").val(dato[4]);
+                                  $("#resistencia1").val(dato[5]);
 
                                   },
                         error:function(datos){
@@ -93,6 +93,8 @@ $( "#dialog-procesos12" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
+               $(".ui-dialog-buttonpane button:contains('Aceptar')").button("disable");
+                $(".ui-dialog-buttonpane button:contains('Cancelar')").button("disable");
               add_stock(id);
             },
           Cancelar:function()
@@ -265,6 +267,49 @@ function verificacion_pedido (id, confirmacion) {
               <strong>Error:</strong> No se pudo verificar el pedido!!!</p>
             </div>
           </div>
+        </div>
           <div style="display:none" id="dialog-procesos12" title="Verificar producto">
-            <?php $this->load->view('stock/formulario_validar_producto');?>
+             <form  name="producto" id="producto">
+                <table>
+
+
+
+                  <tr>
+                    <td><label>Nombre</label></td>
+                    <td><input type="text" id="nombre1" name="nombre1" readonly="readonly" ></td>
+                  </tr>
+
+                  <tr>
+                    <td><label>Largo</label></td>
+                    <td><input type="text" id="largo1" name="largo1" readonly="readonly" ></td>
+                  </tr>
+                  <tr>
+                    <td><label>Ancho</label></td>
+                    <td><input type="text" id="ancho1" name="ancho1" readonly="readonly" ></td>
+                  </tr>
+
+
+                  <tr>
+                    <td><label>Corrugado</label></td>
+                    <td><input type="text" id="corrugado1" name="corrugado1" readonly="readonly" ></td>
+                  </tr>
+                  <tr>
+                    <td><label>Resistencia</label></td>
+                    <td><input type="text" id="resistencia1" name="resistencia1" readonly="readonly" ></td>
+                  </tr>
+
+                  <tr>
+                    <td><label>Cantidad</label></td>
+                    <td><input type="text" id="cantidad1" name="cantidad1"  ></td>
+                  </tr>
+
+                <!--  <tr>
+                    <td><label>Observaciones</label></td>
+                    <td><textarea rows="2" cols="20"></textarea></td>
+                  </tr> -->
+
+                  <!-- <input type="hidden"  id="id_producto" name="id_produto" > -->
+
+                </table>
+                </form>
           </div>

@@ -370,11 +370,11 @@ function cargar () {
                                     'LUGAR DE ENVIO'
                                     ],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                                  {name:'id_pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:100,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:true,editable:true}
+                                  {name:'id_pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'nombre_oficina', index:'nombre_oficina', width:100,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:false,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -441,11 +441,11 @@ function cargar () {
                                     'LUGAR DE ENVIO'
                                     ],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                                  {name:'id_pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:100,resizable:true, sortable:true,search:true,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:true,editable:true}
+                                  {name:'id_pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'nombre_oficina', index:'nombre_oficina', width:100,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:false,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -463,7 +463,7 @@ function cargar () {
     loadtext: 'Cargando',
   width:'950',
   subGrid: true,
-    searchurl:'<?php echo base_url();?>empresas/buscando',
+    //searchurl:'<?php echo base_url();?>empresas/buscando',
     height:"auto",
    subGridRowExpanded: function(subgrid_id, row_id) {
    var subgrid_table_id, pager_id; subgrid_table_id = subgrid_id+"_t"; pager_id = "p_"+subgrid_table_id;

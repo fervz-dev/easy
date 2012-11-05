@@ -113,16 +113,16 @@ function cargar () {
     datatype: "json",
     mtype: 'POST',
                         colNames:['Acciones','CLIENTE','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
-                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:false, align:"center", search:false},
-                              {name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'nombre', index:'nombre', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'largo', index:'largo', width:50,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'ancho', index:'ancho', width:50,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'alto', index:'alto', width:50,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'resistencia', index:'resistencia', width:100,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'corrugado', index:'corrugado', width:80,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'score', index:'score', width:50,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'descripcion', index:'descripcion', width:170,resizable:false, sortable:true,search:false,editable:false}
+                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
+                              {name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'nombre', index:'nombre', width:170,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'largo', index:'largo', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'ancho', index:'ancho', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'alto', index:'alto', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'resistencia', index:'resistencia', width:100,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'corrugado', index:'corrugado', width:80,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'score', index:'score', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'descripcion', index:'descripcion', width:170,resizable:true, sortable:true,search:true,editable:false}
 
 
                                 ],
@@ -141,7 +141,7 @@ editable: true,
     height:'auto',
     loadtext: 'Cargando',
   width:'100%',
-    //searchurl:'<?php echo base_url();?>empresas/buscando',
+    searchurl:'<?php echo base_url();?>catalogo_producto/buscando',
                 height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
@@ -279,6 +279,7 @@ $( "#dialog-procesos-picture_view" ).dialog({
          $('#img_catalogo img:last-child').remove();
           }
           ,
+          <?php  if (($this->permisos->permisos(8,1)==1)&&($this->permisos->permisos(8,3)==1)) {?>
           Eliminar:function()
           {
             $( "#dialog-procesos-picture_view" ).dialog( "close" );
@@ -315,7 +316,7 @@ $( "#dialog-procesos-picture_view" ).dialog({
                              }//Error
                          });//Ajax
 
-          }
+          }<?php } ?>
       },
       close: function() {
         $('#img_catalogo img:last-child').remove();
@@ -390,13 +391,15 @@ if (validarVacio(nombre_archivo)==false) {
   $("#nombre_archivo").focus();
   return false;
 
-}else if (validarVacio(descripcion_archivo)==false) {
+}
+// else if (validarVacio(descripcion_archivo)==false) {
 
-  notify('* El campo <strong>DESCRIPCION</strong> no puede estar vacio!!!',500,5000,'error');
-  $("#descripcion_archivo").focus();
-  return false;
+//   notify('* El campo <strong>DESCRIPCION</strong> no puede estar vacio!!!',500,5000,'error');
+//   $("#descripcion_archivo").focus();
+//   return false;
 
-}else if (validarVacio(userfile)==false) {
+// }
+else if (validarVacio(userfile)==false) {
 
   notify('* Debe de seleccionar un archivos!!!',500,5000,'error');
   $("#userfile").focus();
@@ -412,13 +415,17 @@ if (validarVacio(nombre_archivo)==false) {
 ////////////////////////////////////// validacion //////////////////////
 function validarCampos () {
 
+            clientesdb=$('#clientesdb').val();
             nombre=$("#nombre").val();
             ancho=$("#ancho").val();
             largo=$("#largo").val();
             corrugado=$("#corrugado").val();
             resistencia=$("#resistencia_mprima_id_resistencia_mprima").val();
-
-            if (validarVacio(nombre)==false) {
+            if (validarCombo(clientesdb)==false) {
+              notify('* El campo <strong>CLIENTE</strong> no puede estar vacio!!!',500,5000,'error');
+              $("#clientesdb").focus();
+              return false;
+            }else if (validarVacio(nombre)==false) {
               notify('* El campo <strong>NOMBRE</strong> no puede estar vacio!!!',500,5000,'error');
               $("#nombre").focus();
               return false;
@@ -457,16 +464,16 @@ function validarCampos () {
     datatype: "json",
     mtype: 'POST',
                         colNames:['Acciones','CLIENTE','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
-                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:false, align:"center", search:false},
-                              {name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'nombre', index:'nombre', width:170,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'largo', index:'largo', width:50,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'ancho', index:'ancho', width:50,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'alto', index:'alto', width:50,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'resistencia', index:'resistencia', width:100,resizable:false, sortable:true,search:false,editable:false},
-                              {name:'corrugado', index:'corrugado', width:80,resizable:false, sortable:true,search:false,editable:false},
-                                    {name:'score', index:'score', width:50,resizable:false, sortable:true,search:false,editable:false},
-                                    {name:'descripcion', index:'descripcion', width:170,resizable:false, sortable:true,search:false,editable:false}
+                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
+                              {name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'nombre', index:'nombre', width:170,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'largo', index:'largo', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'ancho', index:'ancho', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'alto', index:'alto', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'resistencia', index:'resistencia', width:100,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'corrugado', index:'corrugado', width:80,resizable:true, sortable:true,search:true,editable:false},
+                                    {name:'score', index:'score', width:50,resizable:true, sortable:true,search:true,editable:false},
+                                    {name:'descripcion', index:'descripcion', width:170,resizable:true, sortable:true,search:true,editable:false}
 
 
                                 ],
@@ -485,7 +492,7 @@ function validarCampos () {
     height:'auto',
     loadtext: 'Cargando',
   width:'100%',
-    //searchurl:'<?php echo base_url();?>empresas/buscando',
+    searchurl:'<?php echo base_url();?>catalogo_producto/buscando',
                 height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;

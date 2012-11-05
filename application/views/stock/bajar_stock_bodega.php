@@ -179,7 +179,7 @@ function verificacion_pedido_bodega (id, confirmacion) {
     viewrecords: true,
     sortorder: "desc",
   editable: true,
-    caption: 'Pedido de linea',
+    caption: 'Pedido de Bodega',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',

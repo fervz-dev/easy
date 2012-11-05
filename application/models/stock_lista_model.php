@@ -28,6 +28,25 @@ class Stock_lista_model extends CI_Model
 									);
 		return ($query->num_rows()> 0)? $query->result() : NULL;
 	}
+
+		public function get_stock_lista_search($where, $sidx, $sord, $start, $limite)
+	{
+		$query = $this->db->query("SELECT
+									stock_linea.id_stock_linea,
+									stock_linea.nombre,
+									stock_linea.ancho,
+									stock_linea.largo,
+									stock_linea.corrugado,
+									stock_linea.resistencia,
+									stock_linea.cantidad
+									FROM
+									stock_linea
+									".$where."
+									ORDER BY $sidx $sord
+									LIMIT $start, $limite;"
+									);
+		return ($query->num_rows()> 0)? $query->result() : NULL;
+	}
 ////////////////////////////envia los datos  paginacion reutilizable/////////////////////////////////
 	public function get_stock_lista_reutilizable($sidx, $sord, $start, $limite)
 	{
@@ -131,7 +150,8 @@ class Stock_lista_model extends CI_Model
 		$cant  =  $this->input->post('cantidad');
 
 		$query= $this->db->query("SELECT
-										stock_linea.id_stock_linea,										stock_linea.nombre,
+										stock_linea.id_stock_linea,										
+										stock_linea.nombre,
 										stock_linea.ancho,
 										stock_linea.largo,
 										stock_linea.cantidad,
@@ -142,7 +162,8 @@ class Stock_lista_model extends CI_Model
 										stock_linea.nombre='".$nom."' AND
 										stock_linea.ancho= '".$anc."' AND
 										stock_linea.largo= '".$lar."' AND
-										stock_linea.resistencia= '".$resis."'
+										stock_linea.resistencia= '".$resis."' AND
+										stock_linea.id_sucursal =".$this->session->userdata('oficina')."
 										LIMIT 1");
 	$respuesta=$query->row();
 		if (count($respuesta)>0) {
@@ -182,12 +203,14 @@ class Stock_lista_model extends CI_Model
 
 			$num_rows_insert=$this->db->insert('stock_linea', $data);
 			if ($num_rows_insert>0) {
+				return 1;
 					// actualiza el registro de la tabla cantidad producto el campo verificacion a '1',
 					// para mostrar en la grid que ya se a verificado y agregado correctamente
-				$data_cantidad = array ('verificacion'=>1);
-					$this->db->where('id_cantidad_pedido', $id);
-					$this->db->update('cantidad_pedido_bodega',$data_cantidad);
-				return $this->db->affected_rows();
+				// $data_cantidad = array ('verificacion'=>1);
+				// 	$this->db->where('id_cantidad_pedido', $id);
+				// 	$this->db->update('cantidad_pedido_bodega',$data_cantidad);
+				// return $this->db->affected_rows();
+				
 			}
 
 		}

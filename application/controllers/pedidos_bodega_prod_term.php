@@ -77,10 +77,10 @@ public function paginacion()
         $data->total = $total_pages;
         $data->records = $count;
         $i=0;
-if ($this->permisos->permisos(10,2)==1) {
+if ($this->permisos->permisos(20,2)==1) {
         foreach($resultado_ as $row) {
            $data->rows[$i]['id']=$row->id_pedido;
- if (($this->permisos->permisos(10,1)==1)&&($this->permisos->permisos(10,3)==1)){
+ if (($this->permisos->permisos(20,1)==1)&&($this->permisos->permisos(20,3)==1)){
 
            $onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
            $onclick_add="onclick=add('".$row->id_pedido."')";
@@ -108,7 +108,7 @@ if ($this->permisos->permisos(10,2)==1) {
             }
 
            }
- }elseif (($this->permisos->permisos(10,1)==1)&&($this->permisos->permisos(10,3)==0)) {
+ }elseif (($this->permisos->permisos(20,1)==1)&&($this->permisos->permisos(20,3)==0)) {
         //$onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
            $onclick_add="onclick=add('".$row->id_pedido."')";
            $onclikedit="onclick=edit('".$row->id_pedido."')";
@@ -133,7 +133,7 @@ if ($this->permisos->permisos(10,2)==1) {
 
              }
            }
-}elseif (($this->permisos->permisos(10,1)==0)&&($this->permisos->permisos(10,3)==1)) {
+}elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==1)) {
            $onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
            $onclick_add="onclick=add('".$row->id_pedido."')";
            //$onclikedit="onclick=edit('".$row->id_pedido."')";
@@ -158,7 +158,7 @@ if ($this->permisos->permisos(10,2)==1) {
             }
 
            }
-        }elseif (($this->permisos->permisos(10,1)==0)&&($this->permisos->permisos(10,3)==0)) {
+        }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==0)) {
           $acciones='';
 
             }

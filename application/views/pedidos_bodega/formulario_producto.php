@@ -68,13 +68,14 @@ $( "#dialog-procesos_cantidad" ).dialog({
     url:'<?php echo base_url();?>catalogo_mprima/paginacion_productos',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Agregar','NOMBRE','CORRUGADO','LARGO','ANCHO','RESISTENCIA'],
+                          colNames:['Agregar','NOMBRE','DESCRIPCION','CORRUGADO','LARGO','ANCHO','RESISTENCIA'],
                         colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:50,resizable:true,align:"center", sortable:true,search:false,editable:false},
-                                  {name:'nombre', index:'nombre', width:150,resizable:true, sortable:true,search:false,editable:false,search:false,},
-                                  {name:'tipo_m', index:'tipo_m', width:90,resizable:true, sortable:true,align:"center",editable:true,search:false,},
-                                  {name:'largo', index:'largo', width:50,resizable:true, sortable:true,align:"center",editable:true,search:false,},
-                                  {name:'ancho', index:'ancho', width:50,resizable:true, sortable:true,align:"center",editable:true,search:false,},
-                                  {name:'resistencia', index:'resistencia', width:90,resizable:true, align:"center",sortable:true,search:false,editable:true}
+                                  {name:'nombre', index:'nombre', width:150,resizable:true, sortable:true,editable:false,search:true,},
+                                  {name:'descripcion', index:'descripcion', width:150,resizable:true, sortable:true,editable:false,search:true,},
+                                  {name:'tipo_m', index:'tipo_m', width:90,resizable:true, sortable:true,align:"center",editable:true,search:true,},
+                                  {name:'largo', index:'largo', width:50,resizable:true, sortable:true,align:"center",editable:true,search:true,},
+                                  {name:'ancho', index:'ancho', width:50,resizable:true, sortable:true,align:"center",editable:true,search:true,},
+                                  {name:'resistencia', index:'resistencia', width:90,resizable:true, align:"center",sortable:true,search:true,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -91,7 +92,7 @@ $( "#dialog-procesos_cantidad" ).dialog({
     height:'auto',
     loadtext: 'Cargando',
   width:'100%',
-    //searchurl:'<?php echo base_url();?>empresas/buscando',
+  searchurl:'<?php echo base_url();?>catalogo_mprima/buscando_pedidos_proveedor',
                 height:"auto"
         }).navGrid("#paginacion_form", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl_p_prove_form").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;

@@ -450,6 +450,17 @@ public function paginacion_producto($id)
              strtoupper($row->resistencia);
 
     }
+        public function verificacion_pedido_pedido($id)
+    {
+        $row=$this->pedidos->get_producto_pedido($id);
+        echo strtoupper($row->nombre).'~'.
+             strtoupper($row->largo).'~'.
+             strtoupper($row->ancho).'~'.
+             strtoupper($row->tipo_m).'~'.
+             strtoupper($row->cantidad).'~'.
+             strtoupper($row->resistencia);
+
+    }
 
 
 }

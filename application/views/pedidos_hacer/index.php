@@ -1,5 +1,98 @@
 <?php $this->load->view('hed');?>
 <script>
+function cargar1 () {
+  // body...
+
+  $("#tbl_p_prove").jqGrid({
+    url:'<?php echo base_url();?>pedidos_hacer/paginacion',
+    datatype: "json",
+    mtype: 'POST',
+
+                        colNames:['Acciones',
+                                    'ID PEDIDO',
+                                    'FECHA DE PEDIDO',
+                                    'FECHA DE ENTREGA',
+                                    'LUGAR DE ENVIO'
+                                    ],
+                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
+                                  {name:'id_pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:true,editable:true}
+                                ],
+    pager: jQuery('#paginacion'),
+    rownumbers:true,
+  rowNum:15,
+    rowList:[10,20,30],
+    imgpath: '<?php echo base_url();?>img/editar.jpg',
+    mtype: "POST",
+    sortname: 'id_pedido',
+    viewrecords: true,
+    sortorder: "asc",
+  editable: true,
+    caption: 'Pedidos Pendientes',
+    multiselect: false,
+    height:'auto',
+    loadtext: 'Cargando',
+  width:'950',
+  subGrid: true,
+    // searchurl:'<?php echo base_url();?>empresas/buscando',
+    height:"auto",
+   subGridRowExpanded: function(subgrid_id, row_id) {
+   var subgrid_table_id, pager_id; subgrid_table_id = subgrid_id+"_t"; pager_id = "p_"+subgrid_table_id;
+
+   $("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' alt='subtabla' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>");
+
+   $("#"+subgrid_table_id).jqGrid({
+   //url:"subgrid.php?q=2&id="+row_id,
+   url:"<?php echo base_url();?>pedidos_hacer/subpaginacion/"+row_id,
+   datatype: "json",
+   mtype: 'POST',
+   colNames: ['ACCI&Oacute;N',
+                          'No',
+                          'cantidad',
+                          'observaciones',
+                          'fecha_entrega',
+                          'nombre',
+                          'largo',
+                          'ancho',
+                          'alto',
+                          'resistencia',
+                          'corrugado',
+                          'score',
+                          'descripcion',
+                          'id_archivos'
+                          ],
+   colModel: [
+             {name:"acciones",index:"acciones",width:56,align:"center"},
+             {name:"No",index:"No",width:56,align:"center"},
+             {name:"cantidad",index:"cantidad",search: false,align:"center"},
+             {name:"observaciones",index:"observaciones",align:"left",search: false},
+             {name:"fecha_entrega",index:"fecha_entrega",align:"left",search: false},
+             {name:"nombre",index:"nombre",align:"left",search: false},
+             {name:"largo",index:"largo",width:56,align:"center"},
+             {name:"ancho",index:"ancho",width:56,align:"center"},
+             {name:"alto",index:"alto",search: false,align:"center"},
+             {name:"resistencia",index:"resistencia",align:"left",search: false},
+             {name:"corrugado",index:"corrugado",align:"left",search: false},
+             {name:"score",index:"score",align:"left",search: false},
+             {name:"descripcion",index:"descripcion",width:56,align:"center"},
+             {name:"id_archivos",index:"id_archivos",width:56,align:"center"}
+
+              ],
+   rows:10,
+   rowNum:10,
+   rowList:[10,15],
+   pager: pager_id,
+   sortname: 'id_cantidad_pedido',
+   height:'auto',
+   sortorder: "asc" });
+
+   $("#"+subgrid_table_id).jqGrid('navGrid',"#"+pager_id,{edit:false,add:false,del:false,search:false}) }
+        }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
+        $("#tbl_p_prove").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
+      $("#tbl_p_prove").jqGrid('navGrid','#paginacion',{add:false,edit:false,del:false,search:false});
+}
 
 function finalizar_producto(id) {
   $.ajax({
@@ -13,17 +106,24 @@ function finalizar_producto(id) {
               switch(data){
                 case "0":
                   notify("Error al procesar los datos " ,500,5000,'error');
+                  
+$("#tbl_p_prove").jqGrid('GridUnload');
+                  setTimeout("cargar()",1000);
                 break;
                 case "1":
                   $( "#dialogo" ).dialog( "close" );
                   $("#tbl_p_prove").trigger("reloadGrid");
                   notify('Pedido cerrado satisfactoriamente',500,5000,'aviso');
-
+                  
+$("#tbl_p_prove").jqGrid('GridUnload');
+                  setTimeout("cargar()",1000);
               break;
 
               default:
               $( "#dialogo").dialog( "close" );
-
+            
+$("#tbl_p_prove").jqGrid('GridUnload');
+            setTimeout("cargar()",1000);
               break;
 
               }//switch
@@ -46,11 +146,17 @@ function cerrado () {
       Cerrar:function()
         {
          $( "#dialogo_cerrado" ).dialog( "close" );
+         
+$("#tbl_p_prove").jqGrid('GridUnload');
+         setTimeout("cargar()",1000);
         }
       },
       close: function() {}
     });
         $( "#dialogo_cerrado" ).dialog( "open" );
+        
+$("#tbl_p_prove").jqGrid('GridUnload');
+        setTimeout("cargar()",1000);
 
 }
 //////////////////////////////////////////// Alerta producto - Pedido cerrado ////////////////////////////////////////////////
@@ -67,11 +173,17 @@ function pedido_cerrado () {
           Cerrar:function()
           {
         $( "#dialogo_cerrado" ).dialog( "close" );
+        
+$("#tbl_p_prove").jqGrid('GridUnload');
+        setTimeout("cargar()",1000);
           }
       },
       close: function() {}
     });
         $( "#dialogo_cerrado" ).dialog( "open" );
+        
+$("#tbl_p_prove").jqGrid('GridUnload');
+        setTimeout("cargar()",1000);
 
 }
 
@@ -91,16 +203,25 @@ if(confirmacion==true)
               switch(data){
                 case "0":
                   notify("Error al procesar los datos " ,500,5000,'error');
+                  
+$("#tbl_p_prove").jqGrid('GridUnload');
+                  setTimeout("cargar()",1000);
                 break;
                 case "1":
                   $( "#dialogo" ).dialog( "close" );
                   $("#tbl_p_prove").trigger("reloadGrid");
                   notify('Pedido cerrado satisfactoriamente',500,5000,'aviso');
+                  
+$("#tbl_p_prove").jqGrid('GridUnload');
+                  setTimeout("cargar()",1000);
 
               break;
 
               default:
               $( "#dialogo").dialog( "close" );
+              
+$("#tbl_p_prove").jqGrid('GridUnload');
+              setTimeout("cargar()",1000);
 
               break;
 
@@ -124,15 +245,24 @@ function abierto (id) {
           Aceptar: function() {
             var confirmacion=true;
            cerrar_pedido(id,confirmacion);
+           
+$("#tbl_p_prove").jqGrid('GridUnload');
+           setTimeout("cargar()",1000);
           },
           Cancelar:function()
           {
         $( "#dialogo" ).dialog( "close" );
+        
+$("#tbl_p_prove").jqGrid('GridUnload');
+        setTimeout("cargar()",1000);
           }
       },
       close: function() {}
     });
         $( "#dialogo" ).dialog( "open" );
+        
+$("#tbl_p_prove").jqGrid('GridUnload');
+        setTimeout("cargar()",1000);
 
 }
 
@@ -140,6 +270,7 @@ function abierto (id) {
 
 
 function cargar () {
+
     $("#tbl_p_prove").jqGrid({
     url:'<?php echo base_url();?>pedidos_hacer/paginacion',
     datatype: "json",
@@ -313,9 +444,15 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
         "Eliminar": function() {
           $( this ).dialog( "close" );
           eliminar_producto_(id);
+          setTime
+$("#tbl_p_prove").jqGrid('GridUnload');
+          out("cargar()",1000);
         },
         Cancel: function() {
           $( this ).dialog( "close" );
+          se
+$("#tbl_p_prove").jqGrid('GridUnload');
+          tTimeout("cargar()",1000);
         }
       }
     });

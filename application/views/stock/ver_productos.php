@@ -1,8 +1,8 @@
 <script type="text/javascript">
 
 
-function select_producto (id_producto) {
-$( "#dialog-procesos_cantidad" ).dialog({
+function select_producto1 (id_producto) {
+$( "#dialog-procesos_cantidad_mprima" ).dialog({
       autoOpen: false,
       height: 'auto',
       width: 'auto',
@@ -10,8 +10,8 @@ $( "#dialog-procesos_cantidad" ).dialog({
       buttons: {
           Aceptar: function() {
             id=$('#id_linea').val();
-          	cantidad_select=$('#cantidad_reutilizable').val();
-            if (validarCampos()==true) {
+          	cantidad_select=$('#cantidad_materia_prima').val();
+            if (validarCampos_materia_prima()==true) {
               guardar_select(id, cantidad_select, id_producto);
             };
 
@@ -19,18 +19,18 @@ $( "#dialog-procesos_cantidad" ).dialog({
       },
       close: function() {}
     });
-        $( "#dialog-procesos_cantidad" ).dialog( "open" );
+        $( "#dialog-procesos_cantidad_mprima" ).dialog( "open" );
         $("#tbl_p_prove").trigger("reloadGrid");
 }
-function validarCampos () {
-  cantidad_select=$('#cantidad_reutilizable').val();
+function validarCampos_materia_prima () {
+  cantidad_select=$('#cantidad_materia_prima').val();
 
   if (validarNUmero(cantidad_select)==false) {
                 notify('* El campo <strong>CANTIDAD</strong> no es numero!!!',500,5000,'error');
-                $("#cantidad_reutilizable").focus();
+                $("#cantidad_materia_prima").focus();
                 return false;
   }else if (validarVacio(cantidad_select)==false) {
-              notify('* El campo <strong>CANTIDAD</strong> no puede estar vacio!!!',500,5000,'error');
+              notify('* El campo <strong>CANTIDAD</strong> no puede estar vacioasdasdasdasdas!!!',500,5000,'error');
               $("#cantidad_select").focus();
               return false;
 
@@ -56,39 +56,39 @@ $.ajax({
                               switch(data){
                               case "0":
                                   notify("Error al procesar los datos " ,500,5000,'error');
-                                  $( "#dialog-procesos_cantidad" ).dialog( "close" );
+                                  $( "#dialog-procesos_cantidad_mprima" ).dialog( "close" );
                                   $( "#dialog-procesos_producto" ).dialog( "close" );
                                   $("#tbl_stock_linea").trigger("reloadGrid")
-                                  $('#cantidad_reutilizable').val('');
+                                  $('#cantidad_materia_prima').val('');
                               break;
                               case "1":
                                     $("#tbl_stock_linea").trigger("reloadGrid")
                                   notify('El registro se guardado correctamente',500,5000,'aviso');
-                                  $( "#dialog-procesos_cantidad" ).dialog( "close" );
+                                  $( "#dialog-procesos_cantidad_mprima" ).dialog( "close" );
                                   $( "#dialog-procesos_producto" ).dialog( "close" );
-                                  $('#cantidad_reutilizable').val('');
+                                  $('#cantidad_materia_prima').val('');
                               break;
                               case "2":
                                    $("#tbl_stock_linea").trigger("reloadGrid")
                                   notify("Error al procesar los datos " ,500,5000,'error');
-                                  $( "#dialog-procesos_cantidad" ).dialog( "close" );
+                                  $( "#dialog-procesos_cantidad_mprima" ).dialog( "close" );
                                   $( "#dialog-procesos_producto" ).dialog( "close" );
-                                  $('#cantidad_reutilizable').val('');
+                                  $('#cantidad_materia_prima').val('');
                               break;
                               case "4":
                                    // $("#tbl_stock_linea").trigger("reloadGrid")
                                   notify("Error al procesar los datos " ,500,5000,'error');
-                                  // $( "#dialog-procesos_cantidad" ).dialog( "close" );
+                                  // $( "#dialog-procesos_cantidad_mprima" ).dialog( "close" );
                                   // $( "#dialog-procesos_producto" ).dialog( "close" );
-                                  $('#cantidad_reutilizable').val('');
+                                  $('#cantidad_materia_prima').val('');
                               break;
                               default:
-                                   $( "#dialog-procesos_cantidad" ).dialog( "close" );
+                                   $( "#dialog-procesos_cantidad_mprima" ).dialog( "close" );
                                    var error='Error'+data;
                                    notify(error ,500,5000,'error');
                          	        $( "#dialog-procesos_producto" ).dialog( "close" );
                                     $("#tbl_stock_linea").trigger("reloadGrid")
-                                    $('#cantidad_reutilizable').val('');
+                                    $('#cantidad_materia_prima').val('');
                               break;
 
                               }//switch
@@ -98,90 +98,56 @@ $.ajax({
                              }//Error
      });//Ajax
 }
-
-	 $("#tbl_p_prove").jqGrid({
-    url:'<?php echo base_url();?>pedidos_hacer/paginacionUsar',
-    datatype: "json",
+ $("#tbl_p_prove1a").jqGrid({
+    url:'<?php echo base_url();?>catalogo_producto/paginacion_productos_Stock',
+   datatype: "json",
     mtype: 'POST',
-        colNames:['Acciones',
-                    'ID PEDIDO',
-                    'FECHA DE PEDIDO',
-                    'FECHA DE ENTREGA',
-                    'LUGAR DE ENVIO'
-                    ],
-        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                  {name:'id_pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
-                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:true,editable:true},
-                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:true,editable:true},
-                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:true,editable:true}
-                ],
-    pager: jQuery('#paginacion'),
+                         colNames:['Acciones','CLIENTE','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
+                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
+                              {name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:true, sortable:true,search:false,editable:false},
+                              {name:'nombre', index:'nombre', width:170,resizable:true, sortable:true,search:false,editable:false},
+                              {name:'largo', index:'largo', width:50,resizable:true, sortable:true,search:false,editable:false},
+                              {name:'ancho', index:'ancho', width:50,resizable:true, sortable:true,search:false,editable:false},
+                              {name:'alto', index:'alto', width:50,resizable:true, sortable:true,search:false,editable:false},
+                              {name:'resistencia', index:'resistencia', width:100,resizable:true, sortable:true,search:false,editable:false},
+                              {name:'corrugado', index:'corrugado', width:80,resizable:true, sortable:true,search:false,editable:false},
+                              {name:'score', index:'score', width:50,resizable:true, sortable:true,search:false,editable:false},
+                              {name:'descripcion', index:'descripcion', width:170,resizable:true, sortable:true,search:false,editable:false}
+
+
+
+                                ],
+    pager: jQuery('#paginacion1a'),
     rownumbers:true,
-  rowNum:15,
+  rowNum:5,
     rowList:[10,20,30],
     imgpath: '<?php echo base_url();?>img/editar.jpg',
     mtype: "POST",
-    sortname: 'id_pedido',
+    sortname: 'id_catalogo',
     viewrecords: true,
     sortorder: "asc",
-  editable: true,
-    caption: 'Pedidos Pendientes',
+editable: true,
+    caption: 'Catalogo de Producto',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
-  width:'950',
-  subGrid: true,
-    searchurl:'<?php echo base_url();?>empresas/buscando',
-    height:"auto",
-   subGridRowExpanded: function(subgrid_id, row_id) {
-   var subgrid_table_id, pager_id; subgrid_table_id = subgrid_id+"_t"; pager_id = "p_"+subgrid_table_id;
-
-   $("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' alt='subtabla' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>");
-
-   $("#"+subgrid_table_id).jqGrid({
-   //url:"subgrid.php?q=2&id="+row_id,
-   url:"<?php echo base_url();?>pedidos_hacer/subpaginacionUsar/"+row_id,
-   datatype: "json",
-   mtype: 'POST',
-   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','LARGO','ANCHO','ALTO', 'RESISTENCIA', 'CORRUGADO','SCORE','DESCRIPCION','CANTIDAD','OBSERVACIONES','DECHA DE ENTREGA'],
-   colModel: [
-             {name:"acciones",index:"acciones",width:56,align:"center"},
-             {name:"No",index:"No",width:56,align:"center"},
-             {name:"nombre",index:"nombre",search: false,align:"center"},
-             {name:"largo",index:"largo",align:"left",search: false},
-             {name:"ancho",index:"ancho",align:"left",search: false},
-             {name:"alto",index:"alto",align:"left",search: false},
-             {name:"resistencia",index:"resistencia",align:"left",search: false},
-             {name:"corrugado",index:"corrugado",align:"left",search: false},
-             {name:"score",index:"score",align:"left",search: false},
-             {name:"descripcion",index:"descripcion",align:"left",search: false},
-             {name:"cantidad",index:"cantidad",align:"left",search: false},
-             {name:"observaciones",index:"observaciones",align:"left",search: false},
-             {name:"fecha_entrega",index:"fecha_entrega",align:"left",search: false}
-              ],
-
-   rows:10,
-   rowNum:10,
-   rowList:[10,15],
-   pager: pager_id,
-   sortname: 'id_cantidad_pedido',
-   height:'auto',
-   sortorder: "asc" });
-
-   $("#"+subgrid_table_id).jqGrid('navGrid',"#"+pager_id,{edit:false,add:false,del:false,search:false}) }
-        }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
+  width:'100%',
+    //searchurl:'<?php echo base_url();?>empresas/buscando',
+                height:"auto"
+        }).navGrid("#paginacion1a", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl_p_prove").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
-      $("#tbl_p_prove").jqGrid('navGrid','#paginacion',{add:false,edit:false,del:false,search:false});
-</script>
-        <table id="tbl_p_prove"></table>
-        <div id="paginacion"> </div>
 
-       <div style="display:none" id="dialog-procesos_cantidad" title="Cantidad a usar">
+	 
+</script>
+        <table id="tbl_p_prove1a"></table>
+        <div id="paginacion1a"> </div>
+
+       <div style="display:none" id="dialog-procesos_cantidad_mprima" title="Cantidad a usar">
         <table>
           <form name="form_cantidad" id="form_cantidad">
           <tr>
             <td><label  id="labelRight">cantidad:</label></td>
-            <td><input type="text" name="cantidad_reutilizable" id="cantidad_reutilizable"></td>
+            <td><input type="text" name="cantidad_materia_prima" id="cantidad_materia_prima"></td>
 
              <td><input type="hidden" name="id_linea" id="id_linea"></td>
           </tr>

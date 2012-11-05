@@ -77,11 +77,11 @@ function alta()
     datatype: "json",
     mtype: 'POST',
                         colNames:['Acciones','OFICINA','CANTIDAD','FECHA DE VENTA','CLIENTE'],
-                        colModel:[{name:'acciones', index:'acciones', width:50,resizable:false, sortable:true,search:false,editable:false},
-                                  {name:'oficina_id_oficina', index:'oficina_id_oficina', width:70,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'cantidad', index:'cantidad', width:100,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'fecha_venta', index:'fecha_venta', width:60,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'nombre_empresa', index:'nombre_empresa', width:60,resizable:false, sortable:true,search:false,editable:true}
+                        colModel:[{name:'acciones', index:'acciones', width:50,resizable:true, sortable:true,search:false,editable:false},
+                                  {name:'oficina_id_oficina', index:'oficina_id_oficina', width:70,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'cantidad', index:'cantidad', width:100,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'fecha_venta', index:'fecha_venta', width:60,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'nombre_empresa', index:'nombre_empresa', width:60,resizable:true, sortable:true,search:false,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,

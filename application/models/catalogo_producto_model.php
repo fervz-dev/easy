@@ -33,6 +33,32 @@ public function get_cat_productos($sidx, $sord, $start, $limite)
                                 LIMIT $start, $limite;");
     return ($query->num_rows() > 0)? $query->result() : NULL;
 }
+
+public function get_cat_productos_search($where, $sidx, $sord, $start, $limite)
+{
+    $query = $this->db->query("SELECT
+                                    clientes.nombre_empresa,
+                                    catalogo_producto.id_catalogo,
+                                    catalogo_producto.nombre,
+                                    catalogo_producto.largo,
+                                    catalogo_producto.ancho,
+                                    catalogo_producto.alto,
+                                    resistencia_mprima.resistencia,
+                                    catalogo_producto.corrugado,
+                                    catalogo_producto.score,
+                                    catalogo_producto.descripcion,
+                                    catalogo_producto.fecha_ingreso,
+                                    catalogo_producto.id_archivos
+                                    FROM
+                                    catalogo_producto ,
+                                    resistencia_mprima,
+                                    clientes
+                                    ".$where." AND
+                                    catalogo_producto.id_cliente=clientes.id_clientes AND
+                                    resistencia_mprima.id_resistencia_mprima=catalogo_producto.resistencia  ORDER BY $sidx $sord
+                                LIMIT $start, $limite;");
+    return ($query->num_rows() > 0)? $query->result() : NULL;
+}
 /////////////////////////////////////extraccion por ID  ///////////////////////////////////////////////
     public function get_id($id)
     {

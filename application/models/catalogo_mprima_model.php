@@ -13,13 +13,32 @@ class Catalogo_mprima_model extends CI_Model
     {
         $query = $this->db->query("SELECT cprima.id_cat_mprima,
                                     cprima.nombre,
+                                    cprima.descripcion,
                                     cprima.tipo_m,
                                     cprima.ancho,
                                     cprima.largo,
                                     resistencia.resistencia
                                     FROM cat_mprima AS cprima, resistencia_mprima AS resistencia
                                     WHERE resistencia.id_resistencia_mprima=cprima.resistencia_mprima_id_resistencia_mprima
-                                    AND cprima.activo = 1
+                                    ORDER BY $sidx $sord
+                                    LIMIT $start, $limite;");
+                                return ($query->num_rows() > 0)? $query->result() : NULL;
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public function get_cat_mprima_search($where,$sidx, $sord, $start, $limite)
+    {
+        
+        $query = $this->db->query("SELECT 
+                                    cprima.id_cat_mprima,
+                                    cprima.nombre,
+                                    cprima.descripcion,
+                                    cprima.tipo_m,
+                                    cprima.ancho,
+                                    cprima.largo,
+                                    resistencia.resistencia
+                                    FROM cat_mprima AS cprima, resistencia_mprima AS resistencia
+                                    ".$where." AND
+                                    resistencia.id_resistencia_mprima=cprima.resistencia_mprima_id_resistencia_mprima
                                     ORDER BY $sidx $sord
                                     LIMIT $start, $limite;");
                                 return ($query->num_rows() > 0)? $query->result() : NULL;
@@ -42,6 +61,7 @@ public function get_resistencia_all()
     {
         $query = $this->db->query("SELECT
                                         cat_mprima.nombre,
+                                        cat_mprima.descripcion,
                                         cat_mprima.tipo_m,
                                         cat_mprima.ancho,
                                         cat_mprima.largo,
@@ -65,6 +85,7 @@ public function get_resistencia_all()
    {
         $data = array (
         'nombre'=>$this->input->post('nombre'),
+        'descripcion'=>$this->input->post('descripcion'),
         'ancho'=>$this->input->post('ancho'),
         'largo'=>$this->input->post('largo'),
         'resistencia_mprima_id_resistencia_mprima'=>$this->input->post('resistencia_mprima_id_resistencia_mprima'),
@@ -85,8 +106,25 @@ public function get_resistencia_all()
 
       public function guardar()
    {
+    $nombre=$this->input->post('nombre');
+
+$query = $this->db->query("SELECT
+                                        cat_mprima.nombre
+                                        FROM
+                                        cat_mprima
+                                        WHERE
+                                        cat_mprima.nombre = '".$nombre."' AND
+                                        cat_mprima.activo = 1 ");
+
+        if ($query->num_rows() > 0) {
+            return 2;
+        }else{
+
+
+
         $data = array (
         'nombre'=>$this->input->post('nombre'),
+        'descripcion'=>$this->input->post('descripcion'),
         'ancho'=>$this->input->post('ancho'),
         'largo'=>$this->input->post('largo'),
         'resistencia_mprima_id_resistencia_mprima'=>$this->input->post('resistencia_mprima_id_resistencia_mprima'),
@@ -97,6 +135,7 @@ public function get_resistencia_all()
         );
         $this->db->insert('cat_mprima', $data);
         return $this->db->affected_rows();
+        }
    }
 
 }

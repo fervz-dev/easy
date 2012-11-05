@@ -2,20 +2,20 @@
 function usar(id)
 {
   $("#id_reutilizable").val(id);
-$( "#dialog-procesos_producto" ).dialog({
+$( "#dialog-procesos_producto_reutilizable" ).dialog({
       autoOpen: false,
       height: 'auto',
       width: 'auto',
       modal: true,
       buttons: {
           Aceptar: function() {
-          $( "#dialog-procesos_producto" ).dialog( "close" );
+          $( "#dialog-procesos_producto_reutilizable" ).dialog( "close" );
           $("#tbl_p_prove").trigger("reloadGrid");
           }
       },
       close: function() {}
     });
-        $( "#dialog-procesos_producto" ).dialog( "open" );
+        $( "#dialog-procesos_producto_reutilizable" ).dialog( "open" );
         $("#tbl_p_prove").trigger("reloadGrid");
 }
 
@@ -25,16 +25,16 @@ function cargar () {
     datatype: "json",
     mtype: 'POST',
                         colNames:['Acciones','NOMBRE','CORRUGADO','LARGO','ANCHO','RESISTENCIA','CANTIDAD'],
-                        colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:170,resizable:false, sortable:true,search:false,editable:false},
-                                  {name:'nombre', index:'nombre', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'tipo_m', index:'tipo_m', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'largo', index:'largo', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'ancho', index:'ancho', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  // {name:'peso', index:'peso', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'cantidad', index:'cantidad', width:40,resizable:false, sortable:true,search:true,editable:true}
-                                  // {name:'peso_total', index:'peso_total', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  // {name:'restan', index:'restan', width:80,resizable:false, sortable:true,search:true,editable:true}
+                        colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:170,resizable:true, sortable:true,search:false,editable:false},
+                                  {name:'nombre', index:'nombre', width:100,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'tipo_m', index:'tipo_m', width:100,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'largo', index:'largo', width:40,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'ancho', index:'ancho', width:40,resizable:true, sortable:true,search:true,editable:true},
+                                  // {name:'peso', index:'peso', width:40,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'resistencia', index:'resistencia', width:80,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'cantidad', index:'cantidad', width:40,resizable:true, sortable:true,search:true,editable:true}
+                                  // {name:'peso_total', index:'peso_total', width:40,resizable:true, sortable:true,search:true,editable:true},
+                                  // {name:'restan', index:'restan', width:80,resizable:true, sortable:true,search:true,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -62,16 +62,16 @@ function cargar () {
     datatype: "json",
     mtype: 'POST',
                         colNames:['Acciones','NOMBRE','CORRUGADO','ANCHO','LARGO','RESISTENCIA','CANTIDAD'],
-                        colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:170,resizable:false, sortable:true,search:false,editable:false},
-                                  {name:'nombre', index:'nombre', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'tipo_m', index:'tipo_m', width:100,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'ancho', index:'ancho', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'largo', index:'largo', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  // {name:'peso', index:'peso', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:true,editable:true},
-                                  {name:'cantidad', index:'cantidad', width:40,resizable:false, sortable:true,search:true,editable:true}
-                                  // {name:'peso_total', index:'peso_total', width:40,resizable:false, sortable:true,search:true,editable:true},
-                                  // {name:'restan', index:'restan', width:80,resizable:false, sortable:true,search:true,editable:true}
+                        colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:170,resizable:true, sortable:true,search:false,editable:false},
+                                  {name:'nombre', index:'nombre', width:100,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'tipo_m', index:'tipo_m', width:100,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'ancho', index:'ancho', width:40,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'largo', index:'largo', width:40,resizable:true, sortable:true,search:true,editable:true},
+                                  // {name:'peso', index:'peso', width:40,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'resistencia', index:'resistencia', width:80,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'cantidad', index:'cantidad', width:40,resizable:true, sortable:true,search:true,editable:true}
+                                  // {name:'peso_total', index:'peso_total', width:40,resizable:true, sortable:true,search:true,editable:true},
+                                  // {name:'restan', index:'restan', width:80,resizable:true, sortable:true,search:true,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -88,7 +88,7 @@ function cargar () {
     height:'auto',
     loadtext: 'Cargando',
 	width:'100%',
-    //searchurl:'<?php echo base_url();?>empresas/buscando',
+    searchurl:'<?php echo base_url();?>reutilizable_ingreso/buscando',
                 height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
@@ -114,8 +114,12 @@ $.ajax({
             // $("#kilos").val(div_peso[0]);
             // $("#gramos").val(div_peso[1]);
             // $("#peso").val(dato[6]);
-            $("#cantidad").val(dato[7]);
-            // $("#peso_total").val(dato[8]);
+            $("#cantidad").val(dato[9]);
+            $("#peso_total").val(dato[5]);
+            $("#tipoIngreso").val(dato[6]);
+            $("#pesoLamina").val(dato[7]);
+            $("#pesoMuestra").val(dato[8]);
+            tipo_Ingreso(dato[6]);
             },
                         error:function(datos){
                         notify("Error al procesar los datos " ,500,5000,'error');
@@ -166,6 +170,9 @@ function editar(id)
                                 "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val(),
                                 // "peso":$("#peso").val(),
                                 "cantidad":$("#cantidad").val(),
+                                "tipoIngreso":$("#tipoIngreso").val(),
+                                "pesoLamina":$("#pesoLamina").val(),
+                                "pesoMuestra":$("#pesoMuestra").val(),
                                 // "peso_total":$("#peso_total").val()
                               },
                     cache: false,
@@ -219,7 +226,7 @@ if(r==true)
                                $( "#dialog-procesos" ).dialog( "close" );
                                notify('El registro se elimino correctamente',500,5000,'aviso');
                                $("#tbl").jqGrid('GridUnload');
-                                  setTimeout("cargar()",1000);;
+                                  setTimeout("cargar()",1000);
                                break;
                                default:
                                $( "#dialog-procesos" ).dialog( "close" );
@@ -249,6 +256,10 @@ $.ajax({
                   "largo":$("#largo").val(),
                   "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val(),
                   // "peso":$("#peso").val(),
+                  "tipoIngreso":$("#tipoIngreso").val(),
+
+                  "pesoLamina":$("#pesoLamina").val(),
+                  "pesoMuestra":$("#pesoMuestra").val(),
                   "cantidad":$("#cantidad").val(),
                   // "peso_total":$("#peso_total").val()
                 },
@@ -301,7 +312,6 @@ $( "#dialog-procesos" ).dialog({
                   var total1=peso_*cantidad;
                   var calcu=total1;
                   $("#peso_total").val(calcu);
-                  alert(calcu);
 ;
           guardar();
         }
@@ -410,7 +420,7 @@ function validarCampos () {
         $this->load->view('reutilizable/formulario');?>
       </div>
       <!-- formulario de nuevo producto -->
-        <div style="display:none" id="dialog-procesos_producto" title="Catalogo de Pedidos/ Productos">
+        <div style="display:none" id="dialog-procesos_producto_reutilizable" title="Catalogo de Pedidos/ Productos">
         <?php
         $this->load->view('reutilizable/ver_productos');?>
         </div>

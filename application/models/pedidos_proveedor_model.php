@@ -172,6 +172,8 @@ public function get_pedido_proveedor_almacen($sidx, $sord, $start, $limite)
 									pedido_proveedor.oficina = oficina.id_oficina
 									AND
 									pedido_proveedor.activo=0
+									AND
+									pedido_proveedor.oficina =".$this->session->userdata('oficina')."
 									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 									);
@@ -189,6 +191,28 @@ public function get_pedido_proveedor_almacen($sidx, $sord, $start, $limite)
 	}
 	/////////////////////////enviar los datos del produto a pedidos provedor/bajar_stock_liena///////////
 	public function get_producto_($id)
+	{
+		$query = $this->db->query("SELECT
+				cat_mprima.nombre,
+				cat_mprima.ancho,
+				cat_mprima.largo,
+				cat_mprima.tipo_m,
+				resistencia_mprima.resistencia,
+				cantidad_pedido.cantidad
+				FROM
+				cantidad_pedido ,
+				cat_mprima ,
+				resistencia_mprima
+				WHERE
+				cantidad_pedido.id_cantidad_pedido = $id AND
+				cantidad_pedido.catalogo_producto = cat_mprima.id_cat_mprima AND
+				cat_mprima.resistencia_mprima_id_resistencia_mprima = resistencia_mprima.id_resistencia_mprima AND
+				resistencia_mprima.activo = 1");
+				$fila = $query->row();
+				          return $fila;
+	}
+	/////////////////////////enviar los datos del produto a pedidos provedor/bajar_stock_liena///////////
+	public function get_producto_pedido($id)
 	{
 		$query = $this->db->query("SELECT
 				cat_mprima.nombre,

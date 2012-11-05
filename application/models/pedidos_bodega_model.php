@@ -53,8 +53,8 @@ class Pedidos_bodega_model extends CI_Model
 										WHERE
 										pedido_bodega.oficina_pedido = oficina_pedido.id_oficina AND
 										pedido_bodega.oficina = oficina_envio.id_oficina AND
-										oficina_pedido.id_oficina= $oficina AND
-										oficina_envio.activo=1
+									    oficina_pedido.id_oficina= $oficina AND
+										oficina_envio.activo=1 AND pedido_bodega.enviado=0
 
 									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
@@ -181,6 +181,14 @@ public function cerrar($id)
 			return $this->db->affected_rows();
 }
 
+/////////////////////cerrar pedido /////////////////////
+public function enviado($id)
+{
+    $data = array('enviado' => 1);
+			$this->db->where('id_pedido', $id);
+			$this->db->update('pedido_bodega', $data);
+			return $this->db->affected_rows();
+}
 
 //////////////////// extra solo los campos que cumplan con la condicion si activo=1 /////////////////////////////////////
 public function get_pedido_bodega_almacen($sidx, $sord, $start, $limite)
@@ -203,6 +211,7 @@ public function get_pedido_bodega_almacen($sidx, $sord, $start, $limite)
 									pedido_bodega.oficina = oficina_envio.id_oficina
 									AND
 									pedido_bodega.activo=0
+									AND pedido_bodega.oficina =".$this->session->userdata('oficina')."
 									ORDER BY $sidx $sord
 									LIMIT $start, $limite;"
 
@@ -229,15 +238,12 @@ public function get_pedido_bodega_almacen($sidx, $sord, $start, $limite)
 				cat_mprima.ancho,
 				cat_mprima.largo,
 				cat_mprima.tipo_m,
-				resistencia_mprima.resistencia,
-				cantidad_pedido_bodega.cantidad
+				resistencia_mprima.resistencia
 				FROM
-				cantidad_pedido_bodega ,
-				cat_mprima ,
+				cat_mprima,
 				resistencia_mprima
 				WHERE
-				cantidad_pedido_bodega.id_cantidad_pedido = $id AND
-				cantidad_pedido_bodega.catalogo_producto = cat_mprima.id_cat_mprima AND
+				cat_mprima.id_cat_mprima = $id AND
 				cat_mprima.resistencia_mprima_id_resistencia_mprima = resistencia_mprima.id_resistencia_mprima AND
 				resistencia_mprima.activo = 1");
 				$fila = $query->row();

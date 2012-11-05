@@ -89,10 +89,10 @@ class Pedidos_bodega extends CI_Controller
         $data->total = $total_pages;
         $data->records = $count;
         $i=0;
-if ($this->permisos->permisos(10,2)==1) {
+if ($this->permisos->permisos(19,2)==1) {
         foreach($resultado_ as $row) {
            $data->rows[$i]['id']=$row->id_pedido;
- if (($this->permisos->permisos(10,1)==1)&&($this->permisos->permisos(10,3)==1)){
+ if (($this->permisos->permisos(19,1)==1)&&($this->permisos->permisos(19,3)==1)){
 
            $onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
            $onclick_add="onclick=add('".$row->id_pedido."')";
@@ -106,7 +106,7 @@ if ($this->permisos->permisos(10,2)==1) {
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
                $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
            }
- }elseif (($this->permisos->permisos(10,1)==1)&&($this->permisos->permisos(10,3)==0)) {
+ }elseif (($this->permisos->permisos(19,1)==1)&&($this->permisos->permisos(19,3)==0)) {
         //$onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
            $onclick_add="onclick=add('".$row->id_pedido."')";
            $onclikedit="onclick=edit('".$row->id_pedido."')";
@@ -119,7 +119,7 @@ if ($this->permisos->permisos(10,2)==1) {
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
                $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
            }
-}elseif (($this->permisos->permisos(10,1)==0)&&($this->permisos->permisos(10,3)==1)) {
+}elseif (($this->permisos->permisos(19,1)==0)&&($this->permisos->permisos(19,3)==1)) {
            $onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
            $onclick_add="onclick=add('".$row->id_pedido."')";
            //$onclikedit="onclick=edit('".$row->id_pedido."')";
@@ -132,7 +132,7 @@ if ($this->permisos->permisos(10,2)==1) {
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
                $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>';
            }
-        }elseif (($this->permisos->permisos(10,1)==0)&&($this->permisos->permisos(10,3)==0)) {
+        }elseif (($this->permisos->permisos(19,1)==0)&&($this->permisos->permisos(19,3)==0)) {
           $acciones='';
 
             }
@@ -168,6 +168,20 @@ if ($this->permisos->permisos(10,2)==1) {
     public function cerrar_pedido($id)
     {
         $cerrar=$this->pedidos->cerrar($id);
+        if($cerrar > 0)
+    {
+        echo 1;
+    }
+    else
+    {
+        echo 0;
+    }
+
+    }
+
+    public function enviado($id)
+    {
+        $cerrar=$this->pedidos->enviado($id);
         if($cerrar > 0)
     {
         echo 1;
@@ -439,14 +453,13 @@ public function paginacion_producto($id)
     // La respuesta se regresa como json
     echo json_encode($data);
     }
-    public function verificacion_pedido($id)
+    public function verificacion_pedido_mprima($id)
     {
         $row=$this->pedidos->get_producto_($id);
         echo strtoupper($row->nombre).'~'.
              strtoupper($row->largo).'~'.
              strtoupper($row->ancho).'~'.
              strtoupper($row->tipo_m).'~'.
-             strtoupper($row->cantidad).'~'.
              strtoupper($row->resistencia);
 
     }

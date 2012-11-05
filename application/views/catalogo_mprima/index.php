@@ -4,13 +4,15 @@
     url:'<?php echo base_url();?>catalogo_mprima/paginacion',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Acciones','NOMBRE','CORRUGADO','LARGO','ANCHO','RESISTENCIA'],
-                        colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:50,resizable:false, sortable:true,search:false,editable:false},
-                                  {name:'nombre', index:'nombre', width:70,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'tipo_m', index:'tipo_m', width:100,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'largo', index:'largo', width:60,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'ancho', index:'ancho', width:60,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:false,editable:true}
+                        
+                        colNames:['Acciones','NOMBRE','DESCRIPCION','CORRUGADO','LARGO','ANCHO','RESISTENCIA'],
+                        colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:50,resizable:true, sortable:true,search:false,editable:false},
+                                  {name:'nombre', index:'nombre', width:160,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'descripcion', index:'descripcion', width:160,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'tipo_m', index:'tipo_m', width:100,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'largo', index:'largo', width:60,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'ancho', index:'ancho', width:60,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'resistencia', index:'resistencia', width:120,resizable:true, sortable:true,search:false,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -27,7 +29,7 @@
     height:'auto',
     loadtext: 'Cargando',
   width:'100%',
-    //searchurl:'<?php echo base_url();?>empresas/buscando',
+  searchurl:'<?php echo base_url();?>catalogo_mprima/buscando',
                 height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
@@ -37,13 +39,14 @@
     url:'<?php echo base_url();?>catalogo_mprima/paginacion',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Acciones','NOMBRE','CORRUGADO','LARGO','ANCHO','RESISTENCIA'],
-                        colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:50,resizable:false, sortable:true,search:false,editable:false},
-                                  {name:'nombre', index:'nombre', width:70,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'tipo_m', index:'tipo_m', width:100,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'largo', index:'largo', width:60,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'ancho', index:'ancho', width:60,resizable:false, sortable:true,search:false,editable:true},
-                                  {name:'resistencia', index:'resistencia', width:80,resizable:false, sortable:true,search:false,editable:true}
+                        colNames:['Acciones','NOMBRE','DESCRIPCION','CORRUGADO','LARGO','ANCHO','RESISTENCIA'],
+                        colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:50,resizable:true, sortable:true,search:false,editable:false},
+                                  {name:'nombre', index:'nombre', width:160,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'descripcion', index:'descripcion', width:160,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'tipo_m', index:'tipo_m', width:100,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'largo', index:'largo', width:60,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'ancho', index:'ancho', width:60,resizable:true, sortable:true,search:true,editable:true},
+                                  {name:'resistencia', index:'resistencia', width:120,resizable:true, sortable:true,search:true,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -57,10 +60,10 @@
 	editable: true,
     caption: 'Catalogo de Materia Prima',
     multiselect: false,
-    height:'auto',
+    height:'100%',
     loadtext: 'Cargando',
 	width:'100%',
-    //searchurl:'<?php echo base_url();?>empresas/buscando',
+  searchurl:'<?php echo base_url();?>catalogo_mprima/buscando',
                 height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
@@ -83,6 +86,7 @@ $.ajax({
             $("#tipo_m").val(dato[1]);
             $("#ancho").val(dato[2]);
             $("#largo").val(dato[3]);
+            $("#descripcion").val(dato[5]);
             $("#resistencia_mprima_id_resistencia_mprima").val(dato[4]);
             },
                         error:function(datos){
@@ -94,8 +98,8 @@ $.ajax({
 
 $( "#dialog-procesos" ).dialog({
       autoOpen: false,
-      height: 250,
-      width: 380,
+      height: 'auto',
+      width: 'auto',
       modal: true,
       buttons: {
           Aceptar: function() {
@@ -134,6 +138,7 @@ function editar(id)
                                 "tipo_m":$("#tipo_m").val(),
                                 "ancho":$("#ancho").val(),
                                 "largo":$("#largo").val(),
+                                "descripcion":$("#descripcion").val(),
                                 "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val()
                               },
                         cache: false,
@@ -214,6 +219,7 @@ $.ajax({
                   "tipo_m":$("#tipo_m").val(),
                   "ancho":$("#ancho").val(),
                   "largo":$("#largo").val(),
+                   "descripcion":$("#descripcion").val(),
                   "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val()
                 },
 
@@ -229,6 +235,10 @@ $.ajax({
                                 notify('El registro se guardo correctamente',500,5000,'aviso');
                                 $( "#dialog-procesos" ).dialog( "close" );
                                break;
+                               case "2":
+                                
+                                 notify('Ya existe un registro con ese nombre',500,5000,'error');
+                                break;
                                default:
                                 $( "#dialog-procesos" ).dialog( "close" );
                                  var error='Error'+data;
@@ -356,4 +366,4 @@ if (!isset($_GET['submain'])) {
         <?php
 
         $this->load->view('catalogo_mprima/formulario');?>
-
+</div>

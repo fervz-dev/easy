@@ -52,6 +52,7 @@
 			<option value="<?php echo $rst['id_resistencia_mprima']; ?>"><?php echo $rst['resistencia'] ?></option>
 			<?php } ?>
 		</select>
+	</td>
 	</tr>
 	<tr>
 		<td><label id="labelRight">Corrugado:</label></td>

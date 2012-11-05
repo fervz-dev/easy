@@ -33,7 +33,7 @@ public function permisosURL($menu,$submenu)
         //$b=status permiso
         //0 alta
         //1 Modificar
-        //2 Cobnsultar
+        //2 Consultar
         //3 elminar
 
         $usuario = $this->ci->db->query("SELECT

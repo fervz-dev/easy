@@ -24,7 +24,9 @@ public function guardar_select()
 									FROM
 									cat_mprima_reutilizable
 									WHERE
-									cat_mprima_reutilizable.id_cat_mprima=$id_reutilizable");
+									cat_mprima_reutilizable.id_cat_mprima=$id_reutilizable
+									AND cat_mprima_reutilizable.id_sucursal= ".$this->session->userdata('oficina')." "
+									);
 	$resultado=$material->row();
 	if (count($resultado)>0) {
 
@@ -51,7 +53,7 @@ public function guardar_select()
         $this->db->insert('historial_reutilizable', $data);
          $numero_rows1=$this->db->affected_rows();
         if ($numero_rows1>0) {
-				$cantidad_db=$resultado->restan;
+				$cantidad_db=$resultado->cantidad;
 				$result=$cantidad_db-$cantidad;
 				$data2= array ('cantidad'=>$result);
            	 	$this->db->where('id_cat_mprima',$id_reutilizable);
