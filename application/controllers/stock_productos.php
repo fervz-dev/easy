@@ -46,7 +46,7 @@
 	        $this->load->view('principal', $data);
 		}
 
-		 public function paginacion()
+	public function paginacion()
     {
 
 

@@ -460,7 +460,8 @@ public function paginacion_producto($id)
              strtoupper($row->largo).'~'.
              strtoupper($row->ancho).'~'.
              strtoupper($row->tipo_m).'~'.
-             strtoupper($row->resistencia);
+             strtoupper($row->resistencia).'~'.
+             strtoupper($row->descripcion);
 
     }
 

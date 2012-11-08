@@ -11,7 +11,8 @@ function add_stock_bodega (id) {
                   "ancho":$("#ancho").val(),
                   "tipo_m":$("#corrugado").val(),
                   "resistencia":$("#resistencia").val(),
-                  "cantidad":$("#cantidadmprima").val()
+                  "cantidad":$("#cantidadmprima").val(),
+                  "descripcion":$("#descripcionB").val()
                 },
             cache: false,
             datatype:"html",
@@ -56,6 +57,7 @@ $.ajax({
                                   $("#corrugado").val(dato[3]);
                                   //$("#cantidad").val(dato[4]);
                                   $("#resistencia").val(dato[4]);
+                                  $("#descripcionB").val(dato[5]);
 
                                   },
                         error:function(datos){
@@ -174,6 +176,13 @@ if (validarVacio(cantidad)==false) {
                   </tr>
 
                   <tr>
+                    <td><label>Descripcion</label></td>
+                       <td> <textarea name="descripcionB" id="descripcionB" cols="30" rows="4" readonly="readonly"></textarea>
+
+                  </tr>
+
+
+                  <tr>
                     <td><label>Largo</label></td>
                     <td><input type="text" id="largo" name="largo" readonly="readonly" ></td>
                   </tr>
@@ -207,4 +216,3 @@ if (validarVacio(cantidad)==false) {
                 </table>
                 </form>
           </div>
-         

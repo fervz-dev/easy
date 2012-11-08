@@ -20,7 +20,7 @@ $( "#dialog-procesos_cantidad_mprima" ).dialog({
       close: function() {}
     });
         $( "#dialog-procesos_cantidad_mprima" ).dialog( "open" );
-        $("#tbl_p_prove").trigger("reloadGrid");
+        $("#tbl").trigger("reloadGrid");
 }
 function validarCampos_materia_prima () {
   cantidad_select=$('#cantidad_materia_prima').val();
@@ -30,7 +30,7 @@ function validarCampos_materia_prima () {
                 $("#cantidad_materia_prima").focus();
                 return false;
   }else if (validarVacio(cantidad_select)==false) {
-              notify('* El campo <strong>CANTIDAD</strong> no puede estar vacioasdasdasdasdas!!!',500,5000,'error');
+              notify('* El campo <strong>CANTIDAD</strong> no puede estar vacio!!!',500,5000,'error');
               $("#cantidad_select").focus();
               return false;
 
@@ -98,47 +98,55 @@ $.ajax({
                              }//Error
      });//Ajax
 }
- $("#tbl_p_prove1a").jqGrid({
-    url:'<?php echo base_url();?>catalogo_producto/paginacion_productos_Stock',
-   datatype: "json",
-    mtype: 'POST',
-                         colNames:['Acciones','CLIENTE','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
-                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                              {name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'nombre', index:'nombre', width:170,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'largo', index:'largo', width:50,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'ancho', index:'ancho', width:50,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'alto', index:'alto', width:50,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'resistencia', index:'resistencia', width:100,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'corrugado', index:'corrugado', width:80,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'score', index:'score', width:50,resizable:true, sortable:true,search:false,editable:false},
-                              {name:'descripcion', index:'descripcion', width:170,resizable:true, sortable:true,search:false,editable:false}
 
+
+$(document).ready(function(){
+  $("#tbl").jqGrid({
+    url:'<?php echo base_url();?>catalogo_producto/paginacion_productos_Stock',
+    datatype: "json",
+    mtype: 'POST',
+                        colNames:['Acciones','CLIENTE','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
+                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
+                              {name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'nombre', index:'nombre', width:170,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'largo', index:'largo', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'ancho', index:'ancho', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'alto', index:'alto', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'resistencia', index:'resistencia', width:100,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'corrugado', index:'corrugado', width:80,resizable:true, sortable:true,search:true,editable:false},
+                                    {name:'score', index:'score', width:50,resizable:true, sortable:true,search:true,editable:false},
+                                    {name:'descripcion', index:'descripcion', width:170,resizable:true, sortable:true,search:true,editable:false}
 
 
                                 ],
-    pager: jQuery('#paginacion1a'),
+    pager: jQuery('#paginacionProducto'),
     rownumbers:true,
-  rowNum:5,
+  rowNum:10,
     rowList:[10,20,30],
     imgpath: '<?php echo base_url();?>img/editar.jpg',
     mtype: "POST",
     sortname: 'id_catalogo',
     viewrecords: true,
     sortorder: "asc",
-editable: true,
-    caption: 'Catalogo de Producto',
+  editable: true,
+    caption: 'Catalogo de Productos',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
   width:'100%',
-    //searchurl:'<?php echo base_url();?>empresas/buscando',
+    searchurl:'<?php echo base_url();?>catalogo_producto/buscandoStock',
                 height:"auto"
-        }).navGrid("#paginacion1a", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_p_prove").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
+        }).navGrid("#paginacionProducto", { edit: false, add: false, search: false, del: false, refresh:true });
+        $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
+   });
 
-	 
+
 </script>
+
+        <table id="tbl"></table>
+        <div id="paginacion"> </div>
+
+
         <table id="tbl_p_prove1a"></table>
         <div id="paginacion1a"> </div>
 

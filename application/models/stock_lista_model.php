@@ -15,6 +15,7 @@ class Stock_lista_model extends CI_Model
 		$query = $this->db->query("SELECT
 									stock_linea.id_stock_linea,
 									stock_linea.nombre,
+									stock_linea.descripcion,
 									stock_linea.ancho,
 									stock_linea.largo,
 									stock_linea.corrugado,
@@ -34,6 +35,7 @@ class Stock_lista_model extends CI_Model
 		$query = $this->db->query("SELECT
 									stock_linea.id_stock_linea,
 									stock_linea.nombre,
+									stock_linea.descripcion,
 									stock_linea.ancho,
 									stock_linea.largo,
 									stock_linea.corrugado,
@@ -69,6 +71,7 @@ class Stock_lista_model extends CI_Model
 	{
 
 		$nom   =  $this->input->post('nombre');
+		$descripcion   =  $this->input->post('descripcion');
 		$anc   =  $this->input->post('ancho');
 		$lar   =  $this->input->post('largo');
 		$corrugado   =  $this->input->post('tipo_m');
@@ -76,7 +79,8 @@ class Stock_lista_model extends CI_Model
 		$cant  =  $this->input->post('cantidad');
 
 		$query= $this->db->query("SELECT
-										stock_linea.id_stock_linea,										stock_linea.nombre,
+										stock_linea.id_stock_linea,										
+										stock_linea.nombre,
 										stock_linea.ancho,
 										stock_linea.largo,
 										stock_linea.cantidad,
@@ -115,6 +119,7 @@ class Stock_lista_model extends CI_Model
 
 			$data= array (
 						'nombre'=>$this->input->post('nombre'),
+						'descripcion'=>$this->input->post('descripcion'),
 						'ancho'=>$this->input->post('ancho'),
 						'largo'=>$this->input->post('largo'),
 						'corrugado'=>$this->input->post('tipo_m'),
@@ -143,6 +148,7 @@ class Stock_lista_model extends CI_Model
 	{
 
 		$nom   =  $this->input->post('nombre');
+		$descripcion   =  $this->input->post('descripcion');
 		$anc   =  $this->input->post('ancho');
 		$lar   =  $this->input->post('largo');
 		$corrugado   =  $this->input->post('tipo_m');
@@ -150,7 +156,7 @@ class Stock_lista_model extends CI_Model
 		$cant  =  $this->input->post('cantidad');
 
 		$query= $this->db->query("SELECT
-										stock_linea.id_stock_linea,										
+										stock_linea.id_stock_linea,
 										stock_linea.nombre,
 										stock_linea.ancho,
 										stock_linea.largo,
@@ -191,6 +197,7 @@ class Stock_lista_model extends CI_Model
 
 			$data= array (
 						'nombre'=>$this->input->post('nombre'),
+						'descripcion'=>$this->input->post('descripcion'),
 						'ancho'=>$this->input->post('ancho'),
 						'largo'=>$this->input->post('largo'),
 						'corrugado'=>$this->input->post('tipo_m'),

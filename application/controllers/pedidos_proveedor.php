@@ -443,6 +443,7 @@ public function paginacion_producto($id)
     {
         $row=$this->pedidos->get_producto_($id);
         echo strtoupper($row->nombre).'~'.
+
              strtoupper($row->largo).'~'.
              strtoupper($row->ancho).'~'.
              strtoupper($row->tipo_m).'~'.
@@ -458,7 +459,8 @@ public function paginacion_producto($id)
              strtoupper($row->ancho).'~'.
              strtoupper($row->tipo_m).'~'.
              strtoupper($row->cantidad).'~'.
-             strtoupper($row->resistencia);
+             strtoupper($row->resistencia).'~'.
+             strtoupper($row->descripcion);
 
     }
 

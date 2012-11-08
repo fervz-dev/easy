@@ -12,7 +12,8 @@ function add_stock (id) {
                   "ancho":$("#ancho1").val(),
                   "tipo_m":$("#corrugado1").val(),
                   "resistencia":$("#resistencia1").val(),
-                  "cantidad":$("#cantidad1").val()
+                  "cantidad":$("#cantidad1").val(),
+                  "descripcion":$("#descripcion1").val()
                 },
             cache: false,
             datatype:"html",
@@ -77,6 +78,8 @@ $.ajax({
                                   $("#corrugado1").val(dato[3]);
                                   $("#cantidad1").val(dato[4]);
                                   $("#resistencia1").val(dato[5]);
+                                  $("#descripcion1").val(dato[6]);
+
 
                                   },
                         error:function(datos){
@@ -199,13 +202,14 @@ function verificacion_pedido (id, confirmacion) {
    url:"<?php echo base_url();?>almacen_linea/subpaginacion/"+row_id,
    datatype: "json",
    mtype: 'POST',
-   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','ANCHO','LARGO','CORRUGADO','RESISTENCIA','CANTIDAD'],
+   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','LARGO','ANCHO','CORRUGADO','RESISTENCIA','CANTIDAD'],
    colModel: [
              {name:"acciones",index:"acciones",width:56,align:"center",sortable:true,search:false,editable:false},
              {name:"No",index:"No",width:56,align:"center",sortable:true,search:false,editable:false},
              {name:"nombre",index:"nombre",width:80,align:"center",sortable:true,search:false,editable:false},
-             {name:"ancho",index:"ancho",width:56,align:"left",sortable:true,search:false,editable:false},
+
              {name:"largo",index:"largo",width:56,align:"left",sortable:true,search:false,editable:false},
+             {name:"ancho",index:"ancho",width:56,align:"left",sortable:true,search:false,editable:false},
              {name:"tipo_m",index:"tipo_m",width:65,align:"left",sortable:true,search:false,editable:false},
              {name:"resistencia",index:"resistencia",width:65,align:"left",sortable:true,search:false,editable:false},
              {name:"cantidad",index:"cantidad",width:65,align:"left",sortable:true,search:false,editable:false}
@@ -277,6 +281,12 @@ function verificacion_pedido (id, confirmacion) {
                   <tr>
                     <td><label>Nombre</label></td>
                     <td><input type="text" id="nombre1" name="nombre1" readonly="readonly" ></td>
+                  </tr>
+
+                  <tr>
+                    <td><label>Descripcion</label></td>
+                       <td> <textarea name="descripcion1" id="descripcion1" cols="30" rows="4" readonly="readonly"></textarea>
+
                   </tr>
 
                   <tr>

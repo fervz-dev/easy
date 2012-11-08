@@ -265,6 +265,7 @@ function verificacion_pedido_bodega (id, confirmacion) {
               <strong>Error:</strong> No se pudo verificar el pedido!!!</p>
             </div>
           </div>
+        </div>
           <div style="display:none" id="dialog-procesos12" title="Verificar producto">
             <?php $this->load->view('stock/formulario_validar_producto');?>
           </div>

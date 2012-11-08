@@ -492,6 +492,12 @@ function validarCampos () {
     height:'auto',
     loadtext: 'Cargando',
   width:'100%',
+  grouping:true,
+  groupingView : { groupField : ['nombre_empresa'], 
+  groupColumnShow : [false],
+  groupText : ['<b>{0} - {1} Producto(s)</b>'],
+  groupCollapse : true, groupOrder: ['asc'] 
+  },
     searchurl:'<?php echo base_url();?>catalogo_producto/buscando',
                 height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });

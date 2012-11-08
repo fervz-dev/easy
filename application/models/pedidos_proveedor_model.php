@@ -194,6 +194,7 @@ public function get_pedido_proveedor_almacen($sidx, $sord, $start, $limite)
 	{
 		$query = $this->db->query("SELECT
 				cat_mprima.nombre,
+				cat_mprima.descripcion,
 				cat_mprima.ancho,
 				cat_mprima.largo,
 				cat_mprima.tipo_m,
@@ -216,6 +217,7 @@ public function get_pedido_proveedor_almacen($sidx, $sord, $start, $limite)
 	{
 		$query = $this->db->query("SELECT
 				cat_mprima.nombre,
+				cat_mprima.descripcion,
 				cat_mprima.ancho,
 				cat_mprima.largo,
 				cat_mprima.tipo_m,
