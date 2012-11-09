@@ -2,7 +2,7 @@
 <table id="tabla_formulario">
 <tr>
 	<td><label>Cliente:</label></td>
-	<td><select name="clientesdb"  id="clientesdb">
+	<td><select name="clientesdb"  id="clientesdb"  onchange="cargarProductos(this.value);">
 		<option value="">Seleccione...</option>
 		<?php foreach ($clientes as $clt) { ?>
 		<option value="<?php echo $clt['id_clientes']; ?>"><?php echo $clt['nombre_empresa'] ?></option>
@@ -11,16 +11,13 @@
 </td>
 </tr>
 <tr>
-	<td><label>Cliente:</label></td>
-	<td><select name="clientesdb"  id="clientesdb">
-		<option value="">Seleccione...</option>
-		<?php foreach ($clientes as $clt) { ?>
-		<option value="<?php echo $clt['id_clientes']; ?>"><?php echo $clt['nombre_empresa'] ?></option>
-		<?php } ?>
+	<td><label>Produtos del cliente:</label></td>
+	<td><select name="productosBD"  id="productosBD" >
+
 	</select>
 </td>
+<td id="ajax_productos"></td>
 </tr>
-
 
 	<tr>
 		<td>

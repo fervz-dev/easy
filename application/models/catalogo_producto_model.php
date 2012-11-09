@@ -21,15 +21,17 @@ public function get_cat_productos($sidx, $sord, $start, $limite)
                                     catalogo_producto.score,
                                     catalogo_producto.descripcion,
                                     catalogo_producto.fecha_ingreso,
-                                    catalogo_producto.id_archivos
+                                    catalogo_producto.id_archivos,
+                                    producto_final.nombre_producto
                                     FROM
                                     catalogo_producto ,
                                     resistencia_mprima,
-                                    clientes
+                                    clientes,
+                                    producto_final
                                     WHERE
                                     catalogo_producto.activo = 1 AND
-                                    catalogo_producto.id_cliente=clientes.id_clientes AND
-                                    catalogo_producto.resistencia = resistencia_mprima.id_resistencia_mprima  ORDER BY $sidx $sord
+                                    catalogo_producto.id_cliente=clientes.id_clientes AND catalogo_producto.id_cliente=producto_final.id_cliente AND
+                                    catalogo_producto.resistencia = resistencia_mprima.id_resistencia_mprima   ORDER BY $sidx $sord
                                 LIMIT $start, $limite;");
     return ($query->num_rows() > 0)? $query->result() : NULL;
 }
@@ -53,9 +55,8 @@ public function get_cat_productos_search($where, $sidx, $sord, $start, $limite)
                                     catalogo_producto ,
                                     resistencia_mprima,
                                     clientes
-                                    ".$where." AND
-                                    catalogo_producto.id_cliente=clientes.id_clientes AND
-                                    resistencia_mprima.id_resistencia_mprima=catalogo_producto.resistencia  ORDER BY $sidx $sord
+                                    ".$where."
+                                      ORDER BY $sidx $sord
                                 LIMIT $start, $limite;");
     return ($query->num_rows() > 0)? $query->result() : NULL;
 }
@@ -105,6 +106,7 @@ public function guardar()
    {
         $data = array (
         'id_cliente'=>$this->input->post('clientesdb'),
+        'id_productoFinal'=>$this->input->post('productosBD'),
         'nombre'=>$this->input->post('nombre'),
         'largo'=>$this->input->post('largo'),
         'ancho'=>$this->input->post('ancho'),
@@ -154,7 +156,8 @@ public function editar($id)
         'resistencia'=>$this->input->post('resistencia'),
         'corrugado'=>$this->input->post('corrugado'),
         'score'=>$this->input->post('score'),
-        'descripcion'=>$this->input->post('descripcion')
+        'descripcion'=>$this->input->post('descripcion'),
+        'id_productoFinal'=>$this->input->post('productosBD'),
     );
 
     $this->db->where('id_catalogo', $id);

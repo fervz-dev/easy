@@ -7,7 +7,7 @@ class Producto_final_model extends CI_Model {
 		$query = $this->db->query("SELECT
 	                                    clientes.nombre_empresa,
 	                                    producto_final.id_productoFinal,
-	                                    producto_final.nombre,
+	                                    producto_final.nombre_producto,
 	                                    producto_final.descripcion
 	                                    FROM
 	                                    producto_final,
@@ -25,7 +25,7 @@ class Producto_final_model extends CI_Model {
    {
         $data = array (
         'id_cliente'=>$this->input->post('clientesdb'),
-        'nombre'=>$this->input->post('nombre'),
+        'nombre_producto'=>$this->input->post('nombre'),
         'descripcion'=>$this->input->post('descripcion'),
         'fecha_ingreso'=>date('y-m-d'),
         'activo'=>1,
@@ -42,20 +42,33 @@ class Producto_final_model extends CI_Model {
                 return $this->db->affected_rows();
    }
 
-       public function get_id($id)
-    {
-        $query = $this->db->query("SELECT
-										producto_final.id_cliente,
-	                                    producto_final.nombre,
-	                                    producto_final.descripcion
-	                                    FROM
-	                                    producto_final
-	                                    WHERE
-	                                    producto_final.activo = 1 AND
-                                		producto_final.id_productoFinal = $id ");
-        $fila = $query->row();
-          return $fila;
-    }
+  public function get_id($id)
+  {
+      $query = $this->db->query("SELECT
+									producto_final.id_cliente,
+                                    producto_final.nombre_producto,
+                                    producto_final.descripcion
+                                    FROM
+                                    producto_final
+                                    WHERE
+                                    producto_final.activo = 1 AND
+                              		producto_final.id_productoFinal = $id ");
+      $fila = $query->row();
+        return $fila;
+  }
+  public function producto($id_cliente)
+  {
+    $query=$this->db->query("SELECT
+                        producto_final.id_productoFinal,
+                        producto_final.nombre_producto
+                        FROM
+                        producto_final
+                        where
+                        producto_final.id_cliente=$id_cliente AND
+                        producto_final.activo=1
+                        ORDER BY Producto_final.nombre_producto ASC");
+      return ($query->num_rows()> 0)? $query->result_array() : NULL;
+  }
 }
 
 /* End of file producto_final_model.php */

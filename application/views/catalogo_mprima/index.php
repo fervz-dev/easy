@@ -4,7 +4,7 @@
     url:'<?php echo base_url();?>catalogo_mprima/paginacion',
     datatype: "json",
     mtype: 'POST',
-                        
+
                         colNames:['Acciones','NOMBRE','DESCRIPCION','CORRUGADO','LARGO','ANCHO','RESISTENCIA'],
                         colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:50,resizable:true, sortable:true,search:false,editable:false},
                                   {name:'nombre', index:'nombre', width:160,resizable:true, sortable:true,search:false,editable:true},
@@ -236,7 +236,7 @@ $.ajax({
                                 $( "#dialog-procesos" ).dialog( "close" );
                                break;
                                case "2":
-                                
+
                                  notify('Ya existe un registro con ese nombre',500,5000,'error');
                                 break;
                                default:

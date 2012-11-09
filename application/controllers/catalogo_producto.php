@@ -153,7 +153,9 @@ if ($this->permisos->permisos(8,2)==1) {
                                $row->resistencia,
                                $row->corrugado,
                                $row->score,
-                               $row->descripcion);
+                               $row->descripcion,
+                               $row->nombre_producto
+                               );
                    $i++;
                 }
         }
@@ -364,7 +366,9 @@ $catalogo = array (
                 $row->resistencia,
                 $row->corrugado,
                 $row->score,
-                $row->descripcion
+                $row->descripcion,
+                $row->nombre_producto
+
                 );
            $i++;
         }
@@ -489,7 +493,7 @@ $filters = $_POST['filters'];
         $where = "";
         if (isset($filters)) {
             $filters = json_decode($filters);
-            $where = " where catalogo_producto.activo = 1 AND ";
+            $where = " where ";
             $whereArray = array();
             $rules = $filters->rules;
 
@@ -497,14 +501,14 @@ $filters = $_POST['filters'];
 
                 if ($rule->field =='nombre_empresa') {
 
-                  $whereArray[] = ". catalogo_producto.id_cliente=clientes.id_clientes AND clientes.nombre_empresa like '%".$rule->data."%'";
+                  $whereArray[] = "clientes.nombre_empresa like '%".$rule->data."%' AND catalogo_producto.activo = 1 AND resistencia_mprima.id_resistencia_mprima=catalogo_producto.resistencia AND catalogo_producto.id_cliente=clientes.id_clientes";
 
                 }elseif ($rule->field=='resistencia') {
 
                 if (($rule->data=='SG')||($rule->data=='sg')) {
-                   $whereArray[] = "resistencia_mprima.resistencia LIKE '%".$rule->data."%'";
+                   $whereArray[] = "resistencia_mprima.resistencia LIKE '%".$rule->data."%' AND catalogo_producto.activo = 1 AND resistencia_mprima.id_resistencia_mprima=catalogo_producto.resistencia AND catalogo_producto.id_cliente=clientes.id_clientes";
                     }else{
-                   $whereArray[] = "resistencia_mprima.resistencia=".$rule->data." ";
+                   $whereArray[] = "resistencia_mprima.resistencia=".$rule->data." AND catalogo_producto.activo = 1 AND resistencia_mprima.id_resistencia_mprima=catalogo_producto.resistencia AND catalogo_producto.id_cliente=clientes.id_clientes";
                     }
                 }else{
 
@@ -515,7 +519,7 @@ $filters = $_POST['filters'];
 
                 $where .= join(" and ", $whereArray);
             } else {
-                $where = " where catalogo_producto.activo = 1 ";
+                $where = " where catalogo_producto.activo = 1 AND catalogo_producto.activo = 1 AND resistencia_mprima.id_resistencia_mprima=catalogo_producto.resistencia AND catalogo_producto.id_cliente=clientes.id_clientes";
             }
         }
 

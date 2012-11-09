@@ -6,7 +6,7 @@ class Producto_final extends CI_Controller {
 		parent::__construct();
 		$this->load->model("clientes_model","clientes_");
 		$this->load->model('producto_final_model','producto');
-       	
+
 
 		if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
 		   redirect(base_url().'inicio/logout');
@@ -97,7 +97,7 @@ if ($this->permisos->permisos(29,2)==1) {
                         $onclikedit="onclick=edit('".$row->id_productoFinal."')";
                         $onclik="onclick=delet('".$row->id_productoFinal."')";
                         $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
-                       
+
 
 
                         // permisos solo para editar
@@ -105,10 +105,10 @@ if ($this->permisos->permisos(29,2)==1) {
 
                         $onclikedit="onclick=edit('".$row->id_productoFinal."')";
                         //$onclik="onclick=delet('".$row->id_productoFinal."')";
-     
+
 
                         $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>';
-                        
+
 
                         // permisos solo para eliminar
                    }elseif (($this->permisos->permisos(29,1)==0)&&($this->permisos->permisos(29,3)==1)) {
@@ -116,7 +116,7 @@ if ($this->permisos->permisos(29,2)==1) {
                         //$onclikedit="onclick=edit('".$row->id_productoFinal."')";
                         $onclik="onclick=delet('".$row->id_productoFinal."')";
                         $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
-                        
+
 
 // sin permisos
                    }elseif (($this->permisos->permisos(29,1)==0)&&($this->permisos->permisos(29,3)==0)) {
@@ -128,8 +128,8 @@ if ($this->permisos->permisos(29,2)==1) {
                    }
                    $data->rows[$i]['cell']=array($row->nombre_empresa,
                    	$acciones,
-                               
-                               $row->nombre,
+
+                               $row->nombre_producto,
                                $row->descripcion,
                         		);
                    $i++;
@@ -148,7 +148,7 @@ if ($this->permisos->permisos(29,2)==1) {
     {
         $row=$this->producto->get_id($id);
                     echo   $row->id_cliente.'~'.
-                           $row->nombre.'~'.
+                           $row->nombre_producto.'~'.
                            $row->descripcion;
     }
     public function eliminar($id)
@@ -167,6 +167,16 @@ if ($this->permisos->permisos(29,2)==1) {
     {
         $editar=$this->producto->editar($id);
         echo 1;
+    }
+    public function productosCliente($id_cliente)
+    {
+        $queryProductos=$this->producto->producto($id_cliente);
+        $combo = "";
+        $combo= '<option value="">Selecciones...</option>';
+        for ($i=0; $i <count($queryProductos) ; $i++) {
+             $combo .= "<option value='".$queryProductos[$i]["id_productoFinal"]."'>".$queryProductos[$i]["nombre_producto"]."</option>";
+        }
+        echo $combo;
     }
 }
 

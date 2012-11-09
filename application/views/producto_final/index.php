@@ -224,8 +224,8 @@ function cargar () {
                         colModel:[
 								{name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:true, sortable:true,search:true,editable:false},
                         	  {name:'acciones', index:'acciones', width:130, resizable:true, align:"right", search:false},
-                              
-                              {name:'nombre', index:'nombre', width:170,resizable:true, sortable:true,search:true,editable:false},
+
+                              {name:'nombre_producto', index:'nombre_producto', width:170,resizable:true, sortable:true,search:true,editable:false},
                               {name:'descripcion', index:'descripcion', width:170,resizable:true, sortable:true,search:true,editable:false}
                                 ],
     pager: jQuery('#paginacion'),
@@ -244,10 +244,10 @@ function cargar () {
     loadtext: 'Cargando',
   width:'100%',
   grouping:true,
-  groupingView : { groupField : ['nombre_empresa'], 
+  groupingView : { groupField : ['nombre_empresa'],
   groupColumnShow : [false],
   groupText : ['<b>{0} - {1} Producto(s)</b>'],
-  groupCollapse : true, groupOrder: ['asc'] 
+  groupCollapse : true, groupOrder: ['asc']
   },
     searchurl:'<?php echo base_url();?>catalogo_producto/buscando',
                 height:"auto"
@@ -263,8 +263,8 @@ $(document).ready(function(){
                         colModel:[
 								{name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:true, sortable:true,search:true,editable:false},
                         	  {name:'acciones', index:'acciones', width:130, resizable:true, align:"right", search:false},
-                              
-                              {name:'nombre', index:'nombre', width:170,resizable:true, sortable:true,search:true,editable:false},
+
+                              {name:'nombre_producto', index:'nombre_producto', width:170,resizable:true, sortable:true,search:true,editable:false},
                               {name:'descripcion', index:'descripcion', width:170,resizable:true, sortable:true,search:true,editable:false}
                                 ],
     pager: jQuery('#paginacion'),
@@ -283,10 +283,10 @@ $(document).ready(function(){
     loadtext: 'Cargando',
   width:'100%',
   grouping:true,
-  groupingView : { groupField : ['nombre_empresa'], 
+  groupingView : { groupField : ['nombre_empresa'],
   groupColumnShow : [false],
   groupText : ['<b>{0} - {1} Producto(s)</b>'],
-  groupCollapse : true, groupOrder: ['asc'] 
+  groupCollapse : true, groupOrder: ['asc']
   },
     searchurl:'<?php echo base_url();?>catalogo_producto/buscando',
                 height:"auto"
