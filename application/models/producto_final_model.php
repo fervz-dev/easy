@@ -2,30 +2,62 @@
 
 class Producto_final_model extends CI_Model {
 
-	public function get_cat_productos($sidx, $sord, $start, $limite)
-	{
-		$query = $this->db->query("SELECT
-	                                    clientes.nombre_empresa,
-	                                    producto_final.id_productoFinal,
-	                                    producto_final.nombre_producto,
-	                                    producto_final.descripcion
-	                                    FROM
-	                                    producto_final,
-	                                    clientes
-	                                    WHERE
-	                                    producto_final.activo = 1 AND
-	                                    producto_final.id_cliente=clientes.id_clientes
-	                                    ORDER BY $sidx $sord
-	                                LIMIT $start, $limite;");
-	    return ($query->num_rows() > 0)? $query->result() : NULL;
-	}
-
+	// public function get_cat_productos($sidx, $sord, $start, $limite)
+	// {
+	// 	$query = $this->db->query("SELECT
+	//                                     clientes.nombre_empresa,
+	//                                     producto_final.id_productoFinal,
+	//                                     producto_final.nombre_producto,
+	//                                     producto_final.descripcion
+	//                                     FROM
+	//                                     producto_final,
+	//                                     clientes
+	//                                     WHERE
+	//                                     producto_final.activo = 1 AND
+	//                                     producto_final.id_cliente=clientes.id_clientes
+	//                                     ORDER BY $sidx $sord
+	//                                 LIMIT $start, $limite;");
+	//     return ($query->num_rows() > 0)? $query->result() : NULL;
+	// }
+public function get_cat_productos($sidx, $sord, $start, $limite)
+{
+  $query = $this->db->query("SELECT
+                                    clientes.nombre_empresa,
+                                    producto_final.id_catalogo,
+                                    producto_final.nombre,
+                                    producto_final.largo,
+                                    producto_final.ancho,
+                                    producto_final.alto,
+                                    resistencia_mprima.resistencia,
+                                    producto_final.corrugado,
+                                    producto_final.score,
+                                    producto_final.descripcion,
+                                    producto_final.fecha_ingreso,
+                                    producto_final.id_archivos
+                                    FROM
+                                    producto_final,
+                                    resistencia_mprima,
+                                    clientes
+                                    WHERE
+                                    producto_final.activo = 1 AND
+                                    producto_final.id_cliente=clientes.id_clientes AND
+                                    producto_final.resistencia = resistencia_mprima.id_resistencia_mprima   ORDER BY $sidx $sord
+                                LIMIT $start, $limite;");
+    return ($query->num_rows() > 0)? $query->result() : NULL;
+}
 /////////////////////////////////////funcion guardar formulario  ///////////////////////////////////////////////
 	public function guardar()
    {
         $data = array (
         'id_cliente'=>$this->input->post('clientesdb'),
-        'nombre_producto'=>$this->input->post('nombre'),
+        'id_productoFinal'=>$this->input->post('productosBD'),
+        'nombre'=>$this->input->post('nombre'),
+        'largo'=>$this->input->post('largo'),
+        'ancho'=>$this->input->post('ancho'),
+        'alto'=>$this->input->post('alto'),
+        'resistencia'=>$this->input->post('resistencia'),
+        'corrugado'=>$this->input->post('corrugado'),
+        'score'=>$this->input->post('score'),
         'descripcion'=>$this->input->post('descripcion'),
         'fecha_ingreso'=>date('y-m-d'),
         'activo'=>1,

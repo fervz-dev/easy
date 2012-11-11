@@ -1,8 +1,38 @@
+<style type="text/css">
+	#box{ border-style:solid;
+border-color:red; height:10px;}
+</style>
 <form name="cat_producto" id="cat_producto">
 <table id="tabla_formulario">
-<tr>
+
+<!-- 	<tr>
+		<td><label for="">Forma de Ingreso:</label></td>
+		<td>
+			<table  id="box">
+			<tr>
+				<td  ><input type="radio" id="tipoProducto" name="tipoProducto" value="1">Producto</td>
+				<td ><input type="radio" id="tipoProducto" name="tipoProducto" value="2">Componente</td>
+			</tr>
+			</table>
+		</td>
+	</tr> -->
+
+<tr >
+
+	<td><label>Tipo de ingreso:</label></td>
+	<td><select name="tipoIngreso"  id="tipoIngreso">
+		<option value="">Seleccione...</option>
+		<option value="1">Producto</option>
+		<option value="2">Componente</option>		
+	</select>
+</td>
+</tr>
+
+
+<tr >
+
 	<td><label>Cliente:</label></td>
-	<td><select name="clientesdb"  id="clientesdb"  onchange="cargarProductos(this.value);">
+	<td><select name="clientesdb"  id="clientesdb">
 		<option value="">Seleccione...</option>
 		<?php foreach ($clientes as $clt) { ?>
 		<option value="<?php echo $clt['id_clientes']; ?>"><?php echo $clt['nombre_empresa'] ?></option>
@@ -66,11 +96,12 @@
 	<tr>
 		<td><label id="labelRight">Corrugado:</label></td>
 		<td><select id="corrugado" name="corrugado">
-			<option value="">Seleccione...</option>
-			<option value="SENCILLO">SENCILLO</option>
-			<option value="DOBLE">DOBLE</option>
+				<option value="">Seleccione...</option>
+				<option value="SENCILLO">SENCILLO</option>
+				<option value="DOBLE">DOBLE</option>
 
-		</select>
+			</select>
+		</td>
 	</tr>
 
 	<tr>
