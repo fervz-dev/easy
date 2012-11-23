@@ -56,7 +56,7 @@ public function get_cat_productosID($sidx, $sord, $start, $limite, $id_row)
                                     clientes
                                     WHERE
                                     catalogo_producto.activo = 1 AND
-                                    catalogo_producto.id_catalogo = $id_row AND
+                                    catalogo_producto.id_productoFinal = $id_row AND
                                     catalogo_producto.id_cliente=clientes.id_clientes  AND
                                     catalogo_producto.resistencia = resistencia_mprima.id_resistencia_mprima   ORDER BY $sidx $sord
                                 LIMIT $start, $limite;");
@@ -99,7 +99,8 @@ public function get_cat_productos_search($where, $sidx, $sord, $start, $limite)
 								catalogo_producto.resistencia,
 								catalogo_producto.corrugado,
 								catalogo_producto.score,
-								catalogo_producto.descripcion
+								catalogo_producto.descripcion,
+                                catalogo_producto.id_productoFinal
                                 FROM
                                 catalogo_producto,
                                 resistencia_mprima,

@@ -22,8 +22,9 @@ border-color:red; height:10px;}
 	<td><label>Tipo de ingreso:</label></td>
 	<td><select name="tipoIngreso"  id="tipoIngreso">
 		<option value="">Seleccione...</option>
-		<option value="1">Producto</option>
-		<option value="2">Componente</option>		
+		<option value="1">Componente</option>
+		<option value="2">Producto</option>
+
 	</select>
 </td>
 </tr>
@@ -32,7 +33,7 @@ border-color:red; height:10px;}
 <tr >
 
 	<td><label>Cliente:</label></td>
-	<td><select name="clientesdb"  id="clientesdb">
+	<td><select name="clientesdb"  id="clientesdb"  onchange="cargarProductos();">
 		<option value="">Seleccione...</option>
 		<?php foreach ($clientes as $clt) { ?>
 		<option value="<?php echo $clt['id_clientes']; ?>"><?php echo $clt['nombre_empresa'] ?></option>

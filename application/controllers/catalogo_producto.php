@@ -98,11 +98,11 @@ if ($this->permisos->permisos(8,2)==1) {
                    ///todos lo permisos
                    if (($this->permisos->permisos(8,1)==1)&&($this->permisos->permisos(8,3)==1)){
 
-                        $onclikedit="onclick=edit('".$row->id_catalogo."')";
+                        $onclikedit="onclick=edit('".$row->id_catalogo."','1')";
                         $onclik="onclick=delet('".$row->id_catalogo."')";
 
                         if ($row->id_archivos!=0) {
-                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."')";
+                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."','1')";
                         $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';
                         }else{
                         $picture="onclick=picture('".$row->id_catalogo."')";
@@ -113,10 +113,10 @@ if ($this->permisos->permisos(8,2)==1) {
                         // permisos solo para editar
                    }elseif (($this->permisos->permisos(8,1)==1)&&($this->permisos->permisos(8,3)==0)) {
 
-                        $onclikedit="onclick=edit('".$row->id_catalogo."')";
+                        $onclikedit="onclick=edit('".$row->id_catalogo."','1')";
                         //$onclik="onclick=delet('".$row->id_catalogo."')";
                         if ($row->id_archivos!=0) {
-                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."')";
+                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."','1')";
                         $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';
                         }else{
                         $picture="onclick=picture('".$row->id_catalogo."')";
@@ -126,10 +126,10 @@ if ($this->permisos->permisos(8,2)==1) {
                         // permisos solo para eliminar
                    }elseif (($this->permisos->permisos(8,1)==0)&&($this->permisos->permisos(8,3)==1)) {
 
-                        //$onclikedit="onclick=edit('".$row->id_catalogo."')";
+                        //$onclikedit="onclick=edit('".$row->id_catalogo."','1')";
                         $onclik="onclick=delet('".$row->id_catalogo."')";
                         if ($row->id_archivos!=0) {
-                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."')";
+                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."','1')";
                         $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';
                         }else{
                         $picture="onclick=picture('".$row->id_catalogo."')";
@@ -139,7 +139,7 @@ if ($this->permisos->permisos(8,2)==1) {
 // sin permisos
                    }elseif (($this->permisos->permisos(8,1)==0)&&($this->permisos->permisos(8,3)==0)) {
 
-                        //$onclikedit="onclick=edit('".$row->id_catalogo."')";
+                        //$onclikedit="onclick=edit('".$row->id_catalogo."','1')";
                         //$onclik="onclick=delet('".$row->id_catalogo."')";
                         $acciones='';
 
@@ -176,12 +176,12 @@ public function paginacionID($id_row)
         // $conexion = new mysqli("servidor","usuario","password","basededatos");
         // Se hace una consulta para saber cuantos registros se van a mostrar
 
-     $consul = $this->db->query('SELECT
+     $consul = $this->db->query("SELECT
                                         *
                                         FROM
                                         catalogo_producto
                                         WHERE
-                                        catalogo_producto.activo = "1" AND catalogo_producto.id_catalogo = $id_row');
+                                        catalogo_producto.activo = 1 AND catalogo_producto.id_productoFinal = ".$id_row." ");
      $count = $consul->num_rows();
         //En base al numero de registros se obtiene el numero de paginas
         if( $count >0 ) {
@@ -208,16 +208,16 @@ public function paginacionID($id_row)
         $i=0;
 if ($this->permisos->permisos(8,2)==1) {
 
-                foreach($resultado_catalogo as $row) {
+                  foreach($resultado_catalogo as $row) {
                    $data->rows[$i]['id']=$row->id_catalogo;
                    ///todos lo permisos
                    if (($this->permisos->permisos(8,1)==1)&&($this->permisos->permisos(8,3)==1)){
 
-                        $onclikedit="onclick=edit('".$row->id_catalogo."')";
+                        $onclikedit="onclick=edit('".$row->id_catalogo."','1')";
                         $onclik="onclick=delet('".$row->id_catalogo."')";
 
                         if ($row->id_archivos!=0) {
-                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."')";
+                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."','1')";
                         $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';
                         }else{
                         $picture="onclick=picture('".$row->id_catalogo."')";
@@ -228,10 +228,10 @@ if ($this->permisos->permisos(8,2)==1) {
                         // permisos solo para editar
                    }elseif (($this->permisos->permisos(8,1)==1)&&($this->permisos->permisos(8,3)==0)) {
 
-                        $onclikedit="onclick=edit('".$row->id_catalogo."')";
+                        $onclikedit="onclick=edit('".$row->id_catalogo."','1')";
                         //$onclik="onclick=delet('".$row->id_catalogo."')";
                         if ($row->id_archivos!=0) {
-                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."')";
+                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."','1')";
                         $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';
                         }else{
                         $picture="onclick=picture('".$row->id_catalogo."')";
@@ -241,10 +241,10 @@ if ($this->permisos->permisos(8,2)==1) {
                         // permisos solo para eliminar
                    }elseif (($this->permisos->permisos(8,1)==0)&&($this->permisos->permisos(8,3)==1)) {
 
-                        //$onclikedit="onclick=edit('".$row->id_catalogo."')";
+                        //$onclikedit="onclick=edit('".$row->id_catalogo."','1')";
                         $onclik="onclick=delet('".$row->id_catalogo."')";
                         if ($row->id_archivos!=0) {
-                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."')";
+                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."','1')";
                         $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';
                         }else{
                         $picture="onclick=picture('".$row->id_catalogo."')";
@@ -254,13 +254,13 @@ if ($this->permisos->permisos(8,2)==1) {
 // sin permisos
                    }elseif (($this->permisos->permisos(8,1)==0)&&($this->permisos->permisos(8,3)==0)) {
 
-                        //$onclikedit="onclick=edit('".$row->id_catalogo."')";
+                        //$onclikedit="onclick=edit('".$row->id_catalogo."','1')";
                         //$onclik="onclick=delet('".$row->id_catalogo."')";
                         $acciones='';
 
                    }
                    $data->rows[$i]['cell']=array($acciones,
-                               $row->nombre_empresa,
+                               // $row->nombre_empresa,
                                $row->nombre,
                                $row->largo,
                                $row->ancho,
@@ -268,8 +268,7 @@ if ($this->permisos->permisos(8,2)==1) {
                                $row->resistencia,
                                $row->corrugado,
                                $row->score,
-                               $row->descripcion,
-                               $row->nombre_producto
+                               $row->descripcion
                                );
                    $i++;
                 }
@@ -297,7 +296,8 @@ if ($this->permisos->permisos(8,2)==1) {
                            $row->resistencia.'~'.
                            $row->corrugado.'~'.
                            $row->score.'~'.
-                           $row->descripcion;
+                           $row->descripcion.'~'.
+                           $row->id_productoFinal;
     }
 // funcion para guardar formulario
 public function guardar()
@@ -335,6 +335,47 @@ public function editar_producto($id)
         $editar=$this->producto->editar($id);
         echo 1;
     }
+
+function do_uploadProductoFinal()
+{
+
+$data = array (
+'nombre'=>$this->input->post('nombre_archivoCatalogoFinal'),
+'descripcion'=>$this->input->post('descripcion_archivoCatalogoFinal')
+ );
+$id_catalogo=$this->input->post('id_catCatalogoFinal');
+$this->db->insert('archivo', $data);
+$insert_id = $this->db->insert_id();
+
+$path = $_SERVER['DOCUMENT_ROOT'].'/easy/uploads/';
+    $tamano_archivo = $_FILES['userfileCatalogoFinal']['size'];
+    $nombre_archivo = $_FILES['userfileCatalogoFinal']['name'];
+    $tipo_archivo = $_FILES['userfileCatalogoFinal']['type'];
+  if (!strpos($tipo_archivo, "jpeg")){
+    $this->session->set_flashdata('message', array('4'));
+     redirect(base_url().'catalogo_producto?m=2&submain=8','refresh');
+  }else{
+    $numero_archivo=$insert_id.".jpg";
+    move_uploaded_file($_FILES['userfileCatalogoFinal']['tmp_name'], $path.$numero_archivo);
+     $data = array (
+      'nombre_archivo'=>$numero_archivo
+      );
+    $this->db->where('id_file', $insert_id);
+    $this->db->update('archivo',$data);
+$catalogo = array (
+'id_archivos'=>$insert_id
+ );
+    $this->db->where('id_catalogo', $id_catalogo);
+    $this->db->update('producto_final',$catalogo);
+
+    $this->session->set_flashdata('message', array('3'));
+    redirect(base_url().'catalogo_producto?m=2&submain=8','refresh');
+  }
+
+ }
+
+
+
 function do_upload()
 {
 

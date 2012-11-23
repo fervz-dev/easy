@@ -2,6 +2,11 @@
 <script type="text/javascript">
 function editar(id)
 {
+  // tabla ala que se modificara
+  // 1= tabla productos complemento
+  table=$('#tipoIngreso').val();
+  alert(table);
+  if (table=='1') {
 
   $.ajax({
                         async:true,
@@ -44,6 +49,53 @@ function editar(id)
                         notify("Error al procesar los datos " ,500,5000,'error');
                         }//Error
                         });//Ajax
+// 2=producto catalogo final
+//
+  }else if (table=='2') {
+
+  $.ajax({
+                        async:true,
+                        beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+                         type:"POST",
+                          url:"<?php echo base_url();?>producto_final/editar_producto/"+id,
+                          data:{
+                                  "clientesdb":$("#clientesdb").val(),
+                                  "nombre":$("#nombre").val(),
+                                  "largo":$("#largo").val(),
+                                  "ancho":$("#ancho").val(),
+                                  "alto":$("#alto").val(),
+                                  "resistencia":$("#resistencia_mprima_id_resistencia_mprima").val(),
+                                  "corrugado":$("#corrugado").val(),
+                                  "score":$("#score").val(),
+                                  "descripcion":$("#descripcion").val()
+                               },
+                        cache: false,
+                        datatype:"html",
+                        success:function(data, textStatus){
+
+                        switch(data){
+                        case "0":
+                          notify("Error al procesar los datos " ,500,5000,'error');
+                        break;
+                        case "1":
+                          $( "#dialog-procesos" ).dialog( "close" );
+                         reloading();
+                         notify('El registro se edito correctamente',500,5000,'aviso');
+                        break;
+
+                        default:
+                          $( "#dialog-procesos" ).dialog( "close" );
+
+                        break;
+
+                        }//switch
+                        },
+                        error:function(datos){
+                        notify("Error al procesar los datos " ,500,5000,'error');
+                        }//Error
+                        });//Ajax
+  }
+
 }
 function delet (id) {
   msg="Este registro se eliminara. ¿Estás seguro?";
@@ -250,9 +302,11 @@ $.ajax({
 
 
 // editar
-function edit (id) {
+function edit (id,tipo) {
   document.cat_producto.reset();
-$.ajax({
+
+  if (tipo=='1') {
+    $.ajax({
                         async:true,cache: false,
                         beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
                         type:"GET",
@@ -262,6 +316,10 @@ $.ajax({
 
             dato= data.split('~');
             $("#clientesdb").val(dato[0]);
+            $('#tipoIngreso').val(1);
+                        cargarProductos();
+            cargarProductos1(dato[9]);
+
             $("#nombre").val(dato[1]);
             $("#largo").val(dato[2]);
             $("#ancho").val(dato[3]);
@@ -270,7 +328,8 @@ $.ajax({
             $('#corrugado').val(dato[6]);
             $('#score').val(dato[7]);
             $('#descripcion').val(dato[8]);
-            cargarProductos(dato[0]);
+
+
             },
                         error:function(datos){
                         notify("Error al procesar los datos " ,500,5000,'error');
@@ -299,6 +358,58 @@ $( "#dialog-procesos" ).dialog({
       close: function() {}
     });
         $( "#dialog-procesos" ).dialog( "open" );
+  }else if (tipo=='2') {
+    $.ajax({
+                        async:true,cache: false,
+                        beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+                        type:"GET",
+                        url:"<?php echo base_url();?>producto_final/get/"+id+"/"+Math.random()*10919939116744,
+                        datatype:"html",
+                        success:function(data, textStatus){
+
+            dato= data.split('~');
+            $("#clientesdb").val(dato[0]);
+            $("#nombre").val(dato[1]);
+            $("#largo").val(dato[2]);
+            $("#ancho").val(dato[3]);
+            $("#alto").val(dato[4]);
+            $('#resistencia_mprima_id_resistencia_mprima').val(dato[5]);
+            $('#corrugado').val(dato[6]);
+            $('#score').val(dato[7]);
+            $('#descripcion').val(dato[8]);
+            cargarProductos(dato[0]);
+            $('#tipoIngreso').val(2);
+            },
+                        error:function(datos){
+                        notify("Error al procesar los datos " ,500,5000,'error');
+            return false;
+                        }//Error
+                        });//Ajax
+
+
+$( "#dialog-procesos" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+             if (validarCampos()==true) {
+                editar(id);
+             }
+
+            },
+          Cancelar:function()
+          {
+              $( "#dialog-procesos" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialog-procesos" ).dialog( "open" );
+  };
+
+
 
 }
 function reloading()
@@ -306,10 +417,14 @@ function reloading()
 
   $("#tbl").trigger("reloadGrid")
 }
-//si existe la imagen la mandamos a most
-function picture_existe(id,id_cata)
+//si existe la imagen la mandamos a mostrar
+//1= a componentes del catalogo
+//2= a producto principal del catalogo
+//
+function picture_existe(id,id_cata,tipo)
 {
- $.ajax({
+  if (tipo==1) {
+    $.ajax({
                         async:true,cache: false,
                         beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
                         type:"GET",
@@ -380,6 +495,81 @@ $( "#dialog-procesos-picture_view" ).dialog({
       }
     });
         $( "#dialog-procesos-picture_view" ).dialog( "open" );
+////////////////////////////////////////////////////// condicion pra verificar si es del catalofo final la imagen
+  }else if (tipo==2) {
+    $.ajax({
+                        async:true,cache: false,
+                        beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+                        type:"GET",
+                        url:"<?php echo base_url();?>producto_final/get_imagen/"+id,
+                        datatype:"html",
+                        success:function(data, textStatus){
+
+            dato= data.split('~');
+            var img = $('<img />').attr({ 'id': dato[0], 'src':'<?php echo base_url();?>uploads/'+dato[1] }).appendTo($('#img_catalogo'));
+            },
+                        error:function(datos){
+                        notify("Error al procesar los datos " ,500,5000,'error');
+            return false;
+                        }//Error
+                        });//Ajax
+$( "#dialog-procesos-picture_view" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Cerrar: function() {
+        $( "#dialog-procesos-picture_view" ).dialog( "close" );
+         $('#img_catalogo img:last-child').remove();
+          }
+          ,
+          <?php  if (($this->permisos->permisos(8,1)==1)&&($this->permisos->permisos(8,3)==1)) {?>
+          Eliminar:function()
+          {
+            $( "#dialog-procesos-picture_view" ).dialog( "close" );
+              $.ajax({
+                      async:true,cache: false,
+                      beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+                      type:"POST",
+                      url:"<?php echo base_url();?>producto_final/eliminar_imagen/"+id+"/"+id_cata,
+                      datatype:"html",
+                      success:function(data, textStatus){
+
+                             switch(data){
+                               case "0":
+
+                               notify("Error al procesar los datos " ,500,5000,'error');
+                               break;
+                               case "1":
+                               $( "#dialog-procesos-picture_view" ).dialog( "close" );
+                               notify('El registro se ha eliminado correctamente',500,5000,'aviso');
+                                 $("#tbl").jqGrid('GridUnload');
+                                  setTimeout("cargar()",1000);
+
+                               break;
+                               default:
+                               $( "#dialog-procesos-picture_view" ).dialog( "close" );
+
+                               break;
+
+                              }//switch
+                             },
+                        error:function(datos){
+                              var error='Error'+data;
+                                 notify(error ,500,5000,'error');
+                             }//Error
+                         });//Ajax
+
+          }<?php } ?>
+      },
+      close: function() {
+        $('#img_catalogo img:last-child').remove();
+      }
+    });
+        $( "#dialog-procesos-picture_view" ).dialog( "open" );
+  }
+
 }
 // alta de producto
 function picture(id)
@@ -410,9 +600,39 @@ $( "#dialog-procesos-picture" ).dialog({
     });
         $( "#dialog-procesos-picture" ).dialog( "open" );
 }
+function pictureCatalogoFinal(id)
+{
+ document.archivoCatalogoFinal.reset();
+ $("#id_catCatalogoFinal").val(id);
+$( "#dialog-procesos-picture_catalogoFinal" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+
+             if (validarCamposPictureCatalogoFinal()==true) {
+              // guardar();
+              document.archivoCatalogoFinal.submit();
+             }
+
+
+          },
+          Cancelar:function()
+          {
+        $( "#dialog-procesos-picture_catalogoFinal" ).dialog( "close" );
+          }
+      },
+      close: function() {}
+    });
+        $( "#dialog-procesos-picture_catalogoFinal" ).dialog( "open" );
+}
+
 function alta()
 {
 document.cat_producto.reset();
+
 $( "#dialog-procesos" ).dialog({
       autoOpen: false,
       height: 'auto',
@@ -423,15 +643,15 @@ $( "#dialog-procesos" ).dialog({
              if (validarCampos()==true) {
               alert('asdasd111111111');
                           tipoProducto=$('#tipoIngreso').val();
-                          if (tipoProducto==1) {
-                          
+                          if (tipoProducto==2) {
+
                               guardar_producto();
-                          
-                          }else if(tipoProducto==2){
-                          
+
+                          }else if(tipoProducto==1){
+
                               guardar_componente();
                           }
-              
+
              }
 // document.archivo.submit();
 
@@ -479,6 +699,39 @@ else if (validarVacio(userfile)==false) {
 }
 
 }
+//////////////////////////////////////validar compos picture catalogo final////////////
+function validarCamposPictureCatalogoFinal () {
+nombre_archivo=$('#nombre_archivoCatalogoFinal').val();
+descripcion_archivo=$('#descripcion_archivoCatalogoFinal').val();
+userfile=$('#userfileCatalogoFinal').val();
+
+if (validarVacio(nombre_archivo)==false) {
+
+  notify('* El campo <strong>NOMBRE</strong> no puede estar vacio!!!',500,5000,'error');
+  $("#nombre_archivoCatalogoFinal").focus();
+  return false;
+
+}
+// else if (validarVacio(descripcion_archivo)==false) {
+
+//   notify('* El campo <strong>DESCRIPCION</strong> no puede estar vacio!!!',500,5000,'error');
+//   $("#descripcion_archivo").focus();
+//   return false;
+
+// }
+else if (validarVacio(userfile)==false) {
+
+  notify('* Debe de seleccionar un archivos!!!',500,5000,'error');
+  $("#userfileCatalogoFinal").focus();
+  return false;
+
+}else {
+
+  return true;
+
+}
+
+}
 ////////////////////////////////////// validacion //////////////////////
 function validarCampos () {
             clientesdb=$('#clientesdb').val();
@@ -487,7 +740,7 @@ function validarCampos () {
             ancho=$("#ancho").val();
             largo=$("#largo").val();
             corrugado=$("#corrugado").val();
-            tipoProducto=$("#tipoIngreso").val(); 
+            tipoProducto=$("#tipoIngreso").val();
 
             resistencia=$("#resistencia_mprima_id_resistencia_mprima").val();
             if (validarCombo(tipoProducto)==false) {
@@ -498,7 +751,7 @@ function validarCampos () {
               notify('* El campo <strong>CLIENTE</strong> no puede estar vacio!!!',500,5000,'error');
               $("#clientesdb").focus();
               return false;
-            }else if (validarCombo(productosBD)==false) {
+            }else if ((validarCombo(productosBD)==false)&&(tipoProducto==1)) {
               notify('* El campo <strong>PRODUCTOS</strong> no puede estar vacio!!!',500,5000,'error');
               $("#clientesdb").focus();
               return false;
@@ -538,9 +791,12 @@ function validarCampos () {
 
   }
   ////////////////////////////////cargar productos por cleinte
-  function cargarProductos (id_cliente) {
-     $.ajax({
-                    url:"<?php echo base_url();?>producto_final/productosCliente/"+id_cliente,
+  function cargarProductos () {
+    tipoIngreso=$('#tipoIngreso').val();
+    clientesdb=$('#clientesdb').val();
+    if (tipoIngreso==1 && clientesdb!='') {
+      $.ajax({
+                    url:"<?php echo base_url();?>producto_final/productosCliente/"+clientesdb,
                     type:"POST",
                     beforeSend: function(){
                        $("#ajax_productos").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
@@ -550,6 +806,33 @@ function validarCampos () {
                             $("#ajax_productos").html("");
                     }
     });
+    }else if(tipoIngreso==1 && clientesdb==''){
+       notify('* Debes de seleccionar un cliente!!!',500,5000,'error');
+              $("#clientesdb").focus();
+    }
+
+  }
+    function cargarProductos1 (producto) {
+    tipoIngreso=$('#tipoIngreso').val();
+    clientesdb=$('#clientesdb').val();
+    if (tipoIngreso==1 && clientesdb!='') {
+      $.ajax({
+                    url:"<?php echo base_url();?>producto_final/productosCliente/"+clientesdb,
+                    type:"POST",
+                    beforeSend: function(){
+                       $("#ajax_productos").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
+                    },
+                    success: function(html){
+                            $("#productosBD").html(html);
+                            $("#ajax_productos").html("");
+                             $("#productosBD").val(producto);
+                    }
+    });
+    }else{
+       notify('* Debes de seleccionar un cliente!!!',500,5000,'error');
+              $("#clientesdb").focus();
+    }
+
   }
   $(document).ready(function(){
   $("#tbl").jqGrid({
@@ -605,9 +888,9 @@ function validarCampos () {
    url:"<?php echo base_url();?>catalogo_producto/paginacionID/"+row_id,
    datatype: "json",
     mtype: 'POST',
-                        colNames:['Acciones','CLIENTE','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
+                        colNames:['Acciones','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                              {name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:true, sortable:true,search:true,editable:false},
+                             // {name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:true, sortable:true,search:true,editable:false},
                               {name:'nombre', index:'nombre', width:170,resizable:true, sortable:true,search:true,editable:false},
                               {name:'largo', index:'largo', width:50,resizable:true, sortable:true,search:true,editable:false},
                               {name:'ancho', index:'ancho', width:50,resizable:true, sortable:true,search:true,editable:false},
@@ -653,6 +936,10 @@ function validarCampos () {
       </div>
       <div style="display:none" id="dialog-procesos-picture" title="Imagen para Producto">
       <?php $this->load->view('catalogo_producto/archivo');?>
+      </div>
+<!-- arcivo documento final -->
+      <div style="display:none" id="dialog-procesos-picture_catalogoFinal" title="Imagen para Producto">
+      <?php $this->load->view('catalogo_producto/archivo_final');?>
       </div>
       <div style="display:none" id="dialog-procesos-picture_view" title="Imagen">
       <div id="img_catalogo"></div>

@@ -21,7 +21,3 @@
 <!-- <input  type="submit" value="enviar"> -->
 </form>
 </table>
-
-
-
-

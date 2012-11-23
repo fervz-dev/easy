@@ -93,14 +93,14 @@ if ($this->permisos->permisos(8,2)==1) {
                    ///todos lo permisos
                    if (($this->permisos->permisos(8,1)==1)&&($this->permisos->permisos(8,3)==1)){
 
-                        $onclikedit="onclick=edit('".$row->id_catalogo."')";
+                        $onclikedit="onclick=edit('".$row->id_catalogo."','2')";
                         $onclik="onclick=delet('".$row->id_catalogo."')";
 
                         if ($row->id_archivos!=0) {
-                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."')";
+                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."','2')";
                         $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';
                         }else{
-                        $picture="onclick=picture('".$row->id_catalogo."')";
+                        $picture="onclick=pictureCatalogoFinal('".$row->id_catalogo."')";
                         $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/view_picture.png" width="18" height="18" /></span>';
                         }
 
@@ -108,33 +108,33 @@ if ($this->permisos->permisos(8,2)==1) {
                         // permisos solo para editar
                    }elseif (($this->permisos->permisos(8,1)==1)&&($this->permisos->permisos(8,3)==0)) {
 
-                        $onclikedit="onclick=edit('".$row->id_catalogo."')";
+                        $onclikedit="onclick=edit('".$row->id_catalogo."','2')";
                         //$onclik="onclick=delet('".$row->id_catalogo."')";
                         if ($row->id_archivos!=0) {
-                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."')";
+                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."','2')";
                         $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';
                         }else{
-                        $picture="onclick=picture('".$row->id_catalogo."')";
+                        $picture="onclick=pictureCatalogoFinal('".$row->id_catalogo."')";
                         $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/view_picture.png" width="18" height="18" /></span>';
                         }
 
                         // permisos solo para eliminar
                    }elseif (($this->permisos->permisos(8,1)==0)&&($this->permisos->permisos(8,3)==1)) {
 
-                        //$onclikedit="onclick=edit('".$row->id_catalogo."')";
+                        //$onclikedit="onclick=edit('".$row->id_catalogo."','2')";
                         $onclik="onclick=delet('".$row->id_catalogo."')";
                         if ($row->id_archivos!=0) {
-                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."')";
+                        $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."','2')";
                         $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';
                         }else{
-                        $picture="onclick=picture('".$row->id_catalogo."')";
+                        $picture="onclick=pictureCatalogoFinal('".$row->id_catalogo."')";
                         $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/view_picture.png" width="18" height="18" /></span>';
                         }
 
 // sin permisos
                    }elseif (($this->permisos->permisos(8,1)==0)&&($this->permisos->permisos(8,3)==0)) {
 
-                        //$onclikedit="onclick=edit('".$row->id_catalogo."')";
+                        //$onclikedit="onclick=edit('".$row->id_catalogo."','2')";
                         //$onclik="onclick=delet('".$row->id_catalogo."')";
                         $acciones='';
 
@@ -162,11 +162,24 @@ if ($this->permisos->permisos(8,2)==1) {
         $save=$this->producto->guardar();
         echo $save;
     }
+    //  public function get($id)
+    // {
+    //     $row=$this->producto->get_id($id);
+    //                 echo   $row->id_cliente.'~'.
+    //                        $row->nombre_producto.'~'.
+    //                        $row->descripcion;
+    // }
      public function get($id)
     {
         $row=$this->producto->get_id($id);
                     echo   $row->id_cliente.'~'.
-                           $row->nombre_producto.'~'.
+                           $row->nombre.'~'.
+                           $row->largo.'~'.
+                           $row->ancho.'~'.
+                           $row->alto.'~'.
+                           $row->resistencia.'~'.
+                           $row->corrugado.'~'.
+                           $row->score.'~'.
                            $row->descripcion;
     }
     public function eliminar($id)
@@ -192,10 +205,30 @@ if ($this->permisos->permisos(8,2)==1) {
         $combo = "";
         $combo= '<option value="">Selecciones...</option>';
         for ($i=0; $i <count($queryProductos) ; $i++) {
-             $combo .= "<option value='".$queryProductos[$i]["id_productoFinal"]."'>".$queryProductos[$i]["nombre_producto"]."</option>";
+             $combo .= "<option value='".$queryProductos[$i]["id_catalogo"]."'>".$queryProductos[$i]["nombre"]."</option>";
         }
         echo $combo;
     }
+    public function get_imagen($id)
+    {
+        $row=$this->producto->get_imagen($id);
+                    echo   $row->id_file.'~'.
+                           $row->nombre_archivo;
+
+    }
+  ///extraer la imagen
+public function eliminar_imagen($id,$id_catalogo)
+{
+    $delete=$this->producto->eliminar_imagen($id,$id_catalogo);
+    if($delete > 0)
+    {
+        echo 1;
+    }
+    else
+    {
+        echo 0;
+    }
+}
 }
 
 /* End of file producto_final.php */
