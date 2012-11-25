@@ -214,7 +214,7 @@ if ($this->permisos->permisos(8,2)==1) {
                    if (($this->permisos->permisos(8,1)==1)&&($this->permisos->permisos(8,3)==1)){
 
                         $onclikedit="onclick=edit('".$row->id_catalogo."','1')";
-                        $onclik="onclick=delet('".$row->id_catalogo."')";
+                        $onclik="onclick=delet('".$row->id_catalogo."','1')";
 
                         if ($row->id_archivos!=0) {
                         $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."','1')";
@@ -229,7 +229,7 @@ if ($this->permisos->permisos(8,2)==1) {
                    }elseif (($this->permisos->permisos(8,1)==1)&&($this->permisos->permisos(8,3)==0)) {
 
                         $onclikedit="onclick=edit('".$row->id_catalogo."','1')";
-                        //$onclik="onclick=delet('".$row->id_catalogo."')";
+                        //$onclik="onclick=delet('".$row->id_catalogo."','1')";
                         if ($row->id_archivos!=0) {
                         $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."','1')";
                         $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';
@@ -242,7 +242,7 @@ if ($this->permisos->permisos(8,2)==1) {
                    }elseif (($this->permisos->permisos(8,1)==0)&&($this->permisos->permisos(8,3)==1)) {
 
                         //$onclikedit="onclick=edit('".$row->id_catalogo."','1')";
-                        $onclik="onclick=delet('".$row->id_catalogo."')";
+                        $onclik="onclick=delet('".$row->id_catalogo."','1')";
                         if ($row->id_archivos!=0) {
                         $picture="onclick=picture_existe('".$row->id_archivos."','".$row->id_catalogo."','1')";
                         $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span><span style=" cursor:pointer" '.$picture.'><img title="Nueva imagen" src="'.base_url().'img/add_picture.png" width="18" height="18" /></span>';
@@ -255,7 +255,7 @@ if ($this->permisos->permisos(8,2)==1) {
                    }elseif (($this->permisos->permisos(8,1)==0)&&($this->permisos->permisos(8,3)==0)) {
 
                         //$onclikedit="onclick=edit('".$row->id_catalogo."','1')";
-                        //$onclik="onclick=delet('".$row->id_catalogo."')";
+                        //$onclik="onclick=delet('".$row->id_catalogo."','1')";
                         $acciones='';
 
                    }

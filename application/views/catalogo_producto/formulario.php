@@ -21,14 +21,29 @@ border-color:red; height:10px;}
 
 	<td><label>Tipo de ingreso:</label></td>
 	<td><select name="tipoIngreso"  id="tipoIngreso">
-		<option value="">Seleccione...</option>
-		<option value="1">Componente</option>
-		<option value="2">Producto</option>
+		<option value=""onclick="validaTipoIngreso(2);">Seleccione...</option>
+		<option value="1" onclick="validaTipoIngreso(1);">Componente</option>
+		<option value="2" onclick="validaTipoIngreso(2);">Producto</option>
 
 	</select>
 </td>
 </tr>
+<script type="text/javascript">
+	function validaTipoIngreso (tipo) {
+		if (tipo==1) {
+			$('#hideProductos').fadeIn('slow').animate({
+                    backgroundColor: "#9cccde",
+                    color: "#aa0000",
+                    width: 500
+                });
+			 $( "#hideProductos" )
+		}else if (tipo==2) {
+			 
+              $( "#hideProductos" ).fadeOut('slow')
+		}
+	}
 
+</script>
 
 <tr >
 
@@ -41,8 +56,8 @@ border-color:red; height:10px;}
 	</select>
 </td>
 </tr>
-<tr>
-	<td><label>Produtos del cliente:</label></td>
+<tr id="hideProductos" style=" display:none;">
+	<td><label id="textProductos">Produtos del cliente:</label></td>
 	<td><select name="productosBD"  id="productosBD" >
 
 	</select>

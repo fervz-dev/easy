@@ -97,12 +97,21 @@ function editar(id)
   }
 
 }
-function delet (id) {
-  msg="Este registro se eliminara. ¿Estás seguro?";
-  confirmacion(id,msg);
+function delet (id,tipo) {
+ if (tipo=='1') {
+    msg='<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><div style="text-align:center; color:red;"><strong>¿Estás seguro de elimar el Producto?</div><strong>';
+ confirmacion(id,msg,tipo);
+ }else if (tipo=='2') {
+  msg='<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>ATENCIÓN: Al eliminar el producto se eliminan los componentes.</p> <div style="text-align:center; color:red;"><strong>"Se aconseja primero cambiar los componentes a otro producto."<strong></br>¿Estás seguro de elimar el Producto?</div>';
+ confirmacion(id,msg,tipo);
+ };
+  
+
+  
 }
-function delete_id(id)
+function delete_id(id,tipo)
 {
+  if (tipo=='1') {
 
   $.ajax({
                       async:true,cache: false,
@@ -136,10 +145,47 @@ function delete_id(id)
                                  notify(error ,500,5000,'error');
                              }//Error
                          });//Ajax
+  }else if (tipo=='2') {
+
+  $.ajax({
+                      async:true,cache: false,
+                      beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
+                      type:"POST",
+                      url:"<?php echo base_url();?>producto_final/eliminar/"+id,
+                      datatype:"html",
+                      success:function(data, textStatus){
+
+                             switch(data){
+                               case "0":
+
+                               notify("Error al procesar los datos " ,500,5000,'error');
+                               break;
+                               case "1":
+                               $( "#dialog-procesos" ).dialog( "close" );
+                               notify('El registro se ha eliminado correctamente',500,5000,'aviso');
+                                 $("#tbl").jqGrid('GridUnload');
+                                  setTimeout("cargar()",1000);
+
+                               break;
+                               default:
+                               $( "#dialog-procesos" ).dialog( "close" );
+
+                               break;
+
+                              }//switch
+                             },
+                        error:function(datos){
+                              var error='Error'+data;
+                                 notify(error ,500,5000,'error');
+                             }//Error
+                         });//Ajax
+
+  }
+
 }
   ///////////////////dialogo de confirmacion////////////////////////////////////
-  function confirmacion (id,msg) {
-$('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>'+msg+'</p>');
+  function confirmacion (id,msg,tipo) {
+$('#dialog-confirm').html(msg);
 
     $( "#dialog-confirm" ).dialog({
       resizable: false,
@@ -149,7 +195,7 @@ $('#dialog-confirm').html('<p><span class="ui-icon ui-icon-alert" style="float:l
       buttons: {
         "Eliminar": function() {
           $( this ).dialog( "close" );
-          delete_id(id);
+          delete_id(id,tipo);
         },
         Cancel: function() {
           $( this ).dialog( "close" );
@@ -191,15 +237,15 @@ function cargar () {
     height:'auto',
     loadtext: 'Cargando',
   width:'100%',
-   grouping: true,
-   groupingView : {
-                    groupField : ['nombre_empresa'],
-                    groupColumnShow : [true, true],
-                    groupText : ['<b>{0}</b>', '{0}'],
-                    groupCollapse : false, groupOrder: ['asc', 'asc'],
-                    groupSummary : [false, false],
-                    groupDataSorted : true
-                  },
+  //  grouping: true,
+  //  groupingView : {
+  //                   groupField : ['nombre_empresa'],
+  //                   groupColumnShow : [true, true],
+  //                   groupText : ['<b>{0}</b>', '{0}'],
+  //                   groupCollapse : false, groupOrder: ['asc', 'asc'],
+  //                   groupSummary : [false, false],
+  //                   groupDataSorted : true
+                  // },
     searchurl:'<?php echo base_url();?>producto_final/buscando',
                 height:"auto"
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
@@ -306,6 +352,7 @@ function edit (id,tipo) {
   document.cat_producto.reset();
 
   if (tipo=='1') {
+$('#tipoIngreso').attr('disabled', true);
     $.ajax({
                         async:true,cache: false,
                         beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
@@ -317,8 +364,10 @@ function edit (id,tipo) {
             dato= data.split('~');
             $("#clientesdb").val(dato[0]);
             $('#tipoIngreso').val(1);
-                        cargarProductos();
+            validaTipoIngreso(1);
+            cargarProductos();
             cargarProductos1(dato[9]);
+            $('#productosBD').val(dato[9]);
 
             $("#nombre").val(dato[1]);
             $("#largo").val(dato[2]);
@@ -359,6 +408,7 @@ $( "#dialog-procesos" ).dialog({
     });
         $( "#dialog-procesos" ).dialog( "open" );
   }else if (tipo=='2') {
+        $('#tipoIngreso').attr('disabled', true);
     $.ajax({
                         async:true,cache: false,
                         beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
@@ -377,7 +427,7 @@ $( "#dialog-procesos" ).dialog({
             $('#corrugado').val(dato[6]);
             $('#score').val(dato[7]);
             $('#descripcion').val(dato[8]);
-            cargarProductos(dato[0]);
+            // cargarProductos(dato[0]);
             $('#tipoIngreso').val(2);
             },
                         error:function(datos){
@@ -631,6 +681,7 @@ $( "#dialog-procesos-picture_catalogoFinal" ).dialog({
 
 function alta()
 {
+  $('#tipoIngreso').attr('disabled', false);
 document.cat_producto.reset();
 
 $( "#dialog-procesos" ).dialog({

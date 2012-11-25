@@ -69,10 +69,20 @@ public function get_cat_productos($sidx, $sord, $start, $limite)
    }
    public function eliminar($id)
    {
-                $this->db->where('id_productoFinal', $id);
+    $this->db->trans_start();
+                $this->db->where('id_catalogo', $id);
                 $this->db->delete('producto_final');
-                return $this->db->affected_rows();
-   }
+                $this->db->where('id_productoFinal', $id);
+                $this->db->delete('catalogo_producto');
+    $this->db->trans_complete();
+
+      if ($this->db->trans_status() === FALSE)
+      {
+        return 0;
+      }else if ($this->db->trans_status() === TRUE) {
+        return 1;
+      }
+    }
 
   // public function get_id($id)
   // {
