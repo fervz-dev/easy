@@ -339,6 +339,8 @@ public function editar_producto($id)
 function do_uploadProductoFinal()
 {
 
+$extencion=$this->obtenerExtensionFichero($_FILES['userfileCatalogoFinal']['name']);
+if ($extencion=='jpg') {
 $data = array (
 'nombre'=>$this->input->post('nombre_archivoCatalogoFinal'),
 'descripcion'=>$this->input->post('descripcion_archivoCatalogoFinal')
@@ -371,13 +373,27 @@ $catalogo = array (
     $this->session->set_flashdata('message', array('3'));
     redirect(base_url().'catalogo_producto?m=2&submain=8','refresh');
   }
-
+}else{
+    $this->session->set_flashdata('message', array('4'));
+     redirect(base_url().'catalogo_producto?m=2&submain=8','refresh');
+}
  }
 
+
+function obtenerExtensionFichero($str)
+{
+
+        return end(explode(".", $str));
+
+}
 
 
 function do_upload()
 {
+
+$extencion=$this->obtenerExtensionFichero($_FILES['userfile']['name']);
+if ($extencion=='jpg') {
+
 
 $data = array (
 'nombre'=>$this->input->post('nombre_archivo'),
@@ -387,7 +403,7 @@ $id_catalogo=$this->input->post('id_cat');
 $this->db->insert('archivo', $data);
 $insert_id = $this->db->insert_id();
 
-$path = $_SERVER['DOCUMENT_ROOT'].'/sistema/uploads/';
+$path = $_SERVER['DOCUMENT_ROOT'].'/easy/uploads/';
     $tamano_archivo = $_FILES['userfile']['size'];
     $nombre_archivo = $_FILES['userfile']['name'];
     $tipo_archivo = $_FILES['userfile']['type'];
@@ -411,7 +427,10 @@ $catalogo = array (
     $this->session->set_flashdata('message', array('3'));
     redirect(base_url().'catalogo_producto?m=2&submain=8','refresh');
   }
-
+}else{
+    $this->session->set_flashdata('message', array('4'));
+     redirect(base_url().'catalogo_producto?m=2&submain=8','refresh');
+}
  }
 
 

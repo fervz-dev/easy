@@ -5,7 +5,7 @@ function editar(id)
   // tabla ala que se modificara
   // 1= tabla productos complemento
   table=$('#tipoIngreso').val();
-  alert(table);
+
   if (table=='1') {
 
   $.ajax({
@@ -105,9 +105,9 @@ function delet (id,tipo) {
   msg='<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>ATENCIÓN: Al eliminar el producto se eliminan los componentes.</p> <div style="text-align:center; color:red;"><strong>"Se aconseja primero cambiar los componentes a otro producto."<strong></br>¿Estás seguro de elimar el Producto?</div>';
  confirmacion(id,msg,tipo);
  };
-  
 
-  
+
+
 }
 function delete_id(id,tipo)
 {
@@ -206,7 +206,7 @@ $('#dialog-confirm').html(msg);
 
 // Recargar grid
 function cargar () {
- $("#tbl").jqGrid({
+  $("#tbl").jqGrid({
     url:'<?php echo base_url();?>producto_final/paginacion',
     datatype: "json",
     mtype: 'POST',
@@ -237,19 +237,52 @@ function cargar () {
     height:'auto',
     loadtext: 'Cargando',
   width:'100%',
-  //  grouping: true,
-  //  groupingView : {
-  //                   groupField : ['nombre_empresa'],
-  //                   groupColumnShow : [true, true],
-  //                   groupText : ['<b>{0}</b>', '{0}'],
-  //                   groupCollapse : false, groupOrder: ['asc', 'asc'],
-  //                   groupSummary : [false, false],
-  //                   groupDataSorted : true
-                  // },
+    subGrid: true,
+   grouping: false,
+   groupingView : {
+                    groupField : ['nombre_empresa'],
+                    groupColumnShow : [true, true],
+                    groupText : ['<b>{0}</b>', '{0}'],
+                    groupCollapse : false, groupOrder: ['asc', 'asc'],
+                    groupSummary : [false, false],
+                    groupDataSorted : true
+                  },
     searchurl:'<?php echo base_url();?>producto_final/buscando',
-                height:"auto"
+               height:"auto",
+   subGridRowExpanded: function(subgrid_id, row_id) {
+   var subgrid_table_id, pager_id; subgrid_table_id = subgrid_id+"_t"; pager_id = "p_"+subgrid_table_id;
+
+   $("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' alt='subtabla' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>");
+
+   $("#"+subgrid_table_id).jqGrid({
+   //url:"subgrid.php?q=2&id="+row_id,
+   url:"<?php echo base_url();?>catalogo_producto/paginacionID/"+row_id,
+   datatype: "json",
+    mtype: 'POST',
+                        colNames:['Acciones','NOMBRE','LARGO','ANCHO','ALTO','RESISTENCIA','CORRUGADO','SCORE','DESCRIPCION'],
+                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
+                             // {name:'nombre_empresa', index:'nombre_empresa', width:170,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'nombre', index:'nombre', width:170,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'largo', index:'largo', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'ancho', index:'ancho', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'alto', index:'alto', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'resistencia', index:'resistencia', width:100,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'corrugado', index:'corrugado', width:80,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'score', index:'score', width:50,resizable:true, sortable:true,search:true,editable:false},
+                              {name:'descripcion', index:'descripcion', width:170,resizable:true, sortable:true,search:true,editable:false}
+                                ],
+  rows:10,
+  rowNum:10,
+    rowList:[10,20],
+    pager: pager_id,
+    sortname: 'nombre',
+    height:'auto',
+   sortorder: "asc" });
+
+   $("#"+subgrid_table_id).jqGrid('navGrid',"#"+pager_id,{edit:false,add:false,del:false,search:false}) }
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
+      $("#tbl").jqGrid('navGrid','#paginacion',{add:false,edit:false,del:false,search:false});
       }
 // guardar formulario
 function guardar_componente()
@@ -301,7 +334,7 @@ $.ajax({
 
 function guardar_producto()
 {
-alert('funcuin');
+
 $.ajax({
           async:true,cache: false,
           beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
@@ -368,7 +401,6 @@ $('#tipoIngreso').attr('disabled', true);
             cargarProductos();
             cargarProductos1(dato[9]);
             $('#productosBD').val(dato[9]);
-
             $("#nombre").val(dato[1]);
             $("#largo").val(dato[2]);
             $("#ancho").val(dato[3]);
@@ -681,7 +713,8 @@ $( "#dialog-procesos-picture_catalogoFinal" ).dialog({
 
 function alta()
 {
-  $('#tipoIngreso').attr('disabled', false);
+$('#tipoIngreso').attr('disabled', false);
+$('#hideProductos').hide();
 document.cat_producto.reset();
 
 $( "#dialog-procesos" ).dialog({
@@ -692,7 +725,6 @@ $( "#dialog-procesos" ).dialog({
       buttons: {
           Aceptar: function() {
              if (validarCampos()==true) {
-              alert('asdasd111111111');
                           tipoProducto=$('#tipoIngreso').val();
                           if (tipoProducto==2) {
 
@@ -836,7 +868,6 @@ function validarCampos () {
               $("#ancho").focus();
               return false;
             }else{
-              alert('asdasd');
               return true;
             }
 

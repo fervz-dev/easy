@@ -185,6 +185,33 @@ public function editar($id)
     $this->db->update('producto_final',$data);
    }
 
+public function get_cat_productos_search($where, $sidx, $sord, $start, $limite)
+{
+    $query = $this->db->query("SELECT
+                                    clientes.nombre_empresa,
+                                    producto_final.id_catalogo,
+                                    producto_final.nombre,
+                                    producto_final.largo,
+                                    producto_final.ancho,
+                                    producto_final.alto,
+                                    resistencia_mprima.resistencia,
+                                    producto_final.corrugado,
+                                    producto_final.score,
+                                    producto_final.descripcion,
+                                    producto_final.fecha_ingreso,
+                                    producto_final.id_archivos
+                                    FROM
+                                    producto_final ,
+                                    resistencia_mprima,
+                                    clientes
+                                    where
+
+                                    ".$where."
+                                      ORDER BY $sidx $sord
+                                LIMIT $start, $limite;");
+    return ($query->num_rows() > 0)? $query->result() : NULL;
+}
+
 }
 
 /* End of file producto_final_model.php */
