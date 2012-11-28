@@ -6,6 +6,12 @@ function editar(id)
   // 1= tabla productos complemento
   table=$('#tipoIngreso').val();
 
+productoFinal=$('#productoFinal').val();
+// clientes_hiden=$('#clientes_hiden').val();
+// productos_hiden=$$('#productos_hiden').val();
+// $("#clientesdb").val(),
+// $("#clientesdb").val(),
+
   if (table=='1') {
 
   $.ajax({
@@ -14,6 +20,7 @@ function editar(id)
                          type:"POST",
                           url:"<?php echo base_url();?>catalogo_producto/editar_producto/"+id,
                           data:{
+                                  "productosBD":$("#productosBD").val(),
                                   "clientesdb":$("#clientesdb").val(),
                                   "nombre":$("#nombre").val(),
                                   "largo":$("#largo").val(),
@@ -396,6 +403,8 @@ $('#tipoIngreso').attr('disabled', true);
 
             dato= data.split('~');
             $("#clientesdb").val(dato[0]);
+            $('#clientes_hiden').val(dato[0]);
+            $('#productos_hiden').val(dato[9]);
             $('#tipoIngreso').val(1);
             validaTipoIngreso(1);
             cargarProductos();
@@ -409,6 +418,7 @@ $('#tipoIngreso').attr('disabled', true);
             $('#corrugado').val(dato[6]);
             $('#score').val(dato[7]);
             $('#descripcion').val(dato[8]);
+            $('#productoFinal').val(dato[9]);
 
 
             },
@@ -645,7 +655,7 @@ $( "#dialog-procesos-picture_view" ).dialog({
 
           }<?php } ?>
       },
-      close: function() {   
+      close: function() {
         $('#img_catalogo img:last-child').remove();
       }
     });

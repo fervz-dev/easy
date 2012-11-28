@@ -20,6 +20,7 @@ border-color:red; height:10px;}
 <tr >
 
 	<td><label>Tipo de ingreso:</label></td>
+
 	<td><select name="tipoIngreso"  id="tipoIngreso">
 		<option value=""onclick="validaTipoIngreso(2);">Seleccione...</option>
 		<option value="1" onclick="validaTipoIngreso(1);">Componente</option>
@@ -38,7 +39,7 @@ border-color:red; height:10px;}
                 });
 			 $( "#hideProductos" )
 		}else if (tipo==2) {
-			 
+
               $( "#hideProductos" ).fadeOut('slow')
 		}
 	}
@@ -139,6 +140,9 @@ border-color:red; height:10px;}
 			</textarea>
 
 		</td>
+		<input type="hidden" name="productoFinal" id="productoFinal">
+		<input type="hidden" name="clientes_hiden" id="clientes_hiden">
+		<input type="hidden" name="productos_hiden" id="productos_hiden">
 	</tr>
 
 </table>
