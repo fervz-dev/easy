@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/easy/';
+$config['base_url']	= 'http://192.168.1.81/easy/';
 //$config['base_url']	= 'http://www.easyload.com.mx/sistema/';
 
 /*

@@ -645,7 +645,7 @@ $( "#dialog-procesos-picture_view" ).dialog({
 
           }<?php } ?>
       },
-      close: function() {
+      close: function() {   
         $('#img_catalogo img:last-child').remove();
       }
     });
