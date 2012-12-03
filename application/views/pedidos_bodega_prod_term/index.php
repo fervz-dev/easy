@@ -425,6 +425,8 @@ function add(id)
 {
 
 $( "#id_pedido").val(id);
+
+cargarListaProdutos(id);
 $( "#dialog-procesos_producto" ).dialog({
       autoOpen: false,
       height: 'auto',
@@ -434,6 +436,9 @@ $( "#dialog-procesos_producto" ).dialog({
           Aceptar: function() {
           $( "#dialog-procesos_producto" ).dialog( "close" );
           $("#tbl_p_prove").trigger("reloadGrid");
+
+
+
           }
       },
       close: function() {}
@@ -668,7 +673,9 @@ if (!isset($_GET['submain'])) {
 <!-- formulario de nuevo producto -->
         <div style="display:none" id="dialog-procesos_producto" title="Pedidos">
         <?php
-        $this->load->view('pedidos_bodega_prod_term/formulario_producto');?>
+        // $this->load->view('pedidos_bodega_prod_term/formulario_producto');
+        $this->load->view('pedidos_bodega_prod_term/lista_productos');
+        ?>
         </div>
         <!-- Funcion dialogo -->
         <div style="display:none;" id="dialogo" >

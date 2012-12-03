@@ -7,6 +7,7 @@ class Pedidos_bodega_prod_term extends CI_Controller {
 		$this->load->model('catalogo_producto_model','catalogo');
 		$this->load->model('oficina_model','oficina');
     $this->load->model('clientes_model','clientes');
+    $this->load->model('pedido_producto_model', 'pedido_productos');
 
 	   if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
             redirect(base_url().'inicio/logout');
@@ -434,6 +435,197 @@ if ($valor == 1) {
     }
 
     }
+
+
+    //paginacion de productos en la lista de pedidos
+    public function listaPedidos($id)
+ {
+        $page = $_POST['page'];  // Almacena el numero de pagina actual
+        $limite = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
+        $sidx = $_POST['sidx'];  // Almacena el indice por el cual se hará la ordenación de los datos
+        $sord = $_POST['sord'];  // Almacena el modo de ordenación
+
+        if(!$sidx) $sidx =1;
+
+        // Se crea la conexión a la base de datos
+        // $conexion = new mysqli("servidor","usuario","password","basededatos");
+        // Se hace una consulta para saber cuantos registros se van a mostrar
+
+     $consul = $this->db->query('SELECT * from pedido_productos WHERE pedido_productos.activo = 1 AND  pedido_productos.id_pedido_producto = '.$id.' ');
+     $count = $consul->num_rows();
+        //En base al numero de registros se obtiene el numero de paginas
+        if( $count >0 ) {
+        $total_pages = ceil($count/$limite);
+        } else {
+        $total_pages = 0;
+        }
+        if ($page > $total_pages)
+            $page=$total_pages;
+
+        //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
+        $start = $limite*$page - $limite;
+        //Consulta que devuelve los registros de una sola pagina
+        //if ($start < 0) $start = 0;
+        if ($start < 0){
+          $start = 0;
+         $data();
+        }else{
+        $resultado_ =$this->pedido_productos->getLista($id, $sidx, $sord, $start, $limite);
+        // Se agregan los datos de la respuesta del servidor
+        $data->page = $page;
+        $data->total = $total_pages;
+        $data->records = $count;
+        $i=0;
+if ($this->permisos->permisos(20,2)==1) {
+        foreach($resultado_ as $row) {
+           $data->rows[$i]['id']=$row->id_pedido_producto;
+ if (($this->permisos->permisos(20,1)==1)&&($this->permisos->permisos(20,3)==1)){
+
+           $onclik="onclick=eliminarProductoPedido('".$row->id_pedido_producto."')";
+          $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+
+ }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==1)) {
+           $onclik="onclick=eliminarProductoPedido('".$row->id_pedido_producto."')";
+
+                $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+
+ }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==0)) {
+          $acciones='';
+
+            }
+           $data->rows[$i]['cell']=array($acciones,
+                                        // $row->id_pedido_producto,
+                                        // $row->cantidad,
+                                        $row->nombre,
+                                        $row->largo,
+                                        $row->ancho,
+                                        $row->alto,
+                                        $row->resistencia,
+                                        $row->corrugado,
+                                        $row->score
+                                        // $row->descripcion
+                                    );
+           $i++;
+        }
+    }
+}
+        // La respuesta se regresa como json
+        echo json_encode($data);
+}
+// guardar la lista de produtos del pedido
+public function guardarListArray($id)
+{
+    $save=$this->pedido_productos->guardarListArray($id);
+    echo $save;
+}
+public function subpaginacionPedidoProducto($id)
+{
+  $page = $_POST['page'];  // Almacena el numero de pagina actual
+        $limite = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
+        $sidx = $_POST['sidx'];  // Almacena el indice por el cual se hará la ordenación de los datos
+        $sord = $_POST['sord'];  // Almacena el modo de ordenación
+
+        if(!$sidx) $sidx =1;
+
+        // Se crea la conexión a la base de datos
+        // $conexion = new mysqli("servidor","usuario","password","basededatos");
+        // Se hace una consulta para saber cuantos registros se van a mostrar
+
+     $consul = $this->db->query("SELECT
+      componentes_producto.id_componentes_producto,
+      catalogo_producto.nombre,
+      catalogo_producto.largo,
+      catalogo_producto.ancho,
+      catalogo_producto.alto,
+      resistencia_mprima.resistencia,
+      catalogo_producto.corrugado,
+      catalogo_producto.score,
+      catalogo_producto.descripcion
+FROM
+      componentes_producto,
+      catalogo_producto,
+      resistencia_mprima
+WHERE
+componentes_producto.id_producto_pedido = $id AND
+catalogo_producto.activo = 1 AND
+catalogo_producto.id_catalogo=componentes_producto.id_componente AND
+catalogo_producto.resistencia = resistencia_mprima.id_resistencia_mprima ");
+     $count = $consul->num_rows();
+        //En base al numero de registros se obtiene el numero de paginas
+        if( $count >0 ) {
+        $total_pages = ceil($count/$limite);
+        } else {
+        $total_pages = 0;
+        }
+        if ($page > $total_pages)
+            $page=$total_pages;
+
+        //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
+        $start = $limite*$page - $limite;
+        //Consulta que devuelve los registros de una sola pagina
+        if ($start < 0){
+
+          $start = 0;
+         $data[]=0;
+        }else{
+        $resultado_ =$this->pedido_productos->getComponentesXProducto($sidx, $sord, $start, $limite,$id);
+        // Se agregan los datos de la respuesta del servidor
+        $data->page = $page;
+        $data->total = $total_pages;
+        $data->records = $count;
+        $i=0;
+if ($this->permisos->permisos(20,2)==1) {
+        foreach($resultado_ as $row) {
+           $data->rows[$i]['id']=$row->id_componentes_producto;
+ if (($this->permisos->permisos(20,1)==1)&&($this->permisos->permisos(20,3)==1)){
+
+           $onclik="onclick=eliminar_pedido('".$row->id_componentes_producto."')";
+          $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+
+ }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==1)) {
+           $onclik="onclick=eliminar_pedido('".$row->id_componentes_producto."')";
+
+                $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+
+ }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==0)) {
+          $acciones='';
+
+            }
+           $data->rows[$i]['cell']=array(
+                                        // $row->id_componentes_producto,
+                                        // $row->cantidad,
+                                        $row->nombre,
+                                        $row->largo,
+                                        $row->ancho,
+                                        $row->alto,
+                                        $row->resistencia,
+                                        $row->corrugado,
+                                        $row->score
+                                        // $row->descripcion
+                                    );
+           $i++;
+        }
+    }
+}
+        // La respuesta se regresa como json
+        echo json_encode($data);
+
+}
+
+
+// eliminar produto de la lista de pedidos
+public function eliminarPorductoPedido($id)
+{
+        $delete=$this->pedido_productos->eliminarPorductoPedido($id);
+      if($delete > 0)
+      {
+          echo 1;
+      }
+      else
+      {
+          echo 0;
+      }
+}
 }
 
 /* End of file pedidos_bodega_prod_term.php */
