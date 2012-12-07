@@ -95,9 +95,11 @@ if ($this->permisos->permisos(20,2)==1) {
             //0=terminado
             //1= no terminado
             if ($row->verificacion_almacen==1) {
+               $verPedido="onclick=verPedido('".$row->id_pedido."')";
+
                $onclikverificaEnvio="onclick=verificaEnvio('".$row->id_pedido."')";
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
-               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificaEnvio.'><img src="'.base_url().'img/alert-icon.png" width="18" title="Verificar como terminado" height="18" /></span>';
+               $acciones='<span style=" cursor:pointer" '.$verPedido.'><img src="'.base_url().'img/verLista.png" width="18" title="Ver lista" height="18" />&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificaEnvio.'><img src="'.base_url().'img/alert-icon.png" width="18" title="Verificar como terminado" height="18" /></span>';
 
             }elseif ($row->verificacion_almacen==0) {
                $onclikverificadoEnvio="onclick=verificadoEnvio('".$row->id_pedido."')";
@@ -117,15 +119,19 @@ if ($this->permisos->permisos(20,2)==1) {
            if($row->activo == 1)
            {
                 $onclikabierto="onclick=abierto('".$row->id_pedido."')";
-                $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
+
+                $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$verPedido.'><img src="'.base_url().'img/verLista.png" width="18" title="Ver lista" height="18" />&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
            }elseif ($row->activo == 0) {
             //0=terminado
             //1= no terminado
             if ($row->verificacion_almacen==1) {
+
+               $verPedido="onclick=verPedido('".$row->id_pedido."')";
+
                $onclikverificaEnvio="onclick=verificaEnvio('".$row->id_pedido."')";
 
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
-               $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificaEnvio.'><img src="'.base_url().'img/alert-icon.png" width="18" title="Verificar como terminado" height="18" /></span>';
+               $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificaEnvio.'><img src="'.base_url().'img/alert-icon.png" width="18" title="Verificar como terminado" height="18" /></span>';
              }elseif ($row->verificacion_almacen==0) {
                $onclikverificadoEnvio="onclick=verificadoEnvio('".$row->id_pedido."')";
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
@@ -147,10 +153,12 @@ if ($this->permisos->permisos(20,2)==1) {
             //0=terminado
             //1= no terminado
             if ($row->verificacion_almacen==1) {
+               $verPedido="onclick=verPedido('".$row->id_pedido."')";
+
                $onclikverificaEnvio="onclick=verificaEnvio('".$row->id_pedido."')";
 
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
-               $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificaEnvio.'><img src="'.base_url().'img/alert-icon.png" width="18" title="Verificar como terminado" height="18" /></span>';
+               $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$verPedido.'><img src="'.base_url().'img/verLista.png" width="18" title="Ver lista" height="18" />&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificaEnvio.'><img src="'.base_url().'img/alert-icon.png" width="18" title="Verificar como terminado" height="18" /></span>';
             }elseif ($row->verificacion_almacen==0) {
                $onclikverificadoEnvio="onclick=verificadoEnvio('".$row->id_pedido."')";
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
@@ -451,7 +459,7 @@ if ($valor == 1) {
         // $conexion = new mysqli("servidor","usuario","password","basededatos");
         // Se hace una consulta para saber cuantos registros se van a mostrar
 
-     $consul = $this->db->query('SELECT * from pedido_productos WHERE pedido_productos.activo = 1 AND  pedido_productos.id_pedido_producto = '.$id.' ');
+     $consul = $this->db->query('SELECT * from pedido_productos WHERE pedido_productos.activo = 1 AND  pedido_productos.id_pedido = '.$id.' ');
      $count = $consul->num_rows();
         //En base al numero de registros se obtiene el numero de paginas
         if( $count >0 ) {
@@ -468,7 +476,7 @@ if ($valor == 1) {
         //if ($start < 0) $start = 0;
         if ($start < 0){
           $start = 0;
-         $data();
+         $data =array();
         }else{
         $resultado_ =$this->pedido_productos->getLista($id, $sidx, $sord, $start, $limite);
         // Se agregan los datos de la respuesta del servidor
@@ -482,18 +490,20 @@ if ($this->permisos->permisos(20,2)==1) {
  if (($this->permisos->permisos(20,1)==1)&&($this->permisos->permisos(20,3)==1)){
 
            $onclik="onclick=eliminarProductoPedido('".$row->id_pedido_producto."')";
-          $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+           $addCantidadProducto="onclick=addCantidadListado('".$row->id_pedido_producto."','1','".$id."')";
+         $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span> <span style=" cursor:pointer" '.$addCantidadProducto.'><img src="'.base_url().'img/numeral.png" width="18" title="Agregar cantidad" height="18" /></span>';
 
  }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==1)) {
            $onclik="onclick=eliminarProductoPedido('".$row->id_pedido_producto."')";
-
-                $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+           $addCantidadProducto="onclick=addCantidadListado('".$row->id_pedido_producto."','1','".$id."')";
+                $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span> <span style=" cursor:pointer" '.$addCantidadProducto.'><img src="'.base_url().'img/numeral.png" width="18" title="Agregar cantidad" height="18" /></span>';
 
  }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==0)) {
           $acciones='';
 
             }
            $data->rows[$i]['cell']=array($acciones,
+                                          $row->cantidad,
                                         // $row->id_pedido_producto,
                                         // $row->cantidad,
                                         $row->nombre,
@@ -503,6 +513,7 @@ if ($this->permisos->permisos(20,2)==1) {
                                         $row->resistencia,
                                         $row->corrugado,
                                         $row->score
+                                       
                                         // $row->descripcion
                                     );
            $i++;
@@ -533,6 +544,7 @@ public function subpaginacionPedidoProducto($id)
 
      $consul = $this->db->query("SELECT
       componentes_producto.id_componentes_producto,
+      componentes_producto.cantidad,
       catalogo_producto.nombre,
       catalogo_producto.largo,
       catalogo_producto.ancho,
@@ -579,19 +591,20 @@ if ($this->permisos->permisos(20,2)==1) {
            $data->rows[$i]['id']=$row->id_componentes_producto;
  if (($this->permisos->permisos(20,1)==1)&&($this->permisos->permisos(20,3)==1)){
 
-           $onclik="onclick=eliminar_pedido('".$row->id_componentes_producto."')";
-          $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+           $onclik="onclick=addCantidadListado('".$row->id_componentes_producto."','2','".$id."')";
+          $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/numeral.png" width="18" title="Agregar cantidad" height="18" /></span>';
+
 
  }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==1)) {
-           $onclik="onclick=eliminar_pedido('".$row->id_componentes_producto."')";
-
-                $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>';
+           $onclik="onclick=addCantidadListado('".$row->id_componentes_producto."','2','".$id."')";
+          $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/numeral.png" width="18" title="Agregar cantidad" height="18" /></span>';
 
  }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==0)) {
           $acciones='';
 
             }
-           $data->rows[$i]['cell']=array(
+           $data->rows[$i]['cell']=array($acciones,
+                                          $row->cantidad,
                                         // $row->id_componentes_producto,
                                         // $row->cantidad,
                                         $row->nombre,
@@ -601,6 +614,7 @@ if ($this->permisos->permisos(20,2)==1) {
                                         $row->resistencia,
                                         $row->corrugado,
                                         $row->score
+                                       
                                         // $row->descripcion
                                     );
            $i++;
@@ -625,6 +639,201 @@ public function eliminarPorductoPedido($id)
       {
           echo 0;
       }
+}
+
+public function guardarCantidadProducto($id)
+{
+  $resultCantidad=$this->pedido_productos->guardarCantidadProducto($id);
+  if ($resultCantidad>0) {
+      echo 1;
+  }else{
+      echo 0;
+  }
+}
+
+public function guardarCantidadComponente($id)
+{
+  $resultComponente=$this->pedido_productos->guardarCantidadComponente($id);
+  if ($resultComponente>0) {
+      echo 1;
+  }else{
+      echo 0;
+  }
+}
+///////////////////////////////ver listado productos 
+public function verListaPedidos($id)
+ {
+        $page = $_POST['page'];  // Almacena el numero de pagina actual
+        $limite = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
+        $sidx = $_POST['sidx'];  // Almacena el indice por el cual se hará la ordenación de los datos
+        $sord = $_POST['sord'];  // Almacena el modo de ordenación
+
+        if(!$sidx) $sidx =1;
+
+        // Se crea la conexión a la base de datos
+        // $conexion = new mysqli("servidor","usuario","password","basededatos");
+        // Se hace una consulta para saber cuantos registros se van a mostrar
+
+     $consul = $this->db->query('SELECT * from pedido_productos WHERE pedido_productos.activo = 1 AND  pedido_productos.id_pedido = '.$id.' ');
+     $count = $consul->num_rows();
+        //En base al numero de registros se obtiene el numero de paginas
+        if( $count >0 ) {
+        $total_pages = ceil($count/$limite);
+        } else {
+        $total_pages = 0;
+        }
+        if ($page > $total_pages)
+            $page=$total_pages;
+
+        //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
+        $start = $limite*$page - $limite;
+        //Consulta que devuelve los registros de una sola pagina
+        //if ($start < 0) $start = 0;
+        if ($start < 0){
+          $start = 0;
+         $data =array();
+        }else{
+        $resultado_ =$this->pedido_productos->getLista($id, $sidx, $sord, $start, $limite);
+        // Se agregan los datos de la respuesta del servidor
+        $data->page = $page;
+        $data->total = $total_pages;
+        $data->records = $count;
+        $i=0;
+if ($this->permisos->permisos(20,2)==1) {
+        foreach($resultado_ as $row) {
+           $data->rows[$i]['id']=$row->id_pedido_producto;
+ if (($this->permisos->permisos(20,1)==1)&&($this->permisos->permisos(20,3)==1)){
+
+           $onclik="onclick=eliminarProductoPedido('".$row->id_pedido_producto."')";
+           $addCantidadProducto="onclick=addCantidadListado('".$row->id_pedido_producto."','1','".$id."')";
+         $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span> <span style=" cursor:pointer" '.$addCantidadProducto.'><img src="'.base_url().'img/numeral.png" width="18" title="Agregar cantidad" height="18" /></span>';
+
+ }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==1)) {
+           $onclik="onclick=eliminarProductoPedido('".$row->id_pedido_producto."')";
+           $addCantidadProducto="onclick=addCantidadListado('".$row->id_pedido_producto."','1','".$id."')";
+                $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span> <span style=" cursor:pointer" '.$addCantidadProducto.'><img src="'.base_url().'img/numeral.png" width="18" title="Agregar cantidad" height="18" /></span>';
+
+ }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==0)) {
+          $acciones='';
+
+            }
+           $data->rows[$i]['cell']=array(
+                                          $row->cantidad,
+                                        // $row->id_pedido_producto,
+                                        // $row->cantidad,
+                                        $row->nombre,
+                                        $row->largo,
+                                        $row->ancho,
+                                        $row->alto,
+                                        $row->resistencia,
+                                        $row->corrugado,
+                                        $row->score
+                                       
+                                        // $row->descripcion
+                                    );
+           $i++;
+        }
+    }
+}
+        // La respuesta se regresa como json
+        echo json_encode($data);
+}
+
+public function subpaginacionPedidoProductoLista($id)
+{
+  $page = $_POST['page'];  // Almacena el numero de pagina actual
+        $limite = $_POST['rows']; // Almacena el numero de filas que se van a mostrar por pagina
+        $sidx = $_POST['sidx'];  // Almacena el indice por el cual se hará la ordenación de los datos
+        $sord = $_POST['sord'];  // Almacena el modo de ordenación
+
+        if(!$sidx) $sidx =1;
+
+        // Se crea la conexión a la base de datos
+        // $conexion = new mysqli("servidor","usuario","password","basededatos");
+        // Se hace una consulta para saber cuantos registros se van a mostrar
+
+     $consul = $this->db->query("SELECT
+      componentes_producto.id_componentes_producto,
+      componentes_producto.cantidad,
+      catalogo_producto.nombre,
+      catalogo_producto.largo,
+      catalogo_producto.ancho,
+      catalogo_producto.alto,
+      resistencia_mprima.resistencia,
+      catalogo_producto.corrugado,
+      catalogo_producto.score,
+      catalogo_producto.descripcion
+FROM
+      componentes_producto,
+      catalogo_producto,
+      resistencia_mprima
+WHERE
+componentes_producto.id_producto_pedido = $id AND
+catalogo_producto.activo = 1 AND
+catalogo_producto.id_catalogo=componentes_producto.id_componente AND
+catalogo_producto.resistencia = resistencia_mprima.id_resistencia_mprima ");
+     $count = $consul->num_rows();
+        //En base al numero de registros se obtiene el numero de paginas
+        if( $count >0 ) {
+        $total_pages = ceil($count/$limite);
+        } else {
+        $total_pages = 0;
+        }
+        if ($page > $total_pages)
+            $page=$total_pages;
+
+        //Almacena numero de registro donde se va a empezar a recuperar los registros para la pagina
+        $start = $limite*$page - $limite;
+        //Consulta que devuelve los registros de una sola pagina
+        if ($start < 0){
+
+          $start = 0;
+         $data[]=0;
+        }else{
+        $resultado_ =$this->pedido_productos->getComponentesXProducto($sidx, $sord, $start, $limite,$id);
+        // Se agregan los datos de la respuesta del servidor
+        $data->page = $page;
+        $data->total = $total_pages;
+        $data->records = $count;
+        $i=0;
+if ($this->permisos->permisos(20,2)==1) {
+        foreach($resultado_ as $row) {
+           $data->rows[$i]['id']=$row->id_componentes_producto;
+ if (($this->permisos->permisos(20,1)==1)&&($this->permisos->permisos(20,3)==1)){
+
+           $onclik="onclick=addCantidadListado('".$row->id_componentes_producto."','2','".$id."')";
+          $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/numeral.png" width="18" title="Agregar cantidad" height="18" /></span>';
+
+
+ }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==1)) {
+           $onclik="onclick=addCantidadListado('".$row->id_componentes_producto."','2','".$id."')";
+          $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/numeral.png" width="18" title="Agregar cantidad" height="18" /></span>';
+
+ }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==0)) {
+          $acciones='';
+
+            }
+           $data->rows[$i]['cell']=array(
+                                          $row->cantidad,
+                                        // $row->id_componentes_producto,
+                                        // $row->cantidad,
+                                        $row->nombre,
+                                        $row->largo,
+                                        $row->ancho,
+                                        $row->alto,
+                                        $row->resistencia,
+                                        $row->corrugado,
+                                        $row->score
+                                       
+                                        // $row->descripcion
+                                    );
+           $i++;
+        }
+    }
+}
+        // La respuesta se regresa como json
+        echo json_encode($data);
+
 }
 }
 

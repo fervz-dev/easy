@@ -22,7 +22,7 @@
     mtype: "POST",
     sortname: 'id_cat_mprima',
     viewrecords: true,
-    sortorder: "asc",
+    sortorder: "desc",
   editable: true,
     caption: 'Catalogo de Materia Prima',
     multiselect: false,
@@ -39,7 +39,7 @@
     url:'<?php echo base_url();?>catalogo_mprima/paginacion',
     datatype: "json",
     mtype: 'POST',
-                        colNames:['Acciones','NOMBRE','DESCRIPCION','CORRUGADO','LARGO','ANCHO','RESISTENCIA'],
+                        colNames:['Acciones','CODIGO','NOMBRE','CORRUGADO','LARGO','ANCHO','RESISTENCIA'],
                         colModel:[{name:'id_cat_mprima', index:'id_cat_mprima', width:50,resizable:true, sortable:true,search:false,editable:false},
                                   {name:'nombre', index:'nombre', width:160,resizable:true, sortable:true,search:true,editable:true},
                                   {name:'descripcion', index:'descripcion', width:160,resizable:true, sortable:true,search:true,editable:true},
@@ -56,7 +56,7 @@
     mtype: "POST",
     sortname: 'id_cat_mprima',
     viewrecords: true,
-    sortorder: "asc",
+    sortorder: "desc",
 	editable: true,
     caption: 'Catalogo de Materia Prima',
     multiselect: false,
@@ -88,6 +88,7 @@ $.ajax({
             $("#largo").val(dato[3]);
             $("#descripcion").val(dato[5]);
             $("#resistencia_mprima_id_resistencia_mprima").val(dato[4]);
+            $("#proveedor_id_proveedor").val(dato[6]);
             },
                         error:function(datos){
                         notify("Error al procesar los datos " ,500,5000,'error');
@@ -139,7 +140,8 @@ function editar(id)
                                 "ancho":$("#ancho").val(),
                                 "largo":$("#largo").val(),
                                 "descripcion":$("#descripcion").val(),
-                                "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val()
+                                "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val(),
+                                "id_proveedor":$("#proveedor_id_proveedor").val()
                               },
                         cache: false,
                         datatype:"html",
@@ -191,8 +193,9 @@ function delete_id(id)
                                case "1":
                                $( "#dialog-procesos" ).dialog( "close" );
                                notify('El registro se ha eliminado correctamente',500,5000,'aviso');
-                                 $("#tbl").jqGrid('GridUnload');
-                                  setTimeout("cargar()",1000);
+                                 // $("#tbl").jqGrid('GridUnload');
+                                 //  setTimeout("cargar()",1000);
+                                    reloading();
                                break;
                                default:
                                $( "#dialog-procesos" ).dialog( "close" );
@@ -219,8 +222,9 @@ $.ajax({
                   "tipo_m":$("#tipo_m").val(),
                   "ancho":$("#ancho").val(),
                   "largo":$("#largo").val(),
-                   "descripcion":$("#descripcion").val(),
-                  "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val()
+                  "descripcion":$("#descripcion").val(),
+                  "resistencia_mprima_id_resistencia_mprima":$("#resistencia_mprima_id_resistencia_mprima").val(),
+                  "id_proveedor":$("#proveedor_id_proveedor").val()
                 },
 
                      datatype:"html",
@@ -289,6 +293,7 @@ function validarCampos () {
             ancho=$("#ancho").val();
             largo=$("#largo").val();
             resistencia=$("#resistencia_mprima_id_resistencia_mprima").val();
+            proveedor_id_proveedor=$("#proveedor_id_proveedor").val();
             if (validarVacio(nombre)==false) {
               notify('* El campo <strong>NOMBRE</strong> no puede estar vacio!!!',500,5000,'error');
               $("#nombre").focus();
@@ -317,6 +322,10 @@ function validarCampos () {
             }else if (validarNUmero(ancho)==false) {
               notify('* El campo <strong>ANCHO</strong> no es numero!!!',500,5000,'error');
               $("#ancho").focus();
+              return false;
+            }else if (validarCombo(proveedor_id_proveedor)==false) {
+              notify('* El campo <strong>Proveedor</strong> no es numero!!!',500,5000,'error');
+              $("#proveedor_id_proveedor").focus();
               return false;
             }else{
               return true;

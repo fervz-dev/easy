@@ -19,7 +19,7 @@ class Catalogo_mprima_model extends CI_Model
                                     cprima.largo,
                                     resistencia.resistencia
                                     FROM cat_mprima AS cprima, resistencia_mprima AS resistencia
-                                    WHERE resistencia.id_resistencia_mprima=cprima.resistencia_mprima_id_resistencia_mprima
+                                    WHERE resistencia.id_resistencia_mprima=cprima.resistencia_mprima_id_resistencia_mprima AND cprima.activo='1'
                                     ORDER BY $sidx $sord
                                     LIMIT $start, $limite;");
                                 return ($query->num_rows() > 0)? $query->result() : NULL;
@@ -65,7 +65,8 @@ public function get_resistencia_all()
                                         cat_mprima.tipo_m,
                                         cat_mprima.ancho,
                                         cat_mprima.largo,
-                                        cat_mprima.resistencia_mprima_id_resistencia_mprima
+                                        cat_mprima.resistencia_mprima_id_resistencia_mprima,
+                                        cat_mprima.id_proveedor
                                         FROM
                                         cat_mprima,
                                         resistencia_mprima
@@ -89,7 +90,8 @@ public function get_resistencia_all()
         'ancho'=>$this->input->post('ancho'),
         'largo'=>$this->input->post('largo'),
         'resistencia_mprima_id_resistencia_mprima'=>$this->input->post('resistencia_mprima_id_resistencia_mprima'),
-        'tipo_m'=>$this->input->post('tipo_m')
+        'tipo_m'=>$this->input->post('tipo_m'),
+        'id_proveedor'=>$this->input->post('id_proveedor')
     );
 
     $this->db->where('id_cat_mprima', $id);
@@ -129,6 +131,7 @@ $query = $this->db->query("SELECT
         'largo'=>$this->input->post('largo'),
         'resistencia_mprima_id_resistencia_mprima'=>$this->input->post('resistencia_mprima_id_resistencia_mprima'),
         'tipo_m'=>$this->input->post('tipo_m'),
+        'id_proveedor'=>$this->input->post('id_proveedor'),
         'activo'=>1,
         'id_usuario'=>$this->session->userdata('id'),
         'id_sucursal'=>$this->session->userdata('oficina')

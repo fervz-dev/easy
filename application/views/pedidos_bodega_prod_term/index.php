@@ -421,12 +421,14 @@ $.ajax({
 
 }
 ////////////////////////////////////////////agregar producto///////////////////////////////////////////////////////
-function add(id)
+function add(id,tipo)
 {
 
 $( "#id_pedido").val(id);
 
 cargarListaProdutos(id);
+LoadListaProductos();
+ $("#tbl_p_prove_form").trigger("reloadGrid");
 $( "#dialog-procesos_producto" ).dialog({
       autoOpen: false,
       height: 'auto',
@@ -436,16 +438,49 @@ $( "#dialog-procesos_producto" ).dialog({
           Aceptar: function() {
           $( "#dialog-procesos_producto" ).dialog( "close" );
           $("#tbl_p_prove").trigger("reloadGrid");
+          $("#tbl_p_prove_form").jqGrid('GridUnload');
+          $("#tbl_lista_productos").jqGrid('GridUnload');
 
 
 
           }
       },
-      close: function() {}
+      close: function() {
+                  $("#tbl_p_prove_form").jqGrid('GridUnload');
+          $("#tbl_lista_productos").jqGrid('GridUnload');
+      }
     });
         $( "#dialog-procesos_producto" ).dialog( "open" );
-        $("#tbl_p_prove").trigger("reloadGrid");
 }
+
+////////////////////////////////////////////ver producto///////////////////////////////////////////////////////
+function verPedido(id,tipo)
+{
+
+verLista(id);
+ $("#tbl_verListaPedido").trigger("reloadGrid");
+$( "#dialog-procesos_productoLista" ).dialog({
+      autoOpen: false,
+      height: 'auto',
+      width: 'auto',
+      modal: true,
+      buttons: {
+          Aceptar: function() {
+          $( "#dialog-procesos_productoLista" ).dialog( "close" );
+          $("#tbl_verListaPedido").jqGrid('GridUnload');
+
+
+
+          }
+      },
+      close: function() {
+                  $("#tbl_verListaPedido").jqGrid('GridUnload');
+      }
+    });
+        $( "#dialog-procesos_productoLista" ).dialog( "open" );
+}
+
+
 
 /////////////////////////////////////////////////////////////////
 function alta()
@@ -511,7 +546,7 @@ $( "#dialog-procesos" ).dialog({
     height:'auto',
     loadtext: 'Cargando',
   width:'950',
-  subGrid: true,
+  subGrid: false,
     //searchurl:'<?php echo base_url();?>empresas/buscando',
     height:"auto",
    subGridRowExpanded: function(subgrid_id, row_id) {
@@ -675,6 +710,13 @@ if (!isset($_GET['submain'])) {
         <?php
         // $this->load->view('pedidos_bodega_prod_term/formulario_producto');
         $this->load->view('pedidos_bodega_prod_term/lista_productos');
+        ?>
+        </div>
+<!-- formulario lista pedidos-->
+        <div style="display:none" id="dialog-procesos_productoLista" title="Ver lista">
+        <?php
+        // $this->load->view('pedidos_bodega_prod_term/formulario_producto');
+        $this->load->view('pedidos_bodega_prod_term/verListaPedido');
         ?>
         </div>
         <!-- Funcion dialogo -->

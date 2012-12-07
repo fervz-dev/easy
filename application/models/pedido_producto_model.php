@@ -12,6 +12,7 @@ class Pedido_producto_model extends CI_Model {
 	{
 		$query = $this->db->query("SELECT
 										pedido_productos.id_pedido_producto,
+										pedido_productos.cantidad,
 										pedido_productos.id_pedido,
 										pedido_productos.id_producto,
 										pedido_productos.cantidad,
@@ -43,6 +44,7 @@ class Pedido_producto_model extends CI_Model {
 	{
 		$query = $this->db->query("SELECT
 											componentes_producto.id_componentes_producto,
+											componentes_producto.cantidad,
 											catalogo_producto.nombre,
 											catalogo_producto.largo,
 											catalogo_producto.ancho,
@@ -112,6 +114,24 @@ public function eliminarPorductoPedido($id)
 	}
 }
 
+public function guardarCantidadProducto($id)
+{
+
+	$data = array('cantidad' =>$this->input->post('cantidad'));
+	$this->db->where('id_pedido_producto',$id);
+	$this->db->update('pedido_productos',$data);
+	return $this->db->affected_rows();
+}
+
+
+public function guardarCantidadComponente($id)
+{
+
+	$data = array('cantidad' =>$this->input->post('cantidad'));
+	$this->db->where('id_componentes_producto',$id);
+	$this->db->update('componentes_producto',$data);
+	return $this->db->affected_rows();
+}
 }
 /* End of file pedido_producto_model.php */
 /* Location: ./application/models/pedido_producto_model.php */

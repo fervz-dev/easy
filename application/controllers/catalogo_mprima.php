@@ -5,8 +5,7 @@ class Catalogo_mprima extends CI_Controller{
 		parent::__construct();
         $this->load->model("resistencia_mprima_model","resistencia");
 		$this->load->model("catalogo_mprima_model","catalogo");
-
-
+        $this->load->model("proveedores_model","proveedores");
 
             if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
                 redirect(base_url().'inicio/logout');
@@ -35,6 +34,7 @@ class Catalogo_mprima extends CI_Controller{
     public function index()
     {
         $data['resistencia']=$this->resistencia->get_resistencia_mprima_all();
+        $data['proveedor']=$this->proveedores->get_proveedores_all();
     	$data['vista']='catalogo_mprima/index';
     	$data['titulo']='Catalogo de Materia Prima';
     	$this->load->view('principal',$data);
@@ -71,7 +71,7 @@ class Catalogo_mprima extends CI_Controller{
         //Consulta que devuelve los registros de una sola pagina
         if ($start < 0){
           $start = 0;
-         $data();
+         $data = array();
         }else{
         $resultado_catalogo =$this->catalogo->get_cat_mprima($sidx, $sord, $start, $limite);
         // Se agregan los datos de la respuesta del servidor
@@ -111,7 +111,7 @@ if ($this->permisos->permisos(4,2)==1) {
                    }
                    $data->rows[$i]['cell']=array($acciones,
                     strtoupper($row->nombre),
-                    strtoupper($row->descripcion),                    
+                    strtoupper($row->descripcion),
                     strtoupper($row->tipo_m),
                     strtoupper($row->largo),
                     strtoupper($row->ancho),
