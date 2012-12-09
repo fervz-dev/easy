@@ -101,7 +101,7 @@ border-color:red; height:10px;}
 		</td>
 	</tr>
 <tr>
-	<td><label id="labelRight">Resitencia:</label></td>
+	<td><label id="labelRight">Resistencia:</label></td>
 	<td><select id="resistencia_mprima_id_resistencia_mprima" name="resistencia_mprima_id_resistencia_mprima">
 			<option value="">Seleccione...</option>
 			<?php foreach ($resistencia as $rst) { ?>

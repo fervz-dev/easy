@@ -303,8 +303,8 @@ function ver_pedidosLista ()
    ?>
 </div>
 
-        <div style="display:none" id="dialog-procesos_producto" title="Pedidos">
+<!--         <div style="display:none" id="dialog-procesos_producto" title="Pedidos">
         <?php
         $this->load->view('stock/ver_productos');?>
-        </div>
+        </div> -->
 

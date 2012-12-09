@@ -78,4 +78,5 @@
                  <?php } ?>
                   </table>
                </div>
+     </div>
             <?php } ?>

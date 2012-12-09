@@ -135,7 +135,9 @@ if ($this->permisos->permisos(4,2)==1) {
              strtoupper($row->ancho).'~'.
              strtoupper($row->largo).'~'.
              strtoupper($row->resistencia_mprima_id_resistencia_mprima).'~'.
-              $row->descripcion;
+              $row->descripcion.'~'.
+              $row->id_proveedor;
+
     }
 
     public function editar_mprima($id)

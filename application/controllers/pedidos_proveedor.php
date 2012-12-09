@@ -81,7 +81,7 @@ class Pedidos_proveedor extends CI_Controller
         //if ($start < 0) $start = 0;
         if ($start < 0){
           $start = 0;
-         $data();
+         $data=array();
         }else{
         $resultado_ =$this->pedidos->get_pedido_proveedor($sidx, $sord, $start, $limite);
         // Se agregan los datos de la respuesta del servidor
@@ -137,11 +137,11 @@ if ($this->permisos->permisos(10,2)==1) {
 
             }
            $data->rows[$i]['cell']=array($acciones,
-                                    strtoupper($row->id_pedido),
-                                    strtoupper($row->fecha_pedido),
-                                    strtoupper($row->fecha_entrega),
-                                    strtoupper($row->nombre_empresa),
-                                    strtoupper($row->nombre_oficina));
+                                    $row->nombre_empresa,
+                                    $row->nombre_oficina,
+                                    $row->fecha_pedido,
+                                    $row->fecha_entrega);
+                                   
            $i++;
         }
     }

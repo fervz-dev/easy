@@ -356,76 +356,7 @@ function eliminar_pedido_(id)
                              }//Error
                          });//Ajax
 }
-function cargar () {
-    $("#tbl_p_prove").jqGrid({
-    url:'<?php echo base_url();?>pedidos_bodega/paginacion',
-    datatype: "json",
-    mtype: 'POST',
 
-                        colNames:['Acciones',
-                                    'ID PEDIDO',
-                                    'FECHA DE PEDIDO',
-                                    'FECHA DE ENTREGA',
-                                    'BODEGA PEDIDO',
-                                    'LUGAR DE ENVIO'
-                                    ],
-                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                                  {name:'id_pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:100,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:false,editable:true}
-                                ],
-    pager: jQuery('#paginacion'),
-    rownumbers:true,
-  rowNum:15,
-    rowList:[10,20,30],
-    imgpath: '<?php echo base_url();?>img/editar.jpg',
-    mtype: "POST",
-    sortname: 'id_pedido',
-    viewrecords: true,
-    sortorder: "asc",
-  editable: true,
-    caption: 'Pedidoa a Bodega  Materia Prima',
-    multiselect: false,
-    height:'auto',
-    loadtext: 'Cargando',
-  width:'950',
-  subGrid: true,
-    //searchurl:'<?php echo base_url();?>empresas/buscando',
-    height:"auto",
-   subGridRowExpanded: function(subgrid_id, row_id) {
-   var subgrid_table_id, pager_id; subgrid_table_id = subgrid_id+"_t"; pager_id = "p_"+subgrid_table_id;
-
-   $("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' alt='subtabla' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>");
-
-   $("#"+subgrid_table_id).jqGrid({
-   //url:"subgrid.php?q=2&id="+row_id,
-   url:"<?php echo base_url();?>pedidos_bodega/subpaginacion/"+row_id,
-   datatype: "json",
-   mtype: 'POST',
-   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','LARGO','ANCHO','CANTIDAD'],
-   colModel: [
-             {name:"acciones",index:"acciones",width:56,align:"center"},
-             {name:"No",index:"No",width:56,align:"center"},
-             {name:"nombre",index:"nombre",search: false,align:"center"},
-             {name:"largo",index:"largo",align:"left",search: false},
-             {name:"ancho",index:"ancho",align:"left",search: false},
-             {name:"cantidad",index:"cantidad",align:"left",search: false}
-              ],
-   rows:10,
-   rowNum:10,
-   rowList:[10,15],
-   pager: pager_id,
-   sortname: 'id_cantidad_pedido',
-   height:'auto',
-   sortorder: "asc" });
-
-   $("#"+subgrid_table_id).jqGrid('navGrid',"#"+pager_id,{edit:false,add:false,del:false,search:false}) }
-        }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_p_prove").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
-      $("#tbl_p_prove").jqGrid('navGrid','#paginacion',{add:false,edit:false,del:false,search:false});
-}
 ////////////////////////////////////////////////////////////////////////
   $(document).ready(function(){
   $("#tbl_p_prove").jqGrid({
@@ -434,18 +365,20 @@ function cargar () {
     mtype: 'POST',
 
                         colNames:['Acciones',
-                                    'ID PEDIDO',
-                                    'FECHA DE PEDIDO',
-                                    'FECHA DE ENTREGA',
                                     'PROVEEDOR',
-                                    'LUGAR DE ENVIO'
+                                    // 'ID PEDIDO',
+                                    // 'FECHA DE PEDIDO',
+                                    'FECHA DE ENTREGA'
+                                    
+                                    // 'LUGAR DE ENVIO'
                                     ],
-                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                                  {name:'id_pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:100,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:false,editable:true}
+                        colModel:[{name:'acciones', index:'acciones', width:120, resizable:true, align:"center", search:false},
+                                {name:'nombre_oficina', index:'nombre_oficina', width:170,resizable:true, sortable:true,search:false,editable:true},
+                                  // {name:'id_pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  // {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'fecha_entrega', index:'fecha_entrega', width:200,resizable:true, sortable:true,search:false,editable:true}
+                                  
+                                  // {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:false,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -455,13 +388,13 @@ function cargar () {
     mtype: "POST",
     sortname: 'id_pedido',
     viewrecords: true,
-    sortorder: "asc",
+    sortorder: "desc",
   editable: true,
     caption: 'Pedidos a Bodega Materia Prima',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
-  width:'950',
+  width:'100%',
   subGrid: true,
     //searchurl:'<?php echo base_url();?>empresas/buscando',
     height:"auto",
@@ -475,18 +408,17 @@ function cargar () {
    url:"<?php echo base_url();?>pedidos_bodega/subpaginacion/"+row_id,
    datatype: "json",
    mtype: 'POST',
-   colNames: ['ACCI&Oacute;N', 'No', 'NOMBRE','LARGO','ANCHO','CANTIDAD'],
+   colNames: ['ACCI&Oacute;N','NOMBRE','CLAVE','CANTIDAD'],
    colModel: [
              {name:"acciones",index:"acciones",width:56,align:"center"},
-             {name:"No",index:"No",width:56,align:"center"},
-             {name:"nombre",index:"nombre",search: false,align:"center"},
-             {name:"largo",index:"largo",align:"left",search: false},
-             {name:"ancho",index:"ancho",align:"left",search: false},
-             {name:"cantidad",index:"cantidad",align:"left",search: false}
+             // {name:"No",index:"No",width:30,align:"center"},
+             {name:"descripcion",index:"descripcion",width:180,search: false,align:"center"},
+             {name:"nombre",index:"nombre",width:180,align:"left",search: false},
+             {name:"cantidad",index:"cantidad",width:56,align:"left",search: false}
               ],
-   rows:10,
-   rowNum:10,
-   rowList:[10,15],
+   // rows:10,
+   // rowNum:10,
+   // rowList:[10,15],
    pager: pager_id,
    sortname: 'id_cantidad_pedido',
    height:'auto',
@@ -603,3 +535,55 @@ if (!isset($_GET['submain'])) {
             </div>
           </div>
         </div>
+
+        <table width="100%" border="0" cellspacing="1" cellpadding="2" bgcolor="#CCCCCC">
+            <tr>
+              <td width="14"  align="left" bgcolor="#F3F3F3"><label></label>
+                <span class="subtexto15"></span></td>
+              <td align="left" bgcolor="#F3F3F3"><span class="subtexto15">Gramos </span></td>
+              <td align="center" bgcolor="#F3F3F3"><span class="subtexto15">Costo x Gr. </span></td>
+              <td align="center" bgcolor="#F3F3F3"><span class="subtexto15">Total</span></td>
+              <td align="left" bgcolor="#F3F3F3"><span class="subtexto15">Descripci&oacute;n</span></td>
+            </tr>
+      
+
+      <?php 
+
+$sql="SELECT * FROM kilates WHERE activo=1";
+$kilates=get_arreglo($sql);
+      for($i=0; $i<count($kilates); $i++){
+      $sql="SELECT * FROM cotizacion_oro WHERE activo=1 and id_tipo=1 and id_kilate=".$kilates[$i][id_kilate]." and id_clasificacionCliente=".$_POST['tipo_cliente']." order by id_cotizacionOro desc limit 1";
+$cotizacion=get_arreglo($sql);
+      ?>
+      <tr>
+            <td  align="left" bgcolor="#FFFFFF"><label><span class="subtexto15">
+            <input name="num_kilates[]" id="num_kilates" type="hidden" value="<?php  echo $kilates[$i][id_kilate];?>" />
+               <?php  echo $kilates[$i][dsc_kilate]?>:</span></label><span class="subtexto15"></span></td>
+
+              <td width="10%" align="left" bgcolor="#FFFFFF"><input onkeypress ="return validarnum(event)"  name="kilates[]" type="text" class="subtexto15" id="kilates<?php  echo $kilates[$i][id_kilate];?>" size="10" onBlur="suma1();total_costo('<?php echo $kilates[$i][id_kilate];?>');"/></td>
+
+              <td width="10%" align="center" bgcolor="#FFFFFF"><input onkeypress ="return validarnum(event)"  onBlur="suma1();total_costo('<?php echo $kilates[$i][id_kilate];?>');" name="kilates_oculto[]" type="text" class="subtexto15" id="kilates<?php  echo $kilates[$i][id_kilate];?>1" size="10" value="<?php echo $cotizacion[0][valor]?>"/>
+
+              </td>
+
+              <td width="10%" align="center" bgcolor="#FFFFFF"><input name="total_gr_x_costo[]"  readonly="readonly" type="text" class="subtexto15" id="total_gr_x_costo<?php echo $kilates[$i][id_kilate];?>" value="0" size="10" /></td>
+              <td width="63%" align="left" bgcolor="#FFFFFF"><input name="descripcion[]" type="text" class="subtexto15"  size="50" /></td>
+            </tr><?php } ?>
+
+          </table>
+
+
+          for($i=0; $i<count($_POST['kilates']); $i++)
+{
+$sql2="insert into boleta_objetos_empeno values ('',
+                          '".$id_boleta."', 
+                                                  '".$_POST['num_kilates'][$i]."',
+                          '".$_POST['kilates'][$i]."',
+                          '".$_POST['kilates_oculto'][$i]."',
+                          '".$_POST['total_gr_x_costo'][$i]."',
+                          '".$_POST['descripcion'][$i]."',
+                          '',
+                                                  '".date('Y-m-d-h:i:s')."'
+                                )";
+      mysql_db_query("wwwtrue_datos", $sql2) or die(mysql_error($GLOBALS['conexion']));
+}

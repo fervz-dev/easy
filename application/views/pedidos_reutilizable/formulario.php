@@ -2,11 +2,6 @@
 <form name="editar_pedido" id="editar_pedido">
 <table>
 <tr>
-	<td>Fecha de Entrega</td>
-	<td><input type="text" nombre="fecha_entrega"  id="fecha_entrega"></td>
-</tr>
-
-<tr>
 	<td><label>Proveedor</label></td>
 	<td><select name="proveedor_id_proveedor"  id="proveedor_id_proveedor">
 		<option value="">Seleccione...</option>
@@ -14,6 +9,7 @@
 		<option value="<?php echo $pvd['id_proveedores']; ?>"><?php echo $pvd['nombre_empresa'] ?></option>
 		<?php } ?>
 	</select>
+	</td>
 </tr>
 
 <tr>
@@ -26,9 +22,18 @@
 	</select>
 </td>
 </tr>
+
+<tr>
+	<td>Fecha de Entrega</td>
+	<td><input type="text" nombre="fecha_entrega"  id="fecha_entrega"></td>
+</tr>
 <tr>
 	<td>Cantidad en kilos</td>
 	<td><input type="text" nombre="cantidad"  id="cantidad"></td>
 
 </tr>
+
+
+
 </table>
+</form>

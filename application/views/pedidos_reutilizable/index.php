@@ -206,22 +206,25 @@ function eliminar_pedido_(id)
                              switch(data){
                                case "0":
                                   notify("Error al procesar los datos " ,500,5000,'error');
+                                  $("#tbl_p_prove").trigger("reloadGrid");
                                 break;
                                case "1":
-                               $("#tbl_p_prove").jqGrid("GridUnload");
                                     $( "#dialog-procesos" ).dialog( "close" );
                                  notify('El registro se elimino correctamente',500,5000,'aviso');
-                                  setTimeout("cargar()",1000);
+                                 $("#tbl_p_prove").trigger("reloadGrid");
+
                                 break;
 
                                    default:
                                    $( "#dialog-procesos" ).dialog( "close" );
+                                   $("#tbl_p_prove").trigger("reloadGrid");
                                  break;
 
                               }//switch
                              },
                         error:function(datos){
                               notify("Error inesperado" ,500,5000,'error');
+                              $("#tbl_p_prove").trigger("reloadGrid");
                              }//Error
                          });//Ajax
 }
@@ -298,44 +301,7 @@ $( "#dialog-procesos" ).dialog({
         $( "#dialog-procesos" ).dialog( "open" );
 }
 
-function cargar () {
-    $("#tbl_p_prove").jqGrid({
-    url:'<?php echo base_url();?>pedidos_reutilizable/paginacion',
-    datatype: "json",
-    mtype: 'POST',
 
-                        colNames:['Acciones',
-                                    'FECHA DE PEDIDO',
-                                    'FECHA DE ENTREGA',
-                                    'CANTIDAD',
-                                    'PROVEEDOR',
-                                    'LUGAR DE ENVIO'
-                                    ],
-                        colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'cantidad', index:'cantidad', width:30,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:false,editable:true}
-                                ],
-    pager: jQuery('#paginacion'),
-    rownumbers:true,
-  rowNum:15,
-    rowList:[10,20,30],
-    imgpath: '<?php echo base_url();?>img/editar.jpg',
-    mtype: "POST",
-    sortname: 'id_pedido_reutilizable',
-    viewrecords: true,
-    sortorder: "asc",
-  editable: true,
-    caption: 'Pedidos Reutilizable',
-    multiselect: false,
-    height:'auto',
-    loadtext: 'Cargando',
-  width:'950',
-        }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
-        $("#tbl_p_prove").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
-}
 ////////////////////////////PAGINACIONES////////////////////////////////////////////
   $(document).ready(function(){
 	$("#tbl_p_prove").jqGrid({
@@ -344,18 +310,18 @@ function cargar () {
     mtype: 'POST',
 
                         colNames:['Acciones',
-                                    'FECHA DE PEDIDO',
-                                    'FECHA DE ENTREGA',
-                                    'CANTIDAD',
                                     'PROVEEDOR',
-                                    'LUGAR DE ENVIO'
+                                    'CANTIDAD',
+                                    'LUGAR DE ENVIO',
+                                    'FECHA DE PEDIDO',
+                                    'FECHA DE ENTREGA'
                                     ],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                                  {name:'fecha_pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'fecha_entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'cantidad', index:'cantidad', width:30,resizable:true, sortable:true,search:false,editable:true},
                                   {name:'nombre_empresa', index:'nombre_empresa', width:100,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:false,editable:true}
+                                  {name:'cantidad', index:'cantidad', width:70,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'nombre_oficina', index:'nombre_oficina', width:100,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'fecha_pedido', index:'fecha_pedido', width:110,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'fecha_entrega', index:'fecha_entrega', width:120,resizable:true, sortable:true,search:false,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,
@@ -365,13 +331,13 @@ function cargar () {
     mtype: "POST",
     sortname: 'id_pedido_reutilizable',
     viewrecords: true,
-    sortorder: "asc",
+    sortorder: "desc",
   editable: true,
     caption: 'Pedidos Reutilizable',
     multiselect: false,
     height:'auto',
     loadtext: 'Cargando',
-  width:'950',
+  width:'100%',
         }).navGrid("#paginacion", { edit: false, add: false, search: false, del: false, refresh:true });
         $("#tbl_p_prove").jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false }) ;
    });
