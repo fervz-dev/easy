@@ -595,8 +595,7 @@ function validarCamposForm1 () {
       notify('* El campo <strong>FECHA DE ENTREGA</strong> no puede estar vacio!!!',500,5000,'error');
     $("#fecha_entrega").focus();
     return false;
-  }else
-  if (validarCombo(proveedor_id_proveedor)==false) {
+  }else if (validarCombo(proveedor_id_proveedor)==false) {
       notify('* Debe seleccionar almenos una opcion de la lista <strong>PROVEEDORES</strong>',500,5000,'error');
     $("#oficina_pedido").focus();
     return false;

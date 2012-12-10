@@ -6,6 +6,7 @@ class Producto_final extends CI_Controller {
 		parent::__construct();
 		$this->load->model("clientes_model","clientes_");
 		$this->load->model('producto_final_model','producto');
+        $this->load->model('componentes_model', 'componentes');
 
 
 		if(!$this->redux_auth->logged_in()){//verificar si el el usuario ha iniciado sesion
@@ -669,6 +670,10 @@ if ($this->permisos->permisos(8,2)==1) {
         // La respuesta se regresa como json
         echo json_encode($data);
     }
+public function componentesProducto(idProducto,idCliente)
+{
+
+}
 
 }
 
