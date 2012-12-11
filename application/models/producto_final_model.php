@@ -212,6 +212,20 @@ public function get_cat_productos_search($where, $sidx, $sord, $start, $limite)
     return ($query->num_rows() > 0)? $query->result() : NULL;
 }
 
+// enviar producto por ID y Cliente
+  public function getProductosId($idProducto)
+  {
+    $query=$this->db->query("SELECT
+                        producto_final.id_catalogo,
+                        producto_final.nombre
+                        FROM
+                        producto_final
+                        where
+                        producto_final.id_catalogo=$idProducto AND
+                        producto_final.activo=1
+                        ORDER BY Producto_final.nombre ASC");
+      return ($query->num_rows()> 0)? $query->result_array() : NULL;
+  }
 }
 
 /* End of file producto_final_model.php */

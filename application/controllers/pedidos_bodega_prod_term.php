@@ -70,7 +70,7 @@ public function paginacion()
         //if ($start < 0) $start = 0;
         if ($start < 0){
           $start = 0;
-         $data();
+         $data=array();
         }else{
         $resultado_ =$this->productos->get_pedido_bodega_producto($sidx, $sord, $start, $limite);
         // Se agregan los datos de la respuesta del servidor
@@ -99,7 +99,7 @@ if ($this->permisos->permisos(20,2)==1) {
 
                $onclikverificaEnvio="onclick=verificaEnvio('".$row->id_pedido."')";
                $onclikcerrado="onclick=cerrado('".$row->id_pedido."')";
-               $acciones='<span style=" cursor:pointer" '.$verPedido.'><img src="'.base_url().'img/verLista.png" width="18" title="Ver lista" height="18" />&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificaEnvio.'><img src="'.base_url().'img/alert-icon.png" width="18" title="Verificar como terminado" height="18" /></span>';
+               $acciones='<span style=" cursor:pointer" '.$verPedido.'><img src="'.base_url().'img/verLista.png" width="18" title="Ver lista" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikcerrado.'><img src="'.base_url().'img/pedido_cerrado.jpg" width="18" title="Pedido Cerrado" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikverificaEnvio.'><img src="'.base_url().'img/alert-icon.png" width="18" title="Verificar como terminado" height="18" /></span>';
 
             }elseif ($row->verificacion_almacen==0) {
                $onclikverificadoEnvio="onclick=verificadoEnvio('".$row->id_pedido."')";
@@ -172,12 +172,10 @@ if ($this->permisos->permisos(20,2)==1) {
 
             }
            $data->rows[$i]['cell']=array($acciones,
-                                    strtoupper($row->id_pedido),
-                                    strtoupper($row->fecha_pedido),
                                     strtoupper($row->fecha_entrega),
                                     strtoupper($row->nombre_oficina),
                                     strtoupper($row->nombre_empresa),
-                                    strtoupper($row->fecha_entrega)
+                                    strtoupper($row->nombre)
                                     );
            $i++;
         }

@@ -381,18 +381,58 @@ $( "#dialog-procesos" ).dialog({
 ///////////////////////Guardar pedido
 function guardar_pedido()
 {
+    var p=0;
+    var c=0;
+    var pS=0;
+    var cS=0;
+    var resultProductos=document.getElementsByName('inputHideProductos[]');
+    var arrayProductos=new Array();
+    while(p< resultProductos.length){
+      arrayProductos[p]=resultProductos[p].value;
+      p++
+    }
+
+// alert(arrayProductos);
+    var resultComponentes=document.getElementsByName('inputHideComponentes[]');
+    var arrayComponentes=new Array();
+    while(c< resultComponentes.length){
+      arrayComponentes[c]=resultComponentes[c].value
+
+      c++
+    }
+// array show
+    var resultProductosShow=document.getElementsByName('inputHideProductos[]');
+    var arrayProductosShow=new Array();
+    while(p< resultProductosShow.length){
+      arrayProductosShow[pS]=resultProductosShow[pS].value;
+      p++
+    }
+
+// alert(arrayProductos);
+    var resultComponentesShow=document.getElementsByName('inputHideComponentes[]');
+    var arrayComponentesShow=new Array();
+    while(c< resultComponentesShow.length){
+      arrayComponentesShow[cS]=resultComponentesShow[cS].value
+
+      c++
+    }
+// alert(arrayComponentes);
 $.ajax({
           async:true,cache: false,
           beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
            type:"POST",
             url:"<?php echo base_url();?>pedidos_bodega_prod_term/guardar_pedido?da="+Math.random()*2312,
           data:{"fecha_entrega":$("#fecha_entrega").val(),
-                  "clientes":$("#clientes").val(),
-                  "oficina_pedido":$("#oficina_pedido").val(),
-                   "clientes":$("#clientes").val()
+                "clientes":$("#clientes").val(),
+                "oficina_pedido":$("#oficina_pedido").val(),
+                "clientes":$("#clientes").val(),
+                "arrayProductos":arrayProductos,
+                "arrayComponentes":arrayComponentes,
+                
+                "arrayProductosShow":arrayProductosShow,
+                "arrayComponentesShow":arrayComponentesShow
                 },
-
-                     datatype:"html",
+                 datatype:"html",
                       success:function(data, textStatus){
 
                       switch(data){
@@ -419,7 +459,7 @@ $.ajax({
                              }//Error
                          });//Ajax
 
-}
+ }
 ////////////////////////////////////////////agregar producto///////////////////////////////////////////////////////
 function add(id,tipo)
 {
@@ -517,19 +557,20 @@ $( "#dialog-procesos" ).dialog({
     mtype: 'POST',
 
                         colNames:['Acciones',
-                                    'ID PEDIDO',
-                                    'FECHA DE PEDIDO',
+                                    // 'ID PEDIDO',
+                                    // 'FECHA DE PEDIDO',
                                     'FECHA DE ENTREGA',
                                     'BODEGA',
-                                    'CLIENTE'
+                                    'CLIENTE',
+                                    'PRODUCTO'
                                     ],
                         colModel:[{name:'acciones', index:'acciones', width:60, resizable:true, align:"center", search:false},
-                                  {name:'id pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'fecha pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  // {name:'id pedido', index:'id_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
+                                  // {name:'fecha pedido', index:'fecha_pedido', width:30,resizable:true, sortable:true,search:false,editable:true},
                                   {name:'fecha entrega', index:'fecha_entrega', width:30,resizable:true, sortable:true,search:false,editable:true},
                                   {name:'Nombre Bodega', index:'nombre_oficina', width:100,resizable:true, sortable:true,search:false,editable:true},
-                                  {name:'Cliente', index:'nombre_empresa', width:100,resizable:true, sortable:true,search:false,editable:true}
-                                  // {name:'nombre_oficina', index:'nombre_oficina', width:90,resizable:true, sortable:true,search:false,editable:true}
+                                  {name:'Cliente', index:'nombre_empresa', width:100,resizable:true, sortable:true,search:false,editable:true},
+                                  {name:'nombre', index:'nombre', width:90,resizable:true, sortable:true,search:false,editable:true}
                                 ],
     pager: jQuery('#paginacion'),
     rownumbers:true,

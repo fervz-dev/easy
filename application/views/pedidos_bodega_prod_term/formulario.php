@@ -26,7 +26,7 @@ table {border-spacing: 0; } /* IMPORTANT, I REMOVED border-collapse: collapse; F
 Table Style - This is what you want
 ------------------------------------------------------------------ */
 .tablePC table a:link {
-  color: #666;
+  color: #000000;
   font-weight: bold;
   text-decoration:none;
 }
@@ -147,10 +147,9 @@ Table Style - This is what you want
 </td>
 </tr>
 <!-- cargar productos por cliente -->
-</tr>
 <tr id="hideProductos">
 	<td><label id="textProductos">Produtos del cliente:</label></td>
-	<td><select name="productos"  id="productos" onchange="cargarComponentes(this.value)">
+	<td><select  name="productos"  id="productos" onchange="cargarComponentes(this.value)">
 
 	</select>
 </td>
@@ -159,7 +158,7 @@ Table Style - This is what you want
 <!-- end -->
 
 
-<tr>
+<tr>hid
 	<td><label>Bodega (Origen de Pedido)</label></td>
 	<td><select name="oficina_pedido"  id="oficina_pedido">
 		<option value="">Seleccione...</option>
@@ -181,20 +180,10 @@ Table Style - This is what you want
 </td>
 </tr> -->
 </table>
-<div id="tblProductos" class="tablePC">
-<table cellspacing='0'> <!-- cellspacing='0' is important, must stay -->
-  <tr><th colspan="2" align="center"> PRODUCTOS </th></tr><!-- Table Header -->
-  <tr><th>Nombre</th><th>Cantidad</th></tr><!-- Table Header -->
-
-<tr><td>Create pretty table design</td><td><input type="text" name="sdasd" id="asdas" /></td></tr><!-- Table Row -->
-
-  <tr><th colspan="2" align="center"> COMPONENTES </th></tr><!-- Table Header -->
-
-
-<tr><td>Create pretty table design</td><td><input type="text" name="sdasd" id="asdas" /></td></tr><!-- Table Row -->
-</table>
+<div id="ajaxCompponentesProducto" class="tablePC">
 
 </div>
+<div id="ajaxCompponentesProducto_load"></div>
 </form>
 <script type="text/javascript">
 function cargarProductos (clientesdb) {
@@ -215,7 +204,6 @@ function cargarProductos (clientesdb) {
        notify('* Debes de seleccionar un cliente!!!',500,5000,'error');
               $("#clientes").focus();
     }
-
   }
   function cargarComponentes (idProducto) {
      clientesdb=$('#clientes').val();
@@ -224,12 +212,12 @@ function cargarProductos (clientesdb) {
                     url:"<?php echo base_url();?>producto_final/componentesProducto/"+idProducto+"/"+clientesdb,
                     type:"POST",
                     beforeSend: function(){
-                       $("#ajax_componentes").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
+                       $("#ajaxCompponentesProducto_load").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
                     },
                     success: function(html){
 
-                            $("#componentes").html(html);
-                            $("#ajax_productos").html("");
+                            $("#ajaxCompponentesProducto").html(html);
+                            $("#ajaxCompponentesProducto_load").html("");
                     }
     });
     }else if(tipoIngreso==1 && clientesdb==''){

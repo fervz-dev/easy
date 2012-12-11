@@ -11,12 +11,15 @@ public function get_pedido_bodega_producto($sidx, $sord, $start, $limite)
 										oficina.nombre_oficina,
 										clientes.nombre_empresa,
 										pedido_bodega_producto_terminado.activo,
-										pedido_bodega_producto_terminado.verificacion_almacen
+										pedido_bodega_producto_terminado.verificacion_almacen,
+										producto_final.nombre
 										FROM
 										pedido_bodega_producto_terminado ,
 										oficina,
-										clientes
+										clientes,
+										producto_final
 										WHERE
+										producto_final.id_catalogo=pedido_bodega_producto_terminado.id_producto ANd
 										pedido_bodega_producto_terminado.oficina_pedido = oficina.id_oficina AND
 										clientes.id_clientes = pedido_bodega_producto_terminado.cliente
 										ORDER BY $sidx $sord
@@ -27,16 +30,42 @@ public function get_pedido_bodega_producto($sidx, $sord, $start, $limite)
 
 	public function guardar_pedido()
    {
+		   		$arrayProducto=$this->input->post('arrayProductos');
+		   		$arrayProductoShow=$this->input->post('arrayProductosShow');
+
+		   		$arrayComponentes=$this->input->post('arrayComponentes');
+		   		$arrayComponentesShow=$this->input->post('arrayComponentesShow');
+
 		   		$data = array (
 		   		'fecha_pedido'=>date("Y-m-d"),
 			   	'fecha_entrega'=>$this->input->post('fecha_entrega'),
 				'cliente'=>$this->input->post('clientes'),
 				'oficina_pedido'=>$this->input->post('oficina_pedido'),
 				'id_usuario'=>$this->session->userdata('id'),
-				'id_sucursal'=>$this->session->userdata('oficina')
+				'id_sucursal'=>$this->session->userdata('oficina'));
 
-			);
-   		$this->db->insert('pedido_bodega_producto_terminado', $data);
+
+		$this->db->insert('pedido_bodega_producto_terminado', $data);
+		$idPedido=$this->db->insert_id();
+		   			$Productos=array(	'id_pedido'=>$idPedido,
+		   								'id_producto'=>$arrayProducto[0],
+		   								'activo'=>1,
+		   								'cantidad'=>$arrayProductoShow[0]
+		   							);
+
+		   			$this->db->insert('pedido_productos', $Productos);
+				
+
+		   		for ($i=0; $i < count($arrayComponentes); $i++) { 
+		   			$Componentes=array(	'id_pedido_producto'=>$idPedido,
+		   								'id_componente'=>$arrayComponentes[$i], 
+		   								'id_pedido_producto'=>$arrayProducto[0],
+		   								'cantidad'=>$arrayComponentesShow[$i]
+		   								);
+
+		   			$this->db->insert('componentes_producto', $Componentes);
+		   		}
+
 		return $this->db->affected_rows();
 	}
 

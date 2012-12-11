@@ -670,12 +670,45 @@ if ($this->permisos->permisos(8,2)==1) {
         // La respuesta se regresa como json
         echo json_encode($data);
     }
-public function componentesProducto(idProducto,idCliente)
+public function componentesProducto($idProducto,$idCliente)
 {
+    $resultComponentes=$this->componentes->getComponentesId($idProducto, $idCliente);
+    $resultProducto=$this->producto->getProductosId($idProducto, $idCliente);
+
+    $htmlComponente='<table cellspacing="0">
+        <tr><th colspan="2" align="center"> PRODUCTOS </th></tr>
+        <tr><th>Nombre</th><th>Cantidad</th></tr>';
+        for ($i=0; $i < count($resultProducto); $i++) {
+            $htmlComponente.='<tr>
+                                <td>'.
+                                    $resultProducto[$i]["nombre"].'
+                                    <input type="hidden" name="inputHideProductos[]" id="inputHideProductos_'.$resultProducto[$i]["id_catalogo"].'" value="'.$resultProducto[$i]["id_catalogo"].'"/>
+                                </td>';
+
+        $htmlComponente.='<td>
+                                <input type="text" name="inputShowProductos_'.$resultProducto[$i]["id_catalogo"].'[]" id="inputShowProductos_'.$resultProducto[$i]["id_catalogo"].'" />
+                            </td>
+                        </tr>';
+        }
+
+    $htmlComponente.='<tr><th colspan="2" align="center"> COMPONENTES </th></tr>';
+
+    for ($i=0; $i < count($resultComponentes); $i++) {
+        $htmlComponente.='<tr>
+                            <td>'.
+        $resultComponentes[$i]["nombre"].'
+         <input type="hidden" name="inputHideComponentes[]" id="inputHideComponentes_'.$resultComponentes[$i]["id_catalogo"].'" value="'.$resultComponentes[$i]["id_catalogo"].'"/>
+                            </td>';
+
+        $htmlComponente.='<td>
+                                <input type="text" name="inputShowComponentes_'.$resultComponentes[$i]["id_catalogo"].'[]" id="inputShowComponentes_'.$resultComponentes[$i]["id_catalogo"].'"/>
+                            </td>
+                        </tr>';
+}
+        $htmlComponente.='</table>';
+        echo $htmlComponente;
 
 }
-
 }
-
 /* End of file producto_final.php */
 /* Location: ./application/controllers/producto_final.php */
