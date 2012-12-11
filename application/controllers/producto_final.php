@@ -686,7 +686,7 @@ public function componentesProducto($idProducto,$idCliente)
                                 </td>';
 
         $htmlComponente.='<td>
-                                <input type="text" name="inputShowProductos_'.$resultProducto[$i]["id_catalogo"].'[]" id="inputShowProductos_'.$resultProducto[$i]["id_catalogo"].'" />
+                                <input type="text" name="inputShowProductos[]" id="inputShowProductos_'.$resultProducto[$i]["id_catalogo"].'" />
                             </td>
                         </tr>';
         }
@@ -697,11 +697,11 @@ public function componentesProducto($idProducto,$idCliente)
         $htmlComponente.='<tr>
                             <td>'.
         $resultComponentes[$i]["nombre"].'
-         <input type="hidden" name="inputHideComponentes[]" id="inputHideComponentes_'.$resultComponentes[$i]["id_catalogo"].'" value="'.$resultComponentes[$i]["id_catalogo"].'"/>
+         <input type="hidden" name="inputHideComponentes[]" id="inputHideComponentes[]" value="'.$resultComponentes[$i]["id_catalogo"].'"/>
                             </td>';
 
         $htmlComponente.='<td>
-                                <input type="text" name="inputShowComponentes_'.$resultComponentes[$i]["id_catalogo"].'[]" id="inputShowComponentes_'.$resultComponentes[$i]["id_catalogo"].'"/>
+                                <input type="text" name="inputShowComponentes[]" id="inputShowComponentes_'.$resultComponentes[$i]["id_catalogo"].'"/>
                             </td>
                         </tr>';
 }

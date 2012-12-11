@@ -54,13 +54,14 @@ public function get_pedido_bodega_producto($sidx, $sord, $start, $limite)
 		   							);
 
 		   			$this->db->insert('pedido_productos', $Productos);
-				
+		$idProductoPedido=$this->db->insert_id();
 
-		   		for ($i=0; $i < count($arrayComponentes); $i++) { 
+		   		for ($i=0; $i < count($arrayComponentes); $i++) {
 		   			$Componentes=array(	'id_pedido_producto'=>$idPedido,
-		   								'id_componente'=>$arrayComponentes[$i], 
-		   								'id_pedido_producto'=>$arrayProducto[0],
-		   								'cantidad'=>$arrayComponentesShow[$i]
+		   								'id_componente'=>$arrayComponentes[$i],
+		   								'id_producto_pedido'=>$idProductoPedido,
+		   								'cantidad'=>$arrayComponentesShow[$i],
+		   								'id_producto'=>$arrayProducto[0],
 		   								);
 
 		   			$this->db->insert('componentes_producto', $Componentes);

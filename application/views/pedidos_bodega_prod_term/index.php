@@ -383,8 +383,8 @@ function guardar_pedido()
 {
     var p=0;
     var c=0;
-    var pS=0;
-    var cS=0;
+    var t=0;
+    var e=0;
     var resultProductos=document.getElementsByName('inputHideProductos[]');
     var arrayProductos=new Array();
     while(p< resultProductos.length){
@@ -401,20 +401,20 @@ function guardar_pedido()
       c++
     }
 // array show
-    var resultProductosShow=document.getElementsByName('inputHideProductos[]');
+    var resultProductosShow=document.getElementsByName('inputShowProductos[]');
     var arrayProductosShow=new Array();
-    while(p< resultProductosShow.length){
-      arrayProductosShow[pS]=resultProductosShow[pS].value;
-      p++
+    while(t< resultProductosShow.length){
+      arrayProductosShow[t]=resultProductosShow[t].value;
+      t++
     }
 
 // alert(arrayProductos);
-    var resultComponentesShow=document.getElementsByName('inputHideComponentes[]');
+    var resultComponentesShow=document.getElementsByName('inputShowComponentes[]');
     var arrayComponentesShow=new Array();
-    while(c< resultComponentesShow.length){
-      arrayComponentesShow[cS]=resultComponentesShow[cS].value
+    while(e< resultComponentesShow.length){
+      arrayComponentesShow[e]=resultComponentesShow[e].value
 
-      c++
+      e++
     }
 // alert(arrayComponentes);
 $.ajax({
@@ -428,7 +428,7 @@ $.ajax({
                 "clientes":$("#clientes").val(),
                 "arrayProductos":arrayProductos,
                 "arrayComponentes":arrayComponentes,
-                
+
                 "arrayProductosShow":arrayProductosShow,
                 "arrayComponentesShow":arrayComponentesShow
                 },

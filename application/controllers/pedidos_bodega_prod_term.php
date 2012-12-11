@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+  <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Pedidos_bodega_prod_term extends CI_Controller {
 	function __construct() {
@@ -511,7 +511,7 @@ if ($this->permisos->permisos(20,2)==1) {
                                         $row->resistencia,
                                         $row->corrugado,
                                         $row->score
-                                       
+
                                         // $row->descripcion
                                     );
            $i++;
@@ -612,7 +612,7 @@ if ($this->permisos->permisos(20,2)==1) {
                                         $row->resistencia,
                                         $row->corrugado,
                                         $row->score
-                                       
+
                                         // $row->descripcion
                                     );
            $i++;
@@ -658,7 +658,7 @@ public function guardarCantidadComponente($id)
       echo 0;
   }
 }
-///////////////////////////////ver listado productos 
+///////////////////////////////ver listado productos
 public function verListaPedidos($id)
  {
         $page = $_POST['page'];  // Almacena el numero de pagina actual
@@ -726,7 +726,7 @@ if ($this->permisos->permisos(20,2)==1) {
                                         $row->resistencia,
                                         $row->corrugado,
                                         $row->score
-                                       
+
                                         // $row->descripcion
                                     );
            $i++;
@@ -822,7 +822,7 @@ if ($this->permisos->permisos(20,2)==1) {
                                         $row->resistencia,
                                         $row->corrugado,
                                         $row->score
-                                       
+
                                         // $row->descripcion
                                     );
            $i++;
