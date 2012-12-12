@@ -675,8 +675,8 @@ public function componentesProducto($idProducto,$idCliente)
     $resultComponentes=$this->componentes->getComponentesId($idProducto, $idCliente);
     $resultProducto=$this->producto->getProductosId($idProducto, $idCliente);
 
-    $htmlComponente='<table cellspacing="0">
-        <tr><th colspan="2" align="center"> PRODUCTOS </th></tr>
+    $htmlComponente='<table cellspacing="0" style="width: 300px;">
+        <tr><th colspan="2"> <strong> PRODUCTOS  </strong></th></tr>
         <tr><th>Nombre</th><th>Cantidad</th></tr>';
         for ($i=0; $i < count($resultProducto); $i++) {
             $htmlComponente.='<tr>
@@ -691,7 +691,7 @@ public function componentesProducto($idProducto,$idCliente)
                         </tr>';
         }
 
-    $htmlComponente.='<tr><th colspan="2" align="center"> COMPONENTES </th></tr>';
+    $htmlComponente.='<tr><th colspan="2" ><strong> COMPONENTES </strong></th></tr>';
 
     for ($i=0; $i < count($resultComponentes); $i++) {
         $htmlComponente.='<tr>

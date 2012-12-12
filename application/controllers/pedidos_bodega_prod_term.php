@@ -84,13 +84,13 @@ if ($this->permisos->permisos(20,2)==1) {
  if (($this->permisos->permisos(20,1)==1)&&($this->permisos->permisos(20,3)==1)){
 
            $onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
-           $onclick_add="onclick=add('".$row->id_pedido."')";
+
            $onclikedit="onclick=edit('".$row->id_pedido."')";
 
            if($row->activo == 1)
            {
                 $onclikabierto="onclick=abierto('".$row->id_pedido."')";
-                $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
+                $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
            }elseif ($row->activo == 0) {
             //0=terminado
             //1= no terminado
@@ -113,14 +113,14 @@ if ($this->permisos->permisos(20,2)==1) {
            }
  }elseif (($this->permisos->permisos(20,1)==1)&&($this->permisos->permisos(20,3)==0)) {
         //$onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
-           $onclick_add="onclick=add('".$row->id_pedido."')";
+
            $onclikedit="onclick=edit('".$row->id_pedido."')";
 
            if($row->activo == 1)
            {
                 $onclikabierto="onclick=abierto('".$row->id_pedido."')";
 
-                $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$verPedido.'><img src="'.base_url().'img/verLista.png" width="18" title="Ver lista" height="18" />&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
+                $acciones='<span style=" cursor:pointer" '.$onclikedit.'><img title="Editar" src="'.base_url().'img/edit.png" width="18" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$verPedido.'><img src="'.base_url().'img/verLista.png" width="18" title="Ver lista" height="18" />&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
            }elseif ($row->activo == 0) {
             //0=terminado
             //1= no terminado
@@ -142,13 +142,13 @@ if ($this->permisos->permisos(20,2)==1) {
            }
 }elseif (($this->permisos->permisos(20,1)==0)&&($this->permisos->permisos(20,3)==1)) {
            $onclik="onclick=eliminar_pedido('".$row->id_pedido."')";
-           $onclick_add="onclick=add('".$row->id_pedido."')";
+
            //$onclikedit="onclick=edit('".$row->id_pedido."')";
 
            if($row->activo == 1)
            {
                 $onclikabierto="onclick=abierto('".$row->id_pedido."')";
-                $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclick_add.'><img src="'.base_url().'img/add_producto.ico" width="18" title="Agregar Producto" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
+                $acciones='<span style=" cursor:pointer" '.$onclik.'><img src="'.base_url().'img/borrar.png" width="18" title="Eliminar" height="18" /></span>&nbsp;<span style=" cursor:pointer" '.$onclikabierto.'><img src="'.base_url().'img/pedido_abierto.jpg" width="18" title="Cerrar Pedido" height="18" /></span>';
            }elseif ($row->activo == 0) {
             //0=terminado
             //1= no terminado
@@ -344,8 +344,16 @@ if ($valor == 1) {
     public function guardar_pedido()
     {
         $save=$this->productos->guardar_pedido();
-        echo $save;
-    }
+        echo $save; 
+
+        // if ($save=='1') {
+        //   echo'1';
+        // }elseif ($save=='0') {
+        //   echo "0";
+        // }else{
+        //   echo "";
+        // }
+      }
 
   public function guardar()
   {
@@ -357,7 +365,8 @@ if ($valor == 1) {
         $row=$this->productos->get_id($id);
         echo strtoupper($row->fecha_entrega).'~'.
              strtoupper($row->oficina_pedido).'~'.
-             strtoupper($row->cliente)
+             strtoupper($row->cliente).'~'.
+             strtoupper($row->id_producto)
              ;
     }
 
@@ -832,6 +841,11 @@ if ($this->permisos->permisos(20,2)==1) {
         // La respuesta se regresa como json
         echo json_encode($data);
 
+}
+public function editarProductoComponentes($idPedido)
+{
+    $resuslt=$this->productos->productosComponentes($idPedido);
+    echo $resuslt;
 }
 }
 

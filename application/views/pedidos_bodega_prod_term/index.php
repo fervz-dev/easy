@@ -295,16 +295,58 @@ function eliminar_pedido_(id)
 }
 function editar(id)
 {
+ var p=0;
+    var c=0;
+    var t=0;
+    var e=0;
+    var resultProductos=document.getElementsByName('inputHideProductos[]');
+    var arrayProductos=new Array();
+    while(p< resultProductos.length){
+      arrayProductos[p]=resultProductos[p].value;
+      p++
+    }
 
+// alert(arrayProductos);
+    var resultComponentes=document.getElementsByName('inputHideComponentes[]');
+    var arrayComponentes=new Array();
+    while(c< resultComponentes.length){
+      arrayComponentes[c]=resultComponentes[c].value
+
+      c++
+    }
+// array show
+    var resultProductosShow=document.getElementsByName('inputShowProductos[]');
+    var arrayProductosShow=new Array();
+    while(t< resultProductosShow.length){
+      arrayProductosShow[t]=resultProductosShow[t].value;
+      t++
+    }
+
+// alert(arrayProductos);
+    var resultComponentesShow=document.getElementsByName('inputShowComponentes[]');
+    var arrayComponentesShow=new Array();
+    while(e< resultComponentesShow.length){
+      arrayComponentesShow[e]=resultComponentesShow[e].value
+
+      e++
+    }
+    
 $.ajax({
           async:true,cache: false,
           beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
            type:"POST",
             url:"<?php echo base_url();?>pedidos_bodega_prod_term/editar_pedido/"+id,
-          data:{"fecha_entrega":$("#fecha_entrega").val(),
+          data:{"arrayProductos":arrayProductos,
+                "arrayComponentes":arrayComponentes,
+                "arrayProductosShow":arrayProductosShow,
+                "arrayComponentesShow":arrayComponentesShow,
+                "fecha_entrega":$("#fecha_entrega").val(),
                 "clientes":$("#clientes").val(),
-                  "oficina_pedido":$("#oficina_pedido").val(),
-                  "oficina":$("#oficina").val()},
+                "oficina_pedido":$("#oficina_pedido").val()
+
+                },
+
+
 
                      datatype:"html",
                       success:function(data, textStatus){
@@ -337,6 +379,7 @@ $.ajax({
 function edit(id)
 {
 document.editar_pedido.reset();
+ $("#ajaxCompponentesProducto").html("");
 $.ajax({
             async:true,cache: false,
             beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
@@ -347,7 +390,12 @@ $.ajax({
             dato= data.split('~');
             $("#fecha_entrega").val(dato[0]);
             $("#clientes").val(dato[2]);
+            cargarProductosEditar(dato[2], dato[3]);
             $("#oficina_pedido").val(dato[1]);
+            cargarComponentesEditar(id);
+
+
+            
             },
         error:function(datos){
         notify("Error al procesar los datos " ,500,5000,'error');
@@ -421,44 +469,35 @@ $.ajax({
           async:true,cache: false,
           beforeSend:function(objeto){$('#loading').html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');},
            type:"POST",
-            url:"<?php echo base_url();?>pedidos_bodega_prod_term/guardar_pedido?da="+Math.random()*2312,
-          data:{"fecha_entrega":$("#fecha_entrega").val(),
-                "clientes":$("#clientes").val(),
-                "oficina_pedido":$("#oficina_pedido").val(),
-                "clientes":$("#clientes").val(),
-                "arrayProductos":arrayProductos,
+            url:"<?php echo base_url();?>pedidos_bodega_prod_term/guardar_pedido",
+          data:{"arrayProductos":arrayProductos,
                 "arrayComponentes":arrayComponentes,
-
                 "arrayProductosShow":arrayProductosShow,
-                "arrayComponentesShow":arrayComponentesShow
+                "arrayComponentesShow":arrayComponentesShow,
+                "fecha_entrega":$("#fecha_entrega").val(),
+                "clientes":$("#clientes").val(),
+                "oficina_pedido":$("#oficina_pedido").val()
+
                 },
-                 datatype:"html",
-                      success:function(data, textStatus){
+         datatype:"html",
+              success:function(data, textStatus){
+                if (data==0) {
+notify("Error al procesar los datos " ,500,5000,'error');
+                }else if (data==1) {
+                           $("#tbl_p_prove").trigger("reloadGrid");
+                            notify('El registro se guardado correctamente',500,5000,'aviso');
+                           $( "#dialog-procesos" ).dialog( "close" );
+                }else{
+                           $( "#dialog-procesos" ).dialog( "close" );
+                            var error='Error'+data;
+                            notify(error ,500,5000,'error');
+                }
 
-                      switch(data){
-                               case "0":
-                                  notify("Error al procesar los datos " ,500,5000,'error');
-                                break;
-
-                                case "1":
-                                   $("#tbl_p_prove").trigger("reloadGrid");
-                                    notify('El registro se guardado correctamente',500,5000,'aviso');
-                                   $( "#dialog-procesos" ).dialog( "close" );
-                                break;
-
-                                default:
-                                   $( "#dialog-procesos" ).dialog( "close" );
-                                  var error='Error'+data;
-                                 notify(error ,500,5000,'error');
-                                break;
-
-                              }//switch
-                             },
-                        error:function(datos){
-                             notify("Error inesperado" ,500,5000,'error');
-                             }//Error
-                         });//Ajax
-
+                     },
+                error:function(datos){
+                     notify("Error inesperado" ,500,5000,'error');
+                     }//Error
+                 });//Ajax
  }
 ////////////////////////////////////////////agregar producto///////////////////////////////////////////////////////
 function add(id,tipo)
@@ -527,6 +566,7 @@ function alta()
 {
 
 document.editar_pedido.reset();
+ $("#ajaxCompponentesProducto").html("");
 
 $( "#dialog-procesos" ).dialog({
       autoOpen: false,
@@ -535,10 +575,11 @@ $( "#dialog-procesos" ).dialog({
       modal: true,
       buttons: {
           Aceptar: function() {
-            // if (validarCamposForm1()==true) {
+            if (validarCamposForm1()==true) {
               guardar_pedido();
-            // }
-
+              $(".ui-dialog-buttonpane button:contains('Aceptar')").button("disable");
+              $(".ui-dialog-buttonpane button:contains('Cancelar')").button("disable");
+            }
           },
           Cancelar:function()
           {
@@ -628,27 +669,106 @@ $( "#dialog-procesos" ).dialog({
 
 //////////////////////////////////////////////////////////////////////////////
 function validarCamposForm1 () {
-  fecha_entrega=$('#fecha_entrega').val();
-  proveedor_id_proveedor=$('#oficina_pedido').val();
-  oficina=$('#oficina').val();
 
-  if (validarVacio(fecha_entrega)==false) {
-      notify('* El campo <strong>FECHA DE ENTREGA</strong> no puede estar vacio!!!',500,5000,'error');
-    $("#fecha_entrega").focus();
-    return false;
-  }else if (validarCombo(proveedor_id_proveedor)==false) {
-      notify('* Debe seleccionar almenos una opcion de la lista <strong>PROVEEDORES</strong>',500,5000,'error');
-    $("#oficina_pedido").focus();
-    return false;
-  }else if (validarCombo(oficina)==false) {
-      notify('* Debe seleccionar almenos una opcion de la lista <strong>OFICINAS</strong>',500,5000,'error');
-    $("#oficina").focus();
-    return false;
-  }else{
-    return true;
-  }
+    clientes=$('#clientes').val();
+    productos=$('#productos').val();
+    fecha_entrega=$('#fecha_entrega').val();
+    oficina_pedido=$('#oficina_pedido').val();
+
+    if (validarCombo(clientes)==false) {
+      notify('* Debe seleccionar almenos una opcion de la lista <strong>CLIENTES</strong>',500,5000,'error');
+      $("#clientes").focus();
+      return false;
+    }else if (validarCombo(productos)==false) {
+        notify('* Debe seleccionar almenos una opcion de la lista <strong>PRODUCTOS</strong>',500,5000,'error');
+      $("#productos").focus();
+      return false;
+    }else if (validarProductos()==false) {
+        notify('* La cantidad del Producto es requerida',500,5000,'error');
+        return false;
+    }else if (validarProductosN()==false) {
+        notify('* La cantidad no es un Numero',500,5000,'error');
+        return false;
+    }else if (validarComponentes()==false) {
+      notify('* La cantidad del Componente es requerida',500,5000,'error'); 
+        return false;
+    }else if (validarComponentesN()==false) {
+      notify('* La cantidad no es un Numero',500,5000,'error');
+        return false;
+    }else if (validarVacio(fecha_entrega)==false) {
+        notify('* El campo <strong>FECHA DE ENTREGA</strong> no puede estar vacio!!!',500,5000,'error');
+        $("#fecha_entrega").focus();
+        return false;
+    }else if (validarCombo(oficina_pedido)==false) {
+      notify('* Debe seleccionar almenos una opcion de la lista <strong>NAVES</strong>',500,5000,'error');
+      $("#oficina_pedido").focus();
+        return false;
+    }else{
+      return true;
+    }
+
 }
+function validarProductosN () {
+  var t=0;
+  var resultProductosShow=document.getElementsByName('inputShowProductos[]');
+      var arrayProductosShow=new Array();
+      while(t< resultProductosShow.length){
 
+        if (resultProductosShow[t].value=='') {
+              // alert('La cantidad del Producto es requerida');
+              resultProductosShow[t].focus();
+              return false;
+              break;    
+        }
+        t++
+      }
+}
+function validarComponentesN () {
+    var e=0;
+    var resultComponentesShow=document.getElementsByName('inputShowComponentes[]');
+    var arrayComponentesShow=new Array();
+    while(e< resultComponentesShow.length){
+
+      if (validarNUmero(resultComponentesShow[e].value)==false ) {
+        
+        resultComponentesShow[e].focus();
+                return false;
+        break;
+
+      }
+      e++
+    }
+}
+function validarProductos () {
+  var t=0;
+  var resultProductosShow=document.getElementsByName('inputShowProductos[]');
+      var arrayProductosShow=new Array();
+      while(t< resultProductosShow.length){
+
+        if (validarNUmero(resultProductosShow[t].value)==false) {
+              resultProductosShow[t].focus();
+              return false;
+              break;
+        }
+        t++
+      }
+}
+function validarComponentes () {
+    var e=0;
+    var resultComponentesShow=document.getElementsByName('inputShowComponentes[]');
+    var arrayComponentesShow=new Array();
+    while(e< resultComponentesShow.length){
+
+      if (resultComponentesShow[e].value=='') {
+        // alert('La cantidad del Componente es requerida');
+        resultComponentesShow[e].focus();
+                return false;
+        break;
+
+      }
+      e++
+    }
+}
 function verificaEnvio(id) {
   $( "#dialogo_pedido" ).dialog({
       autoOpen: false,

@@ -42,7 +42,9 @@ public function get_pedido_bodega_producto($sidx, $sord, $start, $limite)
 				'cliente'=>$this->input->post('clientes'),
 				'oficina_pedido'=>$this->input->post('oficina_pedido'),
 				'id_usuario'=>$this->session->userdata('id'),
-				'id_sucursal'=>$this->session->userdata('oficina'));
+				'id_sucursal'=>$this->session->userdata('oficina'),
+				'id_producto'=>$arrayProducto[0],
+				);
 
 
 		$this->db->insert('pedido_bodega_producto_terminado', $data);
@@ -66,8 +68,12 @@ public function get_pedido_bodega_producto($sidx, $sord, $start, $limite)
 
 		   			$this->db->insert('componentes_producto', $Componentes);
 		   		}
+		   		if ($this->db->affected_rows()>0) {
+		   			return 1;
+		   		}else{
+		   			return 0;
+		   		}
 
-		return $this->db->affected_rows();
 	}
 
 public function guardar()
@@ -91,7 +97,8 @@ public function guardar()
         $query = $this->db->query("SELECT
         								pedido_bodega_producto_terminado.fecha_entrega,
 										pedido_bodega_producto_terminado.oficina_pedido,
-										pedido_bodega_producto_terminado.cliente
+										pedido_bodega_producto_terminado.cliente,
+										pedido_bodega_producto_terminado.id_producto
 										FROM
 										pedido_bodega_producto_terminado
 										WHERE
@@ -99,9 +106,127 @@ public function guardar()
         $fila = $query->row();
           return $fila;
     }
+public function productosComponentes($idPedido)
+{
+	$productos= $this->db->query("	SELECT
+								pedido_productos.id_pedido_producto,
+								pedido_productos.id_producto,
+								producto_final.nombre,
+								pedido_productos.cantidad
+								FROM
+								pedido_productos ,
+								producto_final
+								WHERE
+								pedido_productos.id_pedido = $idPedido AND
+								pedido_productos.id_producto = producto_final.id_catalogo AND
+								pedido_productos.activo = 1");
+$resultProducto=$productos->result_array();
 
+
+	$componentes = $this->db->query("SELECT
+									componentes_producto.id_componentes_producto,
+									catalogo_producto.nombre,
+									componentes_producto.cantidad
+									FROM
+									pedido_productos ,
+									componentes_producto ,
+									catalogo_producto
+									WHERE
+									componentes_producto.id_producto_pedido = ".$resultProducto[0]['id_pedido_producto']."
+									GROUP BY
+									componentes_producto.id_componentes_producto");
+	$resultComponentes=$componentes->result_array();
+	$htmlComponente='';
+    $htmlComponente='<table cellspacing="0" style="width: 300px;">
+        <tr><th colspan="2"> <strong> PRODUCTOS  </strong></th></tr>
+        <tr><th>Nombre</th><th>Cantidad</th></tr>';
+        for ($i=0; $i < count($resultProducto); $i++) {
+            $htmlComponente.='<tr>
+                                <td>'.
+                                    $resultProducto[$i]["nombre"].'
+                                    <input type="hidden" name="inputHideProductos[]" id="inputHideProductos_'.$resultProducto[$i]["id_pedido_producto"].'" value="'.$resultProducto[$i]["id_pedido_producto"].'"/>
+                                </td>';
+
+        $htmlComponente.='<td>
+                                <input type="text" name="inputShowProductos[]" id="inputShowProductos_'.$resultProducto[$i]["id_pedido_producto"].'" value="'.$resultProducto[$i]["cantidad"].'"/>
+                            </td>
+                        </tr>';
+        }
+
+    $htmlComponente.='<tr><th colspan="2" ><strong> COMPONENTES </strong></th></tr>';
+
+    for ($i=0; $i < count($resultComponentes); $i++) {
+        $htmlComponente.='<tr>
+                            <td>'.
+        $resultComponentes[$i]["nombre"].'
+         <input type="hidden" name="inputHideComponentes[]" id="inputHideComponentes[]" value="'.$resultComponentes[$i]["id_componentes_producto"].'"/>
+                            </td>';
+
+        $htmlComponente.='<td>
+                                <input type="text" name="inputShowComponentes[]" id="inputShowComponentes_'.$resultComponentes[$i]["id_componentes_producto"].'" value="'.$resultComponentes[$i]["cantidad"].'"/>
+                            </td>
+                        </tr>';
+}
+        $htmlComponente.='</table>';
+        return $htmlComponente;
+
+}
    public function editar($id)
    {
+
+
+
+   	$arrayProducto=$this->input->post('arrayProductos');
+		   		$arrayProductoShow=$this->input->post('arrayProductosShow');
+
+		   		$arrayComponentes=$this->input->post('arrayComponentes');
+		   		$arrayComponentesShow=$this->input->post('arrayComponentesShow');
+
+		   		$data = array (
+		   		'fecha_pedido'=>date("Y-m-d"),
+			   	'fecha_entrega'=>$this->input->post('fecha_entrega'),
+				'cliente'=>$this->input->post('clientes'),
+				'oficina_pedido'=>$this->input->post('oficina_pedido'),
+				'id_usuario'=>$this->session->userdata('id'),
+				'id_sucursal'=>$this->session->userdata('oficina'),
+				'id_producto'=>$arrayProducto[0],
+				);
+
+
+					$this->db->insert('pedido_bodega_producto_terminado', $data);
+					$idPedido=$this->db->insert_id();
+		   			$Productos=array(	'id_pedido'=>$idPedido,
+		   								'id_producto'=>$arrayProducto[0],
+		   								'activo'=>1,
+		   								'cantidad'=>$arrayProductoShow[0]
+		   							);
+
+		   			$this->db->insert('pedido_productos', $Productos);
+					$idProductoPedido=$this->db->insert_id();
+
+		   		for ($i=0; $i < count($arrayComponentes); $i++) {
+		   			$Componentes=array(	'id_pedido_producto'=>$idPedido,
+		   								'id_componente'=>$arrayComponentes[$i],
+		   								'id_producto_pedido'=>$idProductoPedido,
+		   								'cantidad'=>$arrayComponentesShow[$i],
+		   								'id_producto'=>$arrayProducto[0],
+		   								);
+
+		   			$this->db->insert('componentes_producto', $Componentes);
+		   		}
+		   		if ($this->db->affected_rows()>0) {
+		   			return 1;
+		   		}else{
+		   			return 0;
+		   		}
+
+
+
+
+
+
+
+
 	   	$data = array (
 			   	'fecha_entrega'=>$this->input->post('fecha_entrega'),
 				'cliente'=>$this->input->post('clientes'),

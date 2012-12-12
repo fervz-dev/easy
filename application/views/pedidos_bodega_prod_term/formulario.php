@@ -6,18 +6,18 @@ table {border-spacing: 0; } /* IMPORTANT, I REMOVED border-collapse: collapse; F
 
 
 .tablePC a:link {
-  color: #666;
+  color: #000;
   font-weight: bold;
   text-decoration:none;
 }
 .tablePC a:visited {
-  color: #666;
+  color: #000;
   font-weight:bold;
   text-decoration:none;
 }
 .tablePC a:active,
 .tablePC a:hover {
-  color: #bd5a35;
+  color: #000;
   text-decoration:underline;
 }
 
@@ -31,7 +31,7 @@ Table Style - This is what you want
   text-decoration:none;
 }
 .tablePC table a:visited {
-  color: #999999;
+  color: #000;
   font-weight:bold;
   text-decoration:none;
 }
@@ -42,7 +42,7 @@ Table Style - This is what you want
 }
 .tablePC table {
   font-family:Arial, Helvetica, sans-serif;
-  color:#666;
+  color:#000;
   font-size:12px;
   text-shadow: 1px 1px 0px #fff;
   background:#eaebec;
@@ -71,6 +71,12 @@ Table Style - This is what you want
   text-align: left;
   padding-left:20px;
 
+
+}
+
+.tablePC input {
+  width: 50px;
+  height:20px;
 
 }
 .tablePC table tr:first-child th:first-child{
@@ -131,35 +137,41 @@ Table Style - This is what you want
 </style>
 <form name="editar_pedido" id="editar_pedido">
 <table>
-<tr>
-	<td>Fecha de Entrega</td>
-	<td><input type="text" nombre="fecha_entrega"  id="fecha_entrega"></td>
-</tr>
-
-<tr>
-	<td><label>Cliente</label></td>
-	<td><select name="clientes"  id="clientes" onchange='cargarProductos(this.value)'>
-		<option value="">Seleccione...</option>
-		<?php foreach ($clientes as $clt) { ?>
-		<option value="<?php echo $clt['id_clientes']; ?>"><?php echo $clt['nombre_empresa'] ?></option>
-		<?php } ?>
-	</select>
+  <tr>
+  <td><label>Cliente</label></td>
+  <td><select name="clientes"  id="clientes" onchange='cargarProductos(this.value)'>
+    <option value="">Seleccione...</option>
+    <?php foreach ($clientes as $clt) { ?>
+    <option value="<?php echo $clt['id_clientes']; ?>"><?php echo $clt['nombre_empresa'] ?></option>
+    <?php } ?>
+  </select>
 </td>
 </tr>
 <!-- cargar productos por cliente -->
 <tr id="hideProductos">
-	<td><label id="textProductos">Produtos del cliente:</label></td>
-	<td><select  name="productos"  id="productos" onchange="cargarComponentes(this.value)">
+  <td><label id="textProductos">Produtos del cliente:</label></td>
+  <td><select  name="productos"  id="productos" onchange="cargarComponentes(this.value)">
 
-	</select>
+  </select>
 </td>
 <td id="ajax_productos"></td>
 </tr>
 <!-- end -->
 
+<tr>
+  <td colspan="2">
+    <div id="ajaxCompponentesProducto" class="tablePC" style="margin-left: 100px;">
 
-<tr>hid
-	<td><label>Bodega (Origen de Pedido)</label></td>
+</div>
+<div id="ajaxCompponentesProducto_load"></div>
+  </td>
+</tr>
+<tr>
+	<td>Fecha de Entrega:</td>
+	<td><input type="text" nombre="fecha_entrega"  id="fecha_entrega"></td>
+</tr>
+<tr>
+	<td><label>Nave:</label></td>
 	<td><select name="oficina_pedido"  id="oficina_pedido">
 		<option value="">Seleccione...</option>
 		<?php foreach ($oficinas as $ofn) { ?>
@@ -180,12 +192,32 @@ Table Style - This is what you want
 </td>
 </tr> -->
 </table>
-<div id="ajaxCompponentesProducto" class="tablePC">
 
-</div>
-<div id="ajaxCompponentesProducto_load"></div>
 </form>
 <script type="text/javascript">
+function cargarProductosEditar (clientesdb,producto) {
+    // clientesdb=$('#clientes').val();
+    if (clientesdb!='') {
+      $.ajax({
+                url:"<?php echo base_url();?>producto_final/productosCliente/"+clientesdb,
+                type:"POST",
+                beforeSend: function(){
+                   $("#ajax_productos").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
+                },
+                success: function(html){
+                        $("#productos").html(html);
+                        $("#ajax_productos").html("");
+                        $("#productos").val(producto);
+                        // cargarComponentes(producto);
+
+                }
+    });
+    }else if(tipoIngreso==1 && clientesdb==''){
+       notify('* Debes de seleccionar un cliente!!!',500,5000,'error');
+              $("#clientes").focus();
+    }
+  }
+
 function cargarProductos (clientesdb) {
     // clientesdb=$('#clientes').val();
     if (clientesdb!='') {
@@ -210,6 +242,26 @@ function cargarProductos (clientesdb) {
   	if (clientesdb!='') {
       $.ajax({
                     url:"<?php echo base_url();?>producto_final/componentesProducto/"+idProducto+"/"+clientesdb,
+                    type:"POST",
+                    beforeSend: function(){
+                       $("#ajaxCompponentesProducto_load").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
+                    },
+                    success: function(html){
+
+                            $("#ajaxCompponentesProducto").html(html);
+                            $("#ajaxCompponentesProducto_load").html("");
+                    }
+    });
+    }else if(tipoIngreso==1 && clientesdb==''){
+       notify('* Debes de seleccionar un cliente!!!',500,5000,'error');
+              $("#clientes").focus();
+  }
+}
+  function cargarComponentesEditar (idPedido) {
+     clientesdb=$('#clientes').val();
+    if (clientesdb!='') {
+      $.ajax({
+                    url:"<?php echo base_url();?>pedidos_bodega_prod_term/editarProductoComponentes/"+idPedido,
                     type:"POST",
                     beforeSend: function(){
                        $("#ajaxCompponentesProducto_load").html('<img src="<?php echo base_url();?>img/ajax-loader.gif" width="28" height="28" />');
