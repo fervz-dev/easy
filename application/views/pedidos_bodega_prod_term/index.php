@@ -394,6 +394,9 @@ $.ajax({
             $("#oficina_pedido").val(dato[1]);
             cargarComponentesEditar(id);
 
+              $("#clientes").attr('disabled', true);
+              $('#productos').attr('disabled', true);
+                $("#oficina_pedido").focus();
 
             
             },
@@ -566,6 +569,10 @@ function alta()
 {
 
 document.editar_pedido.reset();
+
+              $("#clientes").removeAttr('disabled');
+              $('#productos').removeAttr('disabled');
+
  $("#ajaxCompponentesProducto").html("");
 
 $( "#dialog-procesos" ).dialog({

@@ -173,70 +173,35 @@ $resultProducto=$productos->result_array();
 }
    public function editar($id)
    {
+	$arrayProducto=$this->input->post('arrayProductos');
+	$arrayProductoShow=$this->input->post('arrayProductosShow');
 
+	$arrayComponentes=$this->input->post('arrayComponentes');
+	$arrayComponentesShow=$this->input->post('arrayComponentesShow');
 
+	$data = array (
+	'fecha_entrega'=>$this->input->post('fecha_entrega'),
+	'cliente'=>$this->input->post('clientes'),
+	'oficina_pedido'=>$this->input->post('oficina_pedido'),
+	'id_usuario'=>$this->session->userdata('id'),
+	'id_sucursal'=>$this->session->userdata('oficina'),
+	);
+		
+		
+		$this->db->where("id_pedido", $id);
+		$this->db->update('pedido_bodega_producto_terminado', $data);
 
-   	$arrayProducto=$this->input->post('arrayProductos');
-		   		$arrayProductoShow=$this->input->post('arrayProductosShow');
+		$Productos=array('cantidad'=>$arrayProductoShow[0]);
+		$this->db->where('id_pedido',$id);
+		$this->db->where('id_pedido_producto',$arrayProducto[0]);
+		$this->db->update('pedido_productos', $Productos);
 
-		   		$arrayComponentes=$this->input->post('arrayComponentes');
-		   		$arrayComponentesShow=$this->input->post('arrayComponentesShow');
+	for ($i=0; $i < count($arrayComponentes); $i++) {
+		$Componentes=array('cantidad'=>$arrayComponentesShow[$i]);
+		$this->db->where('id_componentes_producto',$arrayComponentes[$i]);
+		$this->db->update('componentes_producto', $Componentes);
+	}
 
-		   		$data = array (
-		   		'fecha_pedido'=>date("Y-m-d"),
-			   	'fecha_entrega'=>$this->input->post('fecha_entrega'),
-				'cliente'=>$this->input->post('clientes'),
-				'oficina_pedido'=>$this->input->post('oficina_pedido'),
-				'id_usuario'=>$this->session->userdata('id'),
-				'id_sucursal'=>$this->session->userdata('oficina'),
-				'id_producto'=>$arrayProducto[0],
-				);
-
-
-					$this->db->insert('pedido_bodega_producto_terminado', $data);
-					$idPedido=$this->db->insert_id();
-		   			$Productos=array(	'id_pedido'=>$idPedido,
-		   								'id_producto'=>$arrayProducto[0],
-		   								'activo'=>1,
-		   								'cantidad'=>$arrayProductoShow[0]
-		   							);
-
-		   			$this->db->insert('pedido_productos', $Productos);
-					$idProductoPedido=$this->db->insert_id();
-
-		   		for ($i=0; $i < count($arrayComponentes); $i++) {
-		   			$Componentes=array(	'id_pedido_producto'=>$idPedido,
-		   								'id_componente'=>$arrayComponentes[$i],
-		   								'id_producto_pedido'=>$idProductoPedido,
-		   								'cantidad'=>$arrayComponentesShow[$i],
-		   								'id_producto'=>$arrayProducto[0],
-		   								);
-
-		   			$this->db->insert('componentes_producto', $Componentes);
-		   		}
-		   		if ($this->db->affected_rows()>0) {
-		   			return 1;
-		   		}else{
-		   			return 0;
-		   		}
-
-
-
-
-
-
-
-
-	   	$data = array (
-			   	'fecha_entrega'=>$this->input->post('fecha_entrega'),
-				'cliente'=>$this->input->post('clientes'),
-				'oficina_pedido'=>$this->input->post('oficina_pedido'),
-				'id_usuario'=>$this->session->userdata('id'),
-				'id_sucursal'=>$this->session->userdata('oficina')
-						);
-
-	$this->db->where('id_pedido', $id);
-	$this->db->update('pedido_bodega_producto_terminado',$data);
    }
 
       public function eliminar_producto($id)
